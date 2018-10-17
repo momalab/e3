@@ -75,8 +75,8 @@ cd e3work
 cp -R $e3ds/db ./
 
 # 2 generate secint
-cp ../cgt.cfg ./
-$cgt gen
+#cp ../cgt.cfg ./
+$cgt gen -c ../cgt.cfg -d ../
 
 # 3 deduce libs
 libstfh=(`cat secint.h | grep LibsTFH`)
