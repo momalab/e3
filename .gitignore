@@ -1,1 +1,8 @@
 g_*.bat
+*.exe
+*.o
+*.obj
+*.dll
+*.so
+*.lib
+*.a
