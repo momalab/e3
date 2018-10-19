@@ -102,4 +102,4 @@ $(objk2): $(BIN)/%.$(OEXT):${EKDIR}/%.cpp cpp_cgt/main/*.h ${EKDIR}/*.h
 	$(CCN) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
 clean:
-	rm -rf cgt.exe *.o *.obj bin_*
+	rm -rf cgt.exe *.o *.obj bn_* bt_*
