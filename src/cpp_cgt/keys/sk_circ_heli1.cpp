@@ -124,7 +124,11 @@ if( i>=num_smValues )
 
 void CircuitPrivKey_heli::init_properties()
 {
-    name += std::to_string(IDX);
+	static bool inited = false;
+	if( inited ) return;
+	inited = true;
+
+    if( IDX != 11 ) name += "_idx_"+std::to_string(IDX);
 
     cout << "Initializing HELIB .. " << std::flush;
 
