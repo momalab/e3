@@ -1,6 +1,6 @@
-# E^3 Framework
+# E<sup>3</sup> Framework
 
-E^3 (Encrypt-Everything-Everywhere) is a framework providing C++ classes for supporting computation on private data. E^3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography.
+E<sup>3</sup> (Encrypt-Everything-Everywhere) is a framework providing C++ classes for supporting computation on private data. E^3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography.
 
 In its first version, E^3 encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
 
