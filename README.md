@@ -89,4 +89,20 @@ $ ./bob.exe | ../../src/cgt.exe dec
 5
 ```
 
+## Building on Windows
+
+Make sure that the following commands run in your Windows console shell:
+```bash
+$ make
+make: *** No targets specified and no makefile found.  Stop.
+$ cl
+Microsoft (R) C/C++ Optimizing Compiler Version 19.10.25224 for x86
+Copyright (C) Microsoft Corporation.  All rights reserved.
+usage: cl [ option... ] filename... [ /link linkoption... ]
+$ sh --help
+GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
+$ bash --help
+GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
+```
+
 = end of description
