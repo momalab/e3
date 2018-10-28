@@ -6,4 +6,4 @@
 
 struct HeliCtxt { bool b; };
 
-struct NativeProperties{};
+struct NativeProperties {};

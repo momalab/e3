@@ -15,14 +15,15 @@ class CircuitPrivKey_heli : public CircuitPrivKey
         bool decbit(const EncBit & y) const;
 
     private:
-		NativeProperties * properties;
+        NativeProperties * properties;
         SecKey key;
 
         CircuitEvalKey_heli_X ek;
         virtual bool load();
         virtual void save();
 
-		void init_properties();
+        ///void init_properties();
+        ///static void init_properties(NativeProperties ** ppprop, string &name);
 
     public:
         CircuitPrivKey_heli(std::string name, bool forceGen,

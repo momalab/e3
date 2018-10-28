@@ -4,8 +4,9 @@ template <class T, class N>
 void initEvalKey(std::string name, T *& pek, T *& gpek)
 {
     if ( !gpek )
-        try { gpek = new N(T::User::Bob, name); }
-        catch (...) { std::cerr << "Cannot load evaluation key of " << name << "\n"; throw; }
+        std::cout << "AAA initEvalKey\n";
+    try { gpek = new N(T::User::Bob, name); }
+    catch (...) { std::cerr << "Cannot load evaluation key of " << name << "\n"; throw; }
     pek = gpek;
 }
 

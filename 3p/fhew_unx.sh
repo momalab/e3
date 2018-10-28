@@ -202,3 +202,22 @@ else
 		echo "Failed to compile test"
 	fi
 fi
+
+echo ""
+echo "Step 9 - faking plats"
+file=$libfhew
+path1=$bin/native/$file
+path2=$bin/target/$file
+echo -n "$me $path1 $path2: "
+if test -f $path1 && test -f $path2; then
+	echo "YES"
+else
+	echo "NO"
+	echo "$me faking platforms"
+	cwd=`pwd`; cd fhew_$PLAT
+	mkdir -p native
+	cp $libfhew libfftw3.a native/
+	mkdir -p target
+	cp $libfhew libfftw3.a target/
+	cd $cwd
+fi

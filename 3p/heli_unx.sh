@@ -20,7 +20,7 @@ else
 	echo "$me checking out HELI"
 	mkdir -p $root
 	cwd=`pwd`; cd $root
-	git -c http.sslVerify=false clone --branch master https://github.com/lducas/heli.git
+	git -c http.sslVerify=false clone --branch master https://github.com/shaih/HElib heli
 	cd $cwd
 	if test -f $path; then
 		echo "$me done"
@@ -54,7 +54,7 @@ else
 
 	echo "$me downloading NTL"
 	mkdir -p $ntlpath
-	cwd=`pwd`; cd $ntlwpath/../
+	cwd=`pwd`; cd $ntlpath/../
 	wget $down
 	cd $cwd
 
@@ -101,24 +101,32 @@ fi
 
 echo	 ""
 echo "Step 5"
-echo -n "$me NTL lib: "
-path=$fftwpath/.libs/libfftw3.a
+echo -n "$me NTL and GMP lib: "
+path=testntlgmp.exe
 
-#if test -f $path; then
-if test -d .; then
-	echo "SKIPPED"
+if test -f $path; then
+	echo "YES"
 else
 	echo "NO"
-	echo "$me making FFTW lib"
-	cwd=`pwd`; cd $fftwpath
-	./configure
-	make
-	cd $cwd
+	echo "$me building a test with NTL/GMP"
+    g++ -std=c++14 testntlgmp.cpp -lgmp -lntl -o testntlgmp.exe
 
 	if test -f $path; then
 		echo "$me done"
 	else
-		echo "$me failed to make FFTW lib"
+		echo "$me failed to make NTL/GMP test"
+		echo "USER ATTENTION!"
+		echo "This script does not automatically build NTL/GMP"
+		echo "Please follow the user manual and install"
+		echo "NTL and GMP libraries on this and the target platforms"
+		echo "NTL library has already been downloaded and unpacked in"
+		echo "../../e3_heli/ntl"
+		echo "Use the following commands to install it:"
+		echo "% cd ntl-xxx/src"
+		echo "% ./configure"
+		echo "% make"
+		echo "% make check"
+		echo "% sudo make install"
 		exit
 	fi
 fi
@@ -153,20 +161,20 @@ echo "Step 7"
 echo -n "$me HELI $libheli: "
 file=src/$libheli
 path=heli_$PLAT/$file
-#if test -f $path; then
-if test -d .; then
-	echo "SKIPPED"
+if test -f $path; then
+#if test -d .; then
+	echo "YES"
 else
-	echo "NO"
-	cwd=`pwd`; cd heli_$PLAT/libheli	
-	echo "$me compiling libheli"
-	g++ -std=c++03 -I../inc/heli -I../inc/fftwa -c *.cpp
-	echo "$me lilnking $file"
-	cd ..
-	ar rcs $libheli libheli/*.o
+	echo "NO $path"
+	cwd=`pwd`; cd heli_$PLAT/src
+	#echo "$me compiling libheli"
+	#g++ -std=c++03 -I../inc/heli -I../inc/fftwa -c *.cpp
+	#echo "$me lilnking $file"
+	#cd ..
+	#ar rcs $libheli libheli/*.o
+	make
 	cd $cwd
 fi
-
 
 echo ""
 echo "Step 8"

@@ -8,12 +8,33 @@ using std::cout;
 
 bool CircuitEvalKey_fhew::load()
 {
-    if ( !NOCOUT ) << "Loading evaluation key .. " << std::flush;
+    init_properties_fhew();
+
+    if ( !NOCOUT ) cout << "Loading evaluation key .. " << std::flush;
+
+    //bool r = load_oleg();
+    bool r = load_fhew();
+
+    if ( !NOCOUT ) cout << "ok\n";
+    return r;
+}
+
+bool CircuitEvalKey_fhew::load_fhew()
+{
+    FILE * fp = fopen(filename().c_str(), "r");
+    key = FHEW::fread_ek(fp);
+    fclose(fp);
+    return true;
+}
+
+bool CircuitEvalKey_fhew::load_oleg()
+{
     std::ifstream in(filename(), std::ios::binary);
     if ( !in ) return false;
 
     static FHEW::EvalKey k;
     key = &k;
+    std::cout << "AAA eval key address in loading " << ((void *)key);
 
     // 1 check type sizes
     // 2 check constants
@@ -111,7 +132,6 @@ bool CircuitEvalKey_fhew::load()
         return false;
     }*/
     catch (...) { throw "Bad " + filename() + " eval key"; }
-    if (!NOCOUT) cout << "ok\n";
     return true;
 }
 

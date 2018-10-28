@@ -225,11 +225,11 @@ string util::increment(const string & hex, size_t bitsize)
     int maxsumbs = 4 * (int)sum.size();
     auto minsumbs = maxsumbs - 3;
 
-	int ibs = (int)bitsize;
-    if ( minsumbs > ibs ) 
-		sum = sum.substr(1);
-    else if ( minsumbs <= ibs && maxsumbs >= ibs ) 
-		sum[0] = maskHex(sum[0], bitsize);
+    int ibs = (int)bitsize;
+    if ( minsumbs > ibs )
+        sum = sum.substr(1);
+    else if ( minsumbs <= ibs && maxsumbs >= ibs )
+        sum[0] = maskHex(sum[0], bitsize);
 
     return sum;
 }

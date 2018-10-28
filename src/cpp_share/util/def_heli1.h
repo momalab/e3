@@ -28,8 +28,10 @@ inline  const ek * toek(cHeliNativeEvalKey a) { return static_cast<const ek *>(a
 
 } // e3heli
 
-struct HeliCtxt 
+struct HeliCtxt
 {
-	Ctxt b;
-	HeliCtxt(const FHEPubKey * ek): b(*ek) {}
+    Ctxt b;
+    HeliCtxt(const FHEPubKey * ek): b(*ek) {}
 };
+
+void init_properties_heli(NativeProperties ** ppprop, std::string & name);

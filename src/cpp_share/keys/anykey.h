@@ -4,7 +4,8 @@
 
 class AnyKey
 {
-    protected:
+    public: // need modify access from both Eval and Priv keys
+        // it's possible to avoid public, but simplicity rules
         std::string name;
 
     public:

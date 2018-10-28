@@ -9,7 +9,7 @@ CircuitPrivKey_heli::CircuitPrivKey_heli
     init_final(forceGen, forceLoad);
 }
 
-void CircuitPrivKey_heli::init_properties(){}
+///void CircuitPrivKey_heli::init_properties() {}
 
 void CircuitPrivKey_heli::gen()
 {

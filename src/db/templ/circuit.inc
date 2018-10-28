@@ -107,8 +107,10 @@ inline $NameUint<SZ> $NameUint<SZ>::operator--()
 template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator+(const $NameUint<SZ> & x) const
 {
+    std::cout << "AAA $NameUint<SZ>::operator+ (in)\n";
     $NameUint<SZ> r;
     d_add(r.bits, bits, x.bits);
+    std::cout << "AAA $NameUint<SZ>::operator+ (out)\n";
     return r;
 }
 

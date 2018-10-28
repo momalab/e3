@@ -7,6 +7,7 @@ const $NameBit * $NameBit::zero = nullptr;
 void $NameBit::init_pek()
 {
     if ( pek ) return;
+    std::cout << "AAA init_pek\n";
 
     initEvalKey
     < CircuitEvalKey, CircuitEvalKey_$Encryption >

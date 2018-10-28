@@ -27,3 +27,4 @@ inline  const ek * toek(cFhewNativeEvalKey a) { return static_cast<const ek *>(a
 
 } // e3fhew
 
+void init_properties_fhew();

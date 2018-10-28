@@ -11,10 +11,10 @@ using std::cout;
 
 void CircuitEvalKey_heli_X::save()
 {
-	FHEPubKey & k = *e3heli::toek(key);
+    FHEPubKey & k = *e3heli::toek(key);
 
     cout << "Saving evaluation key .. " << std::flush;
     std::ofstream of(filename(), std::ios::binary);
-	of << k;
+    of << k;
     cout << "ok\n";
 }

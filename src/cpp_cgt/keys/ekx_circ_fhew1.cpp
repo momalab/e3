@@ -11,8 +11,23 @@ using std::cout;
 void CircuitEvalKey_fhew_X::save()
 {
     cout << "Saving evaluation key .. " << std::flush;
+    save_oleg();
+    cout << "ok\n";
+}
+
+void CircuitEvalKey_fhew_X::save_fhew()
+{
+    FILE * fp = fopen(filename().c_str(), "w");
+    FHEW::fwrite_ek(*e3fhew::toek(key), fp);
+    fclose(fp);
+}
+
+void CircuitEvalKey_fhew_X::save_oleg()
+{
+    const FHEW::EvalKey & k = *e3fhew::toek(key);
+
     std::ofstream of(filename(), std::ios::binary);
-    auto k = e3fhew::toek(key);
+    ///auto k = e3fhew::toek(key);
 
     char c0 = '\0';
     char c1 = '\1';
@@ -81,6 +96,4 @@ void CircuitEvalKey_fhew_X::save()
 
     // 5 store marker
     of.write("1234", 4);
-
-    cout << "ok\n";
 }

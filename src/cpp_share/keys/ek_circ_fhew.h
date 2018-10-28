@@ -6,7 +6,7 @@
 
 class CircuitEvalKey_fhew : public CircuitEvalKey
 {
-        static const bool NOCOUT = true;
+        static const bool NOCOUT = false;
 
     public:
         using Fnek = FhewNativeEvalKey;
@@ -18,6 +18,8 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
         CircuitEvalKey_fhew(User u, std::string name)
             : CircuitEvalKey(name) { user(u); }
 
+        bool load_oleg();
+        bool load_fhew();
         virtual bool load();
         virtual std::string decor(const std::string &, bool add) const;
 

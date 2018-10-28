@@ -3,6 +3,7 @@
 
 #include "sk_circ_fhew.h"
 #include "def_fhew1.h"
+#include "ol.h"
 
 using std::cout;
 
@@ -17,10 +18,12 @@ CircuitPrivKey_fhew::CircuitPrivKey_fhew
 
 void CircuitPrivKey_fhew::gen()
 {
+    init_properties_fhew();
     static LWE::SecretKey priv;
-    static FHEW::EvalKey eval;
-    ek = &eval;
     key = &priv;
+
+    static FHEW::EvalKey eval;
+    ek.key = &eval;
 
     {
         cout << "Generating private key .. " << std::flush;
@@ -39,7 +42,7 @@ void CircuitPrivKey_fhew::gen()
 void CircuitPrivKey_fhew::save()
 {
     cout << "Saving private key .. " << std::flush;
-    auto k = e3fhew::tosk(ek);
+    auto k = e3fhew::tosk(key);
     {
         std::ofstream of(filename());
         of << n << '\n';
@@ -51,6 +54,8 @@ void CircuitPrivKey_fhew::save()
 
 bool CircuitPrivKey_fhew::load()
 {
+    init_properties_fhew();
+
     cout << "loading PrivKey .. " << std::flush;
     static LWE::SecretKey k;
     key = &k;
@@ -71,19 +76,22 @@ bool CircuitPrivKey_fhew::load()
 
         cout << "ok\n";
     }
-    return true;
+    return ek.load();
 }
 
 std::string CircuitPrivKey_fhew::encbitstr(bool b) const
 {
+    ///never("FIXME");
     FhewNativeBit nb(ek.key);
-    LWE::Encrypt(&r.nb, e3fhew::tosk(sk), p);
+    LWE::CipherText * p = &nb.p->b;
+    LWE::Encrypt(p, *e3fhew::tosk(key), int(b));
     return nb.str(ek.key);
 }
 
 bool CircuitPrivKey_fhew::decbitstr(const std::string & s, bool * ok) const
 {
-    FhewNativeBit nb(s, ek.key);
-    bool r = ( LWE::Decrypt(e3fhew::tosk(sk), b.nb); );
-    return r;
+    never("FIXME");
+    //FhewNativeBit nb(s, ek.key);
+    //bool r = ( LWE::Decrypt(e3fhew::tosk(sk), b.nb); );
+    //return r;
 }

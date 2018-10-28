@@ -13,7 +13,7 @@ struct NativeProperties;
 
 struct HeliNativeBit
 {
-	cHeliNativeEvalKey ek;
+    cHeliNativeEvalKey ek;
     std::shared_ptr<HeliCtxt> ctxt;
     std::string str(cHeliNativeEvalKey) const;
     HeliNativeBit(cHeliNativeEvalKey ek); // new
@@ -23,3 +23,4 @@ struct HeliNativeBit
 };
 
 std::string heli_impl(); // 0 or 1
+

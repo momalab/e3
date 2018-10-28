@@ -10,7 +10,7 @@ class CircuitEvalKey_heli : public CircuitEvalKey
 
     public:
         using Hnek = HeliNativeEvalKey;
-		NativeProperties * properties;
+        NativeProperties * properties;
 
     protected:
         Hnek key;
