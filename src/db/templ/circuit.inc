@@ -1,5 +1,19 @@
 // === BEGIN circuit.inc Name=$Name
 
+// Casting
+
+template <int SZ> template <int Z>
+$NameUint<SZ>::operator $NameUint<Z> () const
+{
+    $NameUint<Z> r;
+    for ( int i = 0; i < Z; i++ )
+    {
+        if ( i < SZ ) r.bits[i] = bits[i];
+        else r.bits[i] = *$NameBit::zero;
+    }
+    return r;
+}
+
 // Operators
 
 template <int SZ>
@@ -313,6 +327,20 @@ std::string $NameUint<SZ>::str() const
 }
 
 // ----- $NameInt ----- //
+
+// Casting
+
+template <int SZ> template <int Z>
+$NameInt<SZ>::operator $NameInt<Z> () const
+{
+    $NameUint<Z> r;
+    for ( int i = 0; i < Z; i++ )
+    {
+        if ( i < SZ ) r.bits[i] = bits[i];
+        else r.bits[i] = bits[SZ-1];
+    }
+    return r;
+}
 
 // Operators
 

@@ -90,6 +90,7 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         explicit $NameInt(const $NameBool & y): $NameUint<SZ>(y) {}
 
         // Casting
+        template <int Z> explicit operator $NameInt<Z> () const;
 
         // Operators
         $NameInt<SZ> & operator/=(const $NameInt<SZ> & a);

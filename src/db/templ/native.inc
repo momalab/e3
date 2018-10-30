@@ -439,6 +439,18 @@ std::string $NameUint<SZ>::str() const
 
 // ----- $NameInt ----- //
 
+// Casting
+template <int SZ> template <int Z>
+$NameInt<SZ>::operator $NameInt<Z> () const
+{
+    e3util::ull m = pek->dec(x);
+    m = e3util::signExtend(m, SZ);
+    m &= e3util::mask(Z);
+    $NameInt<Z> r;
+    r.x = pek->enc(m);
+    return r;
+}
+
 // Operators
 
 template <int SZ>

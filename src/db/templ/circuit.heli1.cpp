@@ -33,9 +33,19 @@ void recrypt(const FHEPubKey * ck, Ctxt & c, const string & s, bool ux)
 
 $NameBit $NameBit::gate_and(const $NameBit & a, const $NameBit & b)
 {
-    $NameBit r;
+///    $NameBit a(az);
+///    $NameBit b(bz);
+
+///    recrypt($NameBit_ek(), a.nb.ctxt->b, "and", false);
+///    recrypt($NameBit_ek(), b.nb.ctxt->b, "and", false);
+
+    $NameBit r = a;
     Ctxt & c = r.nb.ctxt->b;
     c.multiplyBy(b.nb.ctxt->b);
+/// std::cout<<"AAA and ";
+/// std::cout<<"AAA a H["<<a.str()<<"] ";
+/// std::cout<<"AAA b H["<<b.str()<<"] ";
+/// std::cout<<"AAA r H["<<r.str()<<"]\n";
     recrypt($NameBit_ek(), c, "and", false);
     return r;
 }
@@ -95,6 +105,10 @@ $NameBit $NameBit::gate_xor(const $NameBit & a, const $NameBit & b)
 
     cr.addCtxt(cb);
 
+/// std::cout<<"AAA XOR ";
+/// std::cout<<"AAA a H["<<a.str()<<"] ";
+/// std::cout<<"AAA b H["<<b.str()<<"] ";
+/// std::cout<<"AAA r H["<<r.str()<<"]\n";
     recrypt($NameBit_ek(), cr, "xor", true);
     return r;
 }

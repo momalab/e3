@@ -19,18 +19,19 @@ as well as how to add new libraries to the framework.
 
 ## Current state: 1 Nov 2018
 
+### TFHE
 Implemented and working TFHE in Linux and Windows
 
+### HELib
+Implemented HELib for Linux, Windows is not supported.
+
+### FHEW
 Implemented FHEW for Linux. FHEW has an internal error (sic)
 ```
 ERROR: Please only use independant ciphertexts as inputs.
 ```
 forbidding binary operations on the same bits.
 
-Implemented HELib for Linux. Currently calculatioins with HElib
-show incorrect results either due to incorrect recrypting or
-public key reloading. Our team is working on rectifying this 
-problem.
 
 ## Running examples
 ### The simplest example
@@ -95,12 +96,18 @@ Make sure that the following commands run in your Windows console shell:
 ```bash
 $ make
 make: *** No targets specified and no makefile found.  Stop.
+```
+```bash
 $ cl
 Microsoft (R) C/C++ Optimizing Compiler Version 19.10.25224 for x86
 Copyright (C) Microsoft Corporation.  All rights reserved.
 usage: cl [ option... ] filename... [ /link linkoption... ]
+```
+```bash
 $ sh --help
 GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
+```
+```bash
 $ bash --help
 GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
 ```

@@ -165,8 +165,10 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         $NameInt(const char * c): $NameUint<SZ>(c) {}
 
         $NameInt(const $NameUint<SZ> & y): $NameUint<SZ>(y) {}
+        explicit $NameInt(const $NameBool & y): $NameUint<SZ>(y) {}
 
         // Casting
+        template <int Z> explicit operator $NameInt<Z> () const;
 
         // Operators
         $NameInt<SZ> & operator/=(const $NameInt<SZ> & a);
