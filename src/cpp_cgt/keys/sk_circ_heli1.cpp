@@ -62,12 +62,6 @@ bool CircuitPrivKey_heli::load()
 
 std::string CircuitPrivKey_heli::encbitstr(bool b) const
 {
-    //TfheNativeBit nb(ek.key);
-    //bootsSymEncrypt(&*nb.p, b, e3tfhe::tosk(key));
-    //return nb.str(ek.key);
-    //Fhe::Bit r;
-    //ek->key->Encrypt(r.nb.ctxt, to_ZZX(m));
-    //return r;
     HeliNativeBit nb(ek.key);
     e3heli::toek(ek.key)->Encrypt(nb.ctxt->b, to_ZZX(b));
     return nb.str(ek.key);
@@ -75,17 +69,10 @@ std::string CircuitPrivKey_heli::encbitstr(bool b) const
 
 bool CircuitPrivKey_heli::decbitstr(const std::string & s, bool * ok) const
 {
-    ///never("FIXME");
-    ///TfheNativeBit nb(s, ek.key);
-    ///bool r = ( bootsSymDecrypt(&*nb.p, e3tfhe::tosk(key) ) > 0 );
-    ///return r;
-
     HeliNativeBit nb(s, ek.key);
     ZZX z;
     e3heli::tosk(key)->Decrypt(z, nb.ctxt->b);
-    // cout<<" 0="<<z[0];
     long a = 0;
     NTL::conv(a, z[0]);
     return bool(a);
 }
-

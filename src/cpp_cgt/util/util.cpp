@@ -116,6 +116,15 @@ string util::negation(const string & hexStr, size_t bitsize)
     return neg;
 }
 
+string util::zeroExtension(const string & hex, size_t bitsize)
+{
+    auto size = (bitsize / 4) - hex.size();
+    string out = "";
+    while (size--) out += "0";
+    out += hex;
+    return out;
+}
+
 char util::addDec(char dec1, char dec2, bool * carry)
 {
     bool c = false;
@@ -338,8 +347,8 @@ char util::dec2hex(unsigned dec)
     return (char)(dec - 10 + 'a');
 }
 
+#include <iostream>
 string util::dec2hex(const string & decStr, size_t bitsize)
-// FIXME e! bitsize is not used, this returns smaller values
 {
     if ( decStr == "0" ) return "0";
 
@@ -360,6 +369,8 @@ string util::dec2hex(const string & decStr, size_t bitsize)
     }
 
     if ( isNegative ) hex = twosComplement(hex, bitsize);
+    else hex = zeroExtension(hex, bitsize);
+
     return hex;
 }
 

@@ -76,11 +76,11 @@ template<> void $NameUint<2>::d_boolmux
 template<> void $NameUint<2>::d_dec
 (vector<Bit> & y, const vector<Bit> & a) noexcept
 {
-    auto n10 = gate_nor(a[1], y[0]);
+    y[0] = gate_not(a[0]);
     auto n11 = gate_not(a[1]);
     auto n8 = gate_nor(a[0], n11);
+    auto n10 = gate_nor(a[1], y[0]);
     y[1] = gate_nor(n10, n8);
-    y[0] = gate_not(a[0]);
 }
 template<> void $NameUint<2>::d_div
 (vector<Bit> & y, const vector<Bit> & a, const vector<Bit> & b) noexcept
@@ -180,8 +180,8 @@ template<> void $NameUint<2>::d_gtsig
 template<> void $NameUint<2>::d_inc
 (vector<Bit> & y, const vector<Bit> & a) noexcept
 {
-    auto n8 = gate_nor(a[1], y[0]);
     y[0] = gate_not(a[0]);
+    auto n8 = gate_nor(a[1], y[0]);
     auto n9 = gate_not(a[1]);
     auto n7 = gate_nor(a[0], n9);
     y[1] = gate_or(n8, n7);

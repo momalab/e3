@@ -81,7 +81,6 @@ bool CircuitPrivKey_fhew::load()
 
 std::string CircuitPrivKey_fhew::encbitstr(bool b) const
 {
-    ///never("FIXME");
     FhewNativeBit nb(ek.key);
     LWE::CipherText * p = &nb.p->b;
     LWE::Encrypt(p, *e3fhew::tosk(key), int(b));

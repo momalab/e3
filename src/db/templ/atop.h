@@ -1,5 +1,5 @@
 // === BEGIN atop.h
-// FIXME e add info on cgt version, libraries included, and config used;
+// FIXME o add info on cgt version, libraries included, and config used;
 // also list all classes generated
 // this info must go at the very beginning of secint.h
 // .inc and .cpp should also be tagged by unique ID referenced to .h

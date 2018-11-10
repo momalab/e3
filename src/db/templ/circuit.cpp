@@ -7,7 +7,7 @@ const $NameBit * $NameBit::zero = nullptr;
 void $NameBit::init_pek()
 {
     if ( pek ) return;
-    std::cout << "AAA init_pek\n";
+    ///std::cout << "AAA init_pek\n";
 
     initEvalKey
     < CircuitEvalKey, CircuitEvalKey_$Encryption >
@@ -15,13 +15,5 @@ void $NameBit::init_pek()
 
     if ( !zero ) zero = new $NameBit("$BitZero");
 }
-
-// FIXME to be removed
-// $NameBool $NameBool::operator&&(const $NameBool & a) const
-// {
-//     $NameBool r;
-//     d_bitand(r.bits, bits, a.bits);
-//     return r;
-// }
 
 // === END circuit.cpp Name=$Name

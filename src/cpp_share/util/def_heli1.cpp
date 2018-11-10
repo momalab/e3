@@ -1,8 +1,9 @@
 
 #include "e3util.h"
 #include "def_heli1.h"
-#include "ol.h"
+///#include "ol.h"
 #include "base64.h"
+
 
 std::string heli_impl() { return "1"; }
 
@@ -25,7 +26,6 @@ HeliNativeBit::HeliNativeBit(const HeliNativeBit & b, cHeliNativeEvalKey e)
 {
     ctxt = std::shared_ptr<HeliCtxt>(new HeliCtxt(e3heli::toek(e)));
     ctxt->b = b.ctxt->b;
-    ///never("FIXME");
 }
 
 HeliNativeBit::HeliNativeBit(const std::string & enc, cHeliNativeEvalKey e)
@@ -105,10 +105,10 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
 
     if ( IDX != 11 ) name += "_idx_" + std::to_string(IDX);
 
-    cout << "Initializing HELIB .. " << std::flush;
+    if (e3heli::PRN) cout << "Initializing HELIB .. " << std::flush;
 
     int idx = IDX;
-    cout << "IDX=" << idx << '\n';
+    if (e3heli::PRN) cout << "IDX=" << idx << '\n';
 
     bool cons = false;
     long p = 2;
@@ -135,13 +135,13 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
     if (abs(mValues(idx, 11)) > 1) ords.push_back(mValues(idx, 11));
     if (abs(mValues(idx, 12)) > 1) ords.push_back(mValues(idx, 12));
 
-    cout << "[ Computing tables " << std::flush;
+    if (e3heli::PRN) cout << "[ Computing tables " << std::flush;
     props.pcontext = new FHEcontext(m, p, r, gens, ords);
     FHEcontext & context = *props.pcontext;
     context.bitsPerLevel = B;
     buildModChain(context, L, c);
     context.makeBootstrappable(mvec, /*t=*/0, cons);
-    cout << "] " << std::flush;;
+    if (e3heli::PRN) cout << "] " << std::flush;
 
     //context.zMStar.printout();
 
@@ -152,16 +152,16 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
     {
         double bitsize = context.logOfProduct(allPrimes) / log(2.0);
         long phim = mValues(idx, 1);
-        cout << "  " << nPrimes << " primes in chain, total bitsize="
-             << ceil(bitsize) << ", secparam="
-             << (7.2 * phim / bitsize - 110) << std::flush;
+        if (e3heli::PRN) cout << "  " << nPrimes
+                                  << " primes in chain, total bitsize="
+                                  << ceil(bitsize) << ", secparam="
+                                  << (7.2 * phim / bitsize - 110) << std::flush;
     }
 
-    cout << " level=" << context.securityLevel() << std::flush;
+    if (e3heli::PRN) cout << " level=" << context.securityLevel() << std::flush;
 
     //long p2r = context.alMod.getPPowR();
     context.zMStar.set_cM(mValues(idx, 13) / 100.0);
 
-    cout << " ok\n";
+    if (e3heli::PRN) cout << " ok\n";
 }
-

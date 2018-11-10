@@ -89,9 +89,9 @@ template<> void $NameUint<5>::d_dec
 (vector<Bit> & y, const vector<Bit> & a) noexcept
 {
     auto n4 = gate_not(a[1]);
-    auto n2 = gate_and(y[0], n4);
     y[1] = gate_xor(a[0], n4);
     y[0] = gate_not(a[0]);
+    auto n2 = gate_and(y[0], n4);
     y[2] = gate_xor(a[2], n2);
     auto n5 = gate_not(a[2]);
     auto n3 = gate_and(n2, n5);

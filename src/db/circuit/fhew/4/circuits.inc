@@ -166,7 +166,6 @@ template<> void $NameUint<4>::d_div
     auto n38 = gate_not(n44);
     auto n34 = gate_not(a[2]);
     auto n51 = gate_or(n14, n34);
-    auto n10 = gate_nor(y[1], n51);
     auto n17 = gate_nor(b[1], n51);
     auto n36 = gate_not(n51);
     auto n15 = gate_nor(n36, n35);
@@ -183,6 +182,7 @@ template<> void $NameUint<4>::d_div
     auto n41 = gate_or(b[3], n40);
     auto n55 = gate_or(n2, n41);
     y[1] = gate_not(n55);
+    auto n10 = gate_nor(y[1], n51);
     auto n43 = gate_or(b[3], n42);
     auto n27 = gate_nor(n44, n43);
     auto n45 = gate_not(b[3]);

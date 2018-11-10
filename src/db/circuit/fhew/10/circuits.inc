@@ -358,8 +358,6 @@ template<> void $NameUint<10>::d_div
     auto n6 = gate_nor(a[0], n499);
     auto n11 = gate_nor(n499, a[9]);
     auto n47 = gate_nor(b[0], n499);
-    auto n78 = gate_nor(y[1], n6);
-    auto n45 = gate_nor(n78, n492);
     auto n256 = gate_or(n11, n255);
     auto n46 = gate_nor(n492, n256);
     y[8] = gate_nor(n8, n256);
@@ -794,6 +792,8 @@ template<> void $NameUint<10>::d_div
     auto n103 = gate_nor(n38, n22);
     auto n538 = gate_or(b[9], n103);
     y[1] = gate_not(n538);
+    auto n78 = gate_nor(y[1], n6);
+    auto n45 = gate_nor(n78, n492);
     auto n469 = gate_not(b[9]);
     auto n73 = gate_nor(n469, n468);
     auto n474 = gate_or(n538, n158);

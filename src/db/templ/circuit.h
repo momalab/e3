@@ -206,7 +206,6 @@ class $NameBool : public $NameUint<1>
         $NameBool operator/(const $NameBool & a) const;
         $NameBool operator%(const $NameBool & a) const;
         template <int SZ> $NameUint<SZ> operator*(const $NameUint<SZ> & x) const;
-        // $NameBool operator&&(const $NameBool & x) const; // FIXME to be removed
 
         template <int SZ>
         $NameUint<SZ> mux(const $NameUint<SZ> & x, const $NameUint<SZ> & y) const;
@@ -219,7 +218,6 @@ operator<<(std::ostream & os, const $NameInt<SZ> & x) { return os << x.str(); }
 
 extern CircuitEvalKey * g_pek_$Name;
 
-// FIXME e check that Circuits (TFHE,...) get the correct number of bits (it is not now; the problem in dec2hex)
 $PostfixDefines
 
 // === END circuit.h Name=$Name

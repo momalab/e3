@@ -230,7 +230,6 @@ template<> void $NameUint<6>::d_div
     auto n156 = gate_not(b[2]);
     auto n86 = gate_not(a[4]);
     auto n101 = gate_or(n81, n86);
-    auto n5 = gate_nor(y[3], n101);
     auto n59 = gate_nor(b[1], n101);
     auto n87 = gate_not(n101);
     auto n11 = gate_nor(n87, n144);
@@ -249,6 +248,7 @@ template<> void $NameUint<6>::d_div
     auto n12 = gate_nor(n73, n93);
     auto n105 = gate_or(n94, n12);
     y[3] = gate_not(n105);
+    auto n5 = gate_nor(y[3], n101);
     auto n142 = gate_not(b[3]);
     auto n97 = gate_or(n148, n105);
     auto n63 = gate_nor(a[3], n97);
@@ -257,7 +257,6 @@ template<> void $NameUint<6>::d_div
     auto n1 = gate_nor(n96, n95);
     auto n117 = gate_or(n1, n63);
     auto n18 = gate_nor(n144, n117);
-    auto n23 = gate_nor(y[2], n117);
     auto n98 = gate_not(n117);
     auto n58 = gate_nor(b[1], n98);
     auto n113 = gate_or(a[2], n148);
@@ -282,6 +281,7 @@ template<> void $NameUint<6>::d_div
     auto n19 = gate_nor(n62, n110);
     auto n125 = gate_or(n111, n19);
     y[2] = gate_not(n125);
+    auto n23 = gate_nor(y[2], n117);
     auto n171 = gate_or(y[2], n112);
     auto n54 = gate_nor(b[4], n171);
     auto n132 = gate_not(n171);
@@ -304,7 +304,6 @@ template<> void $NameUint<6>::d_div
     auto n35 = gate_nor(n119, n118);
     auto n155 = gate_or(n35, n55);
     auto n7 = gate_nor(n144, n155);
-    auto n33 = gate_nor(y[1], n155);
     auto n121 = gate_not(n155);
     auto n57 = gate_nor(b[1], n121);
     auto n152 = gate_or(a[1], n148);
@@ -333,6 +332,7 @@ template<> void $NameUint<6>::d_div
     auto n161 = gate_or(b[5], n42);
     auto n65 = gate_nor(a[1], n161);
     y[1] = gate_not(n161);
+    auto n33 = gate_nor(y[1], n155);
     auto n131 = gate_not(b[5]);
     auto n25 = gate_nor(n132, n131);
     auto n135 = gate_or(n70, n14);

@@ -26,6 +26,8 @@ using ek = FHEPubKey ;
 inline  ek * toek(HeliNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(cHeliNativeEvalKey a) { return static_cast<const ek *>(a); }
 
+const bool PRN = false;
+
 } // e3heli
 
 struct HeliCtxt

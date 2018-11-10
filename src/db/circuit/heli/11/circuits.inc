@@ -234,7 +234,6 @@ template<> void $NameUint<11>::d_div
     auto n11 = gate_xor(n23, n357);
     auto n9 = gate_not(a[8]);
     auto n25 = gate_and(n9, b[0]);
-    auto n1 = gate_nand(y[8], n25);
     auto n10 = gate_not(n25);
     auto n12 = gate_and(n11, n10);
     auto n15 = gate_or(n13, n12);
@@ -247,6 +246,7 @@ template<> void $NameUint<11>::d_div
     auto n19 = gate_and(n37, n354);
     auto n21 = gate_or(n20, n19);
     y[8] = gate_and(n22, n21);
+    auto n1 = gate_nand(y[8], n25);
     auto n24 = gate_and(y[8], b[1]);
     auto n26 = gate_xor(n24, n23);
     auto n45 = gate_and(n26, n1);

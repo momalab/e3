@@ -112,35 +112,47 @@ cp *.priv.key ../
 cd ../
 
 
+# set libraries
+e3p=$e3dir/3p
+TFHED0=$e3p/tfhe_$PLAT
+TFHED2=$TFHED0/target
+
+FHEWD0=$e3p/fhew_$PLAT
+FHEWD2=$FHEWD0/target
+
+HELID0=$e3p/heli_$PLAT
+HELID2=$HELID0/target
+
 OPTS=
-LDF=
-COPYDLL="echo dll ok"
+LDFU=
+LDFW=
+COPYDLL="echo COPYDLL dummy"
 
 if [ "$TFHE" = "1" ]; then
+OPTS="$OPTS -I./$TFHED0/inc/tfhe"
+OPTS="$OPTS -I./$TFHED0/inc/fftwa"
+OPTS="$OPTS -I./$TFHED0/inc/fftw3"
+LDFU="$TFHED2/libtfhe.a $TFHED2/libfftw3.a"
+LDFW="$TFHED2/libfftw3-3.lib $TFHED2/libtfhe.lib"
+COPYDLL="cp $TFHED2/libfftw3-3.dll ./"
+fi
 
-TFHED1=$e3dir/3p/tfhe_$PLAT
-TFHED2=$TFHED1/target
+if [ "$FHEW" = "1" ]; then
+OPTS="$OPTS -I./$FHEWD0/inc/fhew"
+LDFU="$FHEWD2/libfhew.a $TFHED2/libfftw3.a"
+fi
 
-  if test ! -d $TFHED2 ; then
-    echo "Cannot find TFHE directory $TFHED2"
-    exit 1
-  fi
-    echo "Using TFHE directory $TFHED2"
+if [ "$HELI" = "1" ]; then
+OPTS="$OPTS -I./$HELID0/src"
+LDFU="$HELID2/fhe.a -lntl -lgmp -lpthread"
+##echo AAA $OPTS
+##exit
+fi
 
-OPTS="-I$TFHED1/inc/tfhe -I$TFHED1/inc/fftwa -I$TFHED1/inc/fftw3"
-LDF="$TFHED2/libtfhe.a $TFHED2/libfftw3.a"
-
-  if [ "$PLAT" = "win" ] ; then 
-  LDF="$TFHED2/libfftw3-3.lib $TFHED2/libtfhe.lib"
-  COPYDLL="cp $TFHED2/libfftw3-3.dll ./"
-  fi
-
-fi # TFHE
-
-
-cmd="g++ -std=c++14 -O2 -Ie3work $OPTS *.cpp e3work/*.cpp $LDF -o bob.exe"
+cmd="g++ -std=c++14 -O2 -Ie3work $OPTS *.cpp e3work/*.cpp $LDFU -o bob.exe"
 if [ "$PLAT" = "win" ]; then
-cmd="cl -nologo -EHsc -Ie3work -Ox $OPTS *.cpp e3work/*.cpp $LDF -Febob.exe"
+cmd="cl -nologo -EHsc -Ie3work -Ox $OPTS *.cpp e3work/*.cpp $LDFW -Febob.exe"
+$COPYDLL
 fi
 
 echo $cmd
@@ -152,7 +164,7 @@ echo "e3work.sh: Compilation failed, see compile.log"
 exit 1
 fi
 
-$COPYDLL
+#$COPYDLL
 
 echo "e3work.sh: OK"
 exit 0

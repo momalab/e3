@@ -1,10 +1,10 @@
 
-// global FIXMEs
+// global o FIXMEs
 
 // FIXME e add tests for cgt CLO
 // FIXME e add lambda to the top level of cfg
-// FIXME e add to logo type of TFHE(0/1)
 
+// FIXME o add to logo type of TFHE(0/1)
 // FIXME o need 2 different bin directories: one for CCN and another for CCT
 // FIXME o (bug make) objects are built with CCN, but user.exe should be built with CCT
 
@@ -108,13 +108,12 @@ Params parse(int ac, char ** av)
             if ( i + 1 >= ac )
                 throw errorMsg("missing filename for option '" + s + "'");
 
-            std::string cfg = av[i + 1]; // FIXME e replace to ++i, here and below
+            std::string cfg = av[++i];
             if ( !os::isFile(cfg) )
                 throw errorMsg("invalid filename '" + cfg
                                + "' for option '" + s + "'");
 
             params.cfg = cfg;
-            i++;
         }
         else if ( s == nm::param_name )
         {
@@ -128,13 +127,12 @@ Params parse(int ac, char ** av)
             if ( i + 1 >= ac )
                 throw errorMsg("missing name for option '" + s + "'");
 
-            std::string name = av[i + 1];
+            std::string name = av[++i];
             if ( !util::isVarName(name) )
                 throw errorMsg("invalid name '" + name
                                + "' for option '" + s + "'");
 
             params.name = name;
-            i++;
         }
         else if ( s == nm::param_signed )
         {
@@ -148,7 +146,7 @@ Params parse(int ac, char ** av)
             if ( i + 1 >= ac )
                 throw errorMsg("missing bitsize for option '" + s + "'");
 
-            std::string sbs = av[i + 1];
+            std::string sbs = av[++i];
             int bitsize = 0;
             if ( !util::isNumber(sbs) || ((bitsize = std::stoi(sbs)) <= 0) )
                 throw errorMsg("invalid bitsize '" + sbs
@@ -156,7 +154,6 @@ Params parse(int ac, char ** av)
 
             params.sign = Params::Sign::SIGNED;
             params.bitsize = bitsize;
-            i++;
         }
         else if ( s == nm::param_userdir )
         {
@@ -170,16 +167,13 @@ Params parse(int ac, char ** av)
             if ( i + 1 >= ac )
                 throw errorMsg("missing directory name for option '" + s + "'");
 
-            std::string userdir = av[i + 1];
+            std::string userdir = av[++i];
             if ( !os::isDir(userdir) )
                 throw errorMsg("invalid directory '" + userdir
                                + "' for option '" + s + "'");
 
-            ///if ( userdir[userdir.size() - 1] != '/' ) userdir = userdir + '/'; // om: WHY?
-
             params.userdir = userdir;
             params.userdirset = true;
-            i++;
         }
         else if ( s == nm::param_password )
         {
@@ -194,16 +188,14 @@ Params parse(int ac, char ** av)
             if ( i + 1 >= ac )
                 throw errorMsg("missing name for option '" + s + "'");
 
-            std::string password = av[i + 1];
+            std::string password = av[++i];
             if ( password == nm::flag_random_password ) password = "";
             params.password = password;
             params.passwordset = true;
-            i++;
         }
         else if ( s == nm::param_file )
         {
-            params.file = av[i + 1]; // FIXME e add stuff
-            i++;
+            params.file = av[++i]; // FIXME e add stuff
         }
         else throw errorMsg("invalid option '" + s + "'");
     }

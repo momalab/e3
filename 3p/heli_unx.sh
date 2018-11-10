@@ -30,12 +30,50 @@ else
 	fi
 fi
 
+#wget --no-check-certificate https://gmplib.org/download/gmp/gmp-6.1.2.tar.lz
+gmp=gmp-6.1.2
+file_gmp_tar=$gmp.tar
+file_gmp_tlz=$file_gmp_tar.lz
+gmppath=$root/gmp/$PLAT/$gmp
+
+echo ""
+echo "Step 2a"
+echo -n "$me GMP tar: "
+file=$file_gmp_tlz
+down=https://gmplib.org/download/gmp/$file
+path=$root/gmp/$PLAT/$file
+if test -f $path; then
+	echo "YES"
+else
+	echo "NO $path"
+
+	if wget --help > /dev/null; then
+		echo "$me using wget"
+	else
+		echo "$me wget not found, exiting"
+		exit
+	fi
+
+	echo "$me downloading GMP"
+	mkdir -p $gmppath
+	cwd=`pwd`; cd $gmppath/../
+	wget --no-check-certificate $down
+	cd $cwd
+
+	if test -f $path; then
+		echo "$me done"
+	else
+		echo "$me failed to download $file"
+		exit
+	fi
+fi
+
 ntl=ntl-11.0.0
 file_ntl_tar=$ntl.tar.gz
 ntlpath=$root/ntl/$PLAT/$ntl
 
 echo ""
-echo "Step 2"
+echo "Step 2b"
 echo -n "$me NTL tar: "
 file=$file_ntl_tar
 down=http://www.shoup.net/ntl/ntl-11.0.0.tar.gz
@@ -55,7 +93,7 @@ else
 	echo "$me downloading NTL"
 	mkdir -p $ntlpath
 	cwd=`pwd`; cd $ntlpath/../
-	wget $down
+	wget --no-check-certificate $down
 	cd $cwd
 
 	if test -f $path; then
@@ -68,7 +106,7 @@ fi
 
 echo ""
 echo "Step 3"
-echo -n "$me checking tar: "
+echo -n "$me checking tar/plzip: "
 if tar --help > /dev/null; then
 	echo "YES"
 else
@@ -76,10 +114,40 @@ else
 	echo "$me please install tar"
 	exit
 fi
+if plzip --help > /dev/null; then
+	echo "YES"
+else
+	echo "NO"
+	echo "$me please install plzip"
+	exit
+fi
+
+gmp=gmp
+echo ""
+echo "Step 4a"
+echo -n "$me unpacked GMP: "
+path=$gmppath/configure
+if test -f $path; then
+	echo "YES"
+else
+	echo "NO"
+	echo "$me untarring GMP"
+	cwd=`pwd`; cd $gmppath/../
+	plzip -d -k $file_gmp_tlz
+	tar xvf $file_gmp_tar
+	cd $cwd
+
+	if test -f $path; then
+		echo "$me done"
+	else
+		echo "$me failed to untar"
+		exit
+	fi
+fi
 
 ntl=ntl
 echo ""
-echo "Step 4"
+echo "Step 4b"
 echo -n "$me unpacked NTL: "
 path=$ntlpath/src/configure
 if test -f $path; then
@@ -100,8 +168,40 @@ else
 fi
 
 echo	 ""
-echo "Step 5"
-echo -n "$me NTL and GMP lib: "
+echo "Step 5a"
+echo -n "$me GMP lib: "
+path=testgmp.exe
+
+if test -f $path; then
+	echo "YES"
+else
+	echo "NO"
+	echo "$me building a test with GMP"
+	g++ -std=c++14 testgmp.cpp -lgmp -o testgmp.exe
+
+	if test -f $path; then
+		echo "$me done"
+	else
+		echo "$me failed to make GMP test"
+		echo "USER ATTENTION!"
+		echo "This script does not automatically build GMP"
+		echo "Please follow the user manual and install"
+		echo "GMP libraries on this and the target platforms"
+		echo "GMP library has already been downloaded and unpacked in"
+		echo "../../e3_heli/gmp"
+		echo "Use the following commands to install it:"
+		echo "$ cd gmp-xxx"
+		echo "$ ./configure"
+		echo "$ make"
+		echo "$ make check"
+		echo "$ sudo make install"
+		exit
+	fi
+fi
+
+echo	 ""
+echo "Step 5b"
+echo -n "$me NTL lib: "
 path=testntlgmp.exe
 
 if test -f $path; then
@@ -109,24 +209,24 @@ if test -f $path; then
 else
 	echo "NO"
 	echo "$me building a test with NTL/GMP"
-    g++ -std=c++14 testntlgmp.cpp -lgmp -lntl -o testntlgmp.exe
+	g++ -std=c++14 testntlgmp.cpp -lgmp -lntl -o testntlgmp.exe
 
 	if test -f $path; then
 		echo "$me done"
 	else
-		echo "$me failed to make NTL/GMP test"
+		echo "$me failed to make NTL test"
 		echo "USER ATTENTION!"
-		echo "This script does not automatically build NTL/GMP"
+		echo "This script does not automatically build NTL"
 		echo "Please follow the user manual and install"
 		echo "NTL and GMP libraries on this and the target platforms"
 		echo "NTL library has already been downloaded and unpacked in"
 		echo "../../e3_heli/ntl"
 		echo "Use the following commands to install it:"
-		echo "% cd ntl-xxx/src"
-		echo "% ./configure"
-		echo "% make"
-		echo "% make check"
-		echo "% sudo make install"
+		echo "$ cd ntl-xxx/src"
+		echo "$ ./configure"
+		echo "$ make"
+		echo "$ make check"
+		echo "$ sudo make install"
 		exit
 	fi
 fi

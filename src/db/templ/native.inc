@@ -1,7 +1,5 @@
 // === BEGIN native.inc Name=$Name
 
-// FIXME e put functions of diff classes in diff files, eg: native.Uint.inc and include the sources in this file #include "native.Uint.inc"
-
 // Pointer to the manager
 template <int SZ> NativeEvalKey * $NameUint<SZ>::pek = nullptr;
 

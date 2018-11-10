@@ -121,10 +121,10 @@ inline $NameUint<SZ> $NameUint<SZ>::operator--()
 template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator+(const $NameUint<SZ> & x) const
 {
-    std::cout << "AAA $NameUint<SZ>::operator+ (in)\n";
+    ///std::cout << "AAA $NameUint<SZ>::operator+ (in)\n";
     $NameUint<SZ> r;
     d_add(r.bits, bits, x.bits);
-    std::cout << "AAA $NameUint<SZ>::operator+ (out)\n";
+    ///std::cout << "AAA $NameUint<SZ>::operator+ (out)\n";
     return r;
 }
 
@@ -337,7 +337,7 @@ $NameInt<SZ>::operator $NameInt<Z> () const
     for ( int i = 0; i < Z; i++ )
     {
         if ( i < SZ ) r.bits[i] = bits[i];
-        else r.bits[i] = bits[SZ-1];
+        else r.bits[i] = bits[SZ - 1];
     }
     return r;
 }

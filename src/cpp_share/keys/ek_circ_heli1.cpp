@@ -11,18 +11,20 @@ bool CircuitEvalKey_heli::load()
     init_properties_heli(&properties, name);
     key = new FHEPubKey(*properties->pcontext);
 
-    std::cout << "loading ek " <<  filename() << " : " << std::flush;
+    if (e3heli::PRN)
+        std::cout << "loading ek " <<  filename() << " : " << std::flush;
+
     FHEPubKey & k = *e3heli::toek(key);
     std::ifstream in(filename());
 
     if ( !in )
     {
-        std::cout << "failed\n";
+        if (e3heli::PRN) std::cout << "failed\n";
         return false;
     }
 
     in >> k;
-    std::cout << "done\n";
+    if (e3heli::PRN) std::cout << "done\n";
     return true;
 }
 

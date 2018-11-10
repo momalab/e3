@@ -18,6 +18,7 @@ bool isNegative(const std::string & hex, size_t bitsize);
 char maskHex(char c, size_t bitsize);
 char negation(char hex);
 std::string negation(const std::string & hex, size_t bitsize);
+std::string zeroExtension(const std::string & hex, size_t bitsize);
 char addDec(char dec1, char dec2, bool * carry = nullptr);
 char addHex(char hex1, char hex2, bool * carry = nullptr);
 std::string add(const std::string & dec, unsigned value);

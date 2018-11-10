@@ -128,8 +128,7 @@ class $NameBool : public $NameUint<1>
         $NameBool operator/(const $NameBool & a) const;
         $NameBool operator%(const $NameBool & a) const;
         template <int SZ> $NameUint<SZ> operator*(const $NameUint<SZ> & x) const;
-        // $NameBool operator&&(const $NameBool & x) const; // FIXME to be removed
-
+        
         template <int SZ>
         $NameUint<SZ> mux(const $NameUint<SZ> & x, const $NameUint<SZ> & y) const;
 };

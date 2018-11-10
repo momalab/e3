@@ -16,10 +16,6 @@ class NativePrivKey : public PrivKey
         NativePrivKey(std::string name, bool forceGen,
                       bool forceLoad, std::string seed);
 
-        // FIXME e remove this Ctor
-        // NativePrivKey(std::string name) : NativePrivKey(name, false, true, "") { }
-
-        ///virtual std::string decrypt(const std::string & s, bool * ok) const;
         virtual std::string decrypt(const std::string & s) const;
         virtual std::string encrypt(const std::string & s, int msz) const;
         NativeEvalKey & getEk() { return ek; }

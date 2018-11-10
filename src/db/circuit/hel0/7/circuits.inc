@@ -121,7 +121,6 @@ template<> void $NameUint<7>::d_dec
 template<> void $NameUint<7>::d_div
 (vector<Bit> & y, const vector<Bit> & a, const vector<Bit> & b) noexcept
 {
-    auto n14 = gate_nand(y[5], b[0]);
     auto n124 = gate_not(b[6]);
     auto n164 = gate_not(b[5]);
     auto n88 = gate_and(n124, n164);
@@ -138,6 +137,7 @@ template<> void $NameUint<7>::d_div
     auto n15 = gate_nand(b[0], n36);
     auto n37 = gate_and(n13, n15);
     y[5] = gate_and(n38, n37);
+    auto n14 = gate_nand(y[5], b[0]);
     auto n129 = gate_not(b[1]);
     auto n40 = gate_and(n129, n38);
     y[6] = gate_and(n40, n2);
@@ -154,12 +154,12 @@ template<> void $NameUint<7>::d_div
     auto n47 = gate_xor(n55, n129);
     auto n59 = gate_not(a[4]);
     auto n57 = gate_and(b[0], n59);
-    auto n16 = gate_nand(n57, y[4]);
     auto n46 = gate_not(n57);
     auto n34 = gate_nand(n47, n46);
     auto n48 = gate_and(n35, n34);
     auto n26 = gate_nand(n49, n48);
     y[4] = gate_and(n50, n26);
+    auto n16 = gate_nand(n57, y[4]);
     auto n51 = gate_not(y[4]);
     auto n87 = gate_and(n52, n51);
     auto n53 = gate_not(n87);
