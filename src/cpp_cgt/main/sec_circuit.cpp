@@ -23,6 +23,7 @@ Circuit::Circuit(std::istream & is, string nm) : SecType(nm)
     else if ( encType == secNames::encTfhe ) {}
     else if ( encType == secNames::encFhew ) {}
     else if ( encType == secNames::encHeli ) {}
+    else if ( encType == secNames::encBddn ) {}
     else throw "encryption type [" + encType + "] is not known; valid=(plain,tfhe,fhew,heli)";
 
     if ( circDb.empty() ) circDb = encType;
@@ -55,6 +56,10 @@ Circuit::Circuit(std::istream & is, string nm) : SecType(nm)
 void Circuit::genKeys(bool forceGen, bool forceLoad, std::string seed)
 {
     if (0) {}
+
+    else if ( encType == secNames::encBddn )
+        sk = shared_ptr<PrivKey>
+             (csk = new CircuitPrivKey_bddn(name, forceGen, forceLoad, seed, lambda));
 
     else if ( encType == secNames::encHeli )
         sk = shared_ptr<PrivKey>

@@ -58,6 +58,7 @@ srck1= ${SKDIR}/sk_native.cpp ${SKDIR}/ekx_native.cpp \
 	${SKDIR}/sk_circ_tfhe$(TFHE).cpp ${SKDIR}/ekx_circ_tfhe$(TFHE).cpp \
 	${SKDIR}/sk_circ_fhew$(FHEW).cpp ${SKDIR}/ekx_circ_fhew$(FHEW).cpp \
 	${SKDIR}/sk_circ_heli$(HELI).cpp ${SKDIR}/ekx_circ_heli$(HELI).cpp \
+	${SKDIR}/sk_circ_bddn.cpp ${SKDIR}/ekx_circ_bddn.cpp \
 	${SKDIR}/sk_circ.cpp
 objk1 := $(srck1:${SKDIR}/%.cpp=$(BIN)/%.$(OEXT))
 
@@ -66,6 +67,7 @@ srck2= ${EKDIR}/ek_abstract.cpp ${EKDIR}/ek_native.cpp \
 	${EKDIR}/ek_circ_tfhe$(TFHE).cpp \
 	${EKDIR}/ek_circ_fhew$(FHEW).cpp \
 	${EKDIR}/ek_circ_heli$(HELI).cpp \
+	${EKDIR}/ek_circ_bddn.cpp \
 	${EKDIR}/ek_circ.cpp
 objk2 := $(srck2:${EKDIR}/%.cpp=$(BIN)/%.$(OEXT))
 

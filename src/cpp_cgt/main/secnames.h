@@ -12,6 +12,7 @@ const std::string encPlain = "plain";
 const std::string encTfhe = "tfhe";
 const std::string encFhew = "fhew";
 const std::string encHeli = "heli";
+const std::string encBddn = "bddn";
 
 // Keywords for replacement
 const std::string R_name = "$Name";
