@@ -37,9 +37,9 @@ const std::string e3_lib = "secint";
 const std::string lib_h = e3_lib + ".h";
 const std::string lib_cpp = e3_lib + ".cpp";
 const std::string lib_inc = e3_lib + ".inc";
-const std::string lib_3p_basedir = "lib3p/";
-const std::string inc_3p_dir = lib_3p_basedir + "include/";
-const std::string lib_3p_dir = lib_3p_basedir + "lib/";
+///const std::string lib_3p_basedir = "lib3p/";
+///const std::string inc_3p_dir = lib_3p_basedir + "include/";
+///const std::string lib_3p_dir = lib_3p_basedir + "lib/";
 const std::string flag_random_password = "time";
 } //nm
 

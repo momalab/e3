@@ -323,11 +323,11 @@ try
     ///os::FileSys::erase(nm::lib_3p_basedir);
     ///os::FileSys::trymkdir(nm::lib_3p_basedir);
 
-    os::FileSys::erase(nm::inc_3p_dir);
-    os::FileSys::erase(nm::lib_3p_dir);
+    ///os::FileSys::erase(nm::inc_3p_dir);
+    ///os::FileSys::erase(nm::lib_3p_dir);
 
-    os::FileSys::trymkdir(nm::inc_3p_dir);
-    os::FileSys::trymkdir(nm::lib_3p_dir + g_platname);
+    ///os::FileSys::trymkdir(nm::inc_3p_dir);
+    ///os::FileSys::trymkdir(nm::lib_3p_dir + g_platname);
 
     ConfigParser par(cfg);
     if ( params.userdirset ) par.userdir = params.userdir;
@@ -360,7 +360,7 @@ void key(Params params)
 
 void cleanup()
 {
-    os::FileSys::erase(nm::lib_3p_dir);
+    ///os::FileSys::erase(nm::lib_3p_dir);
     os::FileSys::erase(nm::lib_h);
     os::FileSys::erase(nm::lib_inc);
     os::FileSys::erase(nm::lib_cpp);
