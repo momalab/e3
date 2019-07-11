@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 #include <sstream>
+#include <string>
 
 #include "anykey.h"
 
@@ -14,7 +15,8 @@ class EvalKey : public AnyKey
         void loadOrDie();
 
     protected:
-        virtual std::string filename() { return name + ".eval.key"; }
+        std::string filenamex(std::string fx) const { return name + fx + ".eval.key"; }
+        virtual std::string filename() const { return filenamex(""); }
 
         void user(User u) { if ( u == User::Bob ) loadOrDie(); }
         virtual bool load() = 0;

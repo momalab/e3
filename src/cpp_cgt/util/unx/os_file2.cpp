@@ -94,3 +94,30 @@ double os::FileSys::howold(const string & s)
     return difftime(time(0), buf.st_mtime);
 }
 
+string os::execOut(const string & acmd, bool iscurdir)
+{
+    string cmd = ( iscurdir ? "./" : "" ) + acmd;
+
+    FILE * pp = popen(cmd.c_str(), "r");
+
+    char   psBuffer[4];
+    string r;
+
+    if ( pp == NULL )
+        throw "Cannot popen [" + cmd + "]";
+
+    while (fgets(psBuffer, 3, pp))
+    {
+        r += psBuffer;
+    }
+
+    if (!feof( pp))
+    {
+        printf( "Error: Failed to read the pipe to the end.\n");
+        pclose( pp );
+        throw "Error in pipe [" + cmd + "]";
+    }
+    pclose( pp );
+    return r;
+}
+

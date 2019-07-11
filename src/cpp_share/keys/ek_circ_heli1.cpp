@@ -28,9 +28,6 @@ bool CircuitEvalKey_heli::load()
     return true;
 }
 
-std::string CircuitEvalKey_heli::decor(const std::string & s, bool add) const
-{
-    return prefix(s, add, "H");
-}
+///std::string CircuitEvalKey_heli::decor(const std::string & s, bool add) const{    return prefix(s, add, "H");}
 
-std::string CircuitEvalKey_heli::filename() { return EvalKey::filename(); }
+std::string CircuitEvalKey_heli::filename() const { return EvalKey::filename(); }

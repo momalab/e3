@@ -1,0 +1,17 @@
+{C=$CtSize}
+{R=C-1}
+
+# input
+(a,0[1,R]) = dec(x[1,C])
+(b,0[1,R]) = dec(z[1,C])
+
+# op
+c = !(a&b)
+
+# hashing
+{i,1,C} hi = xi^zi
+(0,r[1,R]) = enc(h[1,C])
+
+# output
+(y[1,C]) = enc(c,r[1,R])
+

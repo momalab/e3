@@ -1,0 +1,16 @@
+{C=$CtSize}
+{R=C-1}
+
+(am[1,C]) = dec(a[1,C])
+(bm[1,C]) = dec(b[1,C])
+(cm[1,C]) = dec(c[1,C])
+
+# op
+ym = am1*bm1 | !am1*cm1
+
+# hashing
+(q[2,C])=kernel(am[2,C],bm[2,C])
+(r[2,C])=kernel(cm[2,C],q[2,C])
+
+# output
+(y[1,C]) = enc(ym,r[2,C])

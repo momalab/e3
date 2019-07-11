@@ -6,7 +6,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <cstdio>
+#include <stdio.h>
 #include <iostream>
 
 #include <time.h>
@@ -131,3 +131,29 @@ struct Setmode2binary
     }
 } Setmode2binary_dummy;
 //#endif
+
+string os::execOut(const string & cmd, bool iscurdir)
+{
+    FILE * pp = _popen(cmd.c_str(), "r");
+
+    char   psBuffer[4];
+    string r;
+
+    if ( pp == NULL )
+        throw "Cannot popen [" + cmd + "]";
+
+    while (fgets(psBuffer, 3, pp))
+    {
+        r += psBuffer;
+    }
+
+    if (!feof( pp))
+    {
+        printf( "Error: Failed to read the pipe to the end.\n");
+        _pclose( pp );
+        throw "Error in pipe [" + cmd + "]";
+    }
+    _pclose( pp );
+    return r;
+}
+

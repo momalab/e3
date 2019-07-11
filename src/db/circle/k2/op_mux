@@ -1,0 +1,18 @@
+{C=$CtSize}
+{R=C-1}
+
+# input
+(a,0[1,R]) = dec(xa[1,C])
+(b,0[1,R]) = dec(xb[1,C])
+(d,0[1,R]) = dec(xc[1,C])
+
+# op
+c = a*b | !a*d
+
+# kernel
+(q[1,R])=kernel(xa[1,C],xb[1,C])
+(r[1,R])=kernel(c,q[1,R],xc[1,C])
+
+# output
+(y[1,C]) = enc(c,r[1,R])
+

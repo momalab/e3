@@ -8,7 +8,7 @@
 
 using std::cout;
 
-void CircuitEvalKey_tfhe_X::save()
+void e3::CircuitEvalKey_tfhe_X::save()
 {
     cout << "Saving evaluation key .. " << std::flush;
     std::ofstream of(filename(), std::ios::binary);

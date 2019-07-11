@@ -79,11 +79,12 @@ cp -R $e3ds/db ./
 $cgt gen -c ../cgt.cfg -d ../
 
 # 3 deduce libs
-libstfh=(`cat secint.h | grep LibsTFH`)
+libstfh=(`cat secint.h | grep LibsTFHMC`)
 TFHE=${libstfh[2]}
 FHEW=${libstfh[3]}
 HELI=${libstfh[4]}
-echo "Libs build: TFHE=$TFHE FHEW=$FHEW HELI=$HELI"
+MPIR=${libstfh[5]}
+echo "Libs build: TFHE=$TFHE FHEW=$FHEW HELI=$HELI MPIR=$MPIR"
 
 cpp_share_k="ek_native.cpp ek_abstract.cpp ek_circ_plain.cpp ek_circ.cpp ek_circ_tfhe$TFHE.cpp"
 cpp_share_u="e3util.cpp def_tfhe$TFHE.cpp def_fhew$FHEW.cpp base64.cpp"
@@ -92,6 +93,7 @@ cpp_share_u="e3util.cpp def_tfhe$TFHE.cpp def_fhew$FHEW.cpp base64.cpp"
 # 4 copy files
 cp $e3ds/e3int.h ./
 cp $e3ds/cpp_share/keys/*.h ./
+cp $e3ds/cpp_share/keys/anykey.cpp ./
 cp $e3ds/cpp_share/util/*.h ./
 
 for i in $cpp_share_k

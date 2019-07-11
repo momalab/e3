@@ -4,11 +4,14 @@
 #include "ekx_circ_tfhe.h"
 #include "def_tfhe.h"
 
+namespace e3
+{
+
 class CircuitPrivKey_tfhe : public CircuitPrivKey
 {
         virtual void gen();
 
-        using EncBit = TfheNativeBit;
+        using EncBit = TfheNativeBt;
         using SecKey = TfheNativePrivKey;
 
         EncBit encbit(bool b) const;
@@ -27,5 +30,7 @@ class CircuitPrivKey_tfhe : public CircuitPrivKey
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;
 
-        virtual string filename();
+        virtual string filename() const;
 };
+
+} // e3

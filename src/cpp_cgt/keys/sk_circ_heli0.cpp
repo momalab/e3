@@ -15,13 +15,9 @@ void CircuitPrivKey_heli::gen()
 {
 }
 
-string CircuitPrivKey_heli::filename()
+string CircuitPrivKey_heli::filename() const
 {
-    string old = name;
-    name += "_0";
-    string r = PrivKey::filename();
-    name = old;
-    return r;
+    return PrivKey::filenamex("_0");
 }
 
 void CircuitPrivKey_heli::save()

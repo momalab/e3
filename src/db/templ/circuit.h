@@ -49,11 +49,15 @@ template<int SZ> class $NameUint
         static void d_uminus   (std::vector<Bit> & y, const std::vector<Bit> & a) noexcept;
         static void d_inc      (std::vector<Bit> & y, const std::vector<Bit> & a) noexcept;
 
+        // <N> <N> 1
+        static void d_bitsum   (std::vector<Bit> & y, const std::vector<Bit> & a, const Bit & zero) noexcept;
+
         // <N> <N> <N>
         static void d_add   (std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_bitand(std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_bitor (std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_bitxor(std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
+        static void d_carryadd(std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_div   (std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_divsig(std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
         static void d_mod   (std::vector<Bit> & y, const std::vector<Bit> & a, const std::vector<Bit> & b) noexcept;
@@ -71,8 +75,9 @@ template<int SZ> class $NameUint
         void load(const std::string & s);
 
     public:
-        static const char * name() { return "$Name"; }
+        static const char * name() { return "$Ename"; }
         static const int size() { return SZ; };
+        static const char * scheme() { return "$Encryption"; }
 
         // Constructors
         $NameUint() { bits.resize(SZ); }
@@ -94,9 +99,9 @@ template<int SZ> class $NameUint
         $NameUint<SZ> & operator^=(const $NameUint<SZ> & a);
         $NameUint<SZ> & operator<<=(const $NameUint<SZ> & a);
         $NameUint<SZ> & operator>>=(const $NameUint<SZ> & a);
-        $NameUint<SZ> operator++();
+        $NameUint<SZ> & operator++();
+        $NameUint<SZ> & operator--();
         $NameUint<SZ> operator++(int);
-        $NameUint<SZ> operator--();
         $NameUint<SZ> operator--(int);
 
         $NameUint<SZ> operator+(const $NameUint<SZ> & a) const;
@@ -120,10 +125,15 @@ template<int SZ> class $NameUint
         $NameBool operator>=(const $NameUint<SZ> & a) const;
         $NameBool operator&&(const $NameUint<SZ> & a) const;
         $NameBool operator||(const $NameUint<SZ> & a) const;
+        Bit operator[](int i) const { return bits[i]; }
+        Bit & operator[](int i) { return bits[i]; }
+        $NameUint<SZ> bitsum() const;
 
         $NameUint<SZ> mux(const $NameUint<SZ> & a, const $NameUint<SZ> & b) const;
 
         $NameUint<SZ> operator*(unsigned long long u) const;
+        $NameUint<SZ> operator<<(unsigned long long u) const;
+        $NameUint<SZ> operator>>(unsigned long long u) const;
         friend $NameUint<SZ> operator*(unsigned long long u, const $NameUint<SZ> & a) { return a * u; }
 
         // Functions
@@ -190,7 +200,7 @@ class $NameBool : public $NameUint<1>
     public:
         // Constructors
         $NameBool() = default;
-        template <int SZ> $NameBool(const $NameUint<SZ> &);
+        template <int SZ> explicit $NameBool(const $NameUint<SZ> &);
         $NameBool(const std::string & s): $NameUint<1>(s) {}
         $NameBool(const char * c) : $NameBool(std::string(c)) {}
 

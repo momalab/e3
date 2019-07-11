@@ -4,8 +4,8 @@
 #include <functional>
 #include <ctime>
 
-#include "ol.h"
-#include "util.h"
+#include "olc.h"
+#include "cgtutil.h"
 
 #include "sk_circ_plain.h"
 
@@ -14,7 +14,6 @@ using std::string;
 void CircuitPrivKey_plain::gen()
 {
     key = 800;
-    ///ek.setKey(key);
     ek.key = key;
 }
 

@@ -3,20 +3,22 @@
 #include <string>
 #include <memory>
 
+// FIXME add e3 namespace for all classes
+
 struct LweCipherText;
 
 using FhewNativePrivKey = void * ;
 using FhewNativeEvalKey = void * ;
 using cFhewNativeEvalKey = const void * ;
 
-struct FhewNativeBit
+struct FhewNativeBt
 {
     std::shared_ptr<LweCipherText> p;
     std::string str(cFhewNativeEvalKey) const;
-    FhewNativeBit(cFhewNativeEvalKey ek); // new
-    FhewNativeBit(const std::string & enc, cFhewNativeEvalKey ek);
-    FhewNativeBit(const FhewNativeBit &) = delete;
-    FhewNativeBit(const FhewNativeBit & b, cFhewNativeEvalKey ek);
+    FhewNativeBt(cFhewNativeEvalKey ek); // new
+    FhewNativeBt(const std::string & enc, cFhewNativeEvalKey ek);
+    FhewNativeBt(const FhewNativeBt &) = delete;
+    FhewNativeBt(const FhewNativeBt & b, cFhewNativeEvalKey ek);
 };
 
-std::string fhew_impl(); // 0 or 1
+int fhew_impl(); // 0 or 1

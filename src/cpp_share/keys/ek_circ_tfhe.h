@@ -4,6 +4,9 @@
 #include "e3util.h"
 #include "def_tfhe.h"
 
+namespace e3
+{
+
 class CircuitEvalKey_tfhe : public CircuitEvalKey
 {
         static const bool NOCOUT = true;
@@ -19,9 +22,10 @@ class CircuitEvalKey_tfhe : public CircuitEvalKey
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();
-        virtual std::string decor(const std::string &, bool add) const;
 
         cTfheNativeEvalKey native() const { return key; }
 
-        virtual std::string filename();
+        virtual std::string filename() const;
 };
+
+} // e3

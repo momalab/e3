@@ -6,7 +6,7 @@
 
 using std::cout;
 
-bool CircuitEvalKey_tfhe::load()
+bool e3::CircuitEvalKey_tfhe::load()
 {
     if (!NOCOUT) cout << "Loading evaluation key .. " << std::flush;
     std::ifstream in(filename(), std::ios::binary);
@@ -17,9 +17,4 @@ bool CircuitEvalKey_tfhe::load()
     return true;
 }
 
-std::string CircuitEvalKey_tfhe::decor(const std::string & s, bool add) const
-{
-    return prefix(s, add, "T");
-}
-
-std::string CircuitEvalKey_tfhe::filename() { return EvalKey::filename(); }
+std::string e3::CircuitEvalKey_tfhe::filename() const { return EvalKey::filename(); }

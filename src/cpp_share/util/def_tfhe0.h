@@ -5,3 +5,4 @@
 #include "def_tfhe.h"
 
 struct LweSample { bool b; };
+

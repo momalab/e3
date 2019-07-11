@@ -2,6 +2,9 @@
 
 #include "ek_circ_tfhe.h"
 
+namespace e3
+{
+
 class CircuitEvalKey_tfhe_X : public CircuitEvalKey_tfhe
 {
     public:
@@ -10,3 +13,5 @@ class CircuitEvalKey_tfhe_X : public CircuitEvalKey_tfhe
         void save();
         using CircuitEvalKey_tfhe::key;
 };
+
+} // e3

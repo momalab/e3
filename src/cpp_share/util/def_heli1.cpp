@@ -1,14 +1,13 @@
 
 #include "e3util.h"
 #include "def_heli1.h"
-///#include "ol.h"
 #include "base64.h"
+#include <cassert>
+
+int heli_impl() { return 1; }
 
 
-std::string heli_impl() { return "1"; }
-
-
-std::string HeliNativeBit::str(cHeliNativeEvalKey ek) const
+std::string HeliNativeBt::str(cHeliNativeEvalKey ek) const
 {
     std::ostringstream os;
     os << ctxt->b;
@@ -16,20 +15,20 @@ std::string HeliNativeBit::str(cHeliNativeEvalKey ek) const
     return e3util::base64::enc(os.str());
 }
 
-HeliNativeBit::HeliNativeBit(cHeliNativeEvalKey e) : ek(e)
+HeliNativeBt::HeliNativeBt(cHeliNativeEvalKey e) : ek(e)
 {
     ctxt = std::shared_ptr<HeliCtxt>(new HeliCtxt(e3heli::toek(e)));
 }
 
-HeliNativeBit::HeliNativeBit(const HeliNativeBit & b, cHeliNativeEvalKey e)
-    : HeliNativeBit(e)
+HeliNativeBt::HeliNativeBt(const HeliNativeBt & b, cHeliNativeEvalKey e)
+    : HeliNativeBt(e)
 {
     ctxt = std::shared_ptr<HeliCtxt>(new HeliCtxt(e3heli::toek(e)));
     ctxt->b = b.ctxt->b;
 }
 
-HeliNativeBit::HeliNativeBit(const std::string & enc, cHeliNativeEvalKey e)
-    : HeliNativeBit(e)
+HeliNativeBt::HeliNativeBt(const std::string & enc, cHeliNativeEvalKey e)
+    : HeliNativeBt(e)
 {
     ctxt = std::shared_ptr<HeliCtxt>(new HeliCtxt(e3heli::toek(e)));
 
@@ -40,8 +39,8 @@ HeliNativeBit::HeliNativeBit(const std::string & enc, cHeliNativeEvalKey e)
     }
     catch (...)
     {
-        string s = enc; if (s.size() > 10) s = s.substr(0, 8) + "...";
-        throw "Bad init in HeliNativeBit [" + s + "]";
+        std::string s = enc; if (s.size() > 10) s = s.substr(0, 8) + "...";
+        throw "Bad init in HeliNativeBt [" + s + "]";
     }
 }
 
@@ -94,7 +93,7 @@ long mValues(int i, int j)
 
 
 
-void init_properties_heli(NativeProperties ** ppprop, string & name)
+void init_properties_heli(NativeProperties ** ppprop, std::string & name)
 {
     static NativeProperties props;
     *ppprop = &props;
@@ -105,10 +104,10 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
 
     if ( IDX != 11 ) name += "_idx_" + std::to_string(IDX);
 
-    if (e3heli::PRN) cout << "Initializing HELIB .. " << std::flush;
+    if (e3heli::PRN) std::cout << "Initializing HELIB .. " << std::flush;
 
     int idx = IDX;
-    if (e3heli::PRN) cout << "IDX=" << idx << '\n';
+    if (e3heli::PRN) std::cout << "IDX=" << idx << '\n';
 
     bool cons = false;
     long p = 2;
@@ -118,14 +117,14 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
     long B = 23;
     if (B > NTL_SP_NBITS / 2) B = NTL_SP_NBITS / 2;
 
-    Vec<long> mvec;
-    vector<long> gens;
-    vector<long> ords;
+    NTL::Vec<long> mvec;
+    std::vector<long> gens;
+    std::vector<long> ords;
 
     long m = mValues(idx, 2);
-    assert(GCD(p, m) == 1);
+    assert(NTL::GCD(p, m) == 1);
 
-    append(mvec, mValues(idx, 4));
+    NTL::append(mvec, mValues(idx, 4));
     if (mValues(idx, 5) > 1) append(mvec, mValues(idx, 5));
     if (mValues(idx, 6) > 1) append(mvec, mValues(idx, 6));
     gens.push_back(mValues(idx, 7));
@@ -135,13 +134,13 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
     if (abs(mValues(idx, 11)) > 1) ords.push_back(mValues(idx, 11));
     if (abs(mValues(idx, 12)) > 1) ords.push_back(mValues(idx, 12));
 
-    if (e3heli::PRN) cout << "[ Computing tables " << std::flush;
+    if (e3heli::PRN) std::cout << "[ Computing tables " << std::flush;
     props.pcontext = new FHEcontext(m, p, r, gens, ords);
     FHEcontext & context = *props.pcontext;
     context.bitsPerLevel = B;
     buildModChain(context, L, c);
     context.makeBootstrappable(mvec, /*t=*/0, cons);
-    if (e3heli::PRN) cout << "] " << std::flush;
+    if (e3heli::PRN) std::cout << "] " << std::flush;
 
     //context.zMStar.printout();
 
@@ -152,16 +151,16 @@ void init_properties_heli(NativeProperties ** ppprop, string & name)
     {
         double bitsize = context.logOfProduct(allPrimes) / log(2.0);
         long phim = mValues(idx, 1);
-        if (e3heli::PRN) cout << "  " << nPrimes
+        if (e3heli::PRN) std::cout << "  " << nPrimes
                                   << " primes in chain, total bitsize="
                                   << ceil(bitsize) << ", secparam="
                                   << (7.2 * phim / bitsize - 110) << std::flush;
     }
 
-    if (e3heli::PRN) cout << " level=" << context.securityLevel() << std::flush;
+    if (e3heli::PRN) std::cout << " level=" << context.securityLevel() << std::flush;
 
     //long p2r = context.alMod.getPPowR();
     context.zMStar.set_cM(mValues(idx, 13) / 100.0);
 
-    if (e3heli::PRN) cout << " ok\n";
+    if (e3heli::PRN) std::cout << " ok\n";
 }

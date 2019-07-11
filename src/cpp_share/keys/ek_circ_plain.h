@@ -20,5 +20,5 @@ class CircuitEvalKey_plain : public CircuitEvalKey
         bool dec(e3util::usi x) const { return dec(x, key); }
         e3util::usi enc(bool x) const { return enc(x, key); }
 
-        virtual std::string decor(const std::string &, bool add) const;
+        ///virtual std::string decor(const std::string &, bool add) const;
 };

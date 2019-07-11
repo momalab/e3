@@ -4,7 +4,7 @@
 #include <functional>
 #include <ctime>
 
-#include "util.h"
+#include "cgtutil.h"
 #include "sk_native.h"
 
 using std::string;
@@ -16,8 +16,10 @@ NativePrivKey::NativePrivKey
     init_final(forceGen, forceLoad);
 }
 
-std::string NativePrivKey::decrypt(const string & s) const
+string NativePrivKey::decrypt(const string & c, string pfx) const
 {
+    string s = ek.decor(c, false, pfx);
+
     if ( s.size() != sizeof(e3util::ull) * 2 ) return "";
     if ( !util::isHex(s) ) return "";
 
@@ -26,17 +28,18 @@ std::string NativePrivKey::decrypt(const string & s) const
     return std::to_string(x);
 }
 
-std::string NativePrivKey::encrypt(const string & s, int msz) const
+string NativePrivKey::encrypt(const string & s, int msz, string pfx) const
 {
     e3util::ull x = std::stoull(s);
     x &= e3util::mask(msz);
     x = ek.enc(x, key);
-    return e3util::ull2hex(x);
+    return ek.decor(e3util::ull2hex(x), true, pfx);
+    ///return e3util::ull2hex(x);
 }
 
 void NativePrivKey::gen()
 {
-    key = (1ull << (rnd() % 22 + 2) );
+    key = (1ull << (rnd->next() % 22 + 2) );
     key = 0x800;
     ek.key = key; // if the SK is generated, EK must be generated
 }

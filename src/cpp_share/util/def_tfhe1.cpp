@@ -6,9 +6,9 @@
 
 using std::string;
 
-std::string tfhe_impl() { return "1"; }
+int e3::tfhe_impl() { return 1; }
 
-std::string TfheNativeBit::str(cTfheNativeEvalKey ek) const
+std::string e3::TfheNativeBt::str(cTfheNativeEvalKey ek) const
 {
     std::ostringstream os;
     auto params = e3tfhe::toek(ek)->params;
@@ -16,8 +16,11 @@ std::string TfheNativeBit::str(cTfheNativeEvalKey ek) const
     return e3util::base64::enc(os.str());
 }
 
+namespace e3
+{
+
 void delete_nativebit(LweSample * p) { delete_gate_bootstrapping_ciphertext(p); }
-TfheNativeBit::TfheNativeBit(cTfheNativeEvalKey ek)
+TfheNativeBt::TfheNativeBt(cTfheNativeEvalKey ek)
 {
     auto params = e3tfhe::toek(ek)->params;
     p = std::shared_ptr<LweSample>(
@@ -25,13 +28,15 @@ TfheNativeBit::TfheNativeBit(cTfheNativeEvalKey ek)
             delete_nativebit);
 }
 
-TfheNativeBit::TfheNativeBit(const TfheNativeBit & b, cTfheNativeEvalKey ek) : TfheNativeBit(ek)
+} // e3
+
+e3::TfheNativeBt::TfheNativeBt(const TfheNativeBt & b, cTfheNativeEvalKey ek) : TfheNativeBt(ek)
 {
     p = b.p;
     bootsCOPY( &*p, &*b.p, e3tfhe::toek(ek) );
 }
 
-TfheNativeBit::TfheNativeBit(const std::string & enc, cTfheNativeEvalKey ek) : TfheNativeBit(ek)
+e3::TfheNativeBt::TfheNativeBt(const std::string & enc, cTfheNativeEvalKey ek) : TfheNativeBt(ek)
 {
     auto params = e3tfhe::toek(ek)->params;
     std::istringstream is(e3util::base64::dec(enc));
@@ -41,7 +46,7 @@ TfheNativeBit::TfheNativeBit(const std::string & enc, cTfheNativeEvalKey ek) : T
     }
     catch (...)
     {
-        throw "Bad init in TfheNativeBit [" + enc + "]";
+        throw "Bad init in TfheNativeBt [" + enc + "]";
     }
 }
 

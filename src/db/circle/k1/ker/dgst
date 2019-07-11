@@ -1,0 +1,8 @@
+# Digest kernel 7 Mar 2019
+
+{C=$CtSize}
+{R=C-1}
+
+c2 = b2 ^ !( b3 & b4 )
+{i,3,C } ci = bi
+{i,2,C,j, -1 % R + 2 } ri = ai ^ cj

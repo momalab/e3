@@ -20,9 +20,8 @@ class CircuitEvalKey_heli : public CircuitEvalKey
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();
-        virtual std::string decor(const std::string &, bool add) const;
 
         cHeliNativeEvalKey native() const { return key; }
 
-        virtual std::string filename();
+        virtual std::string filename() const;
 };

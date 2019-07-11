@@ -8,7 +8,7 @@ class CircuitPrivKey_fhew : public CircuitPrivKey
 {
         virtual void gen();
 
-        using EncBit = FhewNativeBit;
+        using EncBit = FhewNativeBt;
         using SecKey = FhewNativePrivKey;
 
         EncBit encbit(bool b) const;
@@ -27,5 +27,5 @@ class CircuitPrivKey_fhew : public CircuitPrivKey
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;
 
-        virtual string filename();
+        virtual string filename() const;
 };

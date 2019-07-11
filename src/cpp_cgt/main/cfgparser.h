@@ -1,13 +1,19 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
-#include "sectype.h"
+/// #include "sectype.h"
 
 using std::string;
+using std::vector;
+
+class SecType;
+class Bridge;
 
 struct ConfigParser
 {
+    string file;
     string userdir;
     string password;
     bool isCloPassword = false;
@@ -20,10 +26,12 @@ struct ConfigParser
 
     ~ConfigParser();
 
-    void makeSecint(string e3_lib) const;
+    void makeSecint(string cgtdir, string e3_lib) const;
     void makeDepend() const;
 
     void loadOrGenKeys(bool forceGen, bool forceLoad);
 
     void setCloPassword(string p) { password = p; isCloPassword = true; }
+
+    Bridge * getBridge(string name) const;
 };

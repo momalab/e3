@@ -10,11 +10,9 @@
 using std::string;
 using std::vector;
 
-namespace cir_name
+namespace cir_deco
 {
 char separator = ',';
-char begin = '[';
-char end = ']';
 }
 
 vector<string> CircuitEvalKey::enc2bits(const string & e)
@@ -22,13 +20,12 @@ vector<string> CircuitEvalKey::enc2bits(const string & e)
     using rt = vector<string>;
     rt r;
     string c = e;
-    if (c.size() < 2 || c[0] != cir_name::begin
-            || c[c.size() - 1] != cir_name::end ) return rt();
 
-    std::istringstream is(c.substr(1, c.size() - 2));
+    if (c.size() < 1 ) return rt();
+
+    std::istringstream is(c);
     int i = 0;
-    vector<bool> v;
-    for ( string s; std::getline(is, s, cir_name::separator); i++ )
+    for ( string s; std::getline(is, s, cir_deco::separator); i++ )
         r.push_back( s );
 
     if ( !i ) return rt();
@@ -37,19 +34,8 @@ vector<string> CircuitEvalKey::enc2bits(const string & e)
 
 string CircuitEvalKey::bits2enc(const vector<string> & v)
 {
-    string x; x += cir_name::begin;
-    for ( auto b : v ) x += b + cir_name::separator;
-    x[x.size() - 1] = cir_name::end;
-    return x;
+    string x;
+    for ( auto b : v ) x += b + cir_deco::separator;
+    return x.substr(0, x.size() - 1);
 }
 
-std::string CircuitEvalKey::prefix(
-    const std::string & s, bool add, std::string pfx)
-{
-    auto sz = pfx.size();
-
-    if ( add ) return pfx + s;
-
-    if ( s.size() <= sz || s.substr(0, sz) != pfx ) return "";
-    return s.substr(sz);
-}

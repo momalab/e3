@@ -1,0 +1,9 @@
+GATE    INDEX
+not     0       (reuse nand)
+nand    1
+and     2
+or      3
+xor     4
+nor     5
+xnor    6
+mux     7

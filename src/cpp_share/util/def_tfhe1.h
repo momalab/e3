@@ -13,11 +13,11 @@ namespace e3tfhe
 {
 
 using sk = TFheGateBootstrappingSecretKeySet;
-inline  sk * tosk(TfheNativePrivKey a) { return static_cast<sk *>(a); }
+inline  sk * tosk(e3::TfheNativePrivKey a) { return static_cast<sk *>(a); }
 
 using ek = TFheGateBootstrappingCloudKeySet;
-inline  ek * toek(TfheNativeEvalKey a) { return static_cast<ek *>(a); }
-inline  const ek * toek(cTfheNativeEvalKey a) { return static_cast<const ek *>(a); }
+inline  ek * toek(e3::TfheNativeEvalKey a) { return static_cast<ek *>(a); }
+inline  const ek * toek(e3::cTfheNativeEvalKey a) { return static_cast<const ek *>(a); }
 
 } // e3tfhe
 

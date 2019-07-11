@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "ol.h"
+#include "olc.h"
 
 using std::string;
 
@@ -31,6 +31,7 @@ inline int fileSize(const string & s) { std::pair<int, int> r = isDirOrFile(s); 
 bool rmDir(const string & s);
 bool rmFile(const string & s);
 bool rename(string old, string n);
+string execOut(const string & cmd, bool iscurdir); // iscurdir adds "./" in unx
 
 class Path;
 

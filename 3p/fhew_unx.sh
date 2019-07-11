@@ -150,6 +150,7 @@ else
 ##	echo "" > fhew_$PLAT/$testfile2.cpp
 ##	cp $fhewdir/$testfile1.cpp fhew_$PLAT/$testfile2.cpp
 	cp $fhewdir/*.h fhew_$PLAT/inc/fhew/
+	cp $root/fftw/$PLAT/fftw-3.3.8/api/fftw3.h fhew_$PLAT/inc/fhew
 	cp $fhewdir/*.cpp fhew_$PLAT/libfhew/
 	mv fhew_$PLAT/libfhew/$testfile1.cpp fhew_$PLAT/$testfile2.cpp
 ##	# remove abort from die_dramatically as we would handle the exceptions

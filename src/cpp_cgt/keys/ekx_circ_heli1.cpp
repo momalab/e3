@@ -5,7 +5,6 @@
 
 #include "ekx_circ_heli.h"
 #include "def_heli1.h"
-#include "ol.h"
 
 using std::cout;
 

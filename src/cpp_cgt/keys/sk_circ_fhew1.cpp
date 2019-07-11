@@ -3,11 +3,10 @@
 
 #include "sk_circ_fhew.h"
 #include "def_fhew1.h"
-#include "ol.h"
 
 using std::cout;
 
-string CircuitPrivKey_fhew::filename() { return PrivKey::filename(); }
+string CircuitPrivKey_fhew::filename() const { return PrivKey::filename(); }
 
 CircuitPrivKey_fhew::CircuitPrivKey_fhew
 (std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
@@ -49,6 +48,7 @@ void CircuitPrivKey_fhew::save()
         for ( int i = 0; i < n; i++ ) of << k[i] << ' ';
         of << '\n';
     }
+    cout << "ok\n";
     ek.save();
 }
 
@@ -81,7 +81,7 @@ bool CircuitPrivKey_fhew::load()
 
 std::string CircuitPrivKey_fhew::encbitstr(bool b) const
 {
-    FhewNativeBit nb(ek.key);
+    FhewNativeBt nb(ek.key);
     LWE::CipherText * p = &nb.p->b;
     LWE::Encrypt(p, *e3fhew::tosk(key), int(b));
     return nb.str(ek.key);
@@ -89,8 +89,6 @@ std::string CircuitPrivKey_fhew::encbitstr(bool b) const
 
 bool CircuitPrivKey_fhew::decbitstr(const std::string & s, bool * ok) const
 {
-    never("FIXME");
-    //FhewNativeBit nb(s, ek.key);
-    //bool r = ( LWE::Decrypt(e3fhew::tosk(sk), b.nb); );
+    never("FIXME"); // FIXME e - we need to implement this - should be simple
     //return r;
 }

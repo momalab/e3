@@ -34,7 +34,6 @@ bool CircuitEvalKey_fhew::load_oleg()
 
     static FHEW::EvalKey k;
     key = &k;
-    ///std::cout << "AAA eval key address in loading " << ((void *)key);
 
     // 1 check type sizes
     // 2 check constants
@@ -135,9 +134,6 @@ bool CircuitEvalKey_fhew::load_oleg()
     return true;
 }
 
-std::string CircuitEvalKey_fhew::decor(const std::string & s, bool add) const
-{
-    return prefix(s, add, "F");
-}
+///std::string CircuitEvalKey_fhew::decor(const std::string & s, bool add) const{    return prefix(s, add, "F");}
 
-std::string CircuitEvalKey_fhew::filename() { return EvalKey::filename(); }
+std::string CircuitEvalKey_fhew::filename() const { return EvalKey::filename(); }

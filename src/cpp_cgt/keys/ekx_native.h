@@ -9,6 +9,5 @@ class NativeEvalKeyExt : public NativeEvalKey
         NativeEvalKeyExt(std::string name) : NativeEvalKey(User::Alice, name) {}
 
         void save();
-        ///void setKey(e3util::ull k) { key = k; }
         using NativeEvalKey::key;
 };

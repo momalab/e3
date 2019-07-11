@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{FE3E40BD-2F2F-4131-904B-5979DAFBF82A}</ProjectGuid>
+    <RootNamespace>vs</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>/D_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>/D_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\c30\config.h" />
+    <ClInclude Include="..\..\c30\cstringstream.h" />
+    <ClInclude Include="..\..\c30\cudd.h" />
+    <ClInclude Include="..\..\c30\cuddInt.h" />
+    <ClInclude Include="..\..\c30\cuddObj.hh" />
+    <ClInclude Include="..\..\c30\epd.h" />
+    <ClInclude Include="..\..\c30\epdInt.h" />
+    <ClInclude Include="..\..\c30\mtr.h" />
+    <ClInclude Include="..\..\c30\mtrInt.h" />
+    <ClInclude Include="..\..\c30\st.h" />
+    <ClInclude Include="..\..\c30\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\c30\cpu_stats.c" />
+    <ClCompile Include="..\..\c30\cpu_time.c" />
+    <ClCompile Include="..\..\c30\cstringstream.c" />
+    <ClCompile Include="..\..\c30\cuddAddAbs.c" />
+    <ClCompile Include="..\..\c30\cuddAddApply.c" />
+    <ClCompile Include="..\..\c30\cuddAddFind.c" />
+    <ClCompile Include="..\..\c30\cuddAddInv.c" />
+    <ClCompile Include="..\..\c30\cuddAddIte.c" />
+    <ClCompile Include="..\..\c30\cuddAddNeg.c" />
+    <ClCompile Include="..\..\c30\cuddAddWalsh.c" />
+    <ClCompile Include="..\..\c30\cuddAndAbs.c" />
+    <ClCompile Include="..\..\c30\cuddAnneal.c" />
+    <ClCompile Include="..\..\c30\cuddApa.c" />
+    <ClCompile Include="..\..\c30\cuddAPI.c" />
+    <ClCompile Include="..\..\c30\cuddApprox.c" />
+    <ClCompile Include="..\..\c30\cuddBddAbs.c" />
+    <ClCompile Include="..\..\c30\cuddBddCorr.c" />
+    <ClCompile Include="..\..\c30\cuddBddIte.c" />
+    <ClCompile Include="..\..\c30\cuddBridge.c" />
+    <ClCompile Include="..\..\c30\cuddCache.c" />
+    <ClCompile Include="..\..\c30\cuddCheck.c" />
+    <ClCompile Include="..\..\c30\cuddClip.c" />
+    <ClCompile Include="..\..\c30\cuddCof.c" />
+    <ClCompile Include="..\..\c30\cuddCompose.c" />
+    <ClCompile Include="..\..\c30\cuddDecomp.c" />
+    <ClCompile Include="..\..\c30\cuddEssent.c" />
+    <ClCompile Include="..\..\c30\cuddExact.c" />
+    <ClCompile Include="..\..\c30\cuddExport.c" />
+    <ClCompile Include="..\..\c30\cuddGenCof.c" />
+    <ClCompile Include="..\..\c30\cuddGenetic.c" />
+    <ClCompile Include="..\..\c30\cuddGroup.c" />
+    <ClCompile Include="..\..\c30\cuddHarwell.c" />
+    <ClCompile Include="..\..\c30\cuddInit.c" />
+    <ClCompile Include="..\..\c30\cuddInteract.c" />
+    <ClCompile Include="..\..\c30\cuddLCache.c" />
+    <ClCompile Include="..\..\c30\cuddLevelQ.c" />
+    <ClCompile Include="..\..\c30\cuddLinear.c" />
+    <ClCompile Include="..\..\c30\cuddLiteral.c" />
+    <ClCompile Include="..\..\c30\cuddMatMult.c" />
+    <ClCompile Include="..\..\c30\cuddObj.cc" />
+    <ClCompile Include="..\..\c30\cuddPriority.c" />
+    <ClCompile Include="..\..\c30\cuddRead.c" />
+    <ClCompile Include="..\..\c30\cuddRef.c" />
+    <ClCompile Include="..\..\c30\cuddReorder.c" />
+    <ClCompile Include="..\..\c30\cuddSat.c" />
+    <ClCompile Include="..\..\c30\cuddSign.c" />
+    <ClCompile Include="..\..\c30\cuddSolve.c" />
+    <ClCompile Include="..\..\c30\cuddSplit.c" />
+    <ClCompile Include="..\..\c30\cuddSubsetHB.c" />
+    <ClCompile Include="..\..\c30\cuddSubsetSP.c" />
+    <ClCompile Include="..\..\c30\cuddSymmetry.c" />
+    <ClCompile Include="..\..\c30\cuddTable.c" />
+    <ClCompile Include="..\..\c30\cuddUtil.c" />
+    <ClCompile Include="..\..\c30\cuddWindow.c" />
+    <ClCompile Include="..\..\c30\cuddZddCount.c" />
+    <ClCompile Include="..\..\c30\cuddZddFuncs.c" />
+    <ClCompile Include="..\..\c30\cuddZddGroup.c" />
+    <ClCompile Include="..\..\c30\cuddZddIsop.c" />
+    <ClCompile Include="..\..\c30\cuddZddLin.c" />
+    <ClCompile Include="..\..\c30\cuddZddMisc.c" />
+    <ClCompile Include="..\..\c30\cuddZddPort.c" />
+    <ClCompile Include="..\..\c30\cuddZddReord.c" />
+    <ClCompile Include="..\..\c30\cuddZddSetop.c" />
+    <ClCompile Include="..\..\c30\cuddZddSymm.c" />
+    <ClCompile Include="..\..\c30\cuddZddUtil.c" />
+    <ClCompile Include="..\..\c30\datalimit.c" />
+    <ClCompile Include="..\..\c30\epd.c" />
+    <ClCompile Include="..\..\c30\mtrBasic.c" />
+    <ClCompile Include="..\..\c30\mtrGroup.c" />
+    <ClCompile Include="..\..\c30\pathsearch.c" />
+    <ClCompile Include="..\..\c30\pipefork.c" />
+    <ClCompile Include="..\..\c30\prtime.c" />
+    <ClCompile Include="..\..\c30\safe_mem.c" />
+    <ClCompile Include="..\..\c30\st.c" />
+    <ClCompile Include="..\..\c30\strsav.c" />
+    <ClCompile Include="..\..\c30\texpand.c" />
+    <ClCompile Include="..\..\c30\ucbqsort.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

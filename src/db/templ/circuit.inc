@@ -95,7 +95,7 @@ inline $NameUint<SZ> $NameUint<SZ>::operator++(int)
 }
 
 template <int SZ>
-inline $NameUint<SZ> $NameUint<SZ>::operator++()
+inline $NameUint<SZ> & $NameUint<SZ>::operator++()
 {
     $NameUint<SZ> r = (*this);
     d_inc(bits, r.bits);
@@ -111,7 +111,7 @@ inline $NameUint<SZ> $NameUint<SZ>::operator--(int)
 }
 
 template <int SZ>
-inline $NameUint<SZ> $NameUint<SZ>::operator--()
+inline $NameUint<SZ> & $NameUint<SZ>::operator--()
 {
     $NameUint<SZ> r = (*this);
     d_dec(bits, r.bits);
@@ -119,12 +119,21 @@ inline $NameUint<SZ> $NameUint<SZ>::operator--()
 }
 
 template <int SZ>
+inline $NameUint<SZ> $NameUint<SZ>::bitsum() const
+{
+    $NameUint<SZ> r;
+    d_bitsum(r.bits, bits, *$NameBit::zero);
+    return r;
+}
+
+template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator+(const $NameUint<SZ> & x) const
 {
-    ///std::cout << "AAA $NameUint<SZ>::operator+ (in)\n";
     $NameUint<SZ> r;
-    d_add(r.bits, bits, x.bits);
-    ///std::cout << "AAA $NameUint<SZ>::operator+ (out)\n";
+
+    if (CarryAdd::use) d_carryadd(r.bits, bits, x.bits);
+    else d_add(r.bits, bits, x.bits);
+
     return r;
 }
 
@@ -300,15 +309,49 @@ inline $NameUint<SZ> $NameUint<SZ>::operator*(unsigned long long u) const
     return multiply_by_ull < $NameUint<SZ >> (u, *this);
 }
 
+template <int SZ>
+inline $NameUint<SZ> $NameUint<SZ>::operator<<(unsigned long long u) const
+{
+    $NameUint<SZ> r;
+    if ( u > SZ )
+    {
+        for ( auto b : r.bits ) b = *$NameBit::zero;
+    }
+    else
+    {
+        for ( unsigned long long i = 0; i + u < SZ; i++ )
+            r.bits[i + u] = bits[i];
+        for ( unsigned long long i = 0; i < u; i++ )
+            r.bits[i] = *$NameBit::zero;
+    }
+    return r;
+}
+
+template <int SZ>
+inline $NameUint<SZ> $NameUint<SZ>::operator>>(unsigned long long u) const
+{
+    $NameUint<SZ> r;
+    if ( u > SZ )
+        for ( auto b : r.bits ) b = *$NameBit::zero;
+    else
+    {
+        for ( unsigned long long i = 0; i + u < SZ; i++ )
+            r.bits[i] = bits[i + u];
+        for ( unsigned long long i = 0; i < u; i++ )
+            r.bits[SZ - 1 - i] = *$NameBit::zero;
+    }
+    return r;
+}
+
 // Functions
 
 template <int SZ>
 void $NameUint<SZ>::load(const std::string & c)
 {
-    auto s = $NameBit::k()->decor(c, false);
-    if ( s.empty() ) throw "Bad decoration in $Name, expecting [] :" + c;
+    auto s = $NameBit::k()->decor(c, false, "$Name");
+    if ( s.empty() ) throw "Bad decoration in $Name [" + c + "]";
     auto bs = $NameBit::k()->enc2bits(s);
-    if ( bs.empty() ) throw "Bad init in $Name, expecting [] :" + c;
+    if ( bs.empty() ) throw "Bad init in $Name [" + c + "]";
 
     for ( int i = 0; i < SZ; i++ )
     {
@@ -323,7 +366,7 @@ std::string $NameUint<SZ>::str() const
     std::vector<std::string> bs;
     for ( const auto & x : bits ) bs.push_back(x.str());
     auto s = $NameBit::k()->bits2enc(bs);
-    return $NameBit::k()->decor(s, true);
+    return $NameBit::k()->decor(s, true, "$Name");
 }
 
 // ----- $NameInt ----- //
@@ -466,35 +509,39 @@ inline $NameBool & $NameBool::operator%=(const $NameBool & x)
 inline $NameBool $NameBool::operator+(const $NameBool & x) const
 {
     $NameBool r;
-    r = (*this) | x;
+    r = $NameBool ( $NameUint<1>(*this) | $NameUint<1>(x) );
     return r;
 }
 
 inline $NameBool $NameBool::operator-(const $NameBool & x) const
 {
     $NameBool r;
-    r = (*this) ^ x;
+    r = $NameBool ( $NameUint<1>(*this) ^ $NameUint<1>(x) );
+///    r = (*this) ^ x;
     return r;
 }
 
 inline $NameBool $NameBool::operator*(const $NameBool & x) const
 {
     $NameBool r;
-    r = (*this) & x;
+    r = $NameBool ( $NameUint<1>(*this) & $NameUint<1>(x) );
+///    r = (*this) & x;
     return r;
 }
 
 inline $NameBool $NameBool::operator/(const $NameBool & x) const
 {
     $NameBool r;
-    r = (*this) & x;
+    r = $NameBool ( $NameUint<1>(*this) & $NameUint<1>(x) );
+///    r = (*this) & x;
     return r;
 }
 
 inline $NameBool $NameBool::operator%(const $NameBool & x) const
 {
     $NameBool r;
-    r = (*this) ^ (*this);
+    r = $NameBool ( $NameUint<1>(*this) ^ $NameUint<1>(x) );
+///    r = (*this) ^ (*this);
     return r;
 }
 

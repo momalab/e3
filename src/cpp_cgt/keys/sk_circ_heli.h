@@ -8,7 +8,7 @@ class CircuitPrivKey_heli : public CircuitPrivKey
 {
         virtual void gen();
 
-        using EncBit = HeliNativeBit;
+        using EncBit = HeliNativeBt;
         using SecKey = HeliNativePrivKey;
 
         EncBit encbit(bool b) const;
@@ -32,5 +32,5 @@ class CircuitPrivKey_heli : public CircuitPrivKey
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;
 
-        virtual string filename();
+        virtual string filename() const;
 };

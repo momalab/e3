@@ -1,0 +1,10 @@
+{C=$CtSize}
+{R=C-1}
+
+(xc[1,C])=enc(x,0[1,R])
+(yc[1,C])=enc(y,1[1,R])
+
+(zc[1,C])=op_nand(xc[1,C],yc[1,C])
+
+(z,0[1,R])=dec(zc[1,C])
+

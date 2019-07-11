@@ -13,13 +13,9 @@ void CircuitPrivKey_fhew::gen()
 {
 }
 
-string CircuitPrivKey_fhew::filename()
+string CircuitPrivKey_fhew::filename() const
 {
-    string old = name;
-    name += "_0";
-    string r = PrivKey::filename();
-    name = old;
-    return r;
+    return PrivKey::filenamex("_0");
 }
 
 void CircuitPrivKey_fhew::save()

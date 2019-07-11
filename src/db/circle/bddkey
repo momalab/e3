@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+
+using std::string;
+using std::cout;
+
+#include "x.$tid/dec.c"
+#include "x.$tid/enc.c"
+
+inline char toc(char c)
+{
+    if ( c == '0' ) return '\0';
+    if ( c == '1' ) return '\1';
+    throw "Bad character";
+};
+
+int main(int ac, const char * av[])
+try
+{
+    if ( ac < 3 ) throw "2 args required (id=$tid)";
+
+    const size_t csz = $CtSize;
+    string bits = av[2];
+    if ( bits.size() != csz ) throw "size mismatch";
+
+    char x[csz], y[csz];
+    for ( size_t i = 0; i < csz; i++ ) x[i] = toc(bits[i]);
+
+    if(0);
+    else if ( string(av[1]) == "enc" ) x_$tid_enc_$CtSize_$CtSize(x,y);
+    else if ( string(av[1]) == "dec" ) x_$tid_dec_$CtSize_$CtSize(x,y);
+    else throw "1st arg must be 'enc' or 'dec'";
+
+    for ( size_t i = 0; i < csz; i++ ) bits[i] = '0'+y[i];
+
+    std::cout << bits << '\n';
+
+    return 0;
+}
+catch (const char * e)
+{
+    std::cout << "error : " << e << "\n";
+    return 0;
+}
+catch (...)
+{
+    std::cout << "error : ...\n";
+    return 0;
+}

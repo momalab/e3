@@ -21,9 +21,8 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
         bool load_oleg();
         bool load_fhew();
         virtual bool load();
-        virtual std::string decor(const std::string &, bool add) const;
 
         cFhewNativeEvalKey native() const { return key; }
 
-        virtual std::string filename();
+        virtual std::string filename() const;
 };

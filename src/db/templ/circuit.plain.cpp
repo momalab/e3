@@ -1,4 +1,4 @@
-// === BEGIN circuit.Plain.cpp Name=$Name
+// === BEGIN circuit.plain.cpp Name=$Name
 
 $NameBit::$NameBit(const std::string & s) : $NameBit()
 {
@@ -103,4 +103,4 @@ $NameBit $NameBit::gate_mux(const $NameBit & a, const $NameBit & b, const $NameB
     return ek->enc(ma);
 }
 
-// === END circuit.Plain.cpp Name=$Name
+// === END circuit.plain.cpp Name=$Name

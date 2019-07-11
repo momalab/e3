@@ -3,11 +3,10 @@
 
 #include "sk_circ_heli.h"
 #include "def_heli1.h"
-#include "ol.h"
 
 using std::cout;
 
-string CircuitPrivKey_heli::filename() { return PrivKey::filename(); }
+string CircuitPrivKey_heli::filename() const { return PrivKey::filename(); }
 
 CircuitPrivKey_heli::CircuitPrivKey_heli
 (std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
@@ -62,14 +61,14 @@ bool CircuitPrivKey_heli::load()
 
 std::string CircuitPrivKey_heli::encbitstr(bool b) const
 {
-    HeliNativeBit nb(ek.key);
+    HeliNativeBt nb(ek.key);
     e3heli::toek(ek.key)->Encrypt(nb.ctxt->b, to_ZZX(b));
     return nb.str(ek.key);
 }
 
 bool CircuitPrivKey_heli::decbitstr(const std::string & s, bool * ok) const
 {
-    HeliNativeBit nb(s, ek.key);
+    HeliNativeBt nb(s, ek.key);
     ZZX z;
     e3heli::tosk(key)->Decrypt(z, nb.ctxt->b);
     long a = 0;

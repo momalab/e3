@@ -1,17 +1,12 @@
-// === BEGIN circuit.Plain.h Name=$Name
+// === BEGIN circuit.plain.h Name=$Name
 
-class $NameBit
+class $NameBit : public $NameBaseBit
 {
     protected:
         e3util::usi x;
-        static CircuitEvalKey * pek;
-
-        static void init_pek();
-        static const char * name() { return "$Name"; }
 
     public:
-        static const $NameBit * zero;
-        $NameBit(e3util::usi ax = 0) : x(ax) { init_pek(); }
+        $NameBit(e3util::usi ax = 0) : x(ax) {}
         $NameBit(const std::string & s);
 
         // access to SecureInt classes
@@ -30,4 +25,4 @@ class $NameBit
         static $NameBit gate_mux(const $NameBit & a, const $NameBit & b, const $NameBit & c);
 };
 
-// === END circuit.Plain.h Name=$Name
+// === END circuit.plain.h Name=$Name

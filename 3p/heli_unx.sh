@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# FIXME gmp requires m4 -- add check for that
+
+# FIXME first successful run of this script the folling although the lib is working properly:
+# Step 8
+# === 3p === heli_unx/test.exe: NO
+# === 3p === compiling test
+# DONE
+#
+# Step 9 - faking plats
+# === 3p === heli_unx/native/fhe.a heli_unx/target/fhe.a: NO
+# === 3p === faking platforms
+
+
 PLAT=unx
 me="=== 3p ==="
 
@@ -20,7 +33,13 @@ else
 	echo "$me checking out HELI"
 	mkdir -p $root
 	cwd=`pwd`; cd $root
+# this is how you download a specific commit
+# thus, new updates in the repo won't break the framework
 	git -c http.sslVerify=false clone --branch master https://github.com/shaih/HElib heli
+	cd heli
+	git reset --hard 65ef24c6147196b2e1bffa070e942eb04b43a019
+# this is the new repo for when we decide to update the helib support
+# git -c http.sslVerify=false clone --depth 1 https://github.com/homenc/HElib heli
 	cd $cwd
 	if test -f $path; then
 		echo "$me done"
@@ -167,22 +186,27 @@ else
 	fi
 fi
 
+gmp=gmp-6.1.2
 echo	 ""
 echo "Step 5a"
 echo -n "$me GMP lib: "
 path=testgmp.exe
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
 if test -f $path; then
 	echo "YES"
 else
 	echo "NO"
 	echo "$me building a test with GMP"
+	#g++ -std=c++14 -I $root/gmp/$PLAT/$gmp testgmp.cpp -lgmp -o testgmp.exe
 	g++ -std=c++14 testgmp.cpp -lgmp -o testgmp.exe
 
 	if test -f $path; then
 		echo "$me done"
 	else
-		echo "$me failed to make GMP test"
+		echo "${RED}$me failed to make GMP test"
 		echo "USER ATTENTION!"
 		echo "This script does not automatically build GMP"
 		echo "Please follow the user manual and install"
@@ -190,11 +214,11 @@ else
 		echo "GMP library has already been downloaded and unpacked in"
 		echo "../../e3_heli/gmp"
 		echo "Use the following commands to install it:"
-		echo "$ cd gmp-xxx"
+		echo "$ cd ../../e3_heli/gmp/unx/gmp-6.1.2"
 		echo "$ ./configure"
 		echo "$ make"
 		echo "$ make check"
-		echo "$ sudo make install"
+		echo "$ make install${NC}"
 		exit
 	fi
 fi
@@ -209,12 +233,13 @@ if test -f $path; then
 else
 	echo "NO"
 	echo "$me building a test with NTL/GMP"
+	#g++ -std=c++14 -I $root/gmp/$PLAT/$gmp -I $root/ntl/$PLAT/ntl-11.0.0/include testntlgmp.cpp -lgmp -lntl -o testntlgmp.exe
 	g++ -std=c++14 testntlgmp.cpp -lgmp -lntl -o testntlgmp.exe
 
 	if test -f $path; then
 		echo "$me done"
 	else
-		echo "$me failed to make NTL test"
+		echo "${RED}$me failed to make NTL test"
 		echo "USER ATTENTION!"
 		echo "This script does not automatically build NTL"
 		echo "Please follow the user manual and install"
@@ -226,7 +251,7 @@ else
 		echo "$ ./configure"
 		echo "$ make"
 		echo "$ make check"
-		echo "$ sudo make install"
+		echo "$ sudo make install${NC}"
 		exit
 	fi
 fi
@@ -247,14 +272,18 @@ else
 	mkdir -p heli_$PLAT
 	mkdir -p heli_$PLAT/src
 	mkdir -p heli_$PLAT/inc/ntl
+	mkdir -p heli_$PLAT/inc/gmp
 	cp -R $helidir/src/* heli_$PLAT/src/
 	mv heli_$PLAT/src/$testfile1.cpp heli_$PLAT/$testfile2.cpp
+	#rm heli_$PLAT/src/local-defs.example
 	cp $ntlpath/include/NTL/*.h heli_$PLAT/inc/ntl/
+	cp $gmppath/* heli_$PLAT/inc/gmp/
 
 	echo "$me done"
 fi
 
 libheli=fhe.a
+ntl=ntl-11.0.0
 
 echo ""
 echo "Step 7"
@@ -272,7 +301,9 @@ else
 	#echo "$me lilnking $file"
 	#cd ..
 	#ar rcs $libheli libheli/*.o
+	#make INC_NTL=-I ../inc/ntl/ INC_GMP=-I ../inc/gmp/ LIB_NTL=-L ../inc/ntl/ LIB_GMP=-L ../inc/gmp/
 	make
+	#make -f mak_heli_fhe.mak INC_NTL=./../3p/heli_$PLAT/inc/ntl INC_GMP=./../3p/heli_$PLAT/inc/gmp LIB_NTL=./../3p/heli_$PLAT/inc/ntl LIB_GMP=./../3p/heli_$PLAT/inc/gmp
 	cd $cwd
 fi
 
@@ -288,7 +319,7 @@ else
 	echo "$me compiling test"
 	cwd=`pwd`; cd heli_$PLAT
 	#g++ -std=c++14 -Iinc/heli $file.cpp $libheli libfftw3.a -o $file.exe
-	g++ -std=c++14 $file.cpp -Isrc src/fhe.a -lpthread -lntl -lgmp -o $file.exe
+	g++ -std=c++14 $file.cpp -L ./src -I ./src -I . src/*.o -I ./inc/ntl -lpthread -lntl -lgmp -o $file.exe
 	cd $cwd
 
 	if test -f $path; then

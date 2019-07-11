@@ -4,13 +4,16 @@
 
 class Native : public SecType
 {
+        virtual void fixEncType() {}
+
     public:
         Native(std::istream & is, string nm);
         ~Native() {}
 
-        virtual void writeH(std::ostream & os, string user_dir) const;
-        virtual void writeInc(std::ostream & os) const;
-        virtual void writeCpp(std::ostream & os) const;
+        virtual void writeH(string root, std::ostream & os, string user_dir) const;
+        virtual void writeInc(string root, std::ostream & os) const;
+        virtual void writeCpp(string root, std::ostream & os) const;
         virtual void copyDependencies() const {}
-        virtual void genKeys(bool forceGen, bool forceLoad, std::string seed);
+        virtual void genKeys(bool forceGen, bool forceLoad,
+                             std::string seed, const ConfigParser * par);
 };

@@ -5,19 +5,28 @@
 class Circuit: public SecType
 {
     private:
-        std::string encType;
+
+        std::string basType; // Generic type BDD for all BDDs
+
         std::string circDb;
         std::vector<int> sizes; // which circuits (template specializations) to include
         CircuitPrivKey * csk = nullptr; // direct access to bit encryption
-        int lambda;
+        ///int lambda;
+        std::string formula; // Circle formula
+        std::string compile; // optional compilation key command
+        std::string kernel; // Circle kernel
+        int modifier; // use mux / use neg gates
+
+        virtual void fixEncType();
 
     public:
-        Circuit(std::istream & is, string nm);
+        Circuit(std::istream & is, string nm, const std::map<string, string> & globs);
         ~Circuit() {}
 
-        virtual void writeH(std::ostream & os, string user_dir) const;
-        virtual void writeInc(std::ostream & os) const;
-        virtual void writeCpp(std::ostream & os) const;
+        virtual void writeH(string root, std::ostream & os, string user_dir) const;
+        virtual void writeInc(string root, std::ostream & os) const;
+        virtual void writeCpp(string root, std::ostream & os) const;
         virtual void copyDependencies() const {}
-        virtual void genKeys(bool forceGen, bool forceLoad, std::string seed);
+        virtual void genKeys(bool forceGen, bool forceLoad,
+                             string seed, const ConfigParser * par);
 };

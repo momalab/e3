@@ -1,0 +1,9 @@
+# BBSL kernel 14 Mar 2019
+
+{C=$CtSize}
+{R=C-1}
+{CC=C*2}
+
+(r[1,CC])=$bbshash(a[1,CC])
+
+{i,C,CC} 0 = ri

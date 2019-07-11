@@ -1,0 +1,13 @@
+# XOR with permutations kernel 3 Mar 2019
+
+#{C=$CtSize}
+{C=6}
+{R=C-1}
+#{P1=$CtPerm1}
+#{P2=$CtPerm2}
+
+{P1=1023}
+{P2=1026}
+
+# xor perm
+{i,2,C,j, -2 * P1 % R + 2, k, -2 * P2 % R + 2} ri = ak ^ bj

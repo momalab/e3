@@ -4,10 +4,10 @@
 #include "def_fhew1.h"
 #include "base64.h"
 
-std::string fhew_impl() { return "1"; }
+int fhew_impl() { return 1; }
 
 
-std::string FhewNativeBit::str(cFhewNativeEvalKey ek) const
+std::string FhewNativeBt::str(cFhewNativeEvalKey ek) const
 {
     const LWE::CipherText & nb = p->b;
     std::ostringstream os;
@@ -16,21 +16,21 @@ std::string FhewNativeBit::str(cFhewNativeEvalKey ek) const
     return e3util::base64::enc(os.str());
 }
 
-FhewNativeBit::FhewNativeBit(cFhewNativeEvalKey ek)
+FhewNativeBt::FhewNativeBt(cFhewNativeEvalKey ek)
 {
     init_properties_fhew();
     p = std::shared_ptr<LweCipherText>(new LweCipherText);
 }
 
-FhewNativeBit::FhewNativeBit(const FhewNativeBit & b, cFhewNativeEvalKey ek)
-    : FhewNativeBit(ek)
+FhewNativeBt::FhewNativeBt(const FhewNativeBt & b, cFhewNativeEvalKey ek)
+    : FhewNativeBt(ek)
 {
     // p is initialized by previous c-tor
     p->b = b.p->b;
 }
 
-FhewNativeBit::FhewNativeBit(const std::string & enc, cFhewNativeEvalKey ek)
-    : FhewNativeBit(ek)
+FhewNativeBt::FhewNativeBt(const std::string & enc, cFhewNativeEvalKey ek)
+    : FhewNativeBt(ek)
 {
     LWE::CipherText & nb = p->b;
     ///std::istringstream is(enc);

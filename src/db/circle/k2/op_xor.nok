@@ -1,0 +1,13 @@
+{C=$CtSize}
+{R=C-1}
+
+# input
+(a[1,C]) = dec(x[1,C])
+(b[1,C]) = dec(z[1,C])
+
+# xor
+{i,1,C} ci = ai ^ bi
+
+# output
+(y[1,C]) = enc(c[1,C])
+

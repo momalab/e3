@@ -6,16 +6,16 @@
 
 using std::cout;
 
-string CircuitPrivKey_tfhe::filename() { return PrivKey::filename(); }
+string e3::CircuitPrivKey_tfhe::filename() const { return PrivKey::filename(); }
 
-CircuitPrivKey_tfhe::CircuitPrivKey_tfhe
+e3::CircuitPrivKey_tfhe::CircuitPrivKey_tfhe
 (std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
     : CircuitPrivKey(name, seed, lam, &ek), ek(name)
 {
     init_final(forceGen, forceLoad);
 }
 
-void CircuitPrivKey_tfhe::gen()
+void e3::CircuitPrivKey_tfhe::gen()
 {
     // first generate SK
     cout << "Generating private key (" << lambda << ") .. " << std::flush;
@@ -24,7 +24,7 @@ void CircuitPrivKey_tfhe::gen()
 
     const int SZ = 20; // Some size to hold enough number of random bits
     uint32_t seed[SZ];
-    for ( int i = 0; i < SZ; i++ ) seed[i] = (uint32_t)rnd();
+    for ( int i = 0; i < SZ; i++ ) seed[i] = (uint32_t)(*rnd)();
     tfhe_random_generator_setSeed(seed, SZ);
     auto priv_key = new_random_gate_bootstrapping_secret_keyset(params);
     key = priv_key; // using priv_key to save the type
@@ -41,7 +41,7 @@ void CircuitPrivKey_tfhe::gen()
     ek.key = eval_key;
 }
 
-void CircuitPrivKey_tfhe::save()
+void e3::CircuitPrivKey_tfhe::save()
 {
     cout << "Saving private key .. " << std::flush;
     {
@@ -55,7 +55,7 @@ void CircuitPrivKey_tfhe::save()
 
 string CircuitPrivKey_tfhe_load(string s) { return s + ""; }
 // (above) dummy function to force tfhe throw exception on error
-bool CircuitPrivKey_tfhe::load()
+bool e3::CircuitPrivKey_tfhe::load()
 {
     std::ifstream in(filename(), std::ios::binary);
     if (!in) return false;
@@ -83,16 +83,16 @@ bool CircuitPrivKey_tfhe::load()
     return ek.load();
 }
 
-std::string CircuitPrivKey_tfhe::encbitstr(bool b) const
+std::string e3::CircuitPrivKey_tfhe::encbitstr(bool b) const
 {
-    TfheNativeBit nb(ek.key);
+    TfheNativeBt nb(ek.key);
     bootsSymEncrypt(&*nb.p, b, e3tfhe::tosk(key));
     return nb.str(ek.key);
 }
 
-bool CircuitPrivKey_tfhe::decbitstr(const std::string & s, bool * ok) const
+bool e3::CircuitPrivKey_tfhe::decbitstr(const std::string & s, bool * ok) const
 {
-    TfheNativeBit nb(s, ek.key);
+    TfheNativeBt nb(s, ek.key);
     bool r = ( bootsSymDecrypt(&*nb.p, e3tfhe::tosk(key) ) > 0 );
     return r;
 }

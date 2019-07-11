@@ -8,10 +8,7 @@ endif
 TFHEBIN=tfhe_$(PLAT)
 
 all:
-	@echo "make TFHE|FHEW|HELI"
-
-TFHE:
-	sh tfhe_$(PLAT).sh
+	@echo "make FHEW|HELI|MPIR|SEAL|TFHE"
 
 FHEW:
 	sh fhew_$(PLAT).sh
@@ -19,6 +16,15 @@ FHEW:
 HELI:
 	sh heli_$(PLAT).sh
 
+MPIR:
+	sh mpir_$(PLAT).sh
+
+SEAL:
+	sh seal_$(PLAT).sh
+
+TFHE:
+	sh tfhe_$(PLAT).sh
+
 
 clean:
-	rm -rf tfhe_win tfhe_unx fhew_win fhew_unx heli_win heli_unx
+	rm -rf fhew_win fhew_unx heli_win heli_unx seal_win seal_unx tfhe_win tfhe_unx

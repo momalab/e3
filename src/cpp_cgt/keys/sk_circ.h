@@ -21,6 +21,19 @@ class CircuitPrivKey : public PrivKey
         virtual std::string encbitstr(bool b) const = 0;
         virtual bool decbitstr(const std::string & s, bool * ok) const = 0;
 
-        virtual std::string encrypt(const std::string & s, int ptsz) const;
-        virtual std::string decrypt(const std::string & s) const;
+        virtual std::string encrypt(const std::string & s, int ptsz, string pfx) const;
+        virtual std::string decrypt(const std::string & s, string pfx) const;
+
+        virtual std::string getTid() const { return "TidNotExist"; }
+};
+
+class CircuitPrivKey_ext : public CircuitPrivKey
+{
+        virtual bool load() { return true; }
+        virtual void save() {}
+        virtual void gen() {}
+    public:
+        CircuitPrivKey_ext() : CircuitPrivKey("", "", 0, nullptr) {}
+        virtual bool decbitstr(const std::string & s, bool * ok) const { throw "dec extern"; }
+	virtual std::string encbitstr(bool b) const { return b ? "1" : "0"; }
 };

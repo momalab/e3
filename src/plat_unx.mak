@@ -1,29 +1,25 @@
 CCN=g++
+CNC=gcc
 CCT=g++
 CCX=gcc
-EOUT=-o 
-OOUT=-o 
+EOUT=-o
+OOUT=-o
 OEXT=o
 EEXT=exe
 #LEXT1=a
 #LEXT2=so
-OPTS=-O2 -std=c++14 -Wall
+OPTS=-O2 -std=c++17 -Wall -Wno-parentheses
+#COPTS=-O2 -Wall -Wpointer-to-int-cast
+COPTS=-O2 -Wno-pointer-to-int-cast
 
-#LDF=-lpthread -ldl
+LDFS=-lpthread -ldl
+#LDFS=
 LDF1=
 LDF2=
 LDF3=
 
 COPYDLL1=echo no .so
 COPYDLL2=echo no .so
-
-ifeq ($(TFHE),1)
-# lib dependency on 3p
-TFHED1=../3p/tfhe_$(PLAT)/native
-TFHED2=../3p/tfhe_$(PLAT)/target
-LDF1=$(TFHED1)/libtfhe.a $(TFHED1)/libfftw3.a
-LDF2=$(TFHED2)/libtfhe.a $(TFHED2)/libfftw3.a
-endif
 
 ifeq ($(FHEW),1)
 # lib dependency on 3p
@@ -40,4 +36,28 @@ HELID2=../3p/heli_$(PLAT)/target
 LDF1+=$(HELID1)/fhe.a
 LDF2+=$(HELID2)/fhe.a
 LDF3+=-lntl -lgmp -lpthread
+endif
+
+ifeq ($(MPIR),1)
+# lib dependency on 3p
+MPIRD1=../3p/mpir_$(PLAT)/native
+MPIRD2=../3p/mpir_$(PLAT)/target
+LDF1=$(MPIRD1)/libmpir.a $(MPIRD1)/libcxx.a
+LDF2=$(MPIRD2)/libmpir.a $(MPIRD2)/libcxx.a
+endif
+
+ifeq ($(SEAL),1)
+# lib dependency on 3p
+SEALD1=../3p/seal_$(PLAT)/native
+SEALD2=../3p/seal_$(PLAT)/target
+LDF1=$(SEALD1)/libseal.a
+LDF2=$(SEALD2)/libseal.a
+endif
+
+ifeq ($(TFHE),1)
+# lib dependency on 3p
+TFHED1=../3p/tfhe_$(PLAT)/native
+TFHED2=../3p/tfhe_$(PLAT)/target
+LDF1=$(TFHED1)/libtfhe.a $(TFHED1)/libfftw3.a
+LDF2=$(TFHED2)/libtfhe.a $(TFHED2)/libfftw3.a
 endif

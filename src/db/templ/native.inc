@@ -14,8 +14,9 @@ $NameUint<SZ>::$NameUint()
 }
 
 template <int SZ>
-$NameUint<SZ>::$NameUint(const std::string & c) : $NameUint<SZ>()
+$NameUint<SZ>::$NameUint(const std::string & s) : $NameUint<SZ>()
 {
+    string c = pek->decor(s, false, "$Name");
     x = e3util::hex2ull(c);
     // hack to have valid plaintext
     // not applicable to other classes
@@ -163,7 +164,7 @@ inline $NameUint<SZ> $NameUint<SZ>::operator++(int)
 }
 
 template <int SZ>
-inline $NameUint<SZ> $NameUint<SZ>::operator++()
+inline $NameUint<SZ> & $NameUint<SZ>::operator++()
 {
     e3util::ull m = pek->dec(x);
     m++;
@@ -184,7 +185,7 @@ inline $NameUint<SZ> $NameUint<SZ>::operator--(int)
 }
 
 template <int SZ>
-inline $NameUint<SZ> $NameUint<SZ>::operator--()
+inline $NameUint<SZ> & $NameUint<SZ>::operator--()
 {
     e3util::ull m = pek->dec(x);
     m--;
@@ -431,7 +432,7 @@ template <int SZ>
 std::string $NameUint<SZ>::str() const
 {
     std::string s = e3util::ull2hex(x);
-    return s;
+    return pek->decor(s, true, "$Name");
 }
 
 

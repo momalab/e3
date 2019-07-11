@@ -2,19 +2,10 @@
 
 #include "def_heli.h"
 
-class $NameBit
+class $NameBit : public $NameBaseBit
 {
     protected:
-        struct PekInitializer
-        {
-            PekInitializer( void(*f)() ) { f(); }
-        } pekInitializer;
-
-        HeliNativeBit nb;
-        static CircuitEvalKey * pek;
-
-        static void init_pek();
-        static const char * name() { return "$Name"; }
+        HeliNativeBt nb;
 
         // this function may not needed (??? see tfhe)
         static const HeliCtxt * op(const std::shared_ptr<HeliCtxt> & p)
@@ -24,13 +15,11 @@ class $NameBit
         }
 
     public:
-        static const $NameBit * zero;
+        $NameBit() : $NameBaseBit(), nb(k()->native()) {}
+        $NameBit(HeliNativeBt ax) : $NameBaseBit(), nb(ax, k()->native()) {}
+        $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb, k()->native()) {}
+        $NameBit(const std::string & s): $NameBaseBit(), nb(s, k()->native()) {}
 
-        $NameBit() : pekInitializer(init_pek), nb(k()->native()) {}
-        $NameBit(HeliNativeBit ax) : pekInitializer(init_pek), nb(ax, k()->native()) {}
-        $NameBit(const $NameBit & b): pekInitializer(init_pek), nb(b.nb, k()->native()) {}
-
-        $NameBit(const std::string & s): pekInitializer(init_pek), nb(s, k()->native()) {}
         $NameBit(const char * s): $NameBit(std::string(s)) {}
         std::string str() const { return nb.str(k()->native()); }
 

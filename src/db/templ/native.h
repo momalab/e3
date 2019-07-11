@@ -12,7 +12,8 @@ template<int SZ> class $NameUint
         static NativeEvalKey * pek;
 
     public:
-        static const char * name() { return "$Name"; }
+        static const char * name() { return "$Ename"; }
+        static const char * scheme() { return "$Encryption"; }
         static const int size() { return SZ; };
 
         // Constructors
@@ -36,9 +37,9 @@ template<int SZ> class $NameUint
         $NameUint<SZ> & operator^=(const $NameUint<SZ> & a);
         $NameUint<SZ> & operator<<=(const $NameUint<SZ> & a);
         $NameUint<SZ> & operator>>=(const $NameUint<SZ> & a);
-        $NameUint<SZ> operator++();
+        $NameUint<SZ> & operator++();
+        $NameUint<SZ> & operator--();
         $NameUint<SZ> operator++(int);
-        $NameUint<SZ> operator--();
         $NameUint<SZ> operator--(int);
 
         $NameUint<SZ> operator+(const $NameUint<SZ> & a) const;
@@ -128,7 +129,7 @@ class $NameBool : public $NameUint<1>
         $NameBool operator/(const $NameBool & a) const;
         $NameBool operator%(const $NameBool & a) const;
         template <int SZ> $NameUint<SZ> operator*(const $NameUint<SZ> & x) const;
-        
+
         template <int SZ>
         $NameUint<SZ> mux(const $NameUint<SZ> & x, const $NameUint<SZ> & y) const;
 };

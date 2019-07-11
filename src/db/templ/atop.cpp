@@ -27,4 +27,8 @@ int abortion_set_variable = set_abortion();
 
 using std::vector;
 
+bool CarryAdd::use = false;
+CarryAdd::CarryAdd(): old(use) { use = true; }
+CarryAdd::~CarryAdd() { use = old; }
+
 // === END atop.cpp

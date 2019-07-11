@@ -16,8 +16,8 @@ class NativePrivKey : public PrivKey
         NativePrivKey(std::string name, bool forceGen,
                       bool forceLoad, std::string seed);
 
-        virtual std::string decrypt(const std::string & s) const;
-        virtual std::string encrypt(const std::string & s, int msz) const;
+        virtual std::string decrypt(const std::string & s, string pfx) const;
+        virtual std::string encrypt(const std::string & s, int msz, string pfx) const;
         NativeEvalKey & getEk() { return ek; }
         virtual bool load();
         virtual void save();

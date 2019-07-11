@@ -7,11 +7,6 @@
 #include "LWE.h"
 #include "FHEW.h"
 
-///using NativePrivKey = LWE::SecretKey;
-///using NativeEvalKey = FHEW::EvalKey;
-///using NativeBit = LWE::CipherText;
-///struct NativeProperties {};
-
 
 struct LweCipherText { LWE::CipherText b; };
 

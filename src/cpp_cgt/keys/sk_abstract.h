@@ -1,7 +1,7 @@
 #pragma once
 
 #include "e3util.h"
-#include "cgtrnd.h"
+#include "olrnd.h"
 #include "anykey.h"
 
 using std::string;
@@ -11,11 +11,13 @@ class PrivKey : public AnyKey
         bool loaded;
 
     protected:
-        mutable e3util::ull salt;
-        util::Rnd rnd;
+        ///mutable e3util::ull salt;
+        mutable Rnd * rnd; // no delete
         int lambda;
 
-        virtual string filename() { return name + ".priv.key"; }
+        string filenamex(string fx) const { return name + fx + ".priv.key"; }
+        virtual string filename() const { return filenamex(""); }
+
         void init_final(bool forceGen, bool forceLoad);
 
         // always generate both priv and eval keys and saves
@@ -29,10 +31,10 @@ class PrivKey : public AnyKey
 
     public:
         PrivKey(string nm, const string & seed, int lam)
-            : AnyKey(nm), loaded(true), rnd(seed), lambda(lam) {}
+            : AnyKey(nm), loaded(true), rnd(Rnd::newRnd(seed)), lambda(lam) {}
 
-        virtual string decrypt(const string & s) const = 0;
-        virtual string encrypt(const string & s, int msz) const = 0;
+        virtual string decrypt(const string & s, string pfx) const = 0;
+        virtual string encrypt(const string & s, int msz, string pfx) const = 0;
 
         virtual bool load() = 0;
         virtual void save() = 0;

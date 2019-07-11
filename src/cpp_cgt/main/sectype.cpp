@@ -3,28 +3,32 @@
 
 #include "os_filesys.h"
 #include "cgt.h"
-#include "util.h"
+#include "cgtutil.h"
 
 #include "secnames.h"
 #include "sectype.h"
 #include "sec_native.h"
 #include "sec_circuit.h"
+#include "sec_partial.h"
+#include "sec_bridge.h"
 
 using std::map;
 
 SecType * SecType::load
-(std::istream & is, string name, string typ)
+(std::istream & is, string name, string typ, const std::map<string, string> & globs)
 {
     if (0);
-    else if ( typ == secNames::typeNative ) return new Native(is, name);
-    else if ( typ == secNames::typeCircuit ) return new Circuit(is, name);
+    else if ( typ == secNames::typeNative ) return new Native(is, name); // FIXME o add globs as well
+    else if ( typ == secNames::typeCircuit ) return new Circuit(is, name, globs);
+    else if ( typ == secNames::typeBridge ) return new Bridge(is, name, globs);
+    else if ( typ == secNames::typePartial ) return new Partial(is, name, globs);
     else throw "Type '" + typ + "' is not valid or implemented";
 }
 
 bool SecType::readKeyVal(std::istream & is, pss & r, string end_word) const
 {
     is >> r.first;
-    if ( !is ) throw "Unexpected EOF in '" + name + "'";
+    if ( !is ) throw "Unexpected EOF in '" + tname + "'";
 
     if ( r.first == end_word ) return false;
 
@@ -32,7 +36,9 @@ bool SecType::readKeyVal(std::istream & is, pss & r, string end_word) const
     is >> w;
     if ( w != "=" ) throw "Expecting '=', got [" + w + "]";
 
-    is >> r.second;
+    ///is >> r.second;
+    r.second = util::readVal(is);
+
     if ( !is ) throw "Unexpected EOF while reading [" + r.first + "]";
     return true;
 }
@@ -84,6 +90,7 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
     auto isab = [](char c)->bool { return  !!std::isalpha(c); };
     auto isau = [](char c)->bool { return  !!std::isalpha(c) || c == '_'; };
     auto isdg = [](char c)->bool { return  !!std::isdigit(c); };
+    auto ishx = [](char c)->bool { return  !!std::isdigit(c) || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'); };
 
     for ( ; pos < text.size(); pos++ )
     {
@@ -122,12 +129,24 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
         }
         else if ( stage == 5 )
         {
-            if ( !isdg(c) ) stage = 0;
-            else
+            if ( pos + 1 < text.size() && c == '0' && text[pos + 1] == 'x' )
+            {
+                r = "0x";
+                pos++;
+                stage = 6;
+            }
+            else if ( isdg(c) )
             {
                 r = ""; r += c;
                 stage = 2;
             }
+            else stage = 0;
+        }
+        else if ( stage == 6 )
+        {
+            if ( ishx(c) ) r += c;
+            else if ( c == '_' ) stage = 3;
+            else stage = 0;
         }
     }
 
@@ -214,7 +233,10 @@ string SecType::makeDefines(const std::set<string> & sx, bool neg) const
     for ( auto m : sx )
     {
         string sign; sign = neg ? "-" : "";
-        string encrypted = encrypt(sign + m);
+        string md;
+        if ( m.size() > 2 && m[0] == '0' && m[1] == 'x' ) md = e3util::hex2dec( m.substr(2), 4 * (m.size() - 2), false );
+        else md = m;
+        string encrypted = encrypt(sign + md);
 
         if ( encrypted.size() > MAX_C_STR ) encrypted = break_str(encrypted, MAX_C_STR);
 
@@ -224,30 +246,11 @@ string SecType::makeDefines(const std::set<string> & sx, bool neg) const
     return r;
 }
 
-/*///
-string SecType::makeDefines(const map<string, bool> & sx) const
-{
-    string r;
-    if ( !sk ) throw "Secret key not found";
-    for ( auto m : sx )
-    {
-        string sign; sign = m.second ? "-" : "";
-        string encrypted = encrypt(sign + m.first);
-
-        if ( encrypted.size() > MAX_C_STR ) encrypted = break_str(encrypted, MAX_C_STR);
-
-        r += "#define _" + ol::tos(m.first) + "_" + (m.second ? postfixN : postfixP);
-        r += " \"" + encrypted + "\"\n";
-    }
-    return r;
-}
-*/
-
 void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
 {
     string w;
     is >> w;
-    if ( w != "{" ) throw "Expecting '{', got [" + w + "] when parsing [" + name + "]";
+    if ( w != "{" ) throw "Expecting '{', got [" + w + "] when parsing [" + tname + "]";
 
     string ptsize;
     kv[secNames::msize] = &ptsize;
@@ -255,7 +258,7 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
     for ( pss p; readKeyVal( is, p, "}" ); )
     {
         auto it = kv.find(p.first);
-        if ( it == kv.end() ) throw "Bad key [" + p.first + "] for [" + name + "]";
+        if ( it == kv.end() ) throw "Bad key [" + p.first + "] for [" + tname + "]";
         *it->second = p.second;
     }
 
@@ -264,14 +267,14 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
 
 std::string SecType::encrypt(const std::string & s) const
 {
-    if ( plaintext_size <= 0 ) throw "Unknown plaintext size in " + name;
-    auto r = get_sk()->encrypt(s, plaintext_size);
+    if ( plaintext_size <= 0 ) throw "Unknown plaintext size in " + tname;
+    auto r = get_sk_raw()->encrypt(s, plaintext_size, tname);
     return r;
 }
 
 std::string SecType::decrypt(const std::string & s) const
 {
-    return get_sk()->decrypt(s);
+    return get_sk_raw()->decrypt(s, tname);
 }
 
 // checking for duplicated postfixes
@@ -279,6 +282,7 @@ void SecType::checkPostfixes(std::set<string> & postfixes)
 {
     auto func = [& postfixes] (std::string postfix)
     {
+        if (postfix.empty()) return;
         if ( postfixes.find(postfix) != postfixes.end() )
             throw "Postfix '" + postfix + "' defined more than once";
         postfixes.insert(postfix);
@@ -287,3 +291,37 @@ void SecType::checkPostfixes(std::set<string> & postfixes)
     func(postfixP);
     func(postfixN);
 }
+
+void SecType::globPairs(std::map<string, string *> & kv, const std::map<string, string> & globs)
+{
+    for (auto & p : kv)
+    {
+        string n = p.first;
+        string * ps = p.second;
+        if (!ps) never("Null pointer in loading table");
+        string & s = *ps;
+        if (!s.empty()) continue; // defined
+        auto g = globs.find(n); // look in globs
+        if (g == globs.end()) continue;
+        s = g->second;
+    }
+}
+
+void SecType::make_bridge(const ConfigParser * par, int index)
+{
+    auto sbr = encType.substr(1);
+    Bridge * br = par->getBridge(sbr);
+    if ( !br ) throw "In [" + tname + "] bridge [" + sbr + "] is not defined";
+
+    sk = br->get_sk_shared();
+    encType = br->getEncType();
+    ename = br->getTname();
+    fixEncType();
+    bridge = br;
+
+    bridge->regist(this, index);
+
+    lambda = bridge->lambda;
+    ///lambda = bridge->getLam();
+}
+
