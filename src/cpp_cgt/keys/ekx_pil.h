@@ -9,7 +9,7 @@ namespace e3
 class PilBaseEvalKeyExt : public PilBaseEvalKey
 {
     public:
-        PilBaseEvalKeyExt(std::string name) : PilBaseEvalKey(User::Alice, name) {}
+        PilBaseEvalKeyExt(KeyName name) : PilBaseEvalKey(User::Alice, name) {}
 
         void save();
 };

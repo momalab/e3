@@ -28,10 +28,10 @@ const std::string encPila = "pila";
 const std::string encExt = "extern";
 
 // Keywords for replacement
-const std::string R_Tname = "$Name";
-const std::string R_Ename = "$Ename";
+const std::string R_TypName = "$Name";
+const std::string R_FilName = "$Filencname";
+const std::string R_ClsName = "$Clsencname";
 const std::string R_postfixDefines = "$PostfixDefines";
-const std::string R_encryption = "$Encryption";
 const std::string R_bitZero = "$BitZero";
 const std::string R_bitUnit = "$BitUnit";
 const std::string R_lambda = "$CtSize";

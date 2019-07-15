@@ -15,7 +15,7 @@ namespace cir_deco
 char separator = ',';
 }
 
-vector<string> CircuitEvalKey::enc2bits(const string & e)
+vector<string> e3::CircuitEvalKey::enc2bits(const string & e)
 {
     using rt = vector<string>;
     rt r;
@@ -32,7 +32,7 @@ vector<string> CircuitEvalKey::enc2bits(const string & e)
     return r;
 }
 
-string CircuitEvalKey::bits2enc(const vector<string> & v)
+string e3::CircuitEvalKey::bits2enc(const vector<string> & v)
 {
     string x;
     for ( auto b : v ) x += b + cir_deco::separator;

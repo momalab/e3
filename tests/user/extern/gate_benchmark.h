@@ -11,7 +11,8 @@ using namespace std;
 
 enum Gate { NOT = 0, AND, OR, XOR, NAND, NOR, XNOR, MUX };
 Gate gates[] = { NOT, AND, OR, XOR, NAND, NOR, XNOR, MUX };
-string gate_names[] = { "NOT...", "AND...", "OR....", "XOR...", "NAND..", "NOR...", "XNOR..", "MUX..." };
+//string gate_names[] = { "NOT...", "AND...", "OR....", "XOR...", "NAND..", "NOR...", "XNOR..", "MUX..." };
+string gate_names[] = { "not", "and", "or", "xor", "nand", "nor", "xnor", "mux" };
 
 template<class Bit> inline void cycle_not (Bit & a0, Bit & a1, Bit & b0, Bit & b1)
 {

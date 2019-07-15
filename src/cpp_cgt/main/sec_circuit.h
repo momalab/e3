@@ -10,7 +10,7 @@ class Circuit: public SecType
 
         std::string circDb;
         std::vector<int> sizes; // which circuits (template specializations) to include
-        CircuitPrivKey * csk = nullptr; // direct access to bit encryption
+        e3::CircuitPrivKey * csk = nullptr; // direct access to bit encryption
         ///int lambda;
         std::string formula; // Circle formula
         std::string compile; // optional compilation key command

@@ -152,9 +152,9 @@ void init_properties_heli(NativeProperties ** ppprop, std::string & name)
         double bitsize = context.logOfProduct(allPrimes) / log(2.0);
         long phim = mValues(idx, 1);
         if (e3heli::PRN) std::cout << "  " << nPrimes
-                                  << " primes in chain, total bitsize="
-                                  << ceil(bitsize) << ", secparam="
-                                  << (7.2 * phim / bitsize - 110) << std::flush;
+                                       << " primes in chain, total bitsize="
+                                       << ceil(bitsize) << ", secparam="
+                                       << (7.2 * phim / bitsize - 110) << std::flush;
     }
 
     if (e3heli::PRN) std::cout << " level=" << context.securityLevel() << std::flush;

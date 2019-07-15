@@ -6,13 +6,16 @@ class $NameBaseBit
 {
     protected:
         ///struct PekInitializer { PekInitializer( void(*f)() ) { f(); } } pekInitializer;
-        static CircuitEvalKey * pek;
+        static e3::CircuitEvalKey * pek;
         static void init_pek();
-        static const char * name() { return "$Ename"; }
 
         $NameBaseBit() { init_pek(); }
 
     public:
+        static const char * typname() { return "$Name"; }
+        static const char * filname() { return "$Filencname"; }
+        static const char * clsname() { return "$Clsencname"; }
+
         static const $NameBit * zero, * unit;
 };
 

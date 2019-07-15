@@ -7,7 +7,7 @@
 using std::cout;
 using std::string;
 
-inline string de(Secure x){ return decs(x); }
+inline string de(Secure x) { return decs(x); }
 
 int main()
 try

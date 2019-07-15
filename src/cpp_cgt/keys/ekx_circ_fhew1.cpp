@@ -8,21 +8,21 @@
 
 using std::cout;
 
-void CircuitEvalKey_fhew_X::save()
+void e3::CircuitEvalKey_fhew_X::save()
 {
     cout << "Saving evaluation key .. " << std::flush;
     save_oleg();
     cout << "ok\n";
 }
 
-void CircuitEvalKey_fhew_X::save_fhew()
+void e3::CircuitEvalKey_fhew_X::save_fhew()
 {
     FILE * fp = fopen(filename().c_str(), "w");
     FHEW::fwrite_ek(*e3fhew::toek(key), fp);
     fclose(fp);
 }
 
-void CircuitEvalKey_fhew_X::save_oleg()
+void e3::CircuitEvalKey_fhew_X::save_oleg()
 {
     const FHEW::EvalKey & k = *e3fhew::toek(key);
 

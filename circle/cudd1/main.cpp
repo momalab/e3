@@ -5,7 +5,7 @@ int main()
 {
     Cudd mgr(0, 0);
 
-    std::cout<<"TimeLimit="<<mgr.ReadTimeLimit()<<'\n';
+    std::cout << "TimeLimit=" << mgr.ReadTimeLimit() << '\n';
 
     BDD a0 = mgr.bddVar();
     BDD a1 = mgr.bddVar();
@@ -42,12 +42,12 @@ int main()
 
     std::cout << "\no cout:\n" << g1 << '\n';
     std::cout << "\no cout:\n" << g2 << '\n';
-    g1 = (a4^!a5);
+    g1 = (a4 ^ !a5);
     std::cout << "\no cout (x4^!x5):\n" << g1 << '\n';
     mgr.DumpDDcal(std::vector<BDD> { g1 });
 
     //mgr.DumpFactoredForm(std::vector<BDD>{ f2 });
     //std::cout <<'\n' << f2 << '\n';
 
-    std::cout<<"Memory used: "<< mgr.ReadMemoryInUse() <<'\n';
+    std::cout << "Memory used: " << mgr.ReadMemoryInUse() << '\n';
 }

@@ -1,5 +1,5 @@
 /**
-  @file 
+  @file
 
   @ingroup mtr
 
@@ -73,11 +73,11 @@ extern "C" {
 /*---------------------------------------------------------------------------*/
 
 /* Flag definitions */
-#define MTR_DEFAULT	0x00000000
-#define MTR_TERMINAL	0x00000001
-#define MTR_SOFT	0x00000002
-#define MTR_FIXED	0x00000004
-#define MTR_NEWNODE	0x00000008
+#define MTR_DEFAULT 0x00000000
+#define MTR_TERMINAL    0x00000001
+#define MTR_SOFT    0x00000002
+#define MTR_FIXED   0x00000004
+#define MTR_NEWNODE 0x00000008
 
 /*---------------------------------------------------------------------------*/
 /* Stucture declarations                                                     */
@@ -107,25 +107,25 @@ typedef struct MtrNode_ MtrNode;
 /*---------------------------------------------------------------------------*/
 
 MtrNode * Mtr_AllocNode(void);
-void Mtr_DeallocNode(MtrNode *node);
+void Mtr_DeallocNode(MtrNode * node);
 MtrNode * Mtr_InitTree(void);
-void Mtr_FreeTree(MtrNode *node);
-MtrNode * Mtr_CopyTree(MtrNode const *node, int expansion);
-void Mtr_MakeFirstChild(MtrNode *parent, MtrNode *child);
-void Mtr_MakeLastChild(MtrNode *parent, MtrNode *child);
-MtrNode * Mtr_CreateFirstChild(MtrNode *parent);
-MtrNode * Mtr_CreateLastChild(MtrNode *parent);
-void Mtr_MakeNextSibling(MtrNode *first, MtrNode *second);
-void Mtr_PrintTree(MtrNode const *node);
+void Mtr_FreeTree(MtrNode * node);
+MtrNode * Mtr_CopyTree(MtrNode const * node, int expansion);
+void Mtr_MakeFirstChild(MtrNode * parent, MtrNode * child);
+void Mtr_MakeLastChild(MtrNode * parent, MtrNode * child);
+MtrNode * Mtr_CreateFirstChild(MtrNode * parent);
+MtrNode * Mtr_CreateLastChild(MtrNode * parent);
+void Mtr_MakeNextSibling(MtrNode * first, MtrNode * second);
+void Mtr_PrintTree(MtrNode const * node);
 MtrNode * Mtr_InitGroupTree(int lower, int size);
-MtrNode * Mtr_MakeGroup(MtrNode *root, unsigned int low, unsigned int high, unsigned int flags);
-MtrNode * Mtr_DissolveGroup(MtrNode *group);
-MtrNode * Mtr_FindGroup(MtrNode *root, unsigned int low, unsigned int high);
-int Mtr_SwapGroups(MtrNode *first, MtrNode *second);
-void Mtr_ReorderGroups(MtrNode *treenode, int *permutation);
-void Mtr_PrintGroups(MtrNode const *root, int silent);
-int Mtr_PrintGroupedOrder(MtrNode const * root, int const *invperm, FILE *fp);
-MtrNode * Mtr_ReadGroups(FILE *fp, int nleaves);
+MtrNode * Mtr_MakeGroup(MtrNode * root, unsigned int low, unsigned int high, unsigned int flags);
+MtrNode * Mtr_DissolveGroup(MtrNode * group);
+MtrNode * Mtr_FindGroup(MtrNode * root, unsigned int low, unsigned int high);
+int Mtr_SwapGroups(MtrNode * first, MtrNode * second);
+void Mtr_ReorderGroups(MtrNode * treenode, int * permutation);
+void Mtr_PrintGroups(MtrNode const * root, int silent);
+int Mtr_PrintGroupedOrder(MtrNode const * root, int const * invperm, FILE * fp);
+MtrNode * Mtr_ReadGroups(FILE * fp, int nleaves);
 
 #ifdef __cplusplus
 }

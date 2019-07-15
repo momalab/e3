@@ -12,7 +12,7 @@
 using std::string;
 
 e3::PilBasePrivKey::PilBasePrivKey
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
     : PrivKey(name, seed, lam), ekb(name)
 {
     mxinited = false;
@@ -106,11 +106,12 @@ bool e3::PilBasePrivKey::load()
 }
 
 
-string e3::PilBasePrivKey::decrypt(const string & c, string pfx) const
+///string e3::PilBasePrivKey::decrypt(const string & c, string pfx) const
+string e3::PilBasePrivKey::decrypt(const string & c) const
 {
     if (!mxinited) never("Matrix not initialized");
 
-    string s = ekb.decor(c, false, pfx);
+    string s = ekb.decor(c, false);
     if ( s.empty() ) return s;
 
     e3::PilQuad bit(s);
@@ -127,7 +128,8 @@ string e3::PilBasePrivKey::decrypt(const string & c, string pfx) const
     return x.n.str();
 }
 
-string e3::PilBasePrivKey::encrypt(const string & s, int msz, string pfx) const
+///string e3::PilBasePrivKey::encrypt(const string & s, int msz, string pfx) const
+string e3::PilBasePrivKey::encrypt(const string & s, int msz) const
 {
     if (!mxinited) never("Matrix not initialized");
 
@@ -164,7 +166,7 @@ string e3::PilBasePrivKey::encrypt(const string & s, int msz, string pfx) const
 
     bit = rotate_tr(bit, Li);
 
-    return ekb.decor(bit.str(), true, pfx);
+    return ekb.decor(bit.str(), true);
 }
 
 e3::PilQuad e3::PilBasePrivKey::rotate_tr(const e3::PilQuad & bit, const Matrix & mx) const

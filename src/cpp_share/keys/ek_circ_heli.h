@@ -4,6 +4,9 @@
 #include "e3util.h"
 #include "def_heli.h"
 
+namespace e3
+{
+
 class CircuitEvalKey_heli : public CircuitEvalKey
 {
         static const bool NOCOUT = true;
@@ -16,7 +19,7 @@ class CircuitEvalKey_heli : public CircuitEvalKey
         Hnek key;
 
     public:
-        CircuitEvalKey_heli(User u, std::string name)
+        CircuitEvalKey_heli(User u, KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();
@@ -25,3 +28,5 @@ class CircuitEvalKey_heli : public CircuitEvalKey
 
         virtual std::string filename() const;
 };
+
+} // e3

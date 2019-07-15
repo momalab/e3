@@ -17,17 +17,17 @@ class CircuitPrivKey_pilc : public CircuitPrivKey
         bool decbit(const Bit & y) const;
 
     private:
-        CircuitEvalKey_pilc_X ekx;
+        ///CircuitEvalKey_pilc_X ekx;
         PilBasePrivKey sk;
 
         virtual bool load();
         virtual void save() { sk.save(); }
 
     public:
-        CircuitPrivKey_pilc(std::string name, bool forceGen,
+        CircuitPrivKey_pilc(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam);
 
-        CircuitPrivKey_pilc(const PilBasePrivKey & pil);
+        CircuitPrivKey_pilc(const PilBasePrivKey & pil, string nm);
 
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;

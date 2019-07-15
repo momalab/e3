@@ -1,7 +1,7 @@
 
 #include "sk_abstract.h"
 
-void PrivKey::init_final(bool forceGen, bool forceLoad)
+void e3::PrivKey::init_final(bool forceGen, bool forceLoad)
 {
     if (forceGen) genAndSave();
     else if (forceLoad)
@@ -14,7 +14,7 @@ void PrivKey::init_final(bool forceGen, bool forceLoad)
     }
 }
 
-void PrivKey::genAndSave()
+void e3::PrivKey::genAndSave()
 {
     gen();
     loaded = false;

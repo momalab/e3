@@ -4,6 +4,9 @@
 #include "ekx_circ_heli.h"
 #include "def_heli.h"
 
+namespace e3
+{
+
 class CircuitPrivKey_heli : public CircuitPrivKey
 {
         virtual void gen();
@@ -26,7 +29,7 @@ class CircuitPrivKey_heli : public CircuitPrivKey
         ///static void init_properties(NativeProperties ** ppprop, string &name);
 
     public:
-        CircuitPrivKey_heli(std::string name, bool forceGen,
+        CircuitPrivKey_heli(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam);
 
         virtual std::string encbitstr(bool b) const;
@@ -34,3 +37,5 @@ class CircuitPrivKey_heli : public CircuitPrivKey
 
         virtual string filename() const;
 };
+
+} // e3

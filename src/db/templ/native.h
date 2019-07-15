@@ -9,11 +9,14 @@ template<int SZ> class $NameUint
 
     protected:
         e3util::ull x;
-        static NativeEvalKey * pek;
+        static e3::NativeEvalKey * pek;
 
     public:
-        static const char * name() { return "$Ename"; }
-        static const char * scheme() { return "$Encryption"; }
+        static const char * typname() { return "$Name"; }
+        static const char * filname() { return "$Filencname"; }
+        static const char * clsname() { return "$Clsencname"; }
+        ///static const char * name() { return "$Ename"; }
+        ///static const char * scheme() { return "$Encryption"; }
         static const int size() { return SZ; };
 
         // Constructors
@@ -137,7 +140,7 @@ class $NameBool : public $NameUint<1>
 template <int SZ> std::ostream & operator<<(std::ostream & os, const $NameUint<SZ> & x);
 template <int SZ> std::ostream & operator<<(std::ostream & os, const $NameInt<SZ> & x);
 
-extern NativeEvalKey * g_pek_$Name;
+extern e3::NativeEvalKey * g_pek_$Name;
 
 $PostfixDefines
 

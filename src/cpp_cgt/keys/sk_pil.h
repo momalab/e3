@@ -36,16 +36,20 @@ class PilBasePrivKey : public PrivKey
         Matrix L, Li;
         PilNum T;
 
-
+        // need for public values, e.g N
         PilBaseEvalKeyExt ekb;
 
     public:
-        PilBasePrivKey(std::string name, bool forceGen,
+        PilBasePrivKey(KeyName name, bool forceGen,
                        bool forceLoad, std::string seed, int lam);
 
-        virtual std::string decrypt(const std::string & s, string pfx) const;
-        virtual std::string encrypt(const std::string & s, int msz, string pfx) const;
-        PilBaseEvalKey & getEk() { return ekb; }
+        PilBasePrivKey(const PilBasePrivKey &) = default;
+        PilBasePrivKey(const PilBasePrivKey & k, string nm)
+            : PilBasePrivKey(k) { name.typ = nm; }
+
+        virtual std::string decrypt(const std::string & s) const;
+        virtual std::string encrypt(const std::string & s, int msz) const;
+        ///PilBaseEvalKey & getEk() { return ekb; }
         virtual bool load();
         virtual void save();
 
@@ -57,7 +61,7 @@ class PilBasePrivKey : public PrivKey
 class PilaPrivKey : public PilBasePrivKey
 {
     public:
-        PilaPrivKey(std::string name, bool forceGen,
+        PilaPrivKey(KeyName name, bool forceGen,
                     bool forceLoad, std::string seed, int lam)
             : PilBasePrivKey(name, forceGen, forceLoad, seed, lam) {}
 };

@@ -24,7 +24,7 @@ class CircuitPrivKey_seal : public CircuitPrivKey
         virtual void save();
 
     public:
-        CircuitPrivKey_seal(std::string name, bool forceGen,
+        CircuitPrivKey_seal(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam);
 
         virtual std::string encbitstr(bool b) const;

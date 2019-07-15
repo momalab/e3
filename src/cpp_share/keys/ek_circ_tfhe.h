@@ -18,7 +18,7 @@ class CircuitEvalKey_tfhe : public CircuitEvalKey
         Tnek key;
 
     public:
-        CircuitEvalKey_tfhe(User u, std::string name)
+        CircuitEvalKey_tfhe(User u, KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();

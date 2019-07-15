@@ -7,7 +7,7 @@
 
 using std::cout;
 
-void CircuitEvalKey_fhew_X::save()
+void e3::CircuitEvalKey_fhew_X::save()
 {
     std::ofstream of(filename(), std::ios::binary);
     of << "CircuitEvalKey_fhew_X impl:0\n";

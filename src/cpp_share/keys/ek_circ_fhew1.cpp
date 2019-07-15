@@ -6,7 +6,7 @@
 
 using std::cout;
 
-bool CircuitEvalKey_fhew::load()
+bool e3::CircuitEvalKey_fhew::load()
 {
     init_properties_fhew();
 
@@ -19,7 +19,7 @@ bool CircuitEvalKey_fhew::load()
     return r;
 }
 
-bool CircuitEvalKey_fhew::load_fhew()
+bool e3::CircuitEvalKey_fhew::load_fhew()
 {
     FILE * fp = fopen(filename().c_str(), "r");
     key = FHEW::fread_ek(fp);
@@ -27,7 +27,7 @@ bool CircuitEvalKey_fhew::load_fhew()
     return true;
 }
 
-bool CircuitEvalKey_fhew::load_oleg()
+bool e3::CircuitEvalKey_fhew::load_oleg()
 {
     std::ifstream in(filename(), std::ios::binary);
     if ( !in ) return false;
@@ -134,6 +134,6 @@ bool CircuitEvalKey_fhew::load_oleg()
     return true;
 }
 
-///std::string CircuitEvalKey_fhew::decor(const std::string & s, bool add) const{    return prefix(s, add, "F");}
+///std::string e3::CircuitEvalKey_fhew::decor(const std::string & s, bool add) const{    return prefix(s, add, "F");}
 
-std::string CircuitEvalKey_fhew::filename() const { return EvalKey::filename(); }
+std::string e3::CircuitEvalKey_fhew::filename() const { return EvalKey::filename(); }

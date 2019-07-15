@@ -1,7 +1,7 @@
 #include "ek_abstract.h"
 
 
-void EvalKey::loadOrDie()
+void e3::EvalKey::loadOrDie()
 {
     if (!load()) throw "Cannot load the key [" + filename() + "]";
 }

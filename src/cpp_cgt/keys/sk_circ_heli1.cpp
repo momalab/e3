@@ -6,16 +6,22 @@
 
 using std::cout;
 
-string CircuitPrivKey_heli::filename() const { return PrivKey::filename(); }
+string e3::CircuitPrivKey_heli::filename() const { return PrivKey::filename(); }
 
-CircuitPrivKey_heli::CircuitPrivKey_heli
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+///<<<<<<< .mine
+e3::CircuitPrivKey_heli::CircuitPrivKey_heli
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+    : CircuitPrivKey(name, seed, lam), ek(name), sk(0)
+///=======
+///CircuitPrivKey_heli::CircuitPrivKey_heli
+///(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
+///    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+///>>>>>>> .r12
 {
     init_final(forceGen, forceLoad);
 }
 
-void CircuitPrivKey_heli::gen()
+void e3::CircuitPrivKey_heli::gen()
 {
     init_properties_heli(&properties, name);
     ek.name = name;
@@ -32,7 +38,7 @@ void CircuitPrivKey_heli::gen()
     ek.key = key;
 }
 
-void CircuitPrivKey_heli::save()
+void e3::CircuitPrivKey_heli::save()
 {
     FHESecKey & k = *e3heli::tosk(key);
     cout << "Saving private key .. " << std::flush;
@@ -45,7 +51,7 @@ void CircuitPrivKey_heli::save()
     ek.save();
 }
 
-bool CircuitPrivKey_heli::load()
+bool e3::CircuitPrivKey_heli::load()
 {
     init_properties_heli(&properties, name);
     ek.name = name;
@@ -59,14 +65,14 @@ bool CircuitPrivKey_heli::load()
     return ek.load();
 }
 
-std::string CircuitPrivKey_heli::encbitstr(bool b) const
+std::string e3::CircuitPrivKey_heli::encbitstr(bool b) const
 {
     HeliNativeBt nb(ek.key);
     e3heli::toek(ek.key)->Encrypt(nb.ctxt->b, to_ZZX(b));
     return nb.str(ek.key);
 }
 
-bool CircuitPrivKey_heli::decbitstr(const std::string & s, bool * ok) const
+bool e3::CircuitPrivKey_heli::decbitstr(const std::string & s, bool * ok) const
 {
     HeliNativeBt nb(s, ek.key);
     ZZX z;

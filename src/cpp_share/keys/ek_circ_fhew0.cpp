@@ -2,7 +2,7 @@
 
 #include "ek_circ_fhew.h"
 
-bool CircuitEvalKey_fhew::load()
+bool e3::CircuitEvalKey_fhew::load()
 {
     std::ifstream in(filename(), std::ios::binary);
     return !!in;
@@ -13,7 +13,7 @@ bool CircuitEvalKey_fhew::load()
 ///    return prefix(s, add, "F0");
 ///}
 
-std::string CircuitEvalKey_fhew::filename() const
+std::string e3::CircuitEvalKey_fhew::filename() const
 {
     return EvalKey::filenamex("_0");
 }

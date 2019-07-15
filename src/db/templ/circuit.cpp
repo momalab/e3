@@ -1,7 +1,7 @@
 // === BEGIN circuit.cpp Name=$Name
 
-CircuitEvalKey * g_pek_$Name = nullptr;
-CircuitEvalKey * $NameBaseBit::pek = nullptr;
+e3::CircuitEvalKey * g_pek_$Name = nullptr;
+e3::CircuitEvalKey * $NameBaseBit::pek = nullptr;
 const $NameBit * $NameBaseBit::zero = nullptr;
 const $NameBit * $NameBaseBit::unit = nullptr;
 
@@ -11,8 +11,8 @@ void $NameBaseBit::init_pek()
     if ( pek ) return;
 
     initEvalKey
-    < CircuitEvalKey, CircuitEvalKey_$Encryption >
-    (name(), pek, g_pek_$Name);
+    < CircuitEvalKey, CircuitEvalKey_$Clsencname >
+    (e3::KeyName {typname(), filname()}, pek, g_pek_$Name);
 
     if ( !zero ) zero = new $NameBit("$BitZero");
     if ( !unit ) unit = new $NameBit("$BitUnit");

@@ -28,7 +28,7 @@ SecType * SecType::load
 bool SecType::readKeyVal(std::istream & is, pss & r, string end_word) const
 {
     is >> r.first;
-    if ( !is ) throw "Unexpected EOF in '" + tname + "'";
+    if ( !is ) throw "Unexpected EOF in '" + name.typ + "'";
 
     if ( r.first == end_word ) return false;
 
@@ -90,7 +90,9 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
     auto isab = [](char c)->bool { return  !!std::isalpha(c); };
     auto isau = [](char c)->bool { return  !!std::isalpha(c) || c == '_'; };
     auto isdg = [](char c)->bool { return  !!std::isdigit(c); };
-    auto ishx = [](char c)->bool { return  !!std::isdigit(c) || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'); };
+    auto ishx = [](char c)->bool { return  !!std::isdigit(c)
+                                           || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+                                 };
 
     for ( ; pos < text.size(); pos++ )
     {
@@ -234,11 +236,15 @@ string SecType::makeDefines(const std::set<string> & sx, bool neg) const
     {
         string sign; sign = neg ? "-" : "";
         string md;
-        if ( m.size() > 2 && m[0] == '0' && m[1] == 'x' ) md = e3util::hex2dec( m.substr(2), 4 * (m.size() - 2), false );
+
+        if ( m.size() > 2 && m[0] == '0' && m[1] == 'x' )
+            md = e3util::hex2dec( m.substr(2), 4 * (m.size() - 2), false );
         else md = m;
+
         string encrypted = encrypt(sign + md);
 
-        if ( encrypted.size() > MAX_C_STR ) encrypted = break_str(encrypted, MAX_C_STR);
+        if ( encrypted.size() > MAX_C_STR )
+            encrypted = break_str(encrypted, MAX_C_STR);
 
         r += "#define _" + ol::tos(m) + "_" + (neg ? postfixN : postfixP);
         r += " \"" + encrypted + "\"\n";
@@ -250,7 +256,9 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
 {
     string w;
     is >> w;
-    if ( w != "{" ) throw "Expecting '{', got [" + w + "] when parsing [" + tname + "]";
+    if ( w != "{" )
+        throw "Expecting '{', got ["
+        + w + "] when parsing [" + name.typ + "]";
 
     string ptsize;
     kv[secNames::msize] = &ptsize;
@@ -258,7 +266,7 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
     for ( pss p; readKeyVal( is, p, "}" ); )
     {
         auto it = kv.find(p.first);
-        if ( it == kv.end() ) throw "Bad key [" + p.first + "] for [" + tname + "]";
+        if ( it == kv.end() ) throw "Bad key [" + p.first + "] for [" + name.typ + "]";
         *it->second = p.second;
     }
 
@@ -267,14 +275,14 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
 
 std::string SecType::encrypt(const std::string & s) const
 {
-    if ( plaintext_size <= 0 ) throw "Unknown plaintext size in " + tname;
-    auto r = get_sk_raw()->encrypt(s, plaintext_size, tname);
+    if ( plaintext_size <= 0 ) throw "Unknown plaintext size in " + name.typ;
+    auto r = get_sk_raw()->encrypt(s, plaintext_size);
     return r;
 }
 
 std::string SecType::decrypt(const std::string & s) const
 {
-    return get_sk_raw()->decrypt(s, tname);
+    return get_sk_raw()->decrypt(s);
 }
 
 // checking for duplicated postfixes
@@ -292,7 +300,8 @@ void SecType::checkPostfixes(std::set<string> & postfixes)
     func(postfixN);
 }
 
-void SecType::globPairs(std::map<string, string *> & kv, const std::map<string, string> & globs)
+void SecType::globPairs(std::map<string, string *> & kv,
+                        const std::map<string, string> & globs)
 {
     for (auto & p : kv)
     {
@@ -307,15 +316,15 @@ void SecType::globPairs(std::map<string, string *> & kv, const std::map<string, 
     }
 }
 
-void SecType::make_bridge(const ConfigParser * par, int index)
+void SecType::makeBridge(const ConfigParser * par, int index)
 {
     auto sbr = encType.substr(1);
     Bridge * br = par->getBridge(sbr);
-    if ( !br ) throw "In [" + tname + "] bridge [" + sbr + "] is not defined";
+    if ( !br ) throw "In [" + name.typ + "] bridge [" + sbr + "] is not defined";
 
     sk = br->get_sk_shared();
     encType = br->getEncType();
-    ename = br->getTname();
+    name.fil = br->getTypName(); // use name of the bridge
     fixEncType();
     bridge = br;
 

@@ -8,7 +8,7 @@
 #include "ek_circ.h"
 #include "sk_circ.h"
 
-std::string CircuitPrivKey::encrypt_cir(const string & s, int msz) const
+std::string e3::CircuitPrivKey::encrypt_cir(const string & s, int msz) const
 {
     if ( !util::isNumber(s) ) throw "Bad plaintext [" + s + "]";
     vector<bool> bin = e3util::hex2bin( e3util::dec2hex(s, msz), msz );
@@ -17,7 +17,7 @@ std::string CircuitPrivKey::encrypt_cir(const string & s, int msz) const
     return CircuitEvalKey::bits2enc(bits);
 }
 
-std::string CircuitPrivKey::decrypt_cir(const std::string & ss) const
+std::string e3::CircuitPrivKey::decrypt_cir(const std::string & ss) const
 {
     auto bits = CircuitEvalKey::enc2bits(ss);
 
@@ -36,14 +36,21 @@ std::string CircuitPrivKey::decrypt_cir(const std::string & ss) const
     return e3util::hex2dec( e3util::bin2hex(v) );
 }
 
-std::string CircuitPrivKey::encrypt(const string & s, int msz, string pfx) const
+///std::string e3::CircuitPrivKey::encrypt(const string & s, int msz, string pfx) const
+///{
+///    return pek->decor(encrypt_cir(s, msz), true, pfx);
+///}
+std::string e3::CircuitPrivKey::encrypt(const string & s, int msz) const
 {
-    return pek->decor(encrypt_cir(s, msz), true, pfx);
+    ///return pek->decor(encrypt_cir(s, msz), true);
+    return decor(encrypt_cir(s, msz), true);
 }
 
-std::string CircuitPrivKey::decrypt(const std::string & s, string pfx) const
+///std::string e3::CircuitPrivKey::decrypt(const std::string & s, string pfx) const
+std::string e3::CircuitPrivKey::decrypt(const std::string & s) const
 {
-    string a = pek->decor(s, false, pfx);
+    ///string a = pek->decor(s, false, pfx);
+    string a = decor(s, false);
     if ( a.empty() ) return "";
     return decrypt_cir(a);
 }

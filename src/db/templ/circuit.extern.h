@@ -11,7 +11,7 @@ class CircuitEvalKey_extern : public CircuitEvalKey
         CircuitEvalKey_extern(User u, std::string name)
             : CircuitEvalKey(name) { user(u); }
 
-        virtual bool load(){ return true; }
+        virtual bool load() { return true; }
 };
 
 class $NameBit : public $NameBaseBit
@@ -30,13 +30,13 @@ class $NameBit : public $NameBaseBit
 
         static $NameBit gate_buf(const $NameBit & a) { return ::gate_buf(a.x); }
         static $NameBit gate_not(const $NameBit & a) { return ::gate_not(a.x); }
-        static $NameBit gate_and(const $NameBit & a, const $NameBit & b){ return ::gate_and(a.x,b.x); }
-        static $NameBit gate_or(const $NameBit & a, const $NameBit & b){ return ::gate_or(a.x,b.x); }
-        static $NameBit gate_nand(const $NameBit & a, const $NameBit & b){ return ::gate_nand(a.x,b.x); }
-        static $NameBit gate_nor(const $NameBit & a, const $NameBit & b){ return ::gate_nor(a.x,b.x); }
-        static $NameBit gate_xnor(const $NameBit & a, const $NameBit & b){ return ::gate_xnor(a.x,b.x); }
-        static $NameBit gate_xor(const $NameBit & a, const $NameBit & b){ return ::gate_xor(a.x,b.x); }
-        static $NameBit gate_mux(const $NameBit & a, const $NameBit & b, const $NameBit & c){ return ::gate_mux(a.x,b.x,c.x); }
+        static $NameBit gate_and(const $NameBit & a, const $NameBit & b) { return ::gate_and(a.x, b.x); }
+        static $NameBit gate_or(const $NameBit & a, const $NameBit & b) { return ::gate_or(a.x, b.x); }
+        static $NameBit gate_nand(const $NameBit & a, const $NameBit & b) { return ::gate_nand(a.x, b.x); }
+        static $NameBit gate_nor(const $NameBit & a, const $NameBit & b) { return ::gate_nor(a.x, b.x); }
+        static $NameBit gate_xnor(const $NameBit & a, const $NameBit & b) { return ::gate_xnor(a.x, b.x); }
+        static $NameBit gate_xor(const $NameBit & a, const $NameBit & b) { return ::gate_xor(a.x, b.x); }
+        static $NameBit gate_mux(const $NameBit & a, const $NameBit & b, const $NameBit & c) { return ::gate_mux(a.x, b.x, c.x); }
 };
 
 

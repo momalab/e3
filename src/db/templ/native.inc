@@ -1,7 +1,7 @@
 // === BEGIN native.inc Name=$Name
 
 // Pointer to the manager
-template <int SZ> NativeEvalKey * $NameUint<SZ>::pek = nullptr;
+template <int SZ> e3::NativeEvalKey * $NameUint<SZ>::pek = nullptr;
 
 // ----- $NameUint ----- //
 
@@ -10,13 +10,14 @@ template <int SZ> NativeEvalKey * $NameUint<SZ>::pek = nullptr;
 template <int SZ>
 $NameUint<SZ>::$NameUint()
 {
-    if ( !pek ) initEvalKey(name(), pek, g_pek_$Name);
+    if ( !pek ) initEvalKey(e3::KeyName {typname(), filname()}, pek, g_pek_$Name);
 }
 
 template <int SZ>
 $NameUint<SZ>::$NameUint(const std::string & s) : $NameUint<SZ>()
 {
-    string c = pek->decor(s, false, "$Name");
+    ///string c = pek->decor(s, false, "$Name");
+    string c = pek->decor(s, false);
     x = e3util::hex2ull(c);
     // hack to have valid plaintext
     // not applicable to other classes
@@ -432,7 +433,8 @@ template <int SZ>
 std::string $NameUint<SZ>::str() const
 {
     std::string s = e3util::ull2hex(x);
-    return pek->decor(s, true, "$Name");
+    return pek->decor(s, true);
+    ///return pek->decor(s, true, "$Name");
 }
 
 

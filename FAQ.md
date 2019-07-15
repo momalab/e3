@@ -1,7 +1,7 @@
 # Frequently Asked Questions
 
 ### How to build
-Go to src directory and make. It should build the tool and build an example user program, and run it.
+Go to src directory and `make`. It should build the tool and build an example user program and run it.
 
 ### How do I specify the name of the class to be used as secure datatype?
 When our build tool (CGT) generates classes, it reads a user-provided configuration file (default cgt.cfg). This file defines types that are to be used in the program. For example, basename __`Secure`__ defines three classes __SecureInt__ , __SecureUint__ , and __SecureBool__ .
@@ -33,7 +33,7 @@ All standard operators are available to the user when using encrypted variables.
 **Overloaded**: These operators are overloaded for `SecureInt`. The class defines these operators, which in turn call the appropriate functions corresponding to the semantics of unencrypted data. Some class operations do not require manipulation on encrypted data: copy, expanding/shrinking of number of bits. These operators are implemented purely at a high-level without calling circuit functions, and appear in the 'Implemented in C++' category. All the other overloaded operations (e.g. `a+b`) require calls to *functions implementing Boolean circuits using FHE-evaluated gates* (dubbed "FHE circuits"). These operators can be further classified into two categories: 'Direct', which actually calls FHE circuit functions; and 'Indirect', which do not call sunch functions directly but are expressed using Direct operators. 
 
 ### Do I need to change my PATH?
-No.
+No. But, in Windows environment, you need to set up the environment variables (PATH, INCLUDE, LIB) manually.
 
 ### A simple full working example
 Configuration file (cgt.cfg)

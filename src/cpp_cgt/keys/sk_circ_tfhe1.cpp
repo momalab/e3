@@ -9,8 +9,9 @@ using std::cout;
 string e3::CircuitPrivKey_tfhe::filename() const { return PrivKey::filename(); }
 
 e3::CircuitPrivKey_tfhe::CircuitPrivKey_tfhe
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+///    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+    : CircuitPrivKey(name, seed, lam), ek(name)
 {
     init_final(forceGen, forceLoad);
 }

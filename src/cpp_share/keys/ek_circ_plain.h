@@ -3,13 +3,16 @@
 #include "ek_circ.h"
 #include "e3util.h"
 
+namespace e3
+{
+
 class CircuitEvalKey_plain : public CircuitEvalKey
 {
     protected:
         e3util::usi key;
 
     public:
-        CircuitEvalKey_plain(User u, std::string name)
+        CircuitEvalKey_plain(User u, KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();
@@ -22,3 +25,5 @@ class CircuitEvalKey_plain : public CircuitEvalKey
 
         ///virtual std::string decor(const std::string &, bool add) const;
 };
+
+} // e3

@@ -6,7 +6,7 @@
 
 using std::cout;
 
-bool CircuitEvalKey_heli::load()
+bool e3::CircuitEvalKey_heli::load()
 {
     init_properties_heli(&properties, name);
     key = new FHEPubKey(*properties->pcontext);
@@ -30,4 +30,4 @@ bool CircuitEvalKey_heli::load()
 
 ///std::string CircuitEvalKey_heli::decor(const std::string & s, bool add) const{    return prefix(s, add, "H");}
 
-std::string CircuitEvalKey_heli::filename() const { return EvalKey::filename(); }
+std::string e3::CircuitEvalKey_heli::filename() const { return EvalKey::filename(); }

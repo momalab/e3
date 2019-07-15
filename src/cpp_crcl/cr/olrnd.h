@@ -16,6 +16,7 @@ class Rnd
         virtual int next() = 0;
         virtual ol::ull nextull() = 0;
         int operator()() { return next(); }
+        virtual ~Rnd() {}
 };
 
 // cross platform generator - not reliiable

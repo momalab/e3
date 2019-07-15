@@ -1,5 +1,5 @@
 /**
-  @file 
+  @file
 
   @ingroup epd
 
@@ -58,9 +58,9 @@
 /* Constant declarations                                                     */
 /*---------------------------------------------------------------------------*/
 
-#define	EPD_MAX_BIN	1023
-#define	EPD_MAX_DEC	308
-#define	EPD_EXP_INF	0x7ff
+#define EPD_MAX_BIN 1023
+#define EPD_MAX_DEC 308
+#define EPD_EXP_INF 0x7ff
 
 /*---------------------------------------------------------------------------*/
 /* Type declarations                                                         */
@@ -77,58 +77,64 @@ typedef union EpTypeUnion EpType;
 /**
   @brief IEEE double struct.
 */
-#ifdef	EPD_BIG_ENDIAN
-struct IeeeDoubleStruct {	/* BIG_ENDIAN */
-  unsigned int sign: 1;
-  unsigned int exponent: 11;
-  unsigned int mantissa0: 20;
-  unsigned int mantissa1: 32;
+#ifdef  EPD_BIG_ENDIAN
+struct IeeeDoubleStruct     /* BIG_ENDIAN */
+{
+    unsigned int sign: 1;
+    unsigned int exponent: 11;
+    unsigned int mantissa0: 20;
+    unsigned int mantissa1: 32;
 };
 #else
-struct IeeeDoubleStruct {	/* LITTLE_ENDIAN */
-  unsigned int mantissa1: 32;
-  unsigned int mantissa0: 20;
-  unsigned int exponent: 11;
-  unsigned int sign: 1;
+struct IeeeDoubleStruct     /* LITTLE_ENDIAN */
+{
+    unsigned int mantissa1: 32;
+    unsigned int mantissa0: 20;
+    unsigned int exponent: 11;
+    unsigned int sign: 1;
 };
 #endif
 
 /**
   @brief IEEE double NaN struct.
 */
-#ifdef	EPD_BIG_ENDIAN
-struct IeeeNanStruct {	/* BIG_ENDIAN */
-  unsigned int sign: 1;
-  unsigned int exponent: 11;
-  unsigned int quiet_bit: 1;
-  unsigned int mantissa0: 19;
-  unsigned int mantissa1: 32;
+#ifdef  EPD_BIG_ENDIAN
+struct IeeeNanStruct    /* BIG_ENDIAN */
+{
+    unsigned int sign: 1;
+    unsigned int exponent: 11;
+    unsigned int quiet_bit: 1;
+    unsigned int mantissa0: 19;
+    unsigned int mantissa1: 32;
 };
 #else
-struct IeeeNanStruct {	/* LITTLE_ENDIAN */
-  unsigned int mantissa1: 32;
-  unsigned int mantissa0: 19;
-  unsigned int quiet_bit: 1;
-  unsigned int exponent: 11;
-  unsigned int sign: 1;
+struct IeeeNanStruct    /* LITTLE_ENDIAN */
+{
+    unsigned int mantissa1: 32;
+    unsigned int mantissa0: 19;
+    unsigned int quiet_bit: 1;
+    unsigned int exponent: 11;
+    unsigned int sign: 1;
 };
 #endif
 
 /**
   @brief Different views of a double.
 */
-union EpTypeUnion {
-  double			value;
-  struct IeeeDoubleStruct	bits;
-  struct IeeeNanStruct		nan;
+union EpTypeUnion
+{
+    double            value;
+    struct IeeeDoubleStruct   bits;
+    struct IeeeNanStruct      nan;
 };
 
 /**
   @brief Extended precision double to keep very large value.
 */
-struct EpDoubleStruct {
-  union EpTypeUnion		type;
-  int				exponent;
+struct EpDoubleStruct
+{
+    union EpTypeUnion     type;
+    int               exponent;
 };
 
 /*---------------------------------------------------------------------------*/

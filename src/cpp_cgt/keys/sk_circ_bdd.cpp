@@ -21,56 +21,57 @@ const int BDDNTRY = 20;
 // this flag used for debug and must be the same as in circuit.bdd.cpp
 const bool NameBit_useHex = true;
 
-CircuitPrivKey_bdd::CircuitPrivKey_bdd
-(std::string name, std::string seed,
- int lam, CircuitEvalKey * ek,
+e3::CircuitPrivKey_bdd::CircuitPrivKey_bdd
+(KeyName name, std::string seed,
+/// int lam, CircuitEvalKey * ek,
+ int lam,
  std::string form, std::string comp, std::string kern)
-    : CircuitPrivKey(name, seed, lam, ek), formula(form), compile(comp), kernel(kern)
+    : CircuitPrivKey(name, seed, lam), formula(form), compile(comp), kernel(kern)
 {
     if ( formula.empty() )
     {
         formula = default_formula();
-        std::cout << "Warning: formula is not defined for " << name << ", using " << formula << '\n';
+        std::cout << "Warning: formula is not defined for " << name.typ << ", using " << formula << '\n';
     }
 
     if ( kernel.empty() )
     {
         kernel = default_kernel();
-        std::cout << "Warning: kernel is not defined for " << name << ", using " << kernel << '\n';
+        std::cout << "Warning: kernel is not defined for " << name.typ << ", using " << kernel << '\n';
     }
 }
 
-CircuitPrivKey_bddn::CircuitPrivKey_bddn
-(std::string name, bool forceGen, bool forceLoad,
+e3::CircuitPrivKey_bddn::CircuitPrivKey_bddn
+(KeyName name, bool forceGen, bool forceLoad,
  std::string seed, int lam, std::string form,
  std::string comp, std::string kern, bool mx)
-    : CircuitPrivKey_bdd(name, seed, lam, &ek, form, comp, kern),
-      modifier_xor(mx), ek(name)
+    : CircuitPrivKey_bdd(name, seed, lam, form, comp, kern),
+      modifier_xor(mx)
 {
     init_final(forceGen, forceLoad);
 }
 
-CircuitPrivKey_bdda::CircuitPrivKey_bdda
-(std::string name, bool forceGen, bool forceLoad,
+e3::CircuitPrivKey_bdda::CircuitPrivKey_bdda
+(KeyName name, bool forceGen, bool forceLoad,
  std::string seed, int lam, std::string form,
  std::string comp, std::string kern, bool mn)
-    : CircuitPrivKey_bdd(name, seed, lam, &ek, form, comp, kern),
-      modifier_not(mn), ek(name)
+    : CircuitPrivKey_bdd(name, seed, lam, form, comp, kern),
+      modifier_not(mn)
 {
     init_final(forceGen, forceLoad);
 }
 
-CircuitPrivKey_bddf::CircuitPrivKey_bddf
-(std::string name, bool forceGen, bool forceLoad,
+e3::CircuitPrivKey_bddf::CircuitPrivKey_bddf
+(KeyName name, bool forceGen, bool forceLoad,
  std::string seed, int lam, std::string form,
  std::string comp, std::string kern, bool mm)
-    : CircuitPrivKey_bdd(name, seed, lam, &ek, form, comp, kern),
-      modifier_mux(mm), ek(name)
+    : CircuitPrivKey_bdd(name, seed, lam, form, comp, kern),
+      modifier_mux(mm)
 {
     init_final(forceGen, forceLoad);
 }
 
-void CircuitPrivKey_bdd::gen_cir2c(string fn, bool ren)
+void e3::CircuitPrivKey_bdd::gen_cir2c(string fn, bool ren)
 {
     Module mod(fn);
 
@@ -91,7 +92,7 @@ void CircuitPrivKey_bdd::gen_cir2c(string fn, bool ren)
     std::cout << "ok\n";
 }
 
-void CircuitPrivKey_bdd::gen_init(string & tid, string & dir)
+void e3::CircuitPrivKey_bdd::gen_init(string & tid, string & dir)
 {
     if (!cudd_impl())
     {
@@ -110,7 +111,7 @@ void CircuitPrivKey_bdd::gen_init(string & tid, string & dir)
     dir = xid + '/';
 }
 
-void CircuitPrivKey_bdd::gen_bbs(Bbs & bbs, string dir, bool hash)
+void e3::CircuitPrivKey_bdd::gen_bbs(Bbs & bbs, string dir, bool hash)
 {
     auto sz = lambda;
     string name = "encdec.bbs";
@@ -132,7 +133,7 @@ void CircuitPrivKey_bdd::gen_bbs(Bbs & bbs, string dir, bool hash)
     bbs.save(std::ofstream(dir + name));
 }
 
-void CircuitPrivKey_bdd::gen_enc(Bbs & bbs, string dir, string & encfn, string & decfn)
+void e3::CircuitPrivKey_bdd::gen_enc(Bbs & bbs, string dir, string & encfn, string & decfn)
 {
     string enc, dec;
     {
@@ -175,8 +176,8 @@ void CircuitPrivKey_bdd::gen_enc(Bbs & bbs, string dir, string & encfn, string &
 }
 
 
-void CircuitPrivKey_bdd::gen_op(string opn, string pfx, string decfn,
-                                string encfn, string & opfn, string & bddfn)
+void e3::CircuitPrivKey_bdd::gen_op(string opn, string pfx, string decfn,
+                                    string encfn, string & opfn, string & bddfn)
 {
     string op = ol::file2str(opn);
     ol::replaceAll(op, secNames::R_lambda, ol::tos(lambda));
@@ -208,7 +209,7 @@ void CircuitPrivKey_bdd::gen_op(string opn, string pfx, string decfn,
     }
 }
 
-void CircuitPrivKey_bddf::trygen()
+void e3::CircuitPrivKey_bddf::trygen()
 {
     std::cout << "cgt: generating BDDF keys\n";
     string tid;
@@ -259,12 +260,13 @@ void CircuitPrivKey_bddf::trygen()
     gen_cir2c(bddfn_xnor, VREN);
     gen_cir2c(bddfn_nor, VREN);
 
-    ek.key = key = tid;
+    ///ek.key = key = tid;
+    key = tid;
 
     std::cout << "cgt: generating BDDF keys .. done\n";
 }
 
-bool CircuitPrivKey_bddf::checkio() const
+bool e3::CircuitPrivKey_bddf::checkio() const
 {
     std::cout << "cgt: check key " << key << "\n";
 
@@ -283,7 +285,7 @@ bool CircuitPrivKey_bddf::checkio() const
     return true;
 }
 
-void CircuitPrivKey_bdda::trygen()
+void e3::CircuitPrivKey_bdda::trygen()
 {
     std::cout << "cgt: generating BDDA keys\n";
     string tid;
@@ -334,12 +336,13 @@ void CircuitPrivKey_bdda::trygen()
         gen_cir2c(bddfn_or, VREN);
     }
 
-    ek.key = key = tid;
+    key = tid;
+    ///ek.key = key = tid;
 
     std::cout << "cgt: generating BDDA keys .. done\n";
 }
 
-bool CircuitPrivKey_bdda::checkio() const
+bool e3::CircuitPrivKey_bdda::checkio() const
 {
     std::cout << "cgt: check key " << key << "\n";
     if ( !checkbdd("not") ) return false;
@@ -359,7 +362,7 @@ bool CircuitPrivKey_bdda::checkio() const
     return true;
 }
 
-void CircuitPrivKey_bddn::trygen()
+void e3::CircuitPrivKey_bddn::trygen()
 {
     std::cout << "cgt: generating BDDN keys\n";
     string tid;
@@ -395,12 +398,13 @@ void CircuitPrivKey_bddn::trygen()
     gen_cir2c(bddfn_nand, VREN);
     gen_cir2c(bddfn_not, VREN);
 
-    ek.key = key = tid;
+    ///ek.key = key = tid;
+    key = tid;
 
     std::cout << "cgt: generating BDDN keys .. done\n";
 }
 
-bool CircuitPrivKey_bddn::checkio() const
+bool e3::CircuitPrivKey_bddn::checkio() const
 {
     std::cout << "cgt: check key " << key << "\n";
     if ( !checkbdd("nand") ) return false;
@@ -412,11 +416,11 @@ bool CircuitPrivKey_bddn::checkio() const
     return true;
 }
 
-string CircuitPrivKey_bdd::filename() const { return PrivKey::filename(); }
-string CircuitPrivKey_bdd::filecpp() const { return filename() + ".cpp"; }
-string CircuitPrivKey_bdd::fileexe() const { return filename() + ".exe"; }
+string e3::CircuitPrivKey_bdd::filename() const { return PrivKey::filename(); }
+string e3::CircuitPrivKey_bdd::filecpp() const { return filename() + ".cpp"; }
+string e3::CircuitPrivKey_bdd::fileexe() const { return filename() + ".exe"; }
 
-void CircuitPrivKey_bdd::save()
+void e3::CircuitPrivKey_bdd::save()
 {
     string cpp = ol::file2str(cfgNames::bddmain);
     ol::replaceAll(cpp, secNames::R_lambda, ol::tos(lambda));
@@ -451,7 +455,7 @@ void CircuitPrivKey_bdd::save()
     }
 }
 
-bool CircuitPrivKey_bdd::load()
+bool e3::CircuitPrivKey_bdd::load()
 {
     std::ifstream in(filecpp(), std::ios::binary);
     if ( !in ) return false;
@@ -472,7 +476,7 @@ bool CircuitPrivKey_bdd::load()
     return true;
 }
 
-std::string CircuitPrivKey_bdd::encbitstr(bool b) const
+std::string e3::CircuitPrivKey_bdd::encbitstr(bool b) const
 {
     string exe = fileexe();
     if ( !os::isFile(exe) )
@@ -492,7 +496,7 @@ std::string CircuitPrivKey_bdd::encbitstr(bool b) const
     return NameBit_useHex ? e3util::bin2hex(vb) : e3util::bin2sbn(vb);
 }
 
-bool CircuitPrivKey_bdd::decbitstr(const std::string & as, bool * ok) const
+bool e3::CircuitPrivKey_bdd::decbitstr(const std::string & as, bool * ok) const
 {
     if (ok) *ok = false;
 
@@ -518,7 +522,7 @@ bool CircuitPrivKey_bdd::decbitstr(const std::string & as, bool * ok) const
     return ( out[0] != '0' );
 }
 
-void CircuitPrivKey_bdd::gen()
+void e3::CircuitPrivKey_bdd::gen()
 {
     for ( int ntry = 1; ntry < BDDNTRY; ntry++ )
     {
@@ -530,7 +534,7 @@ void CircuitPrivKey_bdd::gen()
     throw "Cannot BDD process, D/E/H too simple";
 }
 
-bool CircuitPrivKey_bdd::checkbdd(string name) const
+bool e3::CircuitPrivKey_bdd::checkbdd(string name) const
 {
     auto hgn = hg_name(name);
     auto bdn = bd_name(name);

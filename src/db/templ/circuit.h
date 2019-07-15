@@ -75,9 +75,13 @@ template<int SZ> class $NameUint
         void load(const std::string & s);
 
     public:
-        static const char * name() { return "$Ename"; }
+        static const char * typname() { return $NameBit::typname(); }
+        static const char * filname() { return $NameBit::filname(); }
+        static const char * clsname() { return $NameBit::clsname(); }
+
+        ///static const char * name() { return "$Ename"; }
         static const int size() { return SZ; };
-        static const char * scheme() { return "$Encryption"; }
+        ///static const char * scheme() { return "$Encryption"; }
 
         // Constructors
         $NameUint() { bits.resize(SZ); }
@@ -226,7 +230,7 @@ operator<<(std::ostream & os, const $NameUint<SZ> & x) { return os << x.str(); }
 template <int SZ> std::ostream &
 operator<<(std::ostream & os, const $NameInt<SZ> & x) { return os << x.str(); }
 
-extern CircuitEvalKey * g_pek_$Name;
+extern e3::CircuitEvalKey * g_pek_$Name;
 
 $PostfixDefines
 

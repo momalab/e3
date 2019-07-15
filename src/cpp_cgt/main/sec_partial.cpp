@@ -47,18 +47,18 @@ Partial::Partial(std::istream & is, string nm, const std::map<string, string> & 
 void Partial::genKeys(bool forceGen, bool forceLoad,
                       std::string seed, const ConfigParser * par)
 {
-    seed = tname + seed;
+    seed = name.typ + seed;
 
     if (0) {}
 
     else if ( encType == secNames::encPila )
         sk = shared_ptr<PrivKey>
-             (new PilaPrivKey(tname, forceGen, forceLoad, seed, lambda));
+             (new PilaPrivKey(name, forceGen, forceLoad, seed, lambda));
 
-    else if ( encType[0] == '@' ) make_bridge(par, 1);
+    else if ( encType[0] == '@' ) makeBridge(par, 1);
 
     else
-        throw "Partial: Bad encryption type [" + encType + "] in " + tname;
+        throw "Partial: Bad encryption type [" + encType + "] in " + name.typ;
 
     // set max size for constants
     if ( plaintext_size < 0 ) plaintext_size = lambda - 1;
@@ -68,11 +68,11 @@ void Partial::writeH(string root, std::ostream & os, string user_dir) const
 {
     string dbf = cfgNames::dotH(cfgNames::dbfilePartial + '.' + encType);
     string f = ol::file2str(root + cfgNames::templDir + dbf);
-    ol::replaceAll(f, secNames::R_Tname, tname);
-    ol::replaceAll(f, secNames::R_Ename, ename);
-    ol::replaceAll(f, secNames::R_encryption, encType);
-    ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1, tname));
-    ol::replaceAll(f, secNames::R_pilZero, sk->encrypt("0", 1, tname));
+    ol::replaceAll(f, secNames::R_TypName, name.typ);
+    ol::replaceAll(f, secNames::R_FilName, name.fil);
+    ol::replaceAll(f, secNames::R_ClsName, encType);
+    ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1));
+    ol::replaceAll(f, secNames::R_pilZero, sk->encrypt("0", 1));
 
     auto allconsts = find_constants(user_dir);
     ol::replaceAll(f, secNames::R_postfixDefines, makeDefines(allconsts) );
@@ -85,9 +85,9 @@ void Partial::writeInc(string root, std::ostream & os) const
     {
         string dbf = cfgNames::dotInc(cfgNames::dbfilePartial + '.' + encType);
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
         os << f;
     }
@@ -99,11 +99,11 @@ void Partial::writeCpp(string root, std::ostream & os) const
         string dbf = cfgNames::dotCpp(cfgNames::dbfilePartial + '.' + encType);
 
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
-        ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1, tname));
+        ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1));
         os << f;
     }
 }

@@ -9,8 +9,8 @@ using std::cout;
 string e3::CircuitPrivKey_seal::filename() const { return PrivKey::filename(); }
 
 e3::CircuitPrivKey_seal::CircuitPrivKey_seal
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+    : CircuitPrivKey(name, seed, lam), ek(name)
 {
     init_final(forceGen, forceLoad);
 }

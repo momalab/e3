@@ -61,7 +61,7 @@ check_TFHE() {
 
 	make c > /dev/null
 	echo "Generating cgt.exe..."
-	make USER=$path TFHE=1 &> /dev/null & progress_bar 106 $!
+	make USER=$path TFHE=1 &> /dev/null & progress_bar 110 $!
 	echo ""
 	echo "Compiling..."
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
@@ -135,11 +135,13 @@ check_PIL() {
 	echo "Compiling..."
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
-	iter=1
-	correct=(28 -22 75)
+	iter=0
+	correct=(0 28 1769364377059701218418339787769396464479140297505128934449959270601755394677 75)
 	while IFS="=" read -r desc val; do
-		compare_result $val ${correct[iter]}
-		final=$?
+		if [ ${correct[iter]} != 0 ]; then
+			compare_result $val ${correct[iter]}
+			final=$?
+		fi
 		iter=$((iter+1))
 	done < result.txt
 

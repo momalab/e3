@@ -5,19 +5,22 @@
 #include "sk_circ_pil.h"
 
 e3::CircuitPrivKey_pilc::CircuitPrivKey_pilc
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam, &ekx), ekx(name),
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+///    : CircuitPrivKey(name, seed, lam, &ekx), ekx(name),
+    : CircuitPrivKey(name, seed, lam),
       sk(name, forceGen, forceLoad, seed, lam)
 {
-    // loading via sk //init_final(forceGen, forceLoad);
-    // just copy from sk
-    ekx.bek = sk.ekb;
+    // loading via sk, no init_final needed
+
+    /// just copy from sk
+    ///ekx.bek = sk.ekb;
 }
 
-e3::CircuitPrivKey_pilc::CircuitPrivKey_pilc(const PilBasePrivKey & pil)
-    : CircuitPrivKey(pil.name, "dummy", 0, &ekx), ekx(pil.name), sk(pil)
+e3::CircuitPrivKey_pilc::CircuitPrivKey_pilc(const PilBasePrivKey & pil, string nm)
+///: CircuitPrivKey(pil.name, "dummy", 0, &ekx), ekx(pil.name), sk(pil)
+    : CircuitPrivKey(KeyName { nm, pil.name.fil }, "dummy", 0), sk(pil, nm)
 {
-    ekx.bek = pil.ekb;
+    ///ekx.bek = pil.ekb;
     // rnd created dummy, lets reset it to the correct one
     delete rnd;
     rnd = pil.rnd;
@@ -26,20 +29,22 @@ e3::CircuitPrivKey_pilc::CircuitPrivKey_pilc(const PilBasePrivKey & pil)
 
 void e3::CircuitPrivKey_pilc::gen()
 {
+    // since init_final is not called, this is never called
+    // sk is PilBasePrivKey
     never("called e3::CircuitPrivKey_pilc::gen");
-    sk.gen();
+    ///sk.gen();
 
-    // no init ekx by gen
-    //ekx.gen();
+    /// no init ekx by gen
+    ///ekx.gen();
 
-    // copy inited data to ekx
-    ekx.bek = sk.ekb;
+    /// copy inited data to ekx
+    ///ekx.bek = sk.ekb;
 }
 
 bool e3::CircuitPrivKey_pilc::load()
 {
     bool r = sk.load();
-    ekx.bek = sk.ekb;
+    ///ekx.bek = sk.ekb;
     return r;
 }
 
@@ -47,8 +52,9 @@ std::string e3::CircuitPrivKey_pilc::encbitstr(bool bm) const
 {
     if (!sk.mxinited) never("Matrix not initialized");
 
-    Bigun m = ekx.bek.kv.N;
-    PilArith pilArith(&ekx.bek);
+    ///Bigun m = ekx.bek.kv.N;
+    Bigun m = sk.ekb.kv.N;
+    PilArith pilArith(&sk.ekb);
 
     PilNum ra = euler::random(m, rnd);
     PilNum rb = euler::random(m, rnd);
@@ -97,8 +103,8 @@ bool e3::CircuitPrivKey_pilc::decbitstr(const std::string & s, bool * ok) const
     const auto & b = bit.x.b;
 
     ///Bigun m = PilNum::mod = ek.kv.N;
-    Bigun m = ekx.bek.kv.N;
-    PilArith pilArith(&ekx.bek);
+    Bigun m = sk.ekb.kv.N;
+    PilArith pilArith(&sk.ekb);
 
     auto x = (a + b * sk.Q) % sk.P;
 

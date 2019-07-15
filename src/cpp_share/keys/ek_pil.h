@@ -23,8 +23,8 @@ class PilBaseEvalKey : public EvalKey
         PilEvalValues kv;
 
     public:
-        PilBaseEvalKey(int) : EvalKey("") {} // when used as a member in key class
-        PilBaseEvalKey(User u, std::string name) : EvalKey(name) { user(u); }
+        PilBaseEvalKey(int) : EvalKey({"", ""}) {} // when used as a member in key class
+        PilBaseEvalKey(User u, KeyName name) : EvalKey(name) { user(u); }
 
         bool load(string fname);
         virtual bool load() { return load(filename()); }
@@ -37,7 +37,7 @@ class PilaEvalKey : public PilBaseEvalKey
     protected:
 
     public:
-        PilaEvalKey(User u, std::string name) : PilBaseEvalKey(u, name) {}
+        PilaEvalKey(User u, KeyName name) : PilBaseEvalKey(u, name) {}
 };
 
 struct PilArith

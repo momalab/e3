@@ -24,7 +24,7 @@ int main()
 
     // Maximum distance between the user and the advertised event. //
     SecureInt distance = _5_Eu; //In degrees of latitude. 1 degree = 110 - 111 km
-    SecureInt distance_squared = distance*distance;
+    SecureInt distance_squared = distance * distance;
 
     // User's location in latitude (N) and longitude (E). // As an example, user is at NYUAD. //
     SecureInt user [2] = {_25_Eu, _54_Eu};
@@ -34,7 +34,7 @@ int main()
     For simplicity, it is fine to store coordinates in an array immediately.
     */
     //Advertised events locations: Abu Dhabi, Dubai, Istanbul, Shanghai, New York. //
-    
+
     // Advertised events' latitude (N). //
     SecureInt ad_N [no_ads] = {_24_Eu, _25_Eu, _41_Eu, _31_Eu, _41_Eu}; //latitude
     // Advertised events' longitude (E). //
@@ -49,15 +49,15 @@ int main()
      If the distance is squared, the entire Euclidian distance can be squared as well, as the comparison which once
      is bigger will not fail nonetheless.
     */
-    for (int i=0; i<no_ads; i++)
+    for (int i = 0; i < no_ads; i++)
     {
-      show_ad[i] = ((user[0]-ad_N[i])*(user[0]-ad_N[i])+(user[1]-ad_E[i])*(user[1]-ad_E[i]))<(distance_squared);
+        show_ad[i] = ((user[0] - ad_N[i]) * (user[0] - ad_N[i]) + (user[1] - ad_E[i]) * (user[1] - ad_E[i])) < (distance_squared);
     }
 
     // Print out which advertised events are within the distance from the user. //
-    cout<<"Advertisements relevant to the user's location:\n";
-    for (int i=0; i<no_ads; i++)
+    cout << "Advertisements relevant to the user's location:\n";
+    for (int i = 0; i < no_ads; i++)
     {
-      cout<<show_ad[i]<<" ";
+        cout << show_ad[i] << " ";
     }
 }

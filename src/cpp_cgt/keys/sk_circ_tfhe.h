@@ -24,7 +24,7 @@ class CircuitPrivKey_tfhe : public CircuitPrivKey
         virtual void save();
 
     public:
-        CircuitPrivKey_tfhe(std::string name, bool forceGen,
+        CircuitPrivKey_tfhe(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam);
 
         virtual std::string encbitstr(bool b) const;

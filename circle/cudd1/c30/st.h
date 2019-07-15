@@ -1,5 +1,5 @@
 /**
-  @file 
+  @file
 
   @ingroup st
 
@@ -236,18 +236,18 @@ typedef int (*st_hash_arg_t)(void const *, int, void const *);
 extern "C" {
 #endif
 
-st_table *st_init_table_with_params (st_compare_t, st_hash_t, int, int, double, int);
-st_table *st_init_table (st_compare_t, st_hash_t);
-st_table *st_init_table_with_params_and_arg (st_compare_arg_t, st_hash_arg_t, void const *, int, int, double, int);
-    st_table *st_init_table_with_arg (st_compare_arg_t, st_hash_arg_t, void const *);
+st_table * st_init_table_with_params (st_compare_t, st_hash_t, int, int, double, int);
+st_table * st_init_table (st_compare_t, st_hash_t);
+st_table * st_init_table_with_params_and_arg (st_compare_arg_t, st_hash_arg_t, void const *, int, int, double, int);
+st_table * st_init_table_with_arg (st_compare_arg_t, st_hash_arg_t, void const *);
 void st_free_table (st_table *);
 int st_lookup (st_table *, void const *, void **);
 int st_lookup_int (st_table *, void const *, int *);
 int st_insert (st_table *, void *, void *);
 int st_add_direct (st_table *, void *, void *);
-int st_find_or_add (st_table *, void *, void ***);
-int st_find (st_table *, void const *, void ***);
-st_table *st_copy (st_table const *);
+int st_find_or_add (st_table *, void *, void ** *);
+int st_find (st_table *, void const *, void ** *);
+st_table * st_copy (st_table const *);
 int st_delete (st_table *, void **, void **);
 int st_delete_int (st_table *, void **, int *);
 int st_count(st_table const *);
@@ -257,7 +257,7 @@ int st_numhash (void const *, int);
 int st_ptrhash (void const *, int);
 int st_numcmp (void const *, void const *);
 int st_ptrcmp (void const *, void const *);
-st_generator *st_init_gen (st_table const *);
+st_generator * st_init_gen (st_table const *);
 int st_gen (st_generator *, void **, void **);
 int st_gen_int (st_generator *, void **, int *);
 void st_free_gen (st_generator *);

@@ -3,8 +3,8 @@
 #include "sk_circ_seal.h"
 
 e3::CircuitPrivKey_seal::CircuitPrivKey_seal
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam, &ek), ek(name)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+    : CircuitPrivKey(name, seed, lam), ek(name)
 {
     init_final(forceGen, forceLoad);
 }

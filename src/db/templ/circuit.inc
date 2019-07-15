@@ -348,7 +348,8 @@ inline $NameUint<SZ> $NameUint<SZ>::operator>>(unsigned long long u) const
 template <int SZ>
 void $NameUint<SZ>::load(const std::string & c)
 {
-    auto s = $NameBit::k()->decor(c, false, "$Name");
+    ///auto s = $NameBit::k()->decor(c, false, "$Name");
+    auto s = $NameBit::k()->decor(c, false);
     if ( s.empty() ) throw "Bad decoration in $Name [" + c + "]";
     auto bs = $NameBit::k()->enc2bits(s);
     if ( bs.empty() ) throw "Bad init in $Name [" + c + "]";
@@ -366,7 +367,8 @@ std::string $NameUint<SZ>::str() const
     std::vector<std::string> bs;
     for ( const auto & x : bits ) bs.push_back(x.str());
     auto s = $NameBit::k()->bits2enc(bs);
-    return $NameBit::k()->decor(s, true, "$Name");
+    ///return $NameBit::k()->decor(s, true, "$Name");
+    return $NameBit::k()->decor(s, true);
 }
 
 // ----- $NameInt ----- //

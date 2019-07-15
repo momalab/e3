@@ -67,8 +67,8 @@ try
 {
 #ifdef FIBO
     SecureInt inp = _7_Eu;
-    std::cout << "fibo_m( " << dec(inp,"Pilc") << " ) = " << dec(fibo_m(inp),"Pilm") << '\n' ;
-    std::cout << "fibo_c( " << dec(inp,"Pilc") << " ) = " << dec(fibo_c(inp),"Pilc") << '\n' ;
+    std::cout << "fibo_m( " << dec(inp, "Pilc") << " ) = " << dec(fibo_m(inp), "Pilm") << '\n' ;
+    std::cout << "fibo_c( " << dec(inp, "Pilc") << " ) = " << dec(fibo_c(inp), "Pilc") << '\n' ;
 
     tim(inp, 12, fibo_m);
     tim(inp, 4, fibo_c);
@@ -76,11 +76,11 @@ try
 
     SecureMod x = _3_Em;
     SecureInt y = _13_Eu;
-    std::cout << "Pilm      = " << dec(x,"Pilm") << '\n' ;
-    std::cout << "PilcUint8 = " << dec(y,"Pilc") << '\n' ;
+    std::cout << "Pilm      = " << dec(x, "Pilm") << '\n' ;
+    std::cout << "PilcUint8 = " << dec(y, "Pilc") << '\n' ;
 
     Pilm b = to_Pilm(y);
-    cout << "to_Pilm(13) = " << dec(to_Pilm(y),"Pilm") << '\n';
+    cout << "to_Pilm(13) = " << dec(to_Pilm(y), "Pilm") << '\n';
 
     Pilmd x2 = _3_Emd;
     PilcdUint<8> y2 = _13_Eud;

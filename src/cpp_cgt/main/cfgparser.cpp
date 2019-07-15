@@ -139,7 +139,7 @@ void ConfigParser::makeSecint(string cgtdir, std::string e3_lib) const
     ofh << "// Config: " << file << '\n';
     ofh << "// Classes:";
     for ( const auto & x : sectypes )
-        ofh << " " << x->getTname();
+        ofh << " " << x->getTypName();
     ofh << "\n\n";
 
     if (!cgtdir.empty() && cgtdir[cgtdir.size() - 1] != '/' ) cgtdir += "/";
@@ -179,7 +179,7 @@ void ConfigParser::loadOrGenKeys(bool forceGen, bool forceLoad)
     {
         x->genKeys(forceGen, forceLoad, password, this);
         if (isCloPassword && x->isLoaded())
-            cout << "WARNING: the key '" << x->getTname() << "' already exists; ignoring option '" + nm::param_password + "' for this key\n";
+            cout << "WARNING: the key '" << x->getTypName() << "' already exists; ignoring option '" + nm::param_password + "' for this key\n";
     }
 }
 
@@ -188,7 +188,7 @@ Bridge * ConfigParser::getBridge(string name) const
     for ( auto x : sectypes )
     {
         if ( !x->getBridge() ) continue;
-        if ( x->getTname() == name ) return x->getBridge();
+        if ( x->getTypName() == name ) return x->getBridge();
     }
     return nullptr;
 }

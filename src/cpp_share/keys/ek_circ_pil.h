@@ -16,7 +16,7 @@ class CircuitEvalKey_pilc : public CircuitEvalKey
         PilBaseEvalKey bek;
 
     public:
-        CircuitEvalKey_pilc(User u, std::string name)
+        CircuitEvalKey_pilc(User u, KeyName name)
             : CircuitEvalKey(name), bek(0) { user(u); }
 
         virtual bool load() { return bek.load(filename()); }

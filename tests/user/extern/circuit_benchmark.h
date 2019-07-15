@@ -13,7 +13,8 @@ const int MAX_IT = 10;
 
 enum Operator { ADD = 0, DIV, MUL };
 Operator operators[] = { ADD, DIV, MUL };
-string names[] = { "ADD...", "DIV...", "MUL..." };
+//string operation_names[] = { "ADD...", "DIV...", "MUL..." };
+string operation_names[] = { "add", "div", "mul" };
 
 template<class SI> inline void cycle_add (SI & a, SI & b)
 {

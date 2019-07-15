@@ -234,7 +234,7 @@ std::vector<SecType *> loadSecTypes(std::string name, ConfigParser & par)
     {
         for ( auto sectype : par.sectypes )
         {
-            if ( name == sectype->getTname() )
+            if ( name == sectype->getTypName() )
                 sectypes.push_back(sectype);
         }
         // if name does not exists, throw exception

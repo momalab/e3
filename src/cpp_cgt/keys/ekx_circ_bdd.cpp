@@ -7,5 +7,5 @@
 
 using std::cout;
 
-void CircuitEvalKey_bddn_X::save() {}
-void CircuitEvalKey_bdda_X::save() {}
+///void CircuitEvalKey_bddn_X::save() {}
+///void CircuitEvalKey_bdda_X::save() {}

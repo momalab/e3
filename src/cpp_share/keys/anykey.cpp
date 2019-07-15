@@ -6,7 +6,7 @@ char begin = '[';
 char end = ']';
 }
 
-std::string AnyKey::decor(const std::string & s, bool add, std::string pfx)
+std::string e3::AnyKey::prefix(const std::string & s, bool add, std::string pfx)
 {
     auto sz = pfx.size();
 
@@ -20,11 +20,11 @@ std::string AnyKey::decor(const std::string & s, bool add, std::string pfx)
     return s.substr(sz + 1, s.size() - 2 - sz);
 }
 
-/*///
-std::string AnyKey::decor(const std::string & s, bool add, std::string pfx) const
+std::string e3::AnyKey::decor(const std::string & s, bool add) const
 {
-    auto nm = decorname;
-    if ( nm.empty() ) nm = name;
-    return prefix(s, add, nm);
+    ///auto nm = name.decor;
+    ///if ( nm.empty() ) nm = name.enc;
+    ///return prefix(s, add, nm);
+    return prefix(s, add, name.typ);
+    ///return prefix(s, add, name.decor);
 }
-*/

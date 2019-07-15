@@ -2,7 +2,7 @@
 
 #include "ek_circ_plain.h"
 
-bool CircuitEvalKey_plain::load()
+bool e3::CircuitEvalKey_plain::load()
 {
     std::ifstream in(filename(), std::ios::binary);
     std::string s;

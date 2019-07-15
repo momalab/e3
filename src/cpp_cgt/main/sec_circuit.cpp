@@ -42,7 +42,7 @@ Circuit::Circuit(std::istream & is, string nm, const std::map<string, string> & 
     else throw "encryption type ["
         + encType + "] is not known; valid="
         "(plain,tfhe,seal,fhew,heli,bddn,bddnx,bdda,"
-	"bddaz,bddf,bddfm,pil,extern)";
+        "bddaz,bddf,bddfm,pil,extern)";
 
     if ( circDb.empty() ) circDb = encType;
 
@@ -103,7 +103,7 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
                       std::string seed, const ConfigParser * par)
 {
     // make seed different for different secure types
-    seed = tname + seed;
+    seed = name.typ + seed;
 
     // FIXME this is ugly, it should be some kind of array
     // or something generic, so we dont have to keep adding code as we add schemes
@@ -112,49 +112,49 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
     else if ( encType == secNames::encBddn )
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_bddn
-        (tname, forceGen, forceLoad, seed,
+        (name, forceGen, forceLoad, seed,
          lambda, formula, compile, kernel, modifier ));
 
     else if ( encType == secNames::encBdda )
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_bdda
-        (tname, forceGen, forceLoad, seed,
+        (name, forceGen, forceLoad, seed,
          lambda, formula, compile, kernel, modifier ));
 
     else if ( encType == secNames::encBddf )
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_bddf
-        (tname, forceGen, forceLoad, seed,
+        (name, forceGen, forceLoad, seed,
          lambda, formula, compile, kernel, modifier ));
 
     else if ( encType == secNames::encHeli )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_heli(tname, forceGen,
+             (csk = new CircuitPrivKey_heli(name, forceGen,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encFhew )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_fhew(tname, forceGen,
+             (csk = new CircuitPrivKey_fhew(name, forceGen,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encSeal )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_seal(tname, forceGen,
+             (csk = new CircuitPrivKey_seal(name, forceGen,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encTfhe )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_tfhe(tname, forceGen,
+             (csk = new CircuitPrivKey_tfhe(name, forceGen,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encPlain )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_plain(tname, forceGen,
+             (csk = new CircuitPrivKey_plain(name, forceGen,
                                              forceLoad, seed));
 
     else if ( encType == secNames::encPilc )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_pilc(tname, forceGen,
+             (csk = new CircuitPrivKey_pilc(name, forceGen,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encExt )
@@ -163,7 +163,7 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
 
     else if ( encType[0] == '@' )
     {
-        make_bridge(par, 0); if ( !bridge ) never("bridge");
+        makeBridge(par, 0); if ( !bridge ) never("bridge");
 
         if (0) {}
 
@@ -171,15 +171,17 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
         {
             PilBasePrivKey * p = dynamic_cast<PilBasePrivKey *>(bridge->get_sk_raw());
             if ( !p ) never("bad bridge");
-            sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_pilc(*p));
+            sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_pilc(*p, name.typ));
         }
 
         else
-            throw "Circuit: Bridge is not supperted for type [" + encType + "] in " + tname;
+            throw "Circuit: Bridge is not supperted for type ["
+            + encType + "] in " + name.typ;
     }
 
     else
-        throw "Circuit: Bad encryption type [" + encType + "] in " + tname;
+        throw "Circuit: Bad encryption type ["
+        + encType + "] in " + name.typ;
 }
 
 void Circuit::writeH(string root, std::ostream & os, string user_dir) const
@@ -189,9 +191,9 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
     {
         string dbf = cfgNames::dotH(cfgNames::dbfileCircuitBase);
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         os << f;
     }
 
@@ -209,9 +211,9 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
             f = ol::file2str(root + cfgNames::templDir + f);
         }
 
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
         os << f;
     }
@@ -220,9 +222,9 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
     {
         string dbf = cfgNames::dotH(cfgNames::dbfileCircuit);
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
 
         auto allconsts = find_constants(user_dir);
         ol::replaceAll(f, secNames::R_postfixDefines, makeDefines(allconsts) );
@@ -236,9 +238,9 @@ void Circuit::writeInc(string root, std::ostream & os) const
     {
         string dbf = cfgNames::dotInc(cfgNames::dbfileCircuit);
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
         os << f;
     }
@@ -257,9 +259,9 @@ void Circuit::writeCpp(string root, std::ostream & os) const
                       + "/" + cfgNames::circuitFilename;
 
         string cf = ol::file2str(root + path);
-        ol::replaceAll(cf, secNames::R_Tname, tname);
-        ol::replaceAll(cf, secNames::R_Ename, ename);
-        ol::replaceAll(cf, secNames::R_encryption, encType);
+        ol::replaceAll(cf, secNames::R_TypName, name.typ);
+        ol::replaceAll(cf, secNames::R_FilName, name.fil);
+        ol::replaceAll(cf, secNames::R_ClsName, encType);
         ol::replaceAll(cf, secNames::R_lambda, ol::tos(lambda) );
         os << cf;
     }
@@ -269,9 +271,9 @@ void Circuit::writeCpp(string root, std::ostream & os) const
         string dbf = cfgNames::dotCpp(cfgNames::dbfileCircuit);
 
         string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_Tname, tname);
-        ol::replaceAll(f, secNames::R_Ename, ename);
-        ol::replaceAll(f, secNames::R_encryption, encType);
+        ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
         ol::replaceAll(f, secNames::R_bitZero, csk->encbitstr(false) );
         ol::replaceAll(f, secNames::R_bitUnit, csk->encbitstr(true) );
@@ -294,9 +296,9 @@ void Circuit::writeCpp(string root, std::ostream & os) const
                                           + '.' + basType + ver);
 
             string f = ol::file2str(root + cfgNames::templDir + dbf);
-            ol::replaceAll(f, secNames::R_Tname, tname);
-            ol::replaceAll(f, secNames::R_Ename, ename);
-            ol::replaceAll(f, secNames::R_encryption, encType);
+            ol::replaceAll(f, secNames::R_TypName, name.typ);
+            ol::replaceAll(f, secNames::R_FilName, name.fil);
+            ol::replaceAll(f, secNames::R_ClsName, encType);
             ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda));
             ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda));
             ol::replaceAll(f, secNames::R_tid, csk->getTid());
@@ -310,9 +312,9 @@ void Circuit::writeCpp(string root, std::ostream & os) const
                                           + '.' + encType + ver);
 
             string f = ol::file2str(root + cfgNames::templDir + dbf);
-            ol::replaceAll(f, secNames::R_Tname, tname);
-            ol::replaceAll(f, secNames::R_Ename, ename);
-            ol::replaceAll(f, secNames::R_encryption, encType);
+            ol::replaceAll(f, secNames::R_TypName, name.typ);
+            ol::replaceAll(f, secNames::R_FilName, name.fil);
+            ol::replaceAll(f, secNames::R_ClsName, encType);
             ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
             ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda) );
             ol::replaceAll(f, secNames::R_tid, csk->getTid());

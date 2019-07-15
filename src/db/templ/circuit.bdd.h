@@ -20,7 +20,7 @@ class $NameBit : public $NameBaseBit
         $NameBit(const std::string & s);
 
         // access to SecureInt classes
-        static CircuitEvalKey_bddn * k() { return static_cast<CircuitEvalKey_bddn *>(pek); }
+        static e3::CircuitEvalKey_bddn * k() { return static_cast<e3::CircuitEvalKey_bddn *>(pek); }
 
         std::string str() const { return vc2s(vc); }
 

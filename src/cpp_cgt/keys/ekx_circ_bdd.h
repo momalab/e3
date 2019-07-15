@@ -4,6 +4,8 @@
 
 // FIXME o these clases can be removed - we do not save BDD public kays
 
+/*///
+
 class CircuitEvalKey_bddn_X : public CircuitEvalKey_bddn
 {
     public:
@@ -30,3 +32,5 @@ class CircuitEvalKey_bddf_X : public CircuitEvalKey_bddf
         void save();
         using CircuitEvalKey_bddf::key;
 };
+
+*/

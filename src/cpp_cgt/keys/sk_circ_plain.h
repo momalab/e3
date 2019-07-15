@@ -3,6 +3,9 @@
 #include "sk_circ.h"
 #include "ekx_circ_plain.h"
 
+namespace e3
+{
+
 class CircuitPrivKey_plain : public CircuitPrivKey
 {
         virtual void gen();
@@ -12,13 +15,16 @@ class CircuitPrivKey_plain : public CircuitPrivKey
 
     private:
         e3util::usi key;
-        CircuitEvalKey_plain_X ek;
+        CircuitEvalKey_plain_X ek; // used for dec+enc
         virtual bool load();
         virtual void save();
 
     public:
-        CircuitPrivKey_plain(std::string name, bool forceGen, bool forceLoad, std::string seed);
+        CircuitPrivKey_plain(KeyName name, bool forceGen,
+                             bool forceLoad, std::string seed);
 
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;
 };
+
+} // e3

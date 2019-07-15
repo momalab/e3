@@ -4,6 +4,9 @@
 #include "ekx_circ_fhew.h"
 #include "def_fhew.h"
 
+namespace e3
+{
+
 class CircuitPrivKey_fhew : public CircuitPrivKey
 {
         virtual void gen();
@@ -21,7 +24,7 @@ class CircuitPrivKey_fhew : public CircuitPrivKey
         virtual void save();
 
     public:
-        CircuitPrivKey_fhew(std::string name, bool forceGen,
+        CircuitPrivKey_fhew(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam);
 
         virtual std::string encbitstr(bool b) const;
@@ -29,3 +32,5 @@ class CircuitPrivKey_fhew : public CircuitPrivKey
 
         virtual string filename() const;
 };
+
+} // e3

@@ -2,9 +2,9 @@
 
 #include "ek_circ_bdd.h"
 
-bool CircuitEvalKey_bdd::load() { return true; }
+bool e3::CircuitEvalKey_bdd::load() { return true; }
 
-std::string CircuitEvalKey_bdd::filename() const { return EvalKey::filename(); }
+std::string e3::CircuitEvalKey_bdd::filename() const { return EvalKey::filename(); }
 
 /*///
 std::string CircuitEvalKey_bdd::decor(const std::string & s, bool add) const

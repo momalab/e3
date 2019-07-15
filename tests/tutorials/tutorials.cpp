@@ -4,12 +4,12 @@
 #include "timer.h"
 
 /*
-    You MUST include 'e3int.h' in your program file. It links to 'secint.cpp', a 
-    FHE Framework API file which consists of Bit, secret and evaluation keys 
-    generation, functions to encrypt and decrypt using FHE, and a list of logic 
-    gates. This FHE API is generated for a given configuration file. It enables 
-    the program to abstract different APIs of existing FHE libraries. In other words, 
-    the user's C++ code becomes oblivious to the underlying FHE library, and, hence, 
+    You MUST include 'e3int.h' in your program file. It links to 'secint.cpp', a
+    FHE Framework API file which consists of Bit, secret and evaluation keys
+    generation, functions to encrypt and decrypt using FHE, and a list of logic
+    gates. This FHE API is generated for a given configuration file. It enables
+    the program to abstract different APIs of existing FHE libraries. In other words,
+    the user's C++ code becomes oblivious to the underlying FHE library, and, hence,
     a new FHE library can be plugged in without any change to the implementation
     of the SecureInt class. You simpy need to link your compiled binary with the
     corresponding FHE library and the newly generated 'secint.cpp' file.
@@ -23,12 +23,12 @@ using SecureMint = TypeMint;
 
 /*
     You MUST declare Secure datatypes. Three basic integral types are generated
-    by our tool: 'int', 'unsigned', and 'bool'. Their names are constructed from 
-    the basename specified in the configuration file by adding suffixes 'Int', 
+    by our tool: 'int', 'unsigned', and 'bool'. Their names are constructed from
+    the basename specified in the configuration file by adding suffixes 'Int',
     'Uint' and 'Bool' correspondingly.
 
-    Here, you can also declare the bitsize of the datatype. For example, TypeUint<32> 
-    refers to an unsigned integer of bitsize 32. In the configuration file, 'Type' 
+    Here, you can also declare the bitsize of the datatype. For example, TypeUint<32>
+    refers to an unsigned integer of bitsize 32. In the configuration file, 'Type'
     is defined as 'circuit', which refers to boolean circuit and 'TypeMint' is
     defined as 'partial', meaning arithmetic circuit. 'Native' is a weakly encrypted
     datatype often used for testing compilation without encryption.
@@ -47,7 +47,8 @@ using SecureMint = TypeMint;
     execution context.
  */
 
-void print_hello_world() {
+void print_hello_world()
+{
     cout << "Printing 'Hello World':" << "\n";
     cout << "Hello World" << "\n";
 
@@ -58,9 +59,10 @@ void print_hello_world() {
      */
 }
 
-void add_two_integers() {
+void add_two_integers()
+{
     cout << "\nAdding two integers:" << "\n";
-    
+
     SecureInt num1 = _2_Ep;
     SecureInt num2 = _2_Ep;
     SecureInt res = _0_Ep;
@@ -70,7 +72,7 @@ void add_two_integers() {
         'SecureInt' class for PHE. If you need to initialize private variables with
         encrypted constants (without manually encrypting every value), you can append an
         E3-defined suffix, which will be parsed by our helper tool to automatically
-        generate the encrypted constants. Here, '_Ep' is used as stated in the 
+        generate the encrypted constants. Here, '_Ep' is used as stated in the
         configuration file.
      */
 
@@ -88,15 +90,17 @@ void add_two_integers() {
 
 }
 
-void factorial() {
+void factorial()
+{
     cout << "\nFactorial using boolean circuit:" << "\n";
-    
+
     SecureInt i = _1_Ep;
     SecureInt input = _5_Ep;
     SecureInt fact = _1_Ep;
     SecureInt result = _0_Ep;
-    
-    for (int cntr=1;cntr<MAX_NUM;cntr++){
+
+    for (int cntr = 1; cntr < MAX_NUM; cntr++)
+    {
         fact *= i;
         result += (i == input) * fact;
 
@@ -104,7 +108,7 @@ void factorial() {
 
         /*
             As mentioned above, it is important to execute the 'for' loop for a maximum
-            number of iterations irrelevant to the variables. In C++ terms, a SecureInt 
+            number of iterations irrelevant to the variables. In C++ terms, a SecureInt
             to Bool conversion is not allowed, which manifests as a termination
             problem in the program's control-flow. To address this termination problem,
             loops must execute for a predetermined maximum number of iterations, which
@@ -116,10 +120,11 @@ void factorial() {
          */
     }
 
-    cout << "Factorial of " << input << " = " << result << "\n"; 
+    cout << "Factorial of " << input << " = " << result << "\n";
 }
 
-void factorial_using_bridge() {
+void factorial_using_bridge()
+{
     cout << "\nFactorial using arithmetic circuit:" << "\n";
 
     SecureMint  one = _1_Ea;
@@ -129,22 +134,22 @@ void factorial_using_bridge() {
     SecureMint  res = _0_Ea;
     SecureInt input = _5_Ep;
 
-    for (int cntr=1;cntr<MAX_NUM;cntr++)
+    for (int cntr = 1; cntr < MAX_NUM; cntr++)
     {
         fact *= ia;
         res += (ic == input) * fact;
 
         ic++;
-        ia+=one;
+        ia += one;
 
         /*
-            Here, circuits(boolean)-to-partial(arithmetic) conversion is used to maximize the 
-            use of arithmetic circuits. 'fact' is computing factorial for every iteration 
-            regardless of input using arithmetic circuit. Correct result is selected by the 
-            'ic == input' boolean comparison. Since this outputs the value of either '0' or 
-            '1', the boolean value can be incorporated in arithmetic multiplication with 'fact' 
-            value. Although 'ia' and 'ic' have the same role as 'i' in the above example, 
-            'ia' is used for arithmetic computation for 'fact' and 'ic' is compared to a 
+            Here, circuits(boolean)-to-partial(arithmetic) conversion is used to maximize the
+            use of arithmetic circuits. 'fact' is computing factorial for every iteration
+            regardless of input using arithmetic circuit. Correct result is selected by the
+            'ic == input' boolean comparison. Since this outputs the value of either '0' or
+            '1', the boolean value can be incorporated in arithmetic multiplication with 'fact'
+            value. Although 'ia' and 'ic' have the same role as 'i' in the above example,
+            'ia' is used for arithmetic computation for 'fact' and 'ic' is compared to a
             boolean value 'input'. Hence, they are declared as different datatypes.
          */
     }
@@ -153,7 +158,8 @@ void factorial_using_bridge() {
 
 }
 
-int main() {
+int main()
+{
 
     Timer t;
 
@@ -167,14 +173,14 @@ int main() {
     cout << "Runtime: " << r2 - r1 << " us\n";
 
     /*
-        You can check both the encrypted and decrypted results by building the tool with the 
+        You can check both the encrypted and decrypted results by building the tool with the
         given configuration file. Run following steps in the Command Line:
         1. cd e3/src
         2. make USER=../tests/tutorials
         3. ./bob.exe
         4. ./bob.exe | ./cgt.exe dec -c ../tests/tutorials/cgt.cfg
 
-        NOTE: Compare the runtimes of boolean circuit and arithmetic circuit for computing 
+        NOTE: Compare the runtimes of boolean circuit and arithmetic circuit for computing
         the factorial of 5. Arithmetic circuit (using bridge) will give noticably less
         computation time.
 

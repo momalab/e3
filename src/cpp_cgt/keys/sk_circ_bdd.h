@@ -7,6 +7,9 @@
 
 class Bbs;
 
+namespace e3
+{
+
 class CircuitPrivKey_bdd : public CircuitPrivKey
 {
         using SecKey = std::string;
@@ -41,8 +44,11 @@ class CircuitPrivKey_bdd : public CircuitPrivKey
 
     public:
 
+///        CircuitPrivKey_bdd
+///        (KeyName name, std::string seed, int lam, CircuitEvalKey * ek,
+///         std::string formula, std::string compile, std::string kernel);
         CircuitPrivKey_bdd
-        (std::string name, std::string seed, int lam, CircuitEvalKey * ek,
+        (KeyName name, std::string seed, int lam,
          std::string formula, std::string compile, std::string kernel);
 
         virtual std::string encbitstr(bool b) const;
@@ -62,10 +68,10 @@ class CircuitPrivKey_bdda : public CircuitPrivKey_bdd
         bool modifier_not;
 
     private:
-        CircuitEvalKey_bdda_X ek; // this is used only for decorations (decor)
+        ///CircuitEvalKey_bdda_X ek; // this is used only for decorations (decor)
 
     public:
-        CircuitPrivKey_bdda(std::string name, bool forceGen,
+        CircuitPrivKey_bdda(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed,
                             int lam, std::string formula,
                             std::string compile, std::string kernel, bool m);
@@ -80,10 +86,10 @@ class CircuitPrivKey_bddn : public CircuitPrivKey_bdd
         using EncBit = std::vector<bool>;
 
     private:
-        CircuitEvalKey_bddn_X ek; // this is used only for decorations (decor)
+        ///CircuitEvalKey_bddn_X ek; // this is used only for decorations (decor)
 
     public:
-        CircuitPrivKey_bddn(std::string name, bool forceGen,
+        CircuitPrivKey_bddn(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed,
                             int lam, std::string formula,
                             std::string compile, std::string kernel, bool m);
@@ -96,11 +102,13 @@ class CircuitPrivKey_bddf : public CircuitPrivKey_bdd
         bool modifier_mux;
 
     private:
-        CircuitEvalKey_bddf_X ek; // this is used only for decorations (decor)
+        ///CircuitEvalKey_bddf_X ek; // this is used only for decorations (decor)
 
     public:
-        CircuitPrivKey_bddf(std::string name, bool forceGen,
+        CircuitPrivKey_bddf(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed,
                             int lam, std::string formula,
                             std::string compile, std::string kernel, bool m);
 };
+
+} // e3

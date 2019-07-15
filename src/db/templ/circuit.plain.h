@@ -10,7 +10,7 @@ class $NameBit : public $NameBaseBit
         $NameBit(const std::string & s);
 
         // access to SecureInt classes
-        static CircuitEvalKey_plain * k() { return static_cast<CircuitEvalKey_plain *>(pek); }
+        static e3::CircuitEvalKey_plain * k() { return static_cast<e3::CircuitEvalKey_plain *>(pek); }
 
         std::string str() const { return std::to_string(x); }
 

@@ -34,7 +34,7 @@ struct SealEvalKey
 using sk = SealPrivKey;
 inline  sk * tosk(e3::SealNativePrivKey a) { return static_cast<sk *>(a); }
 
- using ek = SealEvalKey;
+using ek = SealEvalKey;
 inline  ek * toek(e3::SealNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(e3::cSealNativeEvalKey a) { return static_cast<const ek *>(a); }
 

@@ -8,7 +8,7 @@
 #include "e3util.h"
 #include "evalkeys.h"
 
-template <class T, class N = T> void initEvalKey(std::string name, T *& pek, T *& gpek);
+template <class T, class N = T> void initEvalKey(e3::KeyName name, T *& pek, T *& gpek);
 
 template <class T> T multiply_by_ull(unsigned long long u, const T & x);
 

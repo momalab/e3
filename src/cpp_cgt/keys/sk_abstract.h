@@ -6,6 +6,9 @@
 
 using std::string;
 
+namespace e3
+{
+
 class PrivKey : public AnyKey
 {
         bool loaded;
@@ -15,7 +18,7 @@ class PrivKey : public AnyKey
         mutable Rnd * rnd; // no delete
         int lambda;
 
-        string filenamex(string fx) const { return name + fx + ".priv.key"; }
+        string filenamex(string fx) const { return name.fil + fx + ".priv.key"; }
         virtual string filename() const { return filenamex(""); }
 
         void init_final(bool forceGen, bool forceLoad);
@@ -30,14 +33,16 @@ class PrivKey : public AnyKey
         virtual void gen() = 0;
 
     public:
-        PrivKey(string nm, const string & seed, int lam)
+        PrivKey(KeyName nm, const string & seed, int lam)
             : AnyKey(nm), loaded(true), rnd(Rnd::newRnd(seed)), lambda(lam) {}
 
-        virtual string decrypt(const string & s, string pfx) const = 0;
-        virtual string encrypt(const string & s, int msz, string pfx) const = 0;
+        virtual string decrypt(const string & s) const = 0;
+        virtual string encrypt(const string & s, int msz) const = 0;
 
         virtual bool load() = 0;
         virtual void save() = 0;
 
         bool isLoaded() { return loaded; }
 };
+
+} // e3

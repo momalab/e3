@@ -15,9 +15,10 @@ class SecType
         static const size_t MAX_C_STR = 12000; // to break long literals
 
     protected:
-        string tname, ename; // name of the type and name of the encryption key
+        ///string tname, ename; // name of the type and name of the encryption key
         // these are the same, except when SecType is bridged, then ename is the
         // name of the bridge
+        e3::KeyName name;
         Bridge * bridge = nullptr;
 
         string postfixP;
@@ -26,9 +27,9 @@ class SecType
         int lambda;
 
         std::string encType;
-        shared_ptr<PrivKey> sk;
+        shared_ptr<e3::PrivKey> sk;
 
-        SecType(string n): tname(n), ename(n) {}
+        SecType(string n): name({n, n}) {}
         using pss = std::pair<string, string>;
         bool readKeyVal(std::istream & is, pss & p, string end_word) const;
 
@@ -41,7 +42,7 @@ class SecType
         void globPairs(std::map<string, string *> & kv, const std::map<string, string> & globs);
 
         virtual void fixEncType() = 0;
-        void make_bridge(const ConfigParser * par, int index);
+        void makeBridge(const ConfigParser * par, int index);
 
     private:
         static string find_next_constant
@@ -53,11 +54,12 @@ class SecType
 
         virtual ~SecType() = 0;
 
-        PrivKey * get_sk_raw() const { return sk.get(); }
-        shared_ptr<PrivKey> get_sk_shared() const { return sk; }
+        e3::PrivKey * get_sk_raw() const { return sk.get(); }
+        shared_ptr<e3::PrivKey> get_sk_shared() const { return sk; }
 
-        string getTname() const { return tname; }
-        string getEname() const { return ename; }
+        e3::KeyName getName() const { return name; }
+        string getTypName() const { return name.typ; }
+        string getFilName() const { return name.fil; }
         string getEncType() const { return encType; }
         string encrypt(const std::string & s) const;
         string decrypt(const std::string & s) const;

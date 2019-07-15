@@ -2,7 +2,7 @@
 
 #include "ek_native.h"
 
-bool NativeEvalKey::load()
+bool e3::NativeEvalKey::load()
 {
     std::ifstream in(filename(), std::ios::binary);
     std::string s;

@@ -4,6 +4,9 @@
 #include "e3util.h"
 #include "def_fhew.h"
 
+namespace e3
+{
+
 class CircuitEvalKey_fhew : public CircuitEvalKey
 {
         static const bool NOCOUT = false;
@@ -15,7 +18,7 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
         Fnek key;
 
     public:
-        CircuitEvalKey_fhew(User u, std::string name)
+        CircuitEvalKey_fhew(User u, KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         bool load_oleg();
@@ -26,3 +29,5 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
 
         virtual std::string filename() const;
 };
+
+} // e3

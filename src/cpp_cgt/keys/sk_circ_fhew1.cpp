@@ -8,14 +8,14 @@ using std::cout;
 
 string CircuitPrivKey_fhew::filename() const { return PrivKey::filename(); }
 
-CircuitPrivKey_fhew::CircuitPrivKey_fhew
-(std::string name, bool forceGen, bool forceLoad, std::string seed, int lam)
+e3::CircuitPrivKey_fhew::CircuitPrivKey_fhew
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
     : CircuitPrivKey(name, seed, lam, &ek), ek(name)
 {
     init_final(forceGen, forceLoad);
 }
 
-void CircuitPrivKey_fhew::gen()
+void e3::CircuitPrivKey_fhew::gen()
 {
     init_properties_fhew();
     static LWE::SecretKey priv;
@@ -38,7 +38,7 @@ void CircuitPrivKey_fhew::gen()
     }
 }
 
-void CircuitPrivKey_fhew::save()
+void e3::CircuitPrivKey_fhew::save()
 {
     cout << "Saving private key .. " << std::flush;
     auto k = e3fhew::tosk(key);
@@ -52,7 +52,7 @@ void CircuitPrivKey_fhew::save()
     ek.save();
 }
 
-bool CircuitPrivKey_fhew::load()
+bool e3::CircuitPrivKey_fhew::load()
 {
     init_properties_fhew();
 
@@ -79,7 +79,7 @@ bool CircuitPrivKey_fhew::load()
     return ek.load();
 }
 
-std::string CircuitPrivKey_fhew::encbitstr(bool b) const
+std::string e3::CircuitPrivKey_fhew::encbitstr(bool b) const
 {
     FhewNativeBt nb(ek.key);
     LWE::CipherText * p = &nb.p->b;
@@ -87,7 +87,7 @@ std::string CircuitPrivKey_fhew::encbitstr(bool b) const
     return nb.str(ek.key);
 }
 
-bool CircuitPrivKey_fhew::decbitstr(const std::string & s, bool * ok) const
+bool e3::CircuitPrivKey_fhew::decbitstr(const std::string & s, bool * ok) const
 {
     never("FIXME"); // FIXME e - we need to implement this - should be simple
     //return r;

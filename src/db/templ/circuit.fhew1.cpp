@@ -1,4 +1,4 @@
-// === BEGIN circuit.fhew.cpp Name=$Name
+// === BEGIN circuit.tfhe.cpp Name=$Name
 
 #include "def_fhew1.h"
 
@@ -73,4 +73,4 @@ $NameBit $NameBit::gate_mux(const $NameBit & a, const $NameBit & b, const $NameB
     return gate_or(tmp1, tmp2);
 }
 
-// === END circuit.fhew.cpp Name=$Name
+// === END circuit.tfhe.cpp Name=$Name

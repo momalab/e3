@@ -36,17 +36,18 @@ Bridge::Bridge(std::istream & is, string nm, const std::map<string, string> & gl
 void Bridge::genKeys(bool forceGen, bool forceLoad,
                      std::string seed, const ConfigParser * par)
 {
-    seed = tname + seed;
+    seed = name.typ + seed;
 
     if (0) {}
 
     else if ( encType == secNames::encPilBase )
         sk = shared_ptr<PrivKey>
-             (new PilBasePrivKey(tname, forceGen,
+             (new PilBasePrivKey(name, forceGen,
                                  forceLoad, seed, lambda));
 
     else
-        throw "Partial: Bad encryption type [" + encType + "] in " + tname;
+        throw "Partial: Bad encryption type ["
+        + encType + "] in " + name.typ;
 }
 
 void Bridge::writeH(string root, std::ostream & os, string user_dir) const
@@ -57,7 +58,7 @@ void Bridge::writeH(string root, std::ostream & os, string user_dir) const
     string f = ol::file2str(root + cfgNames::templDir + dbf);
 
     for ( size_t i = 0; i < registered.size(); i++ )
-        ol::replaceAll(f, secNames::R_Tname + ol::tos(i), registered[i]->getTname());
+        ol::replaceAll(f, secNames::R_TypName + ol::tos(i), registered[i]->getTypName());
 
     os << f;
 }
@@ -70,7 +71,7 @@ void Bridge::writeInc(string root, std::ostream & os) const
     string f = ol::file2str(root + cfgNames::templDir + dbf);
 
     for ( size_t i = 0; i < registered.size(); i++ )
-        ol::replaceAll(f, secNames::R_Tname + ol::tos(i), registered[i]->getTname());
+        ol::replaceAll(f, secNames::R_TypName + ol::tos(i), registered[i]->getTypName());
 
     os << f;
 }
@@ -83,7 +84,7 @@ void Bridge::writeCpp(string root, std::ostream & os) const
     string f = ol::file2str(root + cfgNames::templDir + dbf);
 
     for ( size_t i = 0; i < registered.size(); i++ )
-        ol::replaceAll(f, secNames::R_Tname + ol::tos(i), registered[i]->getTname());
+        ol::replaceAll(f, secNames::R_TypName + ol::tos(i), registered[i]->getTypName());
 
     os << f;
 }
@@ -117,7 +118,8 @@ bool Bridge::isConnected(int sz) const
         if ( !warned )
         {
             warned = true;
-            cout << "Warning: bridge [" + tname + "] is defined but not fully connected: ignoring\n";
+            cout << "Warning: bridge [" + name.typ
+                 + "] is defined but not fully connected: ignoring\n";
         }
     };
 

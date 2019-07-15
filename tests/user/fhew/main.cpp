@@ -19,7 +19,7 @@ try
     Secure y = _3_ENn;
     cout << "AAA 3\n";
     //x + y;
-    f(x,y);
+    f(x, y);
     cout << "AAA 4\n";
     cout << "This must be [ enc (7) ] = " << x << '\n';
     cout << "AAA 5\n";

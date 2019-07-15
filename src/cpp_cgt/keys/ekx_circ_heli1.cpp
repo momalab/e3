@@ -8,7 +8,7 @@
 
 using std::cout;
 
-void CircuitEvalKey_heli_X::save()
+void e3::CircuitEvalKey_heli_X::save()
 {
     FHEPubKey & k = *e3heli::toek(key);
 

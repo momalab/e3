@@ -1,15 +1,15 @@
 // === BEGIN atop.inc
 
 template <class T, class N>
-void initEvalKey(std::string name, T *& pek, T *& gpek)
+void initEvalKey(e3::KeyName name, T *& pek, T *& gpek)
 {
     if ( !gpek )
     {
         try { gpek = new N(T::User::Bob, name); }
         catch (...)
         {
-            std::cerr << "Cannot load evaluation key of "
-                      << name << "\n";
+            std::cerr << "Cannot load evaluation key of ("
+                      << name.typ << "," << name.fil << ")\n";
             throw;
         }
     }

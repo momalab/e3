@@ -1,5 +1,5 @@
 /**
-  @file 
+  @file
 
   @ingroup mtr
 
@@ -81,9 +81,9 @@
 ** number.
 */
 #if SIZEOF_VOID_P == 8
-#define MTR_MAXHIGH	(((MtrHalfWord) ~0) >> 1)
+#define MTR_MAXHIGH (((MtrHalfWord) ~0) >> 1)
 #else
-#define MTR_MAXHIGH	((MtrHalfWord) ~0)
+#define MTR_MAXHIGH ((MtrHalfWord) ~0)
 #endif
 
 /*---------------------------------------------------------------------------*/
@@ -106,15 +106,16 @@ typedef uint16_t MtrHalfWord;
 /**
  * @brief multi-way tree node.
  */
-struct MtrNode_ {
+struct MtrNode_
+{
     MtrHalfWord flags;
     MtrHalfWord low;
     MtrHalfWord size;
     MtrHalfWord index;
-    struct MtrNode_ *parent;
-    struct MtrNode_ *child;
-    struct MtrNode_ *elder;
-    struct MtrNode_ *younger;
+    struct MtrNode_ * parent;
+    struct MtrNode_ * child;
+    struct MtrNode_ * elder;
+    struct MtrNode_ * younger;
 };
 
 /*---------------------------------------------------------------------------*/
@@ -127,9 +128,9 @@ struct MtrNode_ {
 /*---------------------------------------------------------------------------*/
 
 /* Flag manipulation macros */
-#define MTR_SET(node, flag)	(node->flags |= (flag))
-#define MTR_RESET(node, flag)	(node->flags &= ~ (flag))
-#define MTR_TEST(node, flag)	(node->flags & (flag))
+#define MTR_SET(node, flag) (node->flags |= (flag))
+#define MTR_RESET(node, flag)   (node->flags &= ~ (flag))
+#define MTR_TEST(node, flag)    (node->flags & (flag))
 
 
 /** \cond */

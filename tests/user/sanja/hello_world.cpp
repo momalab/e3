@@ -7,7 +7,10 @@
 using namespace std;
 using SecureInt = PilcUint<8>;
 
+// _1_Em
+
 int main()
+try
 {
     SecureInt num1 = _2_Eu;
     SecureInt num2 = _2_Eu;
@@ -17,7 +20,17 @@ int main()
 
     std::cout << "Hello World \n";
     std::cout << "num1 = " << num1 << "\n";
-    std::cout << "num1d = " << dec(num1,"Pilc") << "\n";
+    std::cout << "num1d = " << dec(num1) << "\n";
     std::cout << "num2 = " << num2 << "\n";
-    std::cout << "Result = " << res << "\n";
+    std::cout << "Result = " << dec(res) << "\n";
+}
+catch (string e)
+{
+    cout << "Error: " << e << "\n";
+    return 1;
+}
+catch (...)
+{
+    cout << "Exception\n";
+    return 1;
 }

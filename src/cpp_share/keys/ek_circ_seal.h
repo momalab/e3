@@ -18,7 +18,7 @@ class CircuitEvalKey_seal : public CircuitEvalKey
         Snek key;
 
     public:
-        CircuitEvalKey_seal(User u, std::string name)
+        CircuitEvalKey_seal(User u, KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load();
