@@ -55,7 +55,24 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
         sk = shared_ptr<PrivKey>
              (new PilaPrivKey(name, forceGen, forceLoad, seed, lambda));
 
-    else if ( encType[0] == '@' ) makeBridge(par, 1);
+    ///else if ( encType[0] == '@' ) makeBridge(par, 1);
+    else if (encType[0] == '@')
+    {
+        makeBridge(par, 1); if (!bridge) never("bridge");
+
+        if (0) {}
+
+        else if (encType == secNames::encPila)
+        {
+            PilBasePrivKey * p = dynamic_cast<PilBasePrivKey *>(bridge->get_sk_raw());
+            if (!p) never("bad bridge");
+            sk = shared_ptr<PrivKey>(new PilaPrivKey(*p, name.typ));
+        }
+
+        else
+            throw "Circuit: Bridge is not supperted for type ["
+            + encType + "] in " + name.typ;
+    }
 
     else
         throw "Partial: Bad encryption type [" + encType + "] in " + name.typ;

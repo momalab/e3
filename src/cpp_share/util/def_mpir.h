@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_MPIR_H_
+#define _E3_DEF_MPIR_H_
 
 #include <string>
 #include <memory>
@@ -83,3 +84,4 @@ class Bigun
 
 
 
+#endif // _E3_DEF_MPIR_H_

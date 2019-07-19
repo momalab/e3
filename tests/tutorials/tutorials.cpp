@@ -3,6 +3,8 @@
 #include "e3int.h"
 #include "timer.h"
 
+#include "alice.h"
+
 /*
     You MUST include 'e3int.h' in your program file. It links to 'secint.cpp', a
     FHE Framework API file which consists of Bit, secret and evaluation keys
@@ -11,8 +13,11 @@
     the program to abstract different APIs of existing FHE libraries. In other words,
     the user's C++ code becomes oblivious to the underlying FHE library, and, hence,
     a new FHE library can be plugged in without any change to the implementation
-    of the SecureInt class. You simpy need to link your compiled binary with the
+    of the SecureInt class. You simply need to link your compiled binary with the
     corresponding FHE library and the newly generated 'secint.cpp' file.
+
+    If you want to access decrypted results by building alice.exe, you need to
+    include alice.h as well.
  */
 
 using namespace std;
@@ -63,8 +68,8 @@ void add_two_integers()
 {
     cout << "\nAdding two integers:" << "\n";
 
-    SecureInt num1 = _2_Ep;
-    SecureInt num2 = _2_Ep;
+    SecureInt num1 = _5_Ep;
+    SecureInt num2 = _2_En;
     SecureInt res = _0_Ep;
 
     /*
@@ -72,7 +77,7 @@ void add_two_integers()
         'SecureInt' class for PHE. If you need to initialize private variables with
         encrypted constants (without manually encrypting every value), you can append an
         E3-defined suffix, which will be parsed by our helper tool to automatically
-        generate the encrypted constants. Here, '_Ep' is used as stated in the
+        generate the encrypted constants. Here, '_Ep' and '_En' is used as stated in the
         configuration file.
      */
 
@@ -84,9 +89,18 @@ void add_two_integers()
      */
 
     cout << "num1 = " << num1 << "\n";
-//    cout << "num1d = " << dec(num1) << "\n";
     cout << "num2 = " << num2 << "\n";
-    cout << "2 + 2 = " << res << "\n";
+    cout << "5 + -2 = " << res << "\n";
+
+    cout << "Using alice:\n";
+    cout << "num1d = " << dec(num1) << "\n";
+    cout << "num2d = " << decs(num2) << "\n";
+    cout << "5 + -2 = " << decs(res) << "\n";
+
+    /*
+        Here, you can immediately retrieve decrypted results by using alice.exe. 'dec()'
+        is used for unsigned value and 'decs()' is for signed value.
+     */
 
 }
 
@@ -178,12 +192,20 @@ int main()
         1. cd e3/src
         2. make USER=../tests/tutorials
         3. ./bob.exe
-        4. ./bob.exe | ./cgt.exe dec -c ../tests/tutorials/cgt.cfg
+        4. ./bob.exe | ./cgt.exe dec -c ../tests/tutorials/cgt.cfg -s 8
 
         NOTE: Compare the runtimes of boolean circuit and arithmetic circuit for computing
         the factorial of 5. Arithmetic circuit (using bridge) will give noticably less
         computation time.
 
+        To check the immediately decrypted results using alice.exe, run:
+        1. cd e3/src
+        2. make alice USER=../tests/tutorials
+        3. ./alice.exe
+
+        NOTE: Only the variables that were annotated with 'dec()' or 'decs()' will be decrypted.
+        All the other variables will remain encrypted.
+        
         NOTE: Before you build your own program, make sure to run 'make cleanall' or 'make c'.
      */
 

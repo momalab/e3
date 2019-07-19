@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_TFHE0_H_
+#define _E3_DEF_TFHE0_H_
 
 // this header def_tfhe0.h should not be included in any code except *tfhe0.cpp
 
@@ -6,3 +7,4 @@
 
 struct LweSample { bool b; };
 
+#endif // _E3_DEF_TFHE0_H_

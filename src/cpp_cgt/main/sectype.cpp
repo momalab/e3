@@ -158,8 +158,14 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
 ///map<string, bool> SecType::find_constants(string dirnames) const
 SecType::Consts SecType::find_constants(string dirnames) const
 {
-    ///map<string, bool> r;
     Consts r;
+
+    // check that encryption is not external
+    if ( encType == secNames::encExt )
+    {
+        if ( postfixP.empty() && postfixN.empty() ) return r;
+        throw "Cannot build in constants in external encryption, type: " + name.typ;
+    }
 
     std::cout << nm::cgt << ": scan " << postfixP << "/" << postfixN;
 

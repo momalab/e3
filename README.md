@@ -18,6 +18,7 @@ Current state: June 2019
 - [Getting Started](#getting-started)
   - [Build Your Program](#build-your-program)
   - [Manual Build using cgt.exe](#manual-build-using-cgt.exe)
+  - [Using alice.exe](#using-alice.exe)
 
 # Introduction
 The proliferation of ubiquitous computing and the recent advances in cloud services have amplified the reliance of millions of users to outsourced computation and storage for their data. Remote servers across the globe are becoming the virtual containers of sensitive data, from banking records and medical information to file storage and search queries. Numerous benefits of outsourcing, however, are often matched with several limitations in security and privacy guarantees offered to the end users. 
@@ -30,34 +31,35 @@ One compelling solution that allows native manipulation of encrypted values with
 ## E3 Framework
 Encrypt-Everything-Everywhere (E<sup>3</sup>) computation paradigm allows non-crypto-savvy developers to *effortlessly* incorporate data privacy in their programs. Specifically, E<sup>3</sup> offers secure cryptographic libraries that define new datatypes to *selectively* protect critical variables using end-to-end encryption for numerous real-life applications.
 
-Given user program with a configuration file delineating the FHE scheme to be instantiated, E<sup>3</sup> build tool ('cgt.exe') is generated. This tool builds 'secret key' for decryption and 'evaluation key' needed to execute a compiled binary, and generates 'Framework API.cpp' file that gives access to the new secure datatypes.
+Programming support for the E<sup>3</sup> computation paradigm is provided through a set of software libraries and helper tools. E<sup>3</sup> works as following. The end user (Alice) employs E<sup>3</sup> to compile a program with encrypted data and send it to Bob for execution. Given a user program with a configuration file delineating the FHE scheme to be instantiated, E<sup>3</sup> build tool ('cgt.exe') is generated. This tool builds 'secret key' for decryption and 'evaluation key' needed to execute a compiled binary, and generates 'Framework API.cpp' file that gives access to the new secure datatypes.
 
 ### Encryption Libraries
 
 E<sup>3</sup> implements four external FHE libraries: TFHE, FHEW, HElib, and SEAL. FHEW and HElib are only supported in Linux. Which library to be used is decided by user and specified in the configuration file. Different libraries can be used simultaneously, and the same source code can be used for any library - users only need to slightly modify the configuration file.
 
-TFHE implements a variant of the GSW scheme and supports evaluation of any Boolean circuit on encrypted values. Unrestricted circuit sizes are possible by incorporating *bootstrapping* in the evaluation of eachgate; gate-by-gate bootstrapping reduces the noise of FHE ciphertexts after each operation and allows applying an arbitrary function *after the data are already encrypted*. 
+**TFHE** implements a variant of the GSW scheme and supports evaluation of any Boolean circuit on encrypted values. Unrestricted circuit sizes are possible by incorporating *bootstrapping* in the evaluation of eachgate; gate-by-gate bootstrapping reduces the noise of FHE ciphertexts after each operation and allows applying an arbitrary function *after the data are already encrypted*. 
 
-FHEW is a predecessor of TFHE and the first FHE library supporting per-gate bootstrapping using a homomorphic accumulator based on a variant of the GSW scheme. The latest version of FHEW implements a functionally-complete set of bitwise operations on the encryptions of bits, and each ciphertext output is refreshed using bootstrapping to reduce its noise to similar levels as the corresponding inputs. Thus, FHEW enables the homomorphic evaluation of any Boolean circuit on encrypted bits. 
+**FHEW** is a predecessor of TFHE and the first FHE library supporting per-gate bootstrapping using a homomorphic accumulator based on a variant of the GSW scheme. The latest version of FHEW implements a functionally-complete set of bitwise operations on the encryptions of bits, and each ciphertext output is refreshed using bootstrapping to reduce its noise to similar levels as the corresponding inputs. Thus, FHEW enables the homomorphic evaluation of any Boolean circuit on encrypted bits. 
 
-HElib implements a ring-LWE variant of the BGV scheme (second generation FHE) with the GHS optimizations. It provides bootstrapping operations to reduce ciphertext noise, as well as *batching* to pack multiple plaintexts within the same ciphertext and enable SIMD-style operations. HElib is used to compose higher-level functions on multi-bit inputs as *circuits* (specifically, we implement multi-bit adders and multipliers) and to evaluate integer addition and multiplication, directly using multi-inputs as coefficients of *polynomials*. 
+**HElib** implements a ring-LWE variant of the BGV scheme (second generation FHE) with the GHS optimizations. It provides bootstrapping operations to reduce ciphertext noise, as well as *batching* to pack multiple plaintexts within the same ciphertext and enable SIMD-style operations. HElib is used to compose higher-level functions on multi-bit inputs as *circuits* (specifically, we implement multi-bit adders and multipliers) and to evaluate integer addition and multiplication, directly using multi-inputs as coefficients of *polynomials*. 
 
-SEAL implements two different homomorphic encryption schemes: BFV scheme and CKKS scheme. The BFV allows modular arithmetic to be performed on encrypted integers, and the CKKS scheme allows addition and multiplication on encrypted real or complex numbers, but yields only approximate results. 
+**SEAL** implements two different homomorphic encryption schemes: BFV scheme and CKKS scheme. The BFV allows modular arithmetic to be performed on encrypted integers, and the CKKS scheme allows addition and multiplication on encrypted real or complex numbers, but yields only approximate results. 
 
 **NOTE**: FHEW has internal error (sic) forbidding binary operations on the same bits:
 ```
 ERROR: Please only use independant ciphertexts as inputs.
 ```
 
-E<sup>3</sup> also implements two internally-developed encryption schemes: BDD and PIL. BDD is developed using an external library called CUDD. PIL uses MPIR, a highly optimized library for bignum arithmetic. Both support full gate operations and full programming via circuits. PIL also supports direct addition, subtraction, and multiplication in modular arithmetic. No bootstrapping is necessary for both schemes since they are sufficiently fast (compared to TFHE).
+E<sup>3</sup> also implements two internally-developed encryption schemes: BDD and PIL. **BDD** is developed using an external library called CUDD. **PIL** uses MPIR, a highly optimized library for bignum arithmetic. Both support full gate operations and full programming via circuits. PIL also supports direct addition, subtraction, and multiplication in modular arithmetic. No bootstrapping is necessary for both schemes since they are sufficiently fast (compared to TFHE).
 
 While TFHE and FHEW libraries provide gates for circuits, gates for HElib, SEAL, BDD and PIL are created using arithmetic equations. Hence, arithmetic addition and multiplication are available and encouraged using HElib, SEAL, BDD and PIL. While arithmetic circuits excel in speed, they have limited operations. The goal is to maximize the use of arithmetic circuits by "bridging" boolean-to-arithmetic conversion. Detailed example with explanation can be found in tutorials.
 
 # Installing E3
 To build and use E<sup>3</sup>, your system must have the following tools available:
 - **git**
-- **make**
-- C++ compiler that supports C++17 (**GNU G++, GCC** for Linux; **cl** for Windows)
+- **make** (>=3.79.1)
+- **sh, bash**
+- C++ compiler that supports C++17 (**GNU G++, GCC** (>=5.4.0) for Linux; **cl** (>=19.10.25224) for Windows)
 
 If you are using external encryption libraries, you need to install them first. E<sup>3</sup> provides scripts and instructions to install them. Yet the scripts do not automatically build some libraries. HElib, for instance, includes GMP and NTL libraries that are not automatically built by E<sup>3</sup> script. Some libraries require additional tools to successfully build. MPIR, for instance, requires Visual Studio 17 in Windows environment. Detailed instruction will be displayed if necessary.
 
@@ -67,7 +69,14 @@ git clone https://github.com/momalab/e3.git
 ```
 
 ## Windows
-We suggest using Cygwin when using E<sup>3</sup> in Windows. While setting up Cygwin, make sure to include installing 'git', 'cl', and 'make' packages. 
+Detailed instructions to set up in the Windows environment can be found in [Windows Set Up Guideline](Windows-Set-Up.md).
+
+You can use Command Prompt, Powershell to use E<sup>3</sup> in Windows. 
+- command line
+- linux subsystem in windows
+- powershell
+
+Alternatively, you can also use Cygwin. While setting up Cygwin, make sure to include installing 'git', 'cl', and 'make' packages. 
 
 Programs are compiled with Microsoft compiler, specifically cl, which can be installed and linked to Cygwin.
 
@@ -75,22 +84,18 @@ Step-by-step instructions of using the Microsoft C++ toolset from Cygwin can be 
 
 Make sure that the following commands run in your Windows console shell:
 ```bash
-$ make
-make: *** No targets specified and no makefile found.  Stop.
-```
-```bash
 $ cl
-Microsoft (R) C/C++ Optimizing Compiler Version 19.10.25224 for x86
+Microsoft (R) C/C++ Optimizing Compiler Version [version number] for [architecture type]
 Copyright (C) Microsoft Corporation.  All rights reserved.
 usage: cl [ option... ] filename... [ /link linkoption... ]
 ```
 ```bash
 $ sh --help
-GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
+GNU bash, version [version number (>=3.1.23)]
 ```
 ```bash
-$ bash --help
-GNU bash, version 4.1.17(9)-release-(i686-pc-cygwin)
+$ make -v
+GNU Make version [version number (>=3.79.1)]
 ```
 
 ## Linux
@@ -230,41 +235,53 @@ Here, your program and corresponding configuration file are stored in 'user/to_b
 ## Manual Build using cgt.exe
 You can also manually build and run your program on E<sup>3</sup> framework.
 
-First, you need to build the build tool (cgt.exe):
+1. You need to build the build tool (cgt.exe):
 ```
 cd e3/src
 make cgt.exe
 ```
-Then, the framework needs to generate appropriate set of secret/evaluation keys. This process is required once per program. You can re-use the same keys for different programs by setting the configuration file parameters accordingly, given that the keys are stored in a file. Generation of keys is required before the first compilation, since the secret key is needed to encrypt the constants in the source code. As a result of following command, you will get a set of private/evaluation keys, secint.cpp, secint.h, and secint.inc. 
+2. Then, the framework needs to generate appropriate set of secret/evaluation keys. This process is required once per program. You can re-use the same keys for different programs by setting the configuration file parameters accordingly, given that the keys are stored in a file. Generation of keys is required before the first compilation, since the secret key is needed to encrypt the constants in the source code. As a result of following command, you will get a set of private/evaluation keys, secint.cpp, secint.h, and secint.inc. 
 ```
 ./cgt.exe gen -c [user configuration file] -d [user program directory]
 ```
-You also need to compile object files needed to compile bob.exe. If you are building in Windows environment, replace 'bt_unx' with 'bt_win' for all commands below. Run:
+3. You also need to compile object files needed to build bob.exe. This task will be automatically done using the amalgamation script (amalgam.sh). As a result of follwing command, you will get cgtshared.cpp and cgtshared.h. Run:
+```
+./amalgam.sh
+```
+4. The last part of the building process is to compile and link all necessary files (cgtshared.cpp, secint.cpp, and user codes) to generate bob.exe. 
+In Linux, run:
+```
+g++ -I./ -I[user program directory] cgtshared.cpp secint.cpp [user program directory]/*.cpp -o./bob.exe
+```
+In Windows, run:
+```
+cl -EHsc -I./ -I[user program directory] cgtshared.cpp secint.cpp [user program directory]/*.cpp -Febob.exe
+```
+
+## Using alice.exe
+When you build using the command `make`, it generates bob.exe, which gives an encrypted set of computation results if not decrypted otherwise using cgt.exe. However, you can immediately access the decrypted result by making alice.exe. In order to do so, a slight modification in your C++ codes is necessary.
+
+First, you need to include "alice.h" file in your program. The file can be found in tests/user directory. Then, you only need to wrap your variables with 'dec()' or 'decs()'. 'decs()' is used for signed number. Keep your variables as they are when declaring them. Here is a simple example:
+```cpp
+ #include <iostream>
+ #include "e3int.h"
+
+ #include "alice.h"
+
+ using SecureInt = MyTypeInt<32>;
+ SecureInt f(SecureInt x, SecureInt y){ return x + y; }
+
+ int main()
+ {
+     SecureInt x = _7_EN, y = _3_ENn;
+     auto z = f(x, y);
+     std::cout << dec(x) << "-" << decs(y) << "=" << dec(z) << "\n";
+ }
+```
+
+To retrieve the decrypted results, run:
 ```
 cd e3/src
-mkdir -p bt_unx
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_abstract.cpp -o bt_unx/ek_abstract.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_native.cpp -o bt_unx/ek_native.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/anykey.cpp -o bt_unx/anykey.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_plain.cpp -o bt_unx/ek_circ_plain.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_pil.cpp -o bt_unx/ek_circ_pil.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_fhew0.cpp -o bt_unx/ek_circ_fhew0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_heli0.cpp -o bt_unx/ek_circ_heli0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_seal0.cpp -o bt_unx/ek_circ_seal0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_tfhe0.cpp -o bt_unx/ek_circ_tfhe0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ_bdd.cpp -o bt_unx/ek_circ_bdd.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_circ.cpp -o bt_unx/ek_circ.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/keys/ek_pil.cpp -o bt_unx/ek_pil.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/e3util.cpp -o bt_unx/e3util.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_fhew0.cpp -o bt_unx/def_fhew0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_heli0.cpp -o bt_unx/def_heli0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_seal0.cpp -o bt_unx/def_seal0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_tfhe0.cpp -o bt_unx/def_tfhe0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_mpir0.cpp -o bt_unx/def_mpir0.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/def_pil.cpp -o bt_unx/def_pil.o
-g++ -c -I./cpp_share/util/ -I./cpp_share/keys/ cpp_share/util/base64.cpp -o bt_unx/base64.o
-```
-The last part of the building process is to compile and link all necessary files to generate bob.exe. 
-```
-g++ -I . -I cpp_share/util -I cpp_share/keys bt_unx/*.o -I [user program directory] secint.cpp [user program directory]/*.cpp -o bob.exe
+make alice
+./alice.exe
 ```

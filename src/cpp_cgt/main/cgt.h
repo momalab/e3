@@ -9,7 +9,7 @@
 
 namespace nm
 {
-const std::string logo = "E3 Framework, NYUAD, 2018-2019, ver 0.1.7";
+const std::string logo = "E3 Framework, NYUAD, 2018-2019, ver 0.2.0";
 const std::string cgt = "cgt";
 const std::string cgtexe = cgt + ".exe";
 const std::string default_cfg = cgt + ".cfg";

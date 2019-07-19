@@ -5,8 +5,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "e3util.h"
-#include "evalkeys.h"
+#include "cgtshared.h"
 
 template <class T, class N = T> void initEvalKey(e3::KeyName name, T *& pek, T *& gpek);
 

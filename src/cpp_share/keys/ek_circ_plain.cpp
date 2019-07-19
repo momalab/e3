@@ -13,5 +13,4 @@ bool e3::CircuitEvalKey_plain::load()
     return true;
 }
 
-///std::string CircuitEvalKey_plain::decor(const std::string & s, bool add) const{    return prefix(s, add, "CP");}
 

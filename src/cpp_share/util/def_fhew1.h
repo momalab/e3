@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_FHEW1_H_
+#define _E3_DEF_FHEW1_H_
 
 // this header def_fhew1.h should not be included in any code except *fhew1.cpp
 
@@ -23,3 +24,4 @@ inline  const ek * toek(cFhewNativeEvalKey a) { return static_cast<const ek *>(a
 } // e3fhew
 
 void init_properties_fhew();
+#endif // _E3_DEF_FHEW1_H_

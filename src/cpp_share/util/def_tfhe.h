@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_TFHE_H_
+#define _E3_DEF_TFHE_H_
 
 #include <string>
 #include <memory>
@@ -25,3 +26,4 @@ struct TfheNativeBt
 int tfhe_impl(); // 0 or 1
 
 } // e3
+#endif // _E3_DEF_TFHE_H_

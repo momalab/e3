@@ -134,6 +134,4 @@ bool e3::CircuitEvalKey_fhew::load_oleg()
     return true;
 }
 
-///std::string e3::CircuitEvalKey_fhew::decor(const std::string & s, bool add) const{    return prefix(s, add, "F");}
-
 std::string e3::CircuitEvalKey_fhew::filename() const { return EvalKey::filename(); }

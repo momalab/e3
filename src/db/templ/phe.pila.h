@@ -11,8 +11,6 @@ class $Name
         static const $Name * zero, * unit;
 
     public:
-        ///static const char * name() { return "$Ename"; }
-        ///static const char * scheme() { return "$Encryption"; }
         static const char * typname() { return "$Name"; }
         static const char * filname() { return "$Filencname"; }
         static const char * clsname() { return "$Clsencname"; }
@@ -31,7 +29,6 @@ class $Name
         template<typename T> T init(const T & s) { init0(); return s; }
 
         $Name() { init0(); }
-        ///$Name(const std::string & s) : x(init(pek)->decor(init(s), false, "$Name")) {}
         $Name(const std::string & s) : x(init(pek)->decor(init(s), false)) {}
         $Name(const char * c) : $Name(std::string(c)) {}
         $Name(e3::PilQuad a) : x(init(a)) {}
@@ -53,7 +50,6 @@ class $Name
         friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
 
         // Functions
-        ///std::string str() const { return pek->decor(x.str(), true, "$Name"); }
         std::string str() const { return pek->decor(x.str(), true); }
 };
 

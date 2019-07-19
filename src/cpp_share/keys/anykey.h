@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_ANYKEY_H_
+#define _E3_ANYKEY_H_
 
 #include <string>
 
@@ -14,19 +15,16 @@ struct KeyName
     std::string typ, fil;
 };
 
-class AnyKey
+struct AnyKey
 {
     public: // need modify access from both Eval and Priv keys
         // it's possible to avoid public, but simplicity rules
         KeyName name;
-        ///std::string decorname;
 
-        ///private:
         // utility function for decor
         static std::string prefix(
             const std::string & s, bool add, std::string pfx);
 
-    public:
         AnyKey(KeyName nm) : name(nm) {}
 
         virtual std::string filename() const = 0;
@@ -35,3 +33,4 @@ class AnyKey
 };
 
 } // e3
+#endif // _E3_ANYKEY_H_

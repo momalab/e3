@@ -1,7 +1,7 @@
 #include <iostream>
 #include <utility>
 
-#include "../../e3int.h"
+#include "e3int.h"
 #include "../alice.h"
 
 using namespace std;
@@ -23,6 +23,9 @@ try
     std::cout << "num1d = " << dec(num1) << "\n";
     std::cout << "num2 = " << num2 << "\n";
     std::cout << "Result = " << dec(res) << "\n";
+
+    PilMint pm = _3_Em;
+    std::cout << "PilMint3: " << dec(pm) << "\n";
 }
 catch (string e)
 {

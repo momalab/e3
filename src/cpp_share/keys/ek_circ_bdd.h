@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_BDD_H_
+#define _E3_EK_CIRC_BDD_H_
 
 #include "ek_circ.h"
 #include "e3util.h"
@@ -23,7 +24,6 @@ class CircuitEvalKey_bdd : public CircuitEvalKey
         virtual bool load();
 
         virtual std::string filename() const;
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 class CircuitEvalKey_bddn : public CircuitEvalKey_bdd
@@ -31,8 +31,6 @@ class CircuitEvalKey_bddn : public CircuitEvalKey_bdd
     public:
         CircuitEvalKey_bddn(User u, KeyName name)
             : CircuitEvalKey_bdd(u, name) {}
-
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 class CircuitEvalKey_bdda : public CircuitEvalKey_bdd
@@ -40,8 +38,6 @@ class CircuitEvalKey_bdda : public CircuitEvalKey_bdd
     public:
         CircuitEvalKey_bdda(User u, KeyName name)
             : CircuitEvalKey_bdd(u, name) {}
-
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 class CircuitEvalKey_bddf : public CircuitEvalKey_bdd
@@ -49,8 +45,7 @@ class CircuitEvalKey_bddf : public CircuitEvalKey_bdd
     public:
         CircuitEvalKey_bddf(User u, KeyName name)
             : CircuitEvalKey_bdd(u, name) {}
-
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 } // e3
+#endif // _E3_EK_CIRC_BDD_H_

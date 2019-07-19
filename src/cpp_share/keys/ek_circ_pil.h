@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_PIL_H_
+#define _E3_EK_CIRC_PIL_H_
 
 #include "ek_circ.h"
 #include "e3util.h"
@@ -28,3 +29,4 @@ class CircuitEvalKey_pilc : public CircuitEvalKey
 
 
 } // e3
+#endif // _E3_EK_CIRC_PIL_H_

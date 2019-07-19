@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_ABSTRACT_H_
+#define _E3_EK_ABSTRACT_H_
 
 #include <cstdlib>
 #include <sstream>
@@ -31,3 +32,4 @@ class EvalKey : public AnyKey
 };
 
 } // e3
+#endif // _E3_EK_ABSTRACT_H_

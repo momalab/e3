@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_HELI1_H_
+#define _E3_DEF_HELI1_H_
 
 // this header def_heli1.h should not be included in any code except *heli1.cpp
 
@@ -7,8 +8,6 @@
 #include "FHE.h"
 #include "EncryptedArray.h"
 
-///using NativePrivKey = FHESecKey * ;
-///using NativeEvalKey = FHEPubKey * ;
 
 struct NativeProperties
 {
@@ -37,3 +36,4 @@ struct HeliCtxt
 };
 
 void init_properties_heli(NativeProperties ** ppprop, std::string & name);
+#endif // _E3_DEF_HELI1_H_

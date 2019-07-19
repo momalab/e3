@@ -15,8 +15,6 @@ template<int SZ> class $NameUint
         static const char * typname() { return "$Name"; }
         static const char * filname() { return "$Filencname"; }
         static const char * clsname() { return "$Clsencname"; }
-        ///static const char * name() { return "$Ename"; }
-        ///static const char * scheme() { return "$Encryption"; }
         static const int size() { return SZ; };
 
         // Constructors

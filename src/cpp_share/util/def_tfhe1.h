@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_TFHE1_H_
+#define _E3_DEF_TFHE1_H_
 
 // this header def_tfhe1.h should not be included in any code except *tfhe1.cpp
 
@@ -21,3 +22,4 @@ inline  const ek * toek(e3::cTfheNativeEvalKey a) { return static_cast<const ek 
 
 } // e3tfhe
 
+#endif // _E3_DEF_TFHE1_H_

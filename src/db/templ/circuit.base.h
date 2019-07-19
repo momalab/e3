@@ -5,7 +5,6 @@ class $NameBit;
 class $NameBaseBit
 {
     protected:
-        ///struct PekInitializer { PekInitializer( void(*f)() ) { f(); } } pekInitializer;
         static e3::CircuitEvalKey * pek;
         static void init_pek();
 

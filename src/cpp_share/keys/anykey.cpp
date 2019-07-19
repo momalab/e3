@@ -22,9 +22,5 @@ std::string e3::AnyKey::prefix(const std::string & s, bool add, std::string pfx)
 
 std::string e3::AnyKey::decor(const std::string & s, bool add) const
 {
-    ///auto nm = name.decor;
-    ///if ( nm.empty() ) nm = name.enc;
-    ///return prefix(s, add, nm);
     return prefix(s, add, name.typ);
-    ///return prefix(s, add, name.decor);
 }

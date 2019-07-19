@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_HELI_H_
+#define _E3_DEF_HELI_H_
 
 #include <string>
 #include <memory>
@@ -26,3 +27,4 @@ struct HeliNativeBt
 
 int heli_impl(); // 0 or 1
 
+#endif // _E3_DEF_HELI_H_

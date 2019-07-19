@@ -5,8 +5,6 @@
 #include "olc.h"
 #include "crcl.h"
 
-///Module invert(const Module & prog);
-
 class Invertor
 {
         Module & module;

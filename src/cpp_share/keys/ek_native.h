@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_NATIVE_H_
+#define _E3_EK_NATIVE_H_
 
 #include "ek_abstract.h"
 #include "e3util.h"
@@ -23,3 +24,4 @@ class NativeEvalKey : public EvalKey
 };
 
 } // e3
+#endif // _E3_EK_NATIVE_H_

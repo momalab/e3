@@ -71,12 +71,6 @@ class RndCpp : public Rnd
         //double operator()() { return rrnd(); }
         int next() { return irnd(); }
         ol::ull nextull();
-        ///int operator()() { return next(); }
 };
 
-///#ifdef KISS
-///using Rnd = RndKiss;
-///#else
-///using Rnd = RndCpp;
-///#endif
 

@@ -9,8 +9,6 @@ const e3::PilEvalValues * e3::PilArith::use = nullptr;
 
 bool e3::PilBaseEvalKey::load(string fname)
 {
-    ////cout << "working dir: " << os::FileSys::cwd().str() << '\n';
-
     std::ifstream in(fname, std::ios::binary);
     if (!in) return false;
     std::string s;

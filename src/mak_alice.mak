@@ -29,6 +29,7 @@ OPTS += -I./cpp_cgt/util/
 OPTS += -I./cpp_share/util/
 OPTS += -I./${SKDIR}/
 OPTS += -I./${EKDIR}/
+OPTS += -I./${USER}/
 
 
 include mak_mod_inc.mak
@@ -116,7 +117,10 @@ cgt.exe:
 #$(LDFDLLLOC): $(LDFDLLREM)
 #	cp $< $@
 
-$(BIN)/secint.$(OEXT): secint.cpp
+cgtshared.cpp: cpp_share/util/*.*  cpp_share/keys/*.*
+	bash amalgam.sh
+
+$(BIN)/secint.$(OEXT): secint.cpp cgtshared.cpp
 	@echo -n "Starting secint compilation: "
 	@date
 	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@

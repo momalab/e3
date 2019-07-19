@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_PIL_H_
+#define _E3_EK_PIL_H_
 
 #include "ek_abstract.h"
 #include "e3util.h"
@@ -77,3 +78,4 @@ PilQuad operator*(PilQuad a, PilQuad b);
 
 
 } // e3
+#endif // _E3_EK_PIL_H_

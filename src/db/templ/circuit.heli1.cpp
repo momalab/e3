@@ -1,7 +1,5 @@
 // === BEGIN circuit.heli.cpp Name=$Name
 
-#include "def_heli1.h"
-
 const double NOISE_LIMITA = -20;
 const double NOISE_LIMITX = -210;
 const bool PRN_BOOT = false;

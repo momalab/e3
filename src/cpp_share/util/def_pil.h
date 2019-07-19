@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_PIL_H_
+#define _E3_DEF_PIL_H_
 
 #include <string>
 #include <memory>
@@ -36,3 +37,4 @@ struct PilQuad
 } // e3
 
 
+#endif // _E3_DEF_PIL_H_

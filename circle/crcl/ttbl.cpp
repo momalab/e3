@@ -145,7 +145,6 @@ void tt2Circle(std::istream & in, string file)
         string sinp, sin1, sin2, sout;
 
         if ( line[0] == ' ' )
-            ///throw "Arithmeric table as input not yet implemented";
             loadAriLine(line, sin1, sin2, sout, iin1, iin2, iout);
         else
             istr(line) >> sin1 >> sin2 >> sout;

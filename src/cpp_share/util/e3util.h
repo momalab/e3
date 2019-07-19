@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_E3UTIL_H_
+#define _E3_E3UTIL_H_
 
 #include <string>
 #include <vector>
@@ -76,3 +77,4 @@ constexpr inline sll signExtend(sll m, ull n)
 #endif
 #endif
 // === END testing compiler versions
+#endif // _E3_E3UTIL_H_

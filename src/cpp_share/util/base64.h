@@ -1,8 +1,7 @@
-#pragma once
+#ifndef _E3_BASE64_H_
+#define _E3_BASE64_H_
 
 #include <string>
-///#include <vector>
-///#include "e3util.h"
 
 namespace e3util
 {
@@ -25,3 +24,4 @@ inline std::string dec(const std::string & s) { return decode(s); }
 
 } // base64
 } // util
+#endif // _E3_BASE64_H_

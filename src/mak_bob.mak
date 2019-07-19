@@ -14,12 +14,12 @@ E3X=e3x/openrisc
 E3X=e3x/riscv
 E3X=e3x/emulate
 
-SKDIR=cpp_cgt/keysXXX # Bob - no access to SK
-EKDIR=cpp_share/keys
+##SKDIR=cpp_cgt/keysXXX # Bob - no access to SK
+##EKDIR=cpp_share/keys
 
 OPTU = $(OPTS) -I./
-OPTS += -I./cpp_share/util/
-OPTS += -I./${EKDIR}/
+##OPTS += -I./cpp_share/util/
+##OPTS += -I./${EKDIR}/
 
 OPTS += -I./${USER}/
 
@@ -56,57 +56,69 @@ objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
 ##objk2 := $(srck2:${EKDIR}/%.cpp=$(BIN)/%.$(OEXT))
 
 # srck2 objk2
-include mak_mod_ek.mak
+#include mak_mod_ek.mak
 
 
-all: $(BIN) bob.exe # execute
+#all: $(BIN) bob.exe # execute
+all: bob.exe # execute
 
 execute: bob.exe cgt.exe
 	./bob.exe | ./cgt.exe dec -c $(CGT) -s ${BITSIZE}
 
 #	./bob.exe
 
-$(BIN):
-	mkdir -p $(BIN)
+# $(BIN):
+# 	mkdir -p $(BIN)
 
-bob.exe: $(BIN) $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) $(E3X)/e3x.$(OEXT) \
-	$(objk2) $(obju2) $(LDF2)
+# bob.exe: $(BIN) $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) $(E3X)/e3x.$(OEXT) \
+# 	$(objk2) $(obju2) $(LDF2)
+# 	@echo -n "Starting user code compilation: "
+# 	@date
+# 	$(CCT) $(OPTU) $(USER)/*.cpp $(BIN)/secint.$(OEXT) $(objk2) $(obju2) \
+# 	$(E3X)/e3x.$(OEXT) $(LDF2) $(LDF3) $(EOUT)$@
+# 	@echo -n "Finished user code compilation: "
+# 	@date
+# 	rm -f *.$(OEXT)
+# 	@$(COPYDLL2)
+
+bob.exe: $(USER)/* secint.h secint.inc secint.cpp cgtshared.cpp $(E3X)/e3x.$(OEXT) $(LDF2)
 	@echo -n "Starting user code compilation: "
 	@date
-	$(CCT) $(OPTU) $(USER)/*.cpp $(BIN)/secint.$(OEXT) $(objk2) $(obju2) \
+	$(CCT) $(OPTU) $(USER)/*.cpp secint.cpp cgtshared.cpp \
 	$(E3X)/e3x.$(OEXT) $(LDF2) $(LDF3) $(EOUT)$@
 	@echo -n "Finished user code compilation: "
 	@date
 	rm -f *.$(OEXT)
 	@$(COPYDLL2)
 
-
 cgt.exe:
 	echo build cgt.exe
 
+cgtshared.cpp: cpp_share/util/*.*  cpp_share/keys/*.*
+	bash amalgam.sh
 
-$(BIN)/secint.$(OEXT): secint.cpp
+$(BIN)/secint.$(OEXT): secint.cpp cgtshared.cpp
 	@echo -n "Starting secint compilation: "
 	@date
 	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 	@echo -n "Finished secint compilation: "
 	@date
 
-$(objl): $(BIN)/%.$(OEXT):cpp_cgt/main/%.cpp cpp_cgt/main/*.h \
-	${SKDIR}/*.h ${EKDIR}/*.h cpp_cgt/util/*.h cpp_share/util/*.h
-	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+##$(objl): $(BIN)/%.$(OEXT):cpp_cgt/main/%.cpp cpp_cgt/main/*.h \
+##	${SKDIR}/*.h ${EKDIR}/*.h cpp_cgt/util/*.h cpp_share/util/*.h
+##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
 
-$(obju2): $(BIN)/%.$(OEXT):cpp_share/util/%.cpp cpp_share/util/*.h
-	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+##$(obju2): $(BIN)/%.$(OEXT):cpp_share/util/%.cpp cpp_share/util/*.h
+##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
-$(objp): $(BIN)/%.$(OEXT):cpp_cgt/util/$(PLAT)/%.cpp cpp_cgt/main/*.h \
-	cpp_cgt/util/*.h cpp_share/util/*.h
-	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+##$(objp): $(BIN)/%.$(OEXT):cpp_cgt/util/$(PLAT)/%.cpp cpp_cgt/main/*.h \
+##	cpp_cgt/util/*.h cpp_share/util/*.h
+##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
 
-${SKDIR}/sk_circ_tfhe.cpp: ${SKDIR}/sk_circ_tfhe0.cpp ${SKDIR}/sk_circ_tfhe1.cpp
-${SKDIR}/sk_circ_seal.cpp: ${SKDIR}/sk_circ_seal0.cpp ${SKDIR}/sk_circ_seal1.cpp
+##${SKDIR}/sk_circ_tfhe.cpp: ${SKDIR}/sk_circ_tfhe0.cpp ${SKDIR}/sk_circ_tfhe1.cpp
+##${SKDIR}/sk_circ_seal.cpp: ${SKDIR}/sk_circ_seal0.cpp ${SKDIR}/sk_circ_seal1.cpp
 
 
 $(objk2): $(BIN)/%.$(OEXT):${EKDIR}/%.cpp cpp_cgt/main/*.h ${EKDIR}/*.h

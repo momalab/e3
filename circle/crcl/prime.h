@@ -19,7 +19,6 @@ struct ValPrime // keep ODR
 
     ValPrime(): ValPrime(-1) {}
     ValPrime(int i): id(i), op(Inp), a(-1), b(-1) {}
-    ///ValPrime(string n = ""): id(2), name(n), op(Inp), a(8), b(8) {}
     ValPrime(const ValPrime &) = default;
 
     string n() const
@@ -34,7 +33,6 @@ struct VisitorPrime
 {
     using Val = ValPrime; // keep ODR
 
-    ///int gid = 10; // Val counter
     std::vector<Val> vars;
 
     Val pval(Val::Op op, ValPrime a, ValPrime b);

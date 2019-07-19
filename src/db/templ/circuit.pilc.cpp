@@ -56,7 +56,6 @@ $NameBit $NameBit::gate_xor(const $NameBit & a, const $NameBit & b)
 // a ? b : c
 $NameBit $NameBit::gate_mux(const $NameBit & a, const $NameBit & b, const $NameBit & c)
 {
-///    return gate_or(gate_and(c, gate_not(a)), gate_and(b, a));
     e3::PilArith pa(kb());
     $NameBit r;
     auto z = a.x * b.x;

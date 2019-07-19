@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_SEAL1_H_
+#define _E3_DEF_SEAL1_H_
 
 // this header def_seal1.h should not be included in any code except *seal1.cpp
 
@@ -39,3 +40,4 @@ inline  ek * toek(e3::SealNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(e3::cSealNativeEvalKey a) { return static_cast<const ek *>(a); }
 
 } // e3seal
+#endif // _E3_DEF_SEAL1_H_

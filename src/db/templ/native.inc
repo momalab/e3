@@ -16,7 +16,6 @@ $NameUint<SZ>::$NameUint()
 template <int SZ>
 $NameUint<SZ>::$NameUint(const std::string & s) : $NameUint<SZ>()
 {
-    ///string c = pek->decor(s, false, "$Name");
     string c = pek->decor(s, false);
     x = e3util::hex2ull(c);
     // hack to have valid plaintext
@@ -434,7 +433,6 @@ std::string $NameUint<SZ>::str() const
 {
     std::string s = e3util::ull2hex(x);
     return pek->decor(s, true);
-    ///return pek->decor(s, true, "$Name");
 }
 
 

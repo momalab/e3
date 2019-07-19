@@ -1,7 +1,5 @@
 // === BEGIN circuit.tfhe.cpp Name=$Name
 
-#include "def_fhew1.h"
-
 inline const FHEW::EvalKey * $NameBit_ek()
 {
     return e3fhew::toek($NameBit::k()->native());

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_FHEW_H_
+#define _E3_EK_CIRC_FHEW_H_
 
 #include "ek_circ.h"
 #include "e3util.h"
@@ -31,3 +32,4 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
 };
 
 } // e3
+#endif // _E3_EK_CIRC_FHEW_H_

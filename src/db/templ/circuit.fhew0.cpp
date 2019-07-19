@@ -1,7 +1,5 @@
 // === BEGIN circuit.fhew.cpp Name=$Name
 
-#include "def_fhew0.h"
-
 $NameBit $NameBit::gate_buf(const $NameBit & a)
 {
     return a;

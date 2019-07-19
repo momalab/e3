@@ -1,7 +1,5 @@
 // === BEGIN circuit.tfhe.cpp Name=$Name
 
-#include "def_tfhe1.h"
-
 inline const TFheGateBootstrappingCloudKeySet * $NameBit_ek()
 {
     return e3tfhe::toek($NameBit::k()->native());

@@ -12,7 +12,6 @@ struct V3foot
 
 void writeProgTbl(string file, const Module & prog,
                   V3foot * vf = nullptr);
-///std::map<string, int> * v3 = nullptr);
 
 void findInvariants(string file_in, string file_ttb,
                     string file_out, const Module & prog, bool prgr);

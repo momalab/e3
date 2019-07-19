@@ -42,7 +42,7 @@ alice.exe: $(secint)
 
 clean:
 	rm -rf secint.* *.exe *.o *.obj bn_* bt_* e3x/emulate/e3x.obj .vs *.dll
-	rm -rf result.txt
+	rm -rf result.txt cgtshared.cpp cgtshared.h
 
 cleankey:
 	rm -rf secint.* *.key *.*.key x.15* *.key.cpp *.key.exe *.key.obj

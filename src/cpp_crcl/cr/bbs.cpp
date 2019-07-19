@@ -370,9 +370,6 @@ void lbs2cir(std::ostream & of, const vvbool & a, const vbool & b, bool xy)
     int sz = (int)a.size();
     int szo = sz, szi = sz;
 
-    ///std::ofstream of(file);
-    ///of << LogoF;
-
     Varman vm;
 
     for (int i = 0; i < szo; i++) // each output
@@ -419,7 +416,6 @@ void Bbs::cir(std::ostream & of1, std::ostream & of2)
     //bbs2cir(file + ".2.cir", lbs.A2, lbs.b2);
 
     {
-        ///std::ofstream of1(file + ".1.cir");
         of1 << LogoF;
 
         bool xy = true;
@@ -429,7 +425,6 @@ void Bbs::cir(std::ostream & of1, std::ostream & of2)
 
     // now write down the opposite
     {
-        ///std::ofstream of2(file + ".2.cir");
         of2 << LogoF;
 
         bool xy = true;

@@ -79,9 +79,7 @@ template<int SZ> class $NameUint
         static const char * filname() { return $NameBit::filname(); }
         static const char * clsname() { return $NameBit::clsname(); }
 
-        ///static const char * name() { return "$Ename"; }
         static const int size() { return SZ; };
-        ///static const char * scheme() { return "$Encryption"; }
 
         // Constructors
         $NameUint() { bits.resize(SZ); }

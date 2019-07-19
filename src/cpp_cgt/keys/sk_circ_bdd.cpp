@@ -420,6 +420,7 @@ string e3::CircuitPrivKey_bdd::filename() const { return PrivKey::filename(); }
 string e3::CircuitPrivKey_bdd::filecpp() const { return filename() + ".cpp"; }
 string e3::CircuitPrivKey_bdd::fileexe() const { return filename() + ".exe"; }
 
+extern const char * g_platname; // declaration outside namespace; used in save
 void e3::CircuitPrivKey_bdd::save()
 {
     string cpp = ol::file2str(cfgNames::bddmain);
@@ -443,7 +444,6 @@ void e3::CircuitPrivKey_bdd::save()
             x = ol::eatSpaces(x);
             vstr vx = ol::str2vstr(x, " ");
             if ( vx.size() < 3 || vx[1] != ":" ) throw "Bad compile format";
-            extern const char * g_platname;
             if ( vx[0] != g_platname ) continue;
             string cmd = vx[2];
             for ( size_t i = 3; i < vx.size(); i++ ) cmd += " " + vx[i];

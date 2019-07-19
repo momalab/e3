@@ -301,3 +301,4 @@ void e3::PilBasePrivKey::initAF(PilEvalValues & kv)
     kv.E = T * f;
     kv.F = PilNum(0) - T * a * c;
 }
+

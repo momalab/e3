@@ -11,7 +11,6 @@ std::string HeliNativeBt::str(cHeliNativeEvalKey ek) const
 {
     std::ostringstream os;
     os << ctxt->b;
-///    return os.str();
     return e3util::base64::enc(os.str());
 }
 

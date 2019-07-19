@@ -1,7 +1,5 @@
 // === BEGIN circuit.seal.cpp Name=$Name
 
-#include "def_seal1.h"
-
 inline const e3seal::SealEvalKey * $NameBit_ek()
 {
     return e3seal::toek($NameBit::k()->native());

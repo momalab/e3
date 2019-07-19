@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+trap 'echo "Command filed with exit code $?."' EXIT
+
 PLAT=unx
 me="=== e3 ==="
 root=../tests/user
@@ -78,12 +81,14 @@ check_TFHE() {
 
 	make c > /dev/null
 	printf "Generating cgt.exe"
-	make USER=$path TFHE=1 &> /dev/null & progress_bar 84 $!
+	make USER=$path TFHE=1 > /dev/null & progress_bar 84 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
 	# chmod +x bob.exe
 	# chmod +x cgt.exe
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -125,10 +130,12 @@ check_HElib() {
 	make c &> /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path HELI=1 &> /dev/null & progress_bar 88 $!
+	make USER=$path HELI=1 > /dev/null & progress_bar 88 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -170,10 +177,12 @@ check_FHEW() {
 	echo "Generating cgt.exe..."
 
 	#FIXME: MOCK used instead of FHEW due to compilation errors in FHEW
-	make USER=$path FHEW=0 &> /dev/null & progress_bar 104 $!
+	make USER=$path FHEW=0 > /dev/null & progress_bar 104 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -197,16 +206,32 @@ check_SEAL() {
 	path=$root/seal 
 	CGT=$path/cgt.cfg
 
-	#FIXME: check if SEAL library is installed
+	path1=../3p/seal_$PLAT/native/libseal.a
+	path2=../3p/seal_$PLAT/target/libseal.a
+
+	if test -f $path1 && test -f $path2; then
+		echo "Using FHEW library"
+	else
+		echo "USER ATTENTION!"
+		echo "This script does not automatically build SEAL."
+		echo "Please follow the user manual and install"
+		echo "SEAL on this and the target platforms."
+		echo "Use the following commands to install it:"
+		echo "$ cd ../3p"
+		echo "$ make SEAL"
+		exit
+	fi
 
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
 	#FIXME: MOCK used instead of SEAL
-	make USER=$path SEAL=0 &> /dev/null & progress_bar 107 $!
+	make USER=$path SEAL=0 > /dev/null & progress_bar 107 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 	four=$(awk 'NR == 4 {print $0}' result.txt)
 
@@ -246,10 +271,12 @@ check_PIL() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path MPIR=1 &> /dev/null & progress_bar 104 $!
+	make USER=$path MPIR=1 > /dev/null & progress_bar 104 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 	iter=0
@@ -274,9 +301,11 @@ check_PIL() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path MPIR=1 &> /dev/null & progress_bar 108 $!
+	make USER=$path MPIR=1 > /dev/null & progress_bar 108 $!
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 	array=( $(cat result.txt) )
@@ -301,10 +330,12 @@ check_PIL() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path MPIR=1 &> /dev/null & progress_bar 125 $!
+	make USER=$path MPIR=1 > /dev/null & progress_bar 125 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -335,10 +366,12 @@ check_BDD() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path CUDD=1 &> /dev/null & progress_bar 144 $!
+	make USER=$path CUDD=1 > /dev/null & progress_bar 144 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -361,10 +394,12 @@ check_BDD() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path CUDD=1 &> /dev/null & progress_bar 136 $!
+	make USER=$path CUDD=1 > /dev/null & progress_bar 136 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -387,10 +422,12 @@ check_BDD() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path CUDD=1 &> /dev/null & progress_bar 134 $!
+	make USER=$path CUDD=1 > /dev/null & progress_bar 134 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT -s 8 | tee ./result.txt
 
 	iter=0
@@ -414,14 +451,14 @@ check_default() {
 	path=$root/def
 	CGT=$path/cgt.cfg
 
-	currentcgt=$(sed -n 's/.*Config: //p' secint.h)
+	currentcgt=$(cat secint.h | sed -n 's/.*Config: //p')
 
 	if [[ $currentcgt != "../tests/user/def/cgt.cfg" ]]; then
 		make
 	fi
 
 	echo "Compiling..."
-	make alice &> /dev/null & progress_bar 65 $!
+	make alice > /dev/null & progress_bar 80 $!
 	echo ""
 	./alice.exe | tee ./result.txt
 
@@ -476,10 +513,12 @@ check_gat() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path &> /dev/null & progress_bar 180 $!
+	make USER=$path CUDD=1 > /dev/null & progress_bar 180 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 	while IFS="=" read -r desc val; do
@@ -503,10 +542,12 @@ check_gate() {
 	make c > /dev/null
 	echo "Generating cgt.exe..."
 
-	make USER=$path &> /dev/null & progress_bar 260 $!
+	make USER=$path CUDD=1 > /dev/null & progress_bar 260 $!
 	wait $! &> /dev/null
 	echo ""
 	echo "Compiling..."
+	ls bob.exe >/dev/null
+	ls cgt.exe >/dev/null
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 	while IFS=$'\n' read -r string; do
@@ -532,60 +573,15 @@ check_gate() {
 
 echo "$me Running User Tests"
 
-options() {
-	while true; do
-		echo ""
-		echo "Select the encryption scheme with external library to check (Enter the number):"
-		echo "1.TFHE 2.HElib 3.FHEW 4.SEAL 5.PIL 6.BDD 0.Quit"
-		echo "NOTE: This process does not automatically install the external libraries."
-		echo "NOTE: Make sure to install them before checking."
-		read choice
-		case $choice in
-			1)
-				check_TFHE
-				;;
-			2)
-				check_HElib
-				;;
-			3)
-				check_FHEW
-				;;
-			4)
-				check_SEAL
-				;;
-			5)
-				check_PIL
-				;;
-			6)
-				check_BDD
-				;;
-			0)
-				make c &> /dev/null
-				exit
-				;;
-		esac
-	done
-}
-
-default=$(sed -n 's/.*Default //p' check.log 2> /dev/null)
-gat=$(sed -n 's/.*GAT //p' check.log 2> /dev/null)
-gate=$(sed -n 's/.*GATE //p' check.log 2> /dev/null)
-
-if [[ $gate = "checked" ]]; then
-	options
-elif [[ $gat = "checked" ]]; then
-	check_gate
-	options
-elif [[ $default = "checked" ]]; then
-	check_gat
-	check_gate
-	options
-else
-	check_default
-	check_gat
-	check_gate
-	options
-fi
+check_default
+check_gat
+check_gate
+check_TFHE
+check_HElib
+check_FHEW
+check_SEAL
+check_BDD
+check_PIL
 
 
 
@@ -603,6 +599,8 @@ fi
 # wait $! &> /dev/null
 # echo ""
 # echo "Compiling..."
+# ls bob.exe >/dev/null
+# ls cgt.exe >/dev/null
 # ./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 # array=( $(cat result.txt) )

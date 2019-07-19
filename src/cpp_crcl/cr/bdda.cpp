@@ -6,8 +6,6 @@
 #include "bdda.h"
 
 const bool INTERMIX = false;
-///const bool STATEREDUCE = true;
-///const bool FINALREDUCE = true;
 bool g_BddReorder = true;
 
 // example
@@ -41,7 +39,6 @@ void writeBDD(string file, const Module & prog, bool dot, bool reorder)
     g_BddReorder = reorder;
 
     Cudd mgr(0, 0);
-    ///BDD a0 = mgr.bddVar();
 
     if ( g_BddReorder ) mgr.AutodynEnable();
     else mgr.AutodynDisable();

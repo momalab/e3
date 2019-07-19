@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_SEAL_H_
+#define _E3_EK_CIRC_SEAL_H_
 
 #include "ek_circ.h"
 #include "e3util.h"
@@ -29,3 +30,4 @@ class CircuitEvalKey_seal : public CircuitEvalKey
 };
 
 } // e3
+#endif // _E3_EK_CIRC_SEAL_H_

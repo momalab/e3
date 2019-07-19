@@ -5,7 +5,6 @@
 
 using Val = ValTtbl;
 
-///void writeProgTbl(string file, const Module & prog, std::map<string, int> * v3)
 void writeProgTbl(string file, const Module & prog, V3foot * vf)
 {
     std::map<string, int> * v3 = 0;

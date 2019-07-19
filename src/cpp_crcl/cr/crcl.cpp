@@ -299,7 +299,6 @@ void Module::verilog(std::ostream & os, bool wire_decl)
                    << n << "[" << i << "]";
         };
 
-        ///os << fn << "(";
         os << fn << " " << fn << "1(";
 
         out("a", false);
@@ -473,9 +472,7 @@ void Module::outc_arr(std::ostream & os)
         if ( opn == 3 ) s = " a_, const char *b_, const char *c";
 
         os << "void " << fn << "(const char *"
-           << s
-           ///<< (op2 ? " a_, const char *b" : "x")
-           << "_, char *y_)\n{\n";
+           << s << "_, char *y_)\n{\n";
     }
 
     // output forward reassignments: x0 = x_[0]
@@ -526,7 +523,6 @@ void Module::outc_arr(std::ostream & os)
 
     os << "  char y[" << osz << "];\n\n";
 
-    ///os << "  for (i = 0; i < ROUNDS; i++) for (j = 0; j < 1000; j++)\n";
     os << "  for (i = 0; i < 1; i++) for (j = 0; j < 1000; j++)\n";
     os << "  {\n";
     os << "    " << fn << " (";

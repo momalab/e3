@@ -1,7 +1,5 @@
 // === BEGIN circuit.tfhe.cpp Name=$Name
 
-#include "def_tfhe0.h"
-
 $NameBit $NameBit::gate_buf(const $NameBit & a)
 {
     return a;

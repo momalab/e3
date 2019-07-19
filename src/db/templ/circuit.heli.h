@@ -1,7 +1,5 @@
 // === BEGIN circuit.heli.h Name=$Name
 
-#include "def_heli.h"
-
 class $NameBit : public $NameBaseBit
 {
     protected:

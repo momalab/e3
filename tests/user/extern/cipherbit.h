@@ -7,7 +7,7 @@ struct Key { int k; void init(); };
 class Cipherbit
 {
     private:
-        int x = 0;
+        int x = 10;
         static Key key;
 
     public:
@@ -20,8 +20,7 @@ class Cipherbit
         Cipherbit nand(Cipherbit b) const
         {
             Cipherbit r;
-            //r.x = ( 1 & ~((x - key.k) & (b.x - key.k)) ) + key.k;
-            r.x = 1 & ~(x & b.x);
+            r.x = ( 1 & ~((x - key.k) & (b.x - key.k)) ) + key.k;
             return r;
         }
 };

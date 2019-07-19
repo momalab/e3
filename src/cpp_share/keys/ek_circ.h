@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_H_
+#define _E3_EK_CIRC_H_
 
 #include <vector>
 #include <string>
@@ -15,7 +16,7 @@ class CircuitEvalKey : public EvalKey
 
         static std::vector<std::string> enc2bits(const std::string & e);
         static std::string bits2enc(const std::vector<std::string> & v);
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 } // e3
+#endif // _E3_EK_CIRC_H_

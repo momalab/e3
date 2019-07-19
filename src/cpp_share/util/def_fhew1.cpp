@@ -33,7 +33,6 @@ FhewNativeBt::FhewNativeBt(const std::string & enc, cFhewNativeEvalKey ek)
     : FhewNativeBt(ek)
 {
     LWE::CipherText & nb = p->b;
-    ///std::istringstream is(enc);
     std::istringstream is(e3util::base64::dec(enc));
     for ( int i = 0; i < n; i++ ) is >> nb.a[i];
     is >> nb.b;

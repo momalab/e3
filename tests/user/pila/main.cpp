@@ -12,9 +12,9 @@ using namespace std;
 int main(int ac, char * av[])
 try
 {
-    Pilm x = _3_En, y = _2_En;
+    Pilm x = _2_En, y = _3_En;
     for ( int i = 0; i < 23; i++ )
-        cout << dec(++y) << ' ';
+        cout << dec(++x) << ' ';
 
     cout << '\n';
 

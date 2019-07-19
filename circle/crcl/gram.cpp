@@ -19,7 +19,6 @@ void Oexpr::load(Pstream & is)
     string s; is >> s;
     if ( s != "(" )
     {
-        ///name = context.name(s);
         name = Prim::isConst(s) ? s : context.name(s);
         return;
     }

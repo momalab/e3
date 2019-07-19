@@ -3,8 +3,6 @@
 
 #include "def_pil.h"
 
-///Bigun e3::PilNum::mod;
-
 e3::PilQuad::PilQuad(string s)
 {
     std::istringstream is(s);

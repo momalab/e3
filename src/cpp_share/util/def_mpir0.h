@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_DEF_MPIR0_H_
+#define _E3_DEF_MPIR0_H_
 
 // this header def_mpir0.h should not be included in any code except *mpir0.cpp
 
@@ -34,3 +35,4 @@ struct BigunNative
     bool operator<(const BigunNative & a) const { return n < a.n; }
 };
 
+#endif // _E3_DEF_MPIR0_H_

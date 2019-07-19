@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EVALKEYS_H_
+#define _E3_EVALKEYS_H_
 
 // Include only leaf classes
 #include "ek_native.h"
@@ -10,3 +11,4 @@
 #include "ek_circ_bdd.h"
 #include "ek_circ_pil.h"
 #include "ek_pil.h"
+#endif // _E3_EVALKEYS_H_

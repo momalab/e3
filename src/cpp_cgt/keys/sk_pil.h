@@ -45,7 +45,7 @@ class PilBasePrivKey : public PrivKey
 
         PilBasePrivKey(const PilBasePrivKey &) = default;
         PilBasePrivKey(const PilBasePrivKey & k, string nm)
-            : PilBasePrivKey(k) { name.typ = nm; }
+            : PilBasePrivKey(k) { ekb.name.typ = name.typ = nm; }
 
         virtual std::string decrypt(const std::string & s) const;
         virtual std::string encrypt(const std::string & s, int msz) const;
@@ -56,6 +56,7 @@ class PilBasePrivKey : public PrivKey
         virtual string filename() const;
 
         friend class CircuitPrivKey_pilc;
+        friend class PilaPrivKey;
 };
 
 class PilaPrivKey : public PilBasePrivKey
@@ -64,6 +65,9 @@ class PilaPrivKey : public PilBasePrivKey
         PilaPrivKey(KeyName name, bool forceGen,
                     bool forceLoad, std::string seed, int lam)
             : PilBasePrivKey(name, forceGen, forceLoad, seed, lam) {}
+
+        PilaPrivKey(const PilBasePrivKey & pil, string nm)
+            : PilBasePrivKey(pil, nm) {}
 };
 
 } // e3

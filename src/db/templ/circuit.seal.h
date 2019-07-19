@@ -1,7 +1,5 @@
 // === BEGIN circuit.seal.h Name=$Name
 
-#include "def_seal.h"
-
 class $NameBit : public $NameBaseBit
 {
     protected:
@@ -20,7 +18,6 @@ class $NameBit : public $NameBaseBit
         $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb, k()->native()) {}
 
         $NameBit(const std::string & s): $NameBaseBit(), nb(s, k()->native()) {}
-        ///$NameBit(const std::string & s): pekInitializer(init_pek), nb(s, k()->native()) {}
         $NameBit(const char * s): $NameBit(std::string(s)) {}
         std::string str() const { return nb.str(k()->native()); }
 

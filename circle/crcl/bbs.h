@@ -37,16 +37,12 @@ class Bbs;
 
 class Lbs : public BbsAbs
 {
-        ///string file;
-
         int sz;       // size of the matrix and vector - inputs
-        ///ull seed; // seed for random Rcop sequence
         Rnd * rnd;
     public:
         vbool b1, b2;
         vvbool A1, A2;
     private:
-        ///string formula;
         vector<Rcop> genRcops();
 
         // matrix operationis
@@ -56,12 +52,8 @@ class Lbs : public BbsAbs
         static vvbool mul(const vvbool & a, const vvbool & b);
         static bool equal(const vvbool & a, const vvbool & b);
 
-        ///public:
-        ///Lbs(string file, bool load);
         Lbs(int z, bool load, std::istream & is, Rnd * r);
 
-        ///void save() { save(file); }
-        ///void save(string file);
         virtual void save(std::ostream & os);
         virtual void generate();
 

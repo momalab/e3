@@ -149,11 +149,9 @@ string e3util::dec2hex(const string & decStr, size_t bitsize)
 
 bool e3util::isNegative(const string & hex, size_t bitsize)
 {
-    ///unsigned maxhexbs = 4 * hex.size();
     auto maxhexbs = 4 * hex.size();
     if ( bitsize > maxhexbs ) return false;
 
-    ///unsigned uppersize = bitsize % 4;
     auto uppersize = bitsize % 4;
     uppersize = uppersize ? uppersize : 4;
     unsigned signThreshold = 1 << (uppersize - 1);

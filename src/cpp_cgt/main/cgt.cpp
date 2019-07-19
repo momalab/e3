@@ -347,7 +347,7 @@ void usage(bool isHelp)
 string libsTFH()
 {
     ol::ostr r;
-    r << "LibsTFHMC " << e3::tfhe_impl() << ' ' << e3::seal_impl() << ' ' << fhew_impl()
-      << ' ' << heli_impl() << ' ' << mpir_impl() << ' ' << cudd_impl();
+    r << "LibsTSFHMC " << e3::tfhe_impl() << e3::seal_impl() << fhew_impl()
+      << heli_impl() << mpir_impl() << cudd_impl();
     return r.str();
 }

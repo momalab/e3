@@ -1,7 +1,5 @@
 // === BEGIN circuit.seal.cpp Name=$Name
 
-#include "def_seal0.h"
-
 $NameBit $NameBit::gate_buf(const $NameBit & a)
 {
     return a;

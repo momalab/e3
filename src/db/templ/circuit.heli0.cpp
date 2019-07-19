@@ -1,7 +1,5 @@
 // === BEGIN circuit.heli.cpp Name=$Name
 
-#include "def_heli0.h"
-
 $NameBit $NameBit::gate_buf(const $NameBit & a)
 {
     return a;

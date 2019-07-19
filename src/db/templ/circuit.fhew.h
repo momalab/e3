@@ -1,7 +1,5 @@
 // === BEGIN circuit.fhew.h Name=$Name
 
-#include "def_fhew.h"
-
 class $NameBit : public $NameBaseBit
 {
     protected:

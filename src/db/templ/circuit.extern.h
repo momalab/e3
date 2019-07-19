@@ -2,13 +2,13 @@
 
 #include "cipherbit.h"
 
-class CircuitEvalKey_extern : public CircuitEvalKey
+class CircuitEvalKey_extern : public e3::CircuitEvalKey
 {
     protected:
         e3util::usi key;
 
     public:
-        CircuitEvalKey_extern(User u, std::string name)
+        CircuitEvalKey_extern(User u, e3::KeyName name)
             : CircuitEvalKey(name) { user(u); }
 
         virtual bool load() { return true; }

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _E3_EK_CIRC_PLAIN_H_
+#define _E3_EK_CIRC_PLAIN_H_
 
 #include "ek_circ.h"
 #include "e3util.h"
@@ -22,8 +23,7 @@ class CircuitEvalKey_plain : public CircuitEvalKey
 
         bool dec(e3util::usi x) const { return dec(x, key); }
         e3util::usi enc(bool x) const { return enc(x, key); }
-
-        ///virtual std::string decor(const std::string &, bool add) const;
 };
 
 } // e3
+#endif // _E3_EK_CIRC_PLAIN_H_
