@@ -3,7 +3,7 @@
 #include "e3int.h"
 #include "timer.h"
 
-#include "alice.h"
+#include "../user/alice.h"
 
 /*
     You MUST include 'e3int.h' in your program file. It links to 'secint.cpp', a
