@@ -280,7 +280,7 @@ check_PIL() {
 	./bob.exe | ./cgt.exe dec -c $CGT | tee ./result.txt
 
 	iter=0
-	correct=(0 28 1045563287892137766342366891529347017067793485384657753314482765037292502557 75)
+	correct=(0 28 22 75)
 	while IFS="=" read -r desc val; do
 		if [ ${correct[iter]} != 0 ]; then
 			compare_result $val ${correct[iter]}

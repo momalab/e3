@@ -149,6 +149,8 @@ int main () {
 
 In C++ terms, the termination problem means that a `SecureInt` cannot be implicitly cast to a `bool`, and the compiler will return an error. Thus, the expression '`if (x>y) {}`', with `x,y` defined as `SecureInt`, will fail to compile. Therefore, existing algorithms may need modifications to be converted to a data-oblivious version. Further information about data oblivious programming can be found [here](https://docs.google.com/presentation/d/1MFn5a9uLuVBgAEHVK9v0rfd5pm7wHq5_Nz324jzvXzM/edit?usp=sharing).
 
+Sample programs can be found in 'e3/tests/user' directory.
+
 ## Build Your Program
 **WARNING: Before implementing E<sup>3</sup> to your program, we strongly advise you to follow tutorials. Any developer attempting to use E<sup>3</sup> without reading all tutorials or by simply re-using the code from the tutorials will inevitably produce code that is vulnerable, malfunctioning, or extremely slow. Tutorials can be found in e3/tests/tutorials.**
 
