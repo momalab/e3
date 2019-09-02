@@ -33,7 +33,7 @@ OPTS += -I./${USER}/
 
 
 include mak_mod_inc.mak
-
+include mak_mod_cu.mak
 
 
 #srcl=cpp_cgt/main/cgt.cpp cpp_cgt/main/cfgparser.cpp cpp_cgt/main/platname.cpp \
@@ -99,12 +99,12 @@ $(BIN):
 	mkdir -p $(BIN)
 
 alice.exe: $(BIN) $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) $(E3X)/e3x.$(OEXT) $(objl) \
-	$(objk2) $(obju2) $(objk1) $(obju1) $(LDF2) $(objp) $(objcr) $(BIN)/cuddObj.$(OEXT)
+	$(objk2) $(obju2) $(objk1) $(obju1) $(LDF2) $(objp) $(objcr) $(BIN)/cuddObj.$(OEXT) $(objcu)
 	@echo -n "Starting user code compilation: "
 	@date
-	$(CCT) $(OPTU) -DE3ALICE=1 $(USER)/*.cpp $(BIN)/secint.$(OEXT) $(objk2) $(obju2) \
+	$(CCT) $(OPTU) -DE3ALICE=1 $(USER)/*.cpp $(BIN)/secint.$(OEXT) $(objk2) $(obju2) $(objcu) \
 	$(objp) $(objk1) $(obju1) $(objcr) $(objl) $(BIN)/cuddObj.$(OEXT) $(E3X)/e3x.$(OEXT) \
-	$(LDF2) $(LDF3) $(EOUT)$@
+	$(LDF2) $(LDF3) $(LDFS) $(EOUT)$@
 	@echo -n "Finished user code compilation: "
 	@date
 	rm -f *.$(OEXT)
@@ -158,3 +158,6 @@ $(objcr): $(BIN)/%.$(OEXT):$(CRDIR)/%.cpp $(CRDIR)/*.h
 
 $(BIN)/cuddObj.$(OEXT): $(CUDIR)/cuddObj.cc
 	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+
+$(objcu): $(BIN)/%.$(OEXT):$(CUDIR)/%.c $(CRDIR)/*.h
+	$(CNC) -c $(COPTS) $< $(OOUT)$@

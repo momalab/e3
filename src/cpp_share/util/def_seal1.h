@@ -18,7 +18,7 @@ namespace e3seal
 
 struct SealPrivKey
 {
-    seal::PublicKey publickey;
+    seal::PublicKey publickey; // may be moved to evalkey
     seal::SecretKey secretkey;
     seal::IntegerEncoder * encoder;
     seal::Decryptor * decryptor;

@@ -20,18 +20,28 @@ void e3::CircuitPrivKey_seal::gen()
     // generate SK
     cout << "Generating private key (" << lambda << ") .. " << std::flush;
     static e3seal::SealPrivKey privkey;
+    static e3seal::SealEvalKey evalkey;
     static auto params = EncryptionParameters(scheme_type::BFV);
+    cout << " 1 " << std::flush;
+    // evalkey.params = EncryptionParameters(scheme_type::BFV);
     size_t polyMod = 1 << 14; // it has to be a power of two
     params.set_poly_modulus_degree(polyMod);
-    params.set_coeff_modulus(DefaultParams::coeff_modulus_128(polyMod));
+    cout << " 2 " << std::flush;
+    params.set_coeff_modulus(CoeffModulus::BFVDefault(polyMod));
     params.set_plain_modulus(1 << 1); // 2
-    static auto context = SEALContext::Create( params );
-    static auto keygen = KeyGenerator( context );
-    static auto encoder = IntegerEncoder( context );
+    // static auto context = SEALContext::Create(params);
+    evalkey.context = SEALContext::Create(params);
+    // static auto keygen = KeyGenerator( context );
+    KeyGenerator keygen(evalkey.context);
+    static auto encoder = IntegerEncoder(evalkey.context);
+    // static auto encoder = IntegerEncoder(context);
+    // privkey.encoder = IntegerEncoder(context);
     privkey.secretkey = keygen.secret_key();
     privkey.publickey = keygen.public_key();
-    auto static decryptor = Decryptor( context, privkey.secretkey );
-    auto static encryptor = Encryptor( context, privkey.publickey );
+    auto static decryptor = Decryptor(evalkey.context, privkey.secretkey);
+    auto static encryptor = Encryptor(evalkey.context, privkey.publickey);
+    // privkey.decryptor = Decryptor(context, privkey.secretkey);
+    // privkey.encryptor = Encryptor(context, privkey.publickey);
     privkey.encoder = &encoder;
     privkey.decryptor = &decryptor;
     privkey.encryptor = &encryptor;
@@ -40,10 +50,10 @@ void e3::CircuitPrivKey_seal::gen()
 
     // generate EK and set it
     cout << "Generating evaluation key .. " << std::flush;
-    static e3seal::SealEvalKey evalkey;
+    // static e3seal::SealEvalKey evalkey;
     evalkey.params = &params;
-    evalkey.context = context;
-    evalkey.relinkeys = keygen.relin_keys(15);
+    // evalkey.context = context;
+    evalkey.relinkeys = keygen.relin_keys();
     ek.key = &evalkey;
     cout << "ok\n";
 }

@@ -45,7 +45,9 @@ fi
 echo ""
 echo "Step 2"
 echo "$me make"
-mkdir $target
+if [ ! -d "$target" ]; then
+	mkdir $target
+fi
 cd $path/native/src
 cmake -DCMAKE_INSTALL_PREFIX=$target .
 make
@@ -55,8 +57,12 @@ echo ""
 echo "Step 3"
 echo "$me set up native and target"
 cd $target
-mkdir native
-mkdir target
+if [ ! -d "native" ]; then
+	mkdir native
+fi
+if [ ! -d target ]; then
+	mkdir target
+fi
 cp lib/*.a native/
 cp lib/*.a target/
 
