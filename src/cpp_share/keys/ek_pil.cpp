@@ -13,7 +13,7 @@ bool e3::PilBaseEvalKey::load(string fname)
     if (!in) return false;
     std::string s;
 
-    if ( kv.ver != 22 ) throw "e3::CircuitEvalKey_pilc::load: version";
+    if ( kv.ver != 22 ) throw "e3::PilBaseEvalKey::load: version";
     in >> s; kv.N = Bigun(s);
     in >> s; kv.S = Bigun(s);
     in >> s; kv.A = Bigun(s);

@@ -4,7 +4,7 @@ class $NameBit : public $NameBaseBit
 {
     protected:
 
-        e3::SealNativeBt nb;
+        e3::SealNativeCiphertext nb;
 
         static const SealCiphertext * op(const std::shared_ptr<SealCiphertext> & p)
         {
@@ -14,7 +14,7 @@ class $NameBit : public $NameBaseBit
 
     public:
         $NameBit() : $NameBaseBit(), nb(k()->native()) {}
-        $NameBit(e3::SealNativeBt ax) : $NameBaseBit(), nb(ax, k()->native()) {}
+        $NameBit(e3::SealNativeCiphertext ax) : $NameBaseBit(), nb(ax, k()->native()) {}
         $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb, k()->native()) {}
 
         $NameBit(const std::string & s): $NameBaseBit(), nb(s, k()->native()) {}

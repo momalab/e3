@@ -17,7 +17,11 @@ class Circuit: public SecType
         std::string kernel; // Circle kernel
         int modifier; // use mux / use neg gates
 
+        std::string polyModulusDegree;
+        std::string plaintextModulus;
+
         virtual void fixEncType();
+        string loadDbTemplCir(string root, string fn) const;
 
     public:
         Circuit(std::istream & is, string nm, const std::map<string, string> & globs);

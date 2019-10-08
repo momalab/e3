@@ -17,6 +17,8 @@ Circuit::Circuit(std::istream & is, string nm, const std::map<string, string> & 
     kv[secNames::formula] = &formula;
     kv[secNames::compile] = &compile;
     kv[secNames::kernel] = &kernel;
+    kv[secNames::polyModulusDegree] = &polyModulusDegree;
+    kv[secNames::plaintextModulus] = &plaintextModulus;
 
     string ssizes;
     kv[secNames::sizes] = &ssizes;
@@ -129,8 +131,8 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
 
     else if ( encType == secNames::encHeli )
         sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_heli(name, forceGen,
-                                            forceLoad, seed, lambda));
+             (csk = new CircuitPrivKey_heli
+        (name, forceGen, forceLoad, seed, lambda));
 
     else if ( encType == secNames::encFhew )
         sk = shared_ptr<PrivKey>
@@ -138,9 +140,12 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encSeal )
+        // sk = shared_ptr<PrivKey>
+        //      (csk = new CircuitPrivKey_seal(name, forceGen,
+        //                                     forceLoad, seed, lambda));
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_seal(name, forceGen,
-                                            forceLoad, seed, lambda));
+                                            forceLoad, seed, lambda, polyModulusDegree, plaintextModulus));
 
     else if ( encType == secNames::encTfhe )
         sk = shared_ptr<PrivKey>
@@ -190,10 +195,11 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
     // write base Bit class
     {
         string dbf = cfgNames::dotH(cfgNames::dbfileCircuitBase);
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
+        ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+        ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ///ol::replaceAll(f, secNames::R_ClsName, encType);
+        string f = loadDbTemplCir(root, dbf);
         os << f;
     }
 
@@ -202,6 +208,7 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
         string dbf = cfgNames::dotH(
                          cfgNames::dbfileCircuit + '.' + encType);
 
+        /*///
         string f = ol::file2str(root + cfgNames::templDir + dbf);
 
         if ( !f.empty() && f[0] == '@' )
@@ -215,16 +222,19 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
         ol::replaceAll(f, secNames::R_FilName, name.fil);
         ol::replaceAll(f, secNames::R_ClsName, encType);
         ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+        */
+        string f = loadDbTemplCir(root, dbf);
         os << f;
     }
 
-
+    // write Circuit class definition
     {
         string dbf = cfgNames::dotH(cfgNames::dbfileCircuit);
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
+        ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+        ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ///ol::replaceAll(f, secNames::R_ClsName, encType);
+        string f = loadDbTemplCir(root, dbf);
 
         auto allconsts = find_constants(user_dir);
         ol::replaceAll(f, secNames::R_postfixDefines, makeDefines(allconsts) );
@@ -237,11 +247,12 @@ void Circuit::writeInc(string root, std::ostream & os) const
 {
     {
         string dbf = cfgNames::dotInc(cfgNames::dbfileCircuit);
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
-        ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+        ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+        ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ///ol::replaceAll(f, secNames::R_ClsName, encType);
+        ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+        string f = loadDbTemplCir(root, dbf);
         os << f;
     }
 }
@@ -270,55 +281,58 @@ void Circuit::writeCpp(string root, std::ostream & os) const
     {
         string dbf = cfgNames::dotCpp(cfgNames::dbfileCircuit);
 
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
-        ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
-        ol::replaceAll(f, secNames::R_bitZero, csk->encbitstr(false) );
-        ol::replaceAll(f, secNames::R_bitUnit, csk->encbitstr(true) );
+        ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+        ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+        ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+        ///ol::replaceAll(f, secNames::R_ClsName, encType);
+        ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+        ///ol::replaceAll(f, secNames::R_bitZero, csk->encbitstr(false) );
+        ///ol::replaceAll(f, secNames::R_bitUnit, csk->encbitstr(true) );
+        string f = loadDbTemplCir(root, dbf);
         os << f;
     }
 
     // write gate implementations
     {
-        string ver;
-        int iver = -1;
-        if ( encType == secNames::encFhew ) iver = fhew_impl();
-        if ( encType == secNames::encHeli ) iver = heli_impl();
-        if ( encType == secNames::encSeal ) iver = seal_impl();
-        if ( encType == secNames::encTfhe ) iver = tfhe_impl();
-        if ( iver != -1 ) ver = ol::tos(iver);
+        string ver = implVer();
+        ///int iver = -1;
+        ///if ( encType == secNames::encFhew ) iver = fhew_impl();
+        ///if ( encType == secNames::encHeli ) iver = heli_impl();
+        ///if ( encType == secNames::encSeal ) iver = seal_impl();
+        ///if ( encType == secNames::encTfhe ) iver = tfhe_impl();
+        ///if ( iver != -1 ) ver = ol::tos(iver);
 
         if (basType != encType)
         {
             string dbf = cfgNames::dotCpp(cfgNames::dbfileCircuit
                                           + '.' + basType + ver);
 
-            string f = ol::file2str(root + cfgNames::templDir + dbf);
-            ol::replaceAll(f, secNames::R_TypName, name.typ);
-            ol::replaceAll(f, secNames::R_FilName, name.fil);
-            ol::replaceAll(f, secNames::R_ClsName, encType);
-            ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda));
-            ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda));
-            ol::replaceAll(f, secNames::R_tid, csk->getTid());
-            ol::replaceAll(f, secNames::R_Modifier, ol::tos(modifier));
+            ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+            ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+            ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+            ///ol::replaceAll(f, secNames::R_ClsName, encType);
+            ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda));
+            string f = loadDbTemplCir(root, dbf);
+
+            ///ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda));
+            ///ol::replaceAll(f, secNames::R_tid, csk->getTid());
+            ///ol::replaceAll(f, secNames::R_Modifier, ol::tos(modifier));
             os << f;
         }
 
-        // FIXME e factor out repetition of replacing
         {
             string dbf = cfgNames::dotCpp(cfgNames::dbfileCircuit
                                           + '.' + encType + ver);
 
-            string f = ol::file2str(root + cfgNames::templDir + dbf);
-            ol::replaceAll(f, secNames::R_TypName, name.typ);
-            ol::replaceAll(f, secNames::R_FilName, name.fil);
-            ol::replaceAll(f, secNames::R_ClsName, encType);
-            ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
-            ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda) );
-            ol::replaceAll(f, secNames::R_tid, csk->getTid());
-            ol::replaceAll(f, secNames::R_Modifier, ol::tos(modifier) );
+            ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+            ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+            ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+            ///ol::replaceAll(f, secNames::R_ClsName, encType);
+            ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+            ///ol::replaceAll(f, secNames::R_x2lambda, ol::tos(2 * lambda) );
+            ///ol::replaceAll(f, secNames::R_tid, csk->getTid());
+            ///ol::replaceAll(f, secNames::R_Modifier, ol::tos(modifier) );
+            string f = loadDbTemplCir(root, dbf);
             os << f;
         }
     }
@@ -338,3 +352,18 @@ void Circuit::fixEncType()
     else
         basType = encType;
 }
+
+string Circuit::loadDbTemplCir(string root, string fn) const
+{
+    using namespace secNames;
+    string f = loadDbTempl(root, fn);
+    if ( f.find(R_bitZero) != string::npos ) ol::replaceAll(f, R_bitZero, csk->encbitstr(false) );
+    if ( f.find(R_bitUnit) != string::npos ) ol::replaceAll(f, R_bitUnit, csk->encbitstr(true) );
+
+    ol::replaceAll(f, R_x2lambda, ol::tos(2 * lambda));
+    ol::replaceAll(f, R_tid, csk->getTid());
+    ol::replaceAll(f, R_Modifier, ol::tos(modifier));
+
+    return f;
+}
+

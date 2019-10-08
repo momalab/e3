@@ -51,7 +51,7 @@ class PilBasePrivKey : public PrivKey
         virtual std::string encrypt(const std::string & s, int msz) const;
         ///PilBaseEvalKey & getEk() { return ekb; }
         virtual bool load();
-        virtual void save();
+        virtual void save(); // FIXME o make it protected.. final classes should be private
 
         virtual string filename() const;
 

@@ -38,8 +38,8 @@ ifeq ($(SEAL),1)
 # lib dependency on 3p
 SEALD1=../3p/seal_$(PLAT)/native
 SEALD2=../3p/seal_$(PLAT)/target
-LDF1=$(SEALD1)/libseal.lib
-LDF2=$(SEALD2)/libseal.lib
+LDF1=$(SEALD1)/seal.lib
+LDF2=$(SEALD2)/seal.lib
 endif
 
 ifeq ($(TFHE),1)

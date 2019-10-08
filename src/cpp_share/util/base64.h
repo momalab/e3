@@ -3,6 +3,7 @@
 
 #include <string>
 
+// FIXME o make e3::util
 namespace e3util
 {
 namespace base64

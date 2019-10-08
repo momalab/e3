@@ -26,6 +26,8 @@ const std::string encPilBase = "pil";
 const std::string encPilc = "pilc";
 const std::string encPila = "pila";
 const std::string encExt = "extern";
+const std::string encPail = "pail";
+const std::string encPailg = "pailg";
 
 // Keywords for replacement
 const std::string R_TypName = "$Name";
@@ -41,8 +43,8 @@ const std::string R_enc = "$enc";
 const std::string R_tid = "$tid";
 const std::string R_Modifier = "$Modifier";
 const std::string R_bbshash = "$bbshash";
-const std::string R_pilUnit = "$PilUnit";
-const std::string R_pilZero = "$PilZero";
+const std::string R_ariUnit = "$ArithUnit";
+const std::string R_ariZero = "$ArithZero";
 
 // Identifiers
 const std::string msize = "msize";
@@ -56,5 +58,7 @@ const std::string lambda = "lambda";
 const std::string compile = "compile";
 const std::string kernel = "kernel";
 const std::string module = "module";
+const std::string polyModulusDegree = "polyModulusDegree";
+const std::string plaintextModulus = "plaintextModulus";
 
 }

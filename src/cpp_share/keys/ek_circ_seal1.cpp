@@ -20,11 +20,13 @@ bool e3::CircuitEvalKey_seal::load()
     static e3seal::SealEvalKey evalkey;
     try
     {
-        static auto params = EncryptionParameters::Load( inParams );
-        static auto context = SEALContext::Create( params );
+        static auto params = EncryptionParameters::Load(inParams);
+        evalkey.context = SEALContext::Create(params);
+        ///static auto evaluator = Evaluator(evalkey.context);
+        static Evaluator evaluator(evalkey.context);
         evalkey.params = &params;
-        evalkey.context = context;
-        evalkey.relinkeys.load(context, inRelin);
+        evalkey.evaluator = &evaluator;
+        evalkey.relinkeys.load(evalkey.context, inRelin);
     }
     catch (...) { throw "Bad " + filename() + " eval key"; }
 

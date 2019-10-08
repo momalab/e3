@@ -7,12 +7,9 @@
 using namespace seal;
 using std::string;
 
-#include <iostream>
-using std::cout;
-
 int e3::seal_impl() { return 1; }
 
-std::string e3::SealNativeBt::str(cSealNativeEvalKey ek) const
+std::string e3::SealNativeCiphertext::str(cSealNativeEvalKey ek) const
 {
     std::ostringstream os;
     p->b.save(os);
@@ -27,19 +24,19 @@ namespace e3
 //     p->b.release();
 // }
 
-SealNativeBt::SealNativeBt(cSealNativeEvalKey ek)
+SealNativeCiphertext::SealNativeCiphertext(cSealNativeEvalKey ek)
 {
     p = std::shared_ptr<SealCiphertext>(new SealCiphertext());
 }
 
 } // e3
 
-e3::SealNativeBt::SealNativeBt(const SealNativeBt & b, cSealNativeEvalKey ek) : SealNativeBt(ek)
+e3::SealNativeCiphertext::SealNativeCiphertext(const SealNativeCiphertext & b, cSealNativeEvalKey ek) : SealNativeCiphertext(ek)
 {
     p->b = b.p->b;
 }
 
-e3::SealNativeBt::SealNativeBt(const std::string & enc, cSealNativeEvalKey ek) : SealNativeBt(ek)
+e3::SealNativeCiphertext::SealNativeCiphertext(const std::string & enc, cSealNativeEvalKey ek) : SealNativeCiphertext(ek)
 {
     std::istringstream is(e3util::base64::dec(enc));
     try
@@ -49,6 +46,6 @@ e3::SealNativeBt::SealNativeBt(const std::string & enc, cSealNativeEvalKey ek) :
     }
     catch (...)
     {
-        throw "Bad init in SealNativeBt [" + enc + "]";
+        throw "Bad init in SealNativeCiphertext [" + enc + "]";
     }
 }

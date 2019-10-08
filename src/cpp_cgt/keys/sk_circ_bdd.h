@@ -67,9 +67,6 @@ class CircuitPrivKey_bdda : public CircuitPrivKey_bdd
         virtual bool checkio() const;
         bool modifier_not;
 
-    private:
-        ///CircuitEvalKey_bdda_X ek; // this is used only for decorations (decor)
-
     public:
         CircuitPrivKey_bdda(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed,
@@ -81,12 +78,9 @@ class CircuitPrivKey_bddn : public CircuitPrivKey_bdd
 {
         virtual void trygen();
         virtual bool checkio() const;
-        bool modifier_xor; // use no-hash for not and xor FIXME o
+        bool modifier_xor;
 
         using EncBit = std::vector<bool>;
-
-    private:
-        ///CircuitEvalKey_bddn_X ek; // this is used only for decorations (decor)
 
     public:
         CircuitPrivKey_bddn(KeyName name, bool forceGen,
@@ -100,9 +94,6 @@ class CircuitPrivKey_bddf : public CircuitPrivKey_bdd
         virtual void trygen();
         virtual bool checkio() const;
         bool modifier_mux;
-
-    private:
-        ///CircuitEvalKey_bddf_X ek; // this is used only for decorations (decor)
 
     public:
         CircuitPrivKey_bddf(KeyName name, bool forceGen,

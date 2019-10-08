@@ -1,4 +1,7 @@
 
+namespace e3
+{
+
 string Bigun::str() const { return p->str(); }
 
 Bigun::Bigun(unsigned long long x): p(new BigunNative(x)) {}
@@ -50,3 +53,11 @@ Bigun Bigun::submod(Bigun x, Bigun m) const
     return r -= x;
 }
 
+Bigun Bigun::invmod(Bigun m) const
+{
+    Bigun r;
+    *r.p = this->p->invmod(*m.p);
+    return r;
+}
+
+} // e3

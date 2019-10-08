@@ -4,6 +4,9 @@
 
 const int TESTNPRIMES = 3;
 
+namespace e3
+{
+
 namespace euler
 {
 
@@ -18,5 +21,5 @@ template<class T> inline T gcd(T a, T b)
 }
 
 } //euler
-
+} // e3
 

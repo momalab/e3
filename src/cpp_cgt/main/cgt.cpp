@@ -348,6 +348,7 @@ string libsTFH()
 {
     ol::ostr r;
     r << "LibsTSFHMC " << e3::tfhe_impl() << e3::seal_impl() << fhew_impl()
-      << heli_impl() << mpir_impl() << cudd_impl();
+      << heli_impl() << e3::mpir_impl() << cudd_impl();
     return r.str();
+    // FIXME see that _impl have all e3:: namespace
 }

@@ -18,5 +18,7 @@ srck2= ${EKDIR}/ek_abstract.cpp ${EKDIR}/ek_native.cpp \
 	${EKDIR}/ek_circ_seal$(SEAL).cpp \
 	${EKDIR}/ek_circ_tfhe$(TFHE).cpp \
 	${EKDIR}/ek_circ_bdd.cpp \
-	${EKDIR}/ek_circ.cpp ${EKDIR}/ek_pil.cpp
+	${EKDIR}/ek_circ.cpp ${EKDIR}/ek_pil.cpp \
+	${EKDIR}/ek_pail.cpp \
+	${EKDIR}/ek_arith_seal$(SEAL).cpp
 objk2 := $(srck2:${EKDIR}/%.cpp=$(BIN)/%.$(OEXT))

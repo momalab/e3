@@ -14,6 +14,8 @@ Partial::Partial(std::istream & is, string nm, const std::map<string, string> & 
     kv[secNames::postfix] = &postfixP;
     kv[secNames::postneg] = &postfixN;
     kv[secNames::encryption] = &encType;
+    kv[secNames::polyModulusDegree] = &polyModulusDegree;
+    kv[secNames::plaintextModulus] = &plaintextModulus;
 
     string slambda;
     kv[secNames::lambda] = &slambda;
@@ -25,8 +27,12 @@ Partial::Partial(std::istream & is, string nm, const std::map<string, string> & 
 
     if ( encType.empty() ) throw "encryption type must be defined for " + nm;
     else if ( encType == secNames::encPila ) {}
+    else if ( encType == secNames::encPail ) {}
+    else if ( encType == secNames::encPailg ) {}
+    else if ( encType == secNames::encSeal ) {}
     else if ( encType[0] == '@' ) {}
-    else throw "encryption type [" + encType + "] is not known; valid=" "(pil)";
+    else throw "encryption type [" + encType + "] is not known; valid=("
+        + secNames::encPila + "," + secNames::encPail + "," + secNames::encPailg + ")";
 
     if ( encType[0] == '@' )
     {
@@ -55,7 +61,18 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
         sk = shared_ptr<PrivKey>
              (new PilaPrivKey(name, forceGen, forceLoad, seed, lambda));
 
-    ///else if ( encType[0] == '@' ) makeBridge(par, 1);
+    else if ( encType == secNames::encPail )
+        sk = shared_ptr<PrivKey>
+             (new PailPrivKey(name, forceGen, forceLoad, seed, lambda));
+
+    else if ( encType == secNames::encPailg )
+        sk = shared_ptr<PrivKey>
+             (new PailgPrivKey(name, forceGen, forceLoad, seed, lambda));
+
+    else if ( encType == secNames::encSeal )
+        sk = shared_ptr<PrivKey>
+             (new SealPrivKey(name, forceGen, forceLoad, seed, lambda, polyModulusDegree, plaintextModulus));
+
     else if (encType[0] == '@')
     {
         makeBridge(par, 1); if (!bridge) never("bridge");
@@ -75,7 +92,7 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
     }
 
     else
-        throw "Partial: Bad encryption type [" + encType + "] in " + name.typ;
+        throw "(Partial::genKeys) Bad encryption type [" + encType + "] in " + name.typ;
 
     // set max size for constants
     if ( plaintext_size < 0 ) plaintext_size = lambda - 1;
@@ -84,45 +101,49 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
 void Partial::writeH(string root, std::ostream & os, string user_dir) const
 {
     string dbf = cfgNames::dotH(cfgNames::dbfilePartial + '.' + encType);
-    string f = ol::file2str(root + cfgNames::templDir + dbf);
-    ol::replaceAll(f, secNames::R_TypName, name.typ);
-    ol::replaceAll(f, secNames::R_FilName, name.fil);
-    ol::replaceAll(f, secNames::R_ClsName, encType);
-    ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1));
-    ol::replaceAll(f, secNames::R_pilZero, sk->encrypt("0", 1));
+    ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+    ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+    ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+    ///ol::replaceAll(f, secNames::R_ClsName, encType);
+    ///ol::replaceAll(f, secNames::R_ariUnit, sk->encrypt("1", 1));
+    ///ol::replaceAll(f, secNames::R_ariZero, sk->encrypt("0", 1));
+
+    using namespace secNames;
+
+    string f = loadDbTemplAri(root, dbf);
 
     auto allconsts = find_constants(user_dir);
-    ol::replaceAll(f, secNames::R_postfixDefines, makeDefines(allconsts) );
+    ol::replaceAll(f, R_postfixDefines, makeDefines(allconsts) );
 
     os << f;
 }
 
 void Partial::writeInc(string root, std::ostream & os) const
 {
-    {
-        string dbf = cfgNames::dotInc(cfgNames::dbfilePartial + '.' + encType);
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
-        ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
-        os << f;
-    }
+    string dbf = cfgNames::dotInc(cfgNames::dbfilePartial + '.' + encType + implVer());
+    ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+    ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+    ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+    ///ol::replaceAll(f, secNames::R_ClsName, encType);
+    ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+
+    string f = loadDbTemplAri(root, dbf);
+    os << f;
 }
 
 void Partial::writeCpp(string root, std::ostream & os) const
 {
-    {
-        string dbf = cfgNames::dotCpp(cfgNames::dbfilePartial + '.' + encType);
+    string dbf = cfgNames::dotCpp(cfgNames::dbfilePartial + '.' + encType + implVer());
 
-        string f = ol::file2str(root + cfgNames::templDir + dbf);
-        ol::replaceAll(f, secNames::R_TypName, name.typ);
-        ol::replaceAll(f, secNames::R_FilName, name.fil);
-        ol::replaceAll(f, secNames::R_ClsName, encType);
-        ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
-        ol::replaceAll(f, secNames::R_pilUnit, sk->encrypt("1", 1));
-        os << f;
-    }
+    ///string f = ol::file2str(root + cfgNames::templDir + dbf);
+    ///ol::replaceAll(f, secNames::R_TypName, name.typ);
+    ///ol::replaceAll(f, secNames::R_FilName, name.fil);
+    ///ol::replaceAll(f, secNames::R_ClsName, encType);
+    ///ol::replaceAll(f, secNames::R_lambda, ol::tos(lambda) );
+    ///ol::replaceAll(f, secNames::R_ariUnit, sk->encrypt("1", 1));
+    ///ol::replaceAll(f, secNames::R_ariZero, sk->encrypt("0", 1));
+    string f = loadDbTemplAri(root, dbf);
+    os << f;
 }
 
 void Partial::fixEncType()
@@ -130,3 +151,11 @@ void Partial::fixEncType()
     if ( encType == secNames::encPilBase ) { encType = secNames::encPila; }
 }
 
+string Partial::loadDbTemplAri(string root, string fn) const
+{
+    using namespace secNames;
+    string f = loadDbTempl(root, fn);
+    if ( f.find(R_ariZero) != string::npos ) ol::replaceAll(f, R_ariZero, sk->encrypt("0", 1));
+    if ( f.find(R_ariUnit) != string::npos ) ol::replaceAll(f, R_ariUnit, sk->encrypt("1", 1));
+    return f;
+}

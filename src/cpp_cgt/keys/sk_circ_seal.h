@@ -11,7 +11,7 @@ class CircuitPrivKey_seal : public CircuitPrivKey
 {
         virtual void gen();
 
-        using EncBit = SealNativeBt;
+        using EncBit = SealNativeCiphertext;
         using SecKey = SealNativePrivKey;
 
         EncBit encbit(bool b) const;
@@ -20,12 +20,16 @@ class CircuitPrivKey_seal : public CircuitPrivKey
     private:
         SecKey key;
         CircuitEvalKey_seal_X ek;
+        uint64_t polyModulusDegree = 1 << 15;
+        uint64_t plainModulus = 2;
         virtual bool load();
         virtual void save();
 
     public:
+        // CircuitPrivKey_seal(KeyName name, bool forceGen,
+        //                     bool forceLoad, std::string seed, int lam);
         CircuitPrivKey_seal(KeyName name, bool forceGen,
-                            bool forceLoad, std::string seed, int lam);
+                            bool forceLoad, std::string seed, int lam, std::string polyModulusDegree, std::string plainModulus);
 
         virtual std::string encbitstr(bool b) const;
         virtual bool decbitstr(const std::string & s, bool * ok) const;

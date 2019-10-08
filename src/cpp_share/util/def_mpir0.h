@@ -5,16 +5,21 @@
 
 #include "def_mpir.h"
 
-using ull = unsigned long long;
+namespace e3
+{
+
+///using ull = e3util::ull;
 
 struct BigunNative
 {
+    using ull = e3util::ull;
     ull n;
     BigunNative(unsigned long long x = 0): n(x) {}
 
     string str() const;
     BigunNative powmod(BigunNative x, BigunNative m) const;
     BigunNative mulmod(BigunNative x, BigunNative m) const;
+    BigunNative invmod(BigunNative m) const;
 
     BigunNative & operator+=(const BigunNative & a) { n += a.n; return *this; }
     BigunNative & operator-=(const BigunNative & a) { n -= a.n; return *this; }
@@ -34,5 +39,7 @@ struct BigunNative
     bool operator==(const BigunNative & a) const { return n == a.n; }
     bool operator<(const BigunNative & a) const { return n < a.n; }
 };
+
+} // e3
 
 #endif // _E3_DEF_MPIR0_H_

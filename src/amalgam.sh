@@ -110,6 +110,7 @@ echo "// *** end $2" >> $1
 
 # do util headers
 dof $header $util/e3util.h
+dof $header $util/e3math.h
 dof $header $util/base64.h
 dof $header $util/def_fhew.h
 dof $header $util/def_fhew$FHEW.h
@@ -127,6 +128,7 @@ dof $header $util/def_tfhe$TFHE.h
 dof $header $keys/anykey.h
 dof $header $keys/ek_abstract.h
 dof $header $keys/ek_pil.h
+dof $header $keys/ek_pail.h
 dof $header $keys/ek_circ.h
 dof $header $keys/ek_circ_bdd.h
 dof $header $keys/ek_circ_fhew.h
@@ -140,6 +142,7 @@ dof $header $keys/ek_native.h
 
 # do util cpps
 dof $cxfile $util/def_mpir.inc
+dof $header $util/e3math.inc
 dof $cxfile $util/e3util.cpp
 dof $cxfile $util/base64.cpp
 dof $cxfile $util/def_fhew$FHEW.cpp
@@ -162,6 +165,7 @@ dof $cxfile $keys/ek_circ_seal$SEAL.cpp
 dof $cxfile $keys/ek_circ_tfhe$TFHE.cpp
 dof $cxfile $keys/ek_native.cpp
 dof $cxfile $keys/ek_pil.cpp
+dof $cxfile $keys/ek_pail.cpp
 
 # test compilation - remove later
 #cl -c -EHsc $amaname.cpp

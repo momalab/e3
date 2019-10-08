@@ -11,4 +11,6 @@
 #include "ek_circ_bdd.h"
 #include "ek_circ_pil.h"
 #include "ek_pil.h"
+#include "ek_pail.h"
+#include "ek_arith_seal.h"
 #endif // _E3_EVALKEYS_H_

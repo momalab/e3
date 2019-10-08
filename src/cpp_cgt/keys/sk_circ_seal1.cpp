@@ -9,9 +9,13 @@ using std::cout;
 string e3::CircuitPrivKey_seal::filename() const { return PrivKey::filename(); }
 
 e3::CircuitPrivKey_seal::CircuitPrivKey_seal
-(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam, std::string polyModulusDegree, std::string plainModulus)
+// e3::CircuitPrivKey_seal::CircuitPrivKey_seal
+// (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
     : CircuitPrivKey(name, seed, lam), ek(name)
 {
+    this->polyModulusDegree = 1 << stoul(polyModulusDegree);
+    this->plainModulus = stoul(plainModulus);
     init_final(forceGen, forceLoad);
 }
 
@@ -22,24 +26,27 @@ void e3::CircuitPrivKey_seal::gen()
     static e3seal::SealPrivKey privkey;
     static e3seal::SealEvalKey evalkey;
     static auto params = EncryptionParameters(scheme_type::BFV);
-    cout << " 1 " << std::flush;
     // evalkey.params = EncryptionParameters(scheme_type::BFV);
-    size_t polyMod = 1 << 14; // it has to be a power of two
-    params.set_poly_modulus_degree(polyMod);
-    cout << " 2 " << std::flush;
-    params.set_coeff_modulus(CoeffModulus::BFVDefault(polyMod));
-    params.set_plain_modulus(1 << 1); // 2
+    // size_t polyMod = 1 << 15; // it has to be a power of two
+    // params.set_poly_modulus_degree(polyMod);
+    // params.set_coeff_modulus(CoeffModulus::BFVDefault(polyMod));
+    params.set_poly_modulus_degree(polyModulusDegree);
+    params.set_coeff_modulus(CoeffModulus::BFVDefault(polyModulusDegree));
+    // params.set_plain_modulus(1 << 1); // 2
+    params.set_plain_modulus(plainModulus);
     // static auto context = SEALContext::Create(params);
     evalkey.context = SEALContext::Create(params);
     // static auto keygen = KeyGenerator( context );
     KeyGenerator keygen(evalkey.context);
-    static auto encoder = IntegerEncoder(evalkey.context);
+    ///static auto encoder = IntegerEncoder(evalkey.context);
+    static IntegerEncoder encoder(evalkey.context);
     // static auto encoder = IntegerEncoder(context);
     // privkey.encoder = IntegerEncoder(context);
     privkey.secretkey = keygen.secret_key();
     privkey.publickey = keygen.public_key();
-    auto static decryptor = Decryptor(evalkey.context, privkey.secretkey);
-    auto static encryptor = Encryptor(evalkey.context, privkey.publickey);
+    ///auto static decryptor = Decryptor(evalkey.context, privkey.secretkey);
+    static Decryptor decryptor(evalkey.context, privkey.secretkey);
+    static Encryptor encryptor(evalkey.context, privkey.publickey);
     // privkey.decryptor = Decryptor(context, privkey.secretkey);
     // privkey.encryptor = Encryptor(context, privkey.publickey);
     privkey.encoder = &encoder;
@@ -51,10 +58,12 @@ void e3::CircuitPrivKey_seal::gen()
     // generate EK and set it
     cout << "Generating evaluation key .. " << std::flush;
     // static e3seal::SealEvalKey evalkey;
-    evalkey.params = &params;
-    // evalkey.context = context;
+    static Evaluator evaluator(evalkey.context);
     evalkey.relinkeys = keygen.relin_keys();
+    evalkey.params = &params;
+    evalkey.evaluator = &evaluator;
     ek.key = &evalkey;
+    // evalkey.context = context;
     cout << "ok\n";
 }
 
@@ -91,12 +100,15 @@ bool e3::CircuitPrivKey_seal::load()
     try
     {
         CircuitPrivKey_seal_load(filename());
-        static auto context = e3seal::toek(ek.key)->context;
-        static auto encoder = IntegerEncoder( context );
+        auto context = e3seal::toek(ek.key)->context;
+    static IntegerEncoder encoder(context);
+        ///static auto encoder = IntegerEncoder( context );
         privkey.publickey.load(context, inPublicKey);
         privkey.secretkey.load(context, inSecretKey);
-        static auto decryptor = Decryptor( context, privkey.secretkey );
-        static auto encryptor = Encryptor( context, privkey.publickey );
+        ///static auto decryptor = Decryptor( context, privkey.secretkey );
+        ///static auto encryptor = Encryptor( context, privkey.publickey );
+    static Decryptor decryptor(context, privkey.secretkey);
+    static Encryptor encryptor(context, privkey.publickey);
         privkey.encoder = &encoder;
         privkey.decryptor = &decryptor;
         privkey.encryptor = &encryptor;
@@ -112,7 +124,7 @@ bool e3::CircuitPrivKey_seal::load()
 
 std::string e3::CircuitPrivKey_seal::encbitstr(bool b) const
 {
-    SealNativeBt nb(ek.key);
+    SealNativeCiphertext nb(ek.key);
     auto context = e3seal::toek(ek.key)->context;
     auto encoder = e3seal::tosk(key)->encoder;
     auto publickey = e3seal::tosk(key)->publickey;
@@ -124,7 +136,7 @@ std::string e3::CircuitPrivKey_seal::encbitstr(bool b) const
 
 bool e3::CircuitPrivKey_seal::decbitstr(const std::string & s, bool * ok) const
 {
-    SealNativeBt nb(s, ek.key);
+    SealNativeCiphertext nb(s, ek.key);
     auto context = e3seal::toek(ek.key)->context;
     auto encoder = e3seal::tosk(key)->encoder;
     auto secretkey = e3seal::tosk(key)->secretkey;

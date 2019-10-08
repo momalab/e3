@@ -38,7 +38,7 @@ const std::string circuitFilename = "circuits.inc";
 const std::string dbfileNative = "native";
 const std::string dbfileCircuit = "circuit";
 const std::string dbfileCircuitBase = "circuit.base";
-const std::string dbfilePartial = "phe";
+const std::string dbfilePartial = "arith";
 const std::string dbfileModPilx = "mod.pilx";
 
 inline std::string dotH(std::string s) { return s + ".h"; }

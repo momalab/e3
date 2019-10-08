@@ -6,9 +6,10 @@ class Partial : public SecType
 {
     private:
 
-        ///int lambda;
-
         virtual void fixEncType();
+        string loadDbTemplAri(string root, string fn) const;
+        std::string polyModulusDegree;
+        std::string plaintextModulus;
 
     public:
         Partial(std::istream & is, string nm, const std::map<string, string> & globs);

@@ -147,7 +147,7 @@ int main () {
 }
 ```
 
-In C++ terms, the termination problem means that a `SecureInt` cannot be implicitly cast to a `bool`, and the compiler will return an error. Thus, the expression '`if (x>y) {}`', with `x,y` defined as `SecureInt`, will fail to compile. Therefore, existing algorithms may need modifications to be converted to a data-oblivious version. Further information about data oblivious programming can be found [here](https://docs.google.com/presentation/d/1MFn5a9uLuVBgAEHVK9v0rfd5pm7wHq5_Nz324jzvXzM/edit?usp=sharing).
+In C++ terms, the termination problem means that a `SecureInt` cannot be implicitly cast to a `bool`, and the compiler will return an error. Thus, the expression '`if (x>y) {}`', with `x,y` defined as `SecureInt`, will fail to compile. Therefore, existing algorithms may need modifications to be converted to a data-oblivious version. Further information about data oblivious programming can be found in doc directory (DataObliviousProg.pdf).
 
 Sample programs can be found in 'e3/tests/user' directory.
 

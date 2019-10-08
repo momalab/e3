@@ -26,7 +26,7 @@ Bridge::Bridge(std::istream & is, string nm, const std::map<string, string> & gl
 
     if ( slambda.empty() )
     {
-        lambda = 10;
+        lambda = 10; // FIXME o lambda should be optional
         std::cout << "Warning: lambda is not defined for "
                   << nm << ", using " << lambda << '\n';
     }

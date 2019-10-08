@@ -18,8 +18,8 @@ namespace e3seal
 
 struct SealPrivKey
 {
-    seal::PublicKey publickey; // may be moved to evalkey
     seal::SecretKey secretkey;
+    seal::PublicKey publickey;
     seal::IntegerEncoder * encoder;
     seal::Decryptor * decryptor;
     seal::Encryptor * encryptor;
@@ -30,6 +30,7 @@ struct SealEvalKey
     seal::RelinKeys relinkeys;
     seal::EncryptionParameters * params;
     std::shared_ptr<seal::SEALContext> context;
+    seal::Evaluator * evaluator;
 };
 
 using sk = SealPrivKey;

@@ -6,7 +6,7 @@ using std::cout;
 
 #include "euler.h"
 
-Bigun euler::prime(int lam, Rnd * rnd, Bigun skip)
+e3::Bigun e3::euler::prime(int lam, Rnd * rnd, Bigun skip)
 {
     const bool PR1 = false;
     const bool PR2 = true;
@@ -51,7 +51,7 @@ Bigun euler::prime(int lam, Rnd * rnd, Bigun skip)
     throw "Not able to generate prime";
 }
 
-static bool isPrime(Bigun x, const std::vector<Bigun> & v)
+static bool isPrime(e3::Bigun x, const std::vector<e3::Bigun> & v)
 {
     for ( const auto & i : v )
         if ( i != i.powmod(x, x) ) return false;
@@ -59,9 +59,9 @@ static bool isPrime(Bigun x, const std::vector<Bigun> & v)
     return true;
 }
 
-static std::vector<Bigun> genPrimes()
+static std::vector<e3::Bigun> genPrimes()
 {
-    std::vector<Bigun> v = {2};
+    std::vector<e3::Bigun> v = {2};
 
     while ( v.size() < TESTNPRIMES )
     {
@@ -77,13 +77,13 @@ static std::vector<Bigun> genPrimes()
     return v;
 }
 
-bool euler::isprime(Bigun x)
+bool e3::euler::isprime(e3::Bigun x)
 {
     static std::vector<Bigun> vprimes = genPrimes();
     return isPrime(x, vprimes);
 }
 
-Bigun euler::random(Bigun mod, Rnd * rnd)
+e3::Bigun e3::euler::random(Bigun mod, Rnd * rnd)
 {
     Bigun x = ( (*rnd)() >> 8 );
     while (x < mod) { x <<= 8; x += (*rnd)(); }

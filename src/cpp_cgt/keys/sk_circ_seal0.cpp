@@ -3,20 +3,19 @@
 #include "sk_circ_seal.h"
 
 e3::CircuitPrivKey_seal::CircuitPrivKey_seal
-(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
+(KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam, std::string polyModulusDegree, std::string plaintextModulus)
+// (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
     : CircuitPrivKey(name, seed, lam), ek(name)
 {
     init_final(forceGen, forceLoad);
-}
-
-void e3::CircuitPrivKey_seal::gen()
-{
 }
 
 string e3::CircuitPrivKey_seal::filename() const
 {
     return PrivKey::filenamex("_0");
 }
+
+void e3::CircuitPrivKey_seal::gen() { }
 
 void e3::CircuitPrivKey_seal::save()
 {

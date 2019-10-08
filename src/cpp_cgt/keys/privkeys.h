@@ -10,3 +10,5 @@
 #include "sk_circ_bdd.h"
 #include "sk_circ_pil.h"
 #include "sk_pil.h"
+#include "sk_pail.h"
+#include "sk_arith_seal.h"

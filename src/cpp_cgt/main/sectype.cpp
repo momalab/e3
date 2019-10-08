@@ -18,7 +18,7 @@ SecType * SecType::load
 (std::istream & is, string name, string typ, const std::map<string, string> & globs)
 {
     if (0);
-    else if ( typ == secNames::typeNative ) return new Native(is, name); // FIXME o add globs as well
+    else if ( typ == secNames::typeNative ) return new Native(is, name);
     else if ( typ == secNames::typeCircuit ) return new Circuit(is, name, globs);
     else if ( typ == secNames::typeBridge ) return new Bridge(is, name, globs);
     else if ( typ == secNames::typePartial ) return new Partial(is, name, globs);
@@ -36,7 +36,6 @@ bool SecType::readKeyVal(std::istream & is, pss & r, string end_word) const
     is >> w;
     if ( w != "=" ) throw "Expecting '=', got [" + w + "]";
 
-    ///is >> r.second;
     r.second = util::readVal(is);
 
     if ( !is ) throw "Unexpected EOF while reading [" + r.first + "]";
@@ -90,9 +89,10 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
     auto isab = [](char c)->bool { return  !!std::isalpha(c); };
     auto isau = [](char c)->bool { return  !!std::isalpha(c) || c == '_'; };
     auto isdg = [](char c)->bool { return  !!std::isdigit(c); };
-    auto ishx = [](char c)->bool { return  !!std::isdigit(c)
-                                           || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
-                                 };
+    auto ishx = [](char c)->bool
+    {
+        return  !!std::isdigit(c) || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+    };
 
     for ( ; pos < text.size(); pos++ )
     {
@@ -155,7 +155,6 @@ string SecType::find_next_constant(const string & text, size_t & pos, const stri
     return "";
 }
 
-///map<string, bool> SecType::find_constants(string dirnames) const
 SecType::Consts SecType::find_constants(string dirnames) const
 {
     Consts r;
@@ -340,3 +339,64 @@ void SecType::makeBridge(const ConfigParser * par, int index)
     ///lambda = bridge->getLam();
 }
 
+static void recursiveLoad(const string & path, ol::vstr & v)
+{
+    ol::vstr r;
+    bool replaced = false;
+    for ( string s : v )
+    {
+        if ( s.empty() || s[0] != '@' )
+        {
+            r.push_back(s);
+            continue;
+        }
+
+        replaced = true;
+        string fn = s.substr(1);
+        string f = ol::file2str(path + fn);
+        ol::replaceAll(f, "\r\n", "\n");
+        ol::vstr q = ol::str2vstr(f, "\n");
+        r.insert(r.end(), q.begin(), q.end());
+    }
+
+    if ( replaced ) recursiveLoad(path, r);
+    v.swap(r);
+
+    ///string f = ol::file2str(root + cfgNames::templDir + fn);
+    ///ol::replaceAll(f, "\r\n", "\n");
+    ///ol::vstr v = ol::str2vstr(f,"\n");
+}
+
+string SecType::loadDbTempl(string root, string fn) const
+{
+    using namespace secNames;
+
+    ol::vstr v;
+    v.push_back("@" + fn);
+    recursiveLoad(root + cfgNames::templDir, v);
+
+    string f;
+    for ( auto i : v ) f += i + '\n';
+
+    ol::replaceAll(f, R_TypName, name.typ);
+    ol::replaceAll(f, R_FilName, name.fil);
+    ol::replaceAll(f, R_ClsName, encType);
+    ol::replaceAll(f, R_lambda, ol::tos(lambda) );
+
+    return f;
+    ///if ( f.find(R_ariZero) != string::npos ) ol::replaceAll(f, R_ariZero, sk->encrypt("0", 1));
+    ///if ( f.find(R_ariUnit) != string::npos ) ol::replaceAll(f, R_ariUnit, sk->encrypt("1", 1));
+}
+
+
+string SecType::implVer() const
+{
+    string ver;
+    int iver = -1;
+    if ( encType == secNames::encFhew ) iver = fhew_impl(); // FIXME e3::
+    if ( encType == secNames::encHeli ) iver = heli_impl();
+    if ( encType == secNames::encSeal ) iver = e3::seal_impl();
+    if ( encType == secNames::encTfhe ) iver = e3::tfhe_impl();
+    if ( iver != -1 ) ver = ol::tos(iver);
+    return ver;
+}

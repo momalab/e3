@@ -192,7 +192,7 @@ void e3::CircuitPrivKey_bdd::gen_op(string opn, string pfx, string decfn,
     bddfn = bd_name(pfx);
 
     {
-        e3::Timer tmr; // FIXME o remove e3:: when key is in e3
+        Timer tmr;
         std::cout << "cgt: process BDD [" << bddfn << "] .. " << std::flush;
         Module mod(opfn);
         ///std::ofstream(xdir + "mod") << mod;

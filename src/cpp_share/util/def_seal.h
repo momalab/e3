@@ -13,14 +13,14 @@ using SealNativePrivKey = void * ;
 using SealNativeEvalKey = void * ;
 using cSealNativeEvalKey = const void * ;
 
-struct SealNativeBt
+struct SealNativeCiphertext
 {
     std::shared_ptr<SealCiphertext> p;
     std::string str(cSealNativeEvalKey) const;
-    SealNativeBt(cSealNativeEvalKey ek); // new
-    SealNativeBt(const std::string & enc, cSealNativeEvalKey ek);
-    SealNativeBt(const SealNativeBt &) = delete;
-    SealNativeBt(const SealNativeBt & b, cSealNativeEvalKey ek);
+    SealNativeCiphertext(cSealNativeEvalKey ek); // new
+    SealNativeCiphertext(const std::string & enc, cSealNativeEvalKey ek);
+    SealNativeCiphertext(const SealNativeCiphertext &) = delete;
+    SealNativeCiphertext(const SealNativeCiphertext & b, cSealNativeEvalKey ek);
 };
 
 int seal_impl(); // 0 or 1

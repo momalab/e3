@@ -8,8 +8,8 @@
 
 using std::string;
 
-// FIXME add e3 namespace for all classes
-
+namespace e3
+{
 
 int mpir_impl(); // 0 or 1
 
@@ -37,6 +37,7 @@ class Bigun
         Bigun addmod(Bigun x, Bigun m) const;
         Bigun submod(Bigun x, Bigun m) const;
         Bigun mulmod(Bigun x, Bigun m) const;
+        Bigun invmod(Bigun m) const;
 
         friend std::istream & operator>>(std::istream & is, Bigun & x);
         friend std::ostream & operator<<(std::ostream & os, const Bigun & x) { return os << x.str(); }
@@ -83,5 +84,6 @@ class Bigun
 };
 
 
+} // e3
 
 #endif // _E3_DEF_MPIR_H_

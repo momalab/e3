@@ -4,16 +4,16 @@
 #include "def_mpir1.h"
 #include "def_mpir.inc"
 
-int mpir_impl() { return 1; }
+int e3::mpir_impl() { return 1; }
 
-int Bigun::maxbitsz() { return 10000000; } // enough
+int e3::Bigun::maxbitsz() { return 10000000; } // enough
 
-Bigun::Bigun(string s) : Bigun(0)
+e3::Bigun::Bigun(string s) : Bigun(0)
 {
     p->n = s;
 }
 
-std::istream & operator>>(std::istream & is, Bigun & x)
+std::istream & e3::operator>>(std::istream & is, Bigun & x)
 {
     string s;
     is >> s;
@@ -21,14 +21,14 @@ std::istream & operator>>(std::istream & is, Bigun & x)
     return is;
 }
 
-BigunNative & BigunNative::operator<<=(const BigunNative & a)
+e3::BigunNative & e3::BigunNative::operator<<=(const BigunNative & a)
 {
     unsigned long c = a.n.get_ui();
     while (c--) n = n * 2;
     return *this;
 }
 
-BigunNative & BigunNative::operator>>=(const BigunNative & a)
+e3::BigunNative & e3::BigunNative::operator>>=(const BigunNative & a)
 {
     unsigned long c = a.n.get_ui();
     while (c--) n = n / 2;
@@ -36,12 +36,12 @@ BigunNative & BigunNative::operator>>=(const BigunNative & a)
 }
 
 
-inline mpz_class mulmod(mpz_class a, mpz_class b, mpz_class m)
+static inline mpz_class mulmod(mpz_class a, mpz_class b, mpz_class m)
 {
     return a * b % m;
 }
 
-mpz_class powmod(const mpz_class & x, const mpz_class & p, const mpz_class & m)
+static mpz_class powmod(const mpz_class & x, const mpz_class & p, const mpz_class & m)
 {
     if ( p == 0 ) return 1;
     if ( p == 1 ) return mulmod(x, 1, m);
@@ -55,15 +55,27 @@ mpz_class powmod(const mpz_class & x, const mpz_class & p, const mpz_class & m)
     return mulmod(x, z, m);
 }
 
-string BigunNative::str() const { return n.get_str(); }
+static inline mpz_class invmod(mpz_class a, mpz_class m)
+{
+    mpz_class rop;
+    if ( mpz_invert (rop.get_mpz_t(), a.get_mpz_t(), m.get_mpz_t())  ) return rop;
+    return mpz_class(0);
+}
 
-BigunNative BigunNative::powmod(BigunNative x, BigunNative m) const
+string e3::BigunNative::str() const { return n.get_str(); }
+
+e3::BigunNative e3::BigunNative::powmod(BigunNative x, BigunNative m) const
 {
     auto z = ::powmod(n, x.n, m.n);
     return BigunNative(z);
 }
 
-BigunNative BigunNative::mulmod(BigunNative x, BigunNative m) const
+e3::BigunNative e3::BigunNative::mulmod(BigunNative x, BigunNative m) const
 {
     return BigunNative(::mulmod(n, x.n, m.n));
+}
+
+e3::BigunNative e3::BigunNative::invmod(BigunNative m) const
+{
+    return BigunNative(::invmod(n, m.n));
 }

@@ -51,7 +51,7 @@ ifeq ($(SEAL),1)
 SEALD1=../3p/seal_$(PLAT)/native
 SEALD2=../3p/seal_$(PLAT)/target
 LDF1=$(SEALD1)/libseal.a
-LDF2=$(SEALD2)/libseal.a
+LDF2=$(SEALD2)/libseal.a -lpthread
 endif
 
 ifeq ($(TFHE),1)

@@ -13,5 +13,7 @@ srck1= ${SKDIR}/sk_native.cpp ${SKDIR}/ekx_native.cpp \
 	${SKDIR}/sk_circ_seal$(SEAL).cpp ${SKDIR}/ekx_circ_seal$(SEAL).cpp \
 	${SKDIR}/sk_circ_tfhe$(TFHE).cpp ${SKDIR}/ekx_circ_tfhe$(TFHE).cpp \
 	${SKDIR}/sk_circ_bdd.cpp ${SKDIR}/ekx_circ_bdd.cpp \
-	${SKDIR}/sk_circ.cpp ${SKDIR}/sk_pil.cpp ${SKDIR}/ekx_pil.cpp
+	${SKDIR}/sk_circ.cpp ${SKDIR}/sk_pil.cpp ${SKDIR}/ekx_pil.cpp \
+	${SKDIR}/sk_pail.cpp ${SKDIR}/ekx_pail.cpp \
+	${SKDIR}/sk_arith_seal$(SEAL).cpp ${SKDIR}/ekx_arith_seal$(SEAL).cpp
 objk1 := $(srck1:${SKDIR}/%.cpp=$(BIN)/%.$(OEXT))

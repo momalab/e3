@@ -6,4 +6,5 @@
 #include "def_seal.h"
 
 struct SealCiphertext { bool b; };
+
 #endif // _E3_DEF_SEAL0_H_

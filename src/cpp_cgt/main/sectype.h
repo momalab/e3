@@ -48,6 +48,10 @@ class SecType
         static string find_next_constant
         (const string & text, size_t & pos, const string & pfx);
 
+    protected:
+        string loadDbTempl(string root, string fn) const;
+        string implVer() const;
+
     public:
         static SecType * load
         (std::istream & is, string name, string typ, const std::map<string, string> & globs);
