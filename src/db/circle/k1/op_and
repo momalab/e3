@@ -1,0 +1,17 @@
+{C=$CtSize}
+{R=C-1}
+
+# input
+(a[1,C]) = dec(x[1,C])
+(b[1,C]) = dec(z[1,C])
+
+# op
+c = a1&b1
+
+# kernel
+(r[2,C])=kernel(a[2,C],b[2,C])
+
+# output
+(y[1,C]) = enc(c,r[2,C])
+
+

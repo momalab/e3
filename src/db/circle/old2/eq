@@ -1,0 +1,9 @@
+#{C=$CtSize}
+{C=6}
+{R=C-1}
+
+{I,1,C} aI=xI^zI
+eq = !(a[1|C])
+
+
+

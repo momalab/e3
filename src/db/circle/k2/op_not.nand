@@ -1,0 +1,5 @@
+{C=$CtSize}
+{R=C-1}
+
+(y[1,C]) = op_nand(x[1,C],x[1,C])
+

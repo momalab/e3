@@ -1,0 +1,10 @@
+# Same kernel 9 Mar 2019
+
+{C=$CtSize}
+#{C=6}
+{R=C-1}
+
+{I,2,C} cI=aI^bI
+q = (c[2|C])
+
+{I,2,C} rI= q & cI | !q & aI

@@ -1,0 +1,12 @@
+# NAND-ROLL-NAND kernel 25 Feb 2019
+# see study git/e3work/art/oleg/kernel/testxor.cpp
+
+{C=$CtSize}
+{R=C-1}
+
+# Can be NAND or AND: using NAND
+{i,2,C,j, -1 % R +2} ri = !(aj & bj)
+
+r2 = r2 ^ !(r4&r3)
+r3 = r3
+r4 = r4
