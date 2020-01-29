@@ -22,7 +22,7 @@ secint=secint.inc secint.cpp secint.h
 
 #all: cgt.exe $(secint) user.exe
 #all: bob.exe alice.exe
-all: bob.exe
+all: cgt.exe
 
 cgt.exe: */*/*.cpp */*/*.h
 	cd cpp_crcl && $(MAKE)
