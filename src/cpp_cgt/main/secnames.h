@@ -7,7 +7,8 @@ namespace secNames
 // Types
 const std::string typeNative = "native";
 const std::string typeCircuit = "circuit";
-const std::string typePartial = "partial";
+const std::string typePartialX = "partial";
+const std::string typeRing = "ring";
 const std::string typeBridge = "bridge";
 
 // Encryption schemes

@@ -43,7 +43,7 @@ class $Name
         explicit $Name(const std::vector<unsigned long long> & a) : $Name( pek->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
 
         // Operators
-        $Name & operator=(const $Name & a) { $Name r(a); x = r.x; *this; }
+        $Name & operator=(const $Name & a) { $Name r(a); x = r.x; return *this; }
         $Name & operator+=(const $Name & a);
         $Name & operator-=(const $Name & a);
         $Name & operator*=(const $Name & a);

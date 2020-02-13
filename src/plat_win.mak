@@ -11,7 +11,7 @@ EEXT=exe
 #LEXT2=obj
 
 #OPTS=-EHsc -nologo -D_USING_V110_SDK71_=1
-OPTS=-EHsc -nologo -Ox -D_USING_V110_SDK71_=1 -bigobj
+OPTS=-EHsc -nologo -Ox -D_USING_V110_SDK71_=1 -bigobj /std:c++17
 COPTS=-nologo -Ox -D_CRT_SECURE_NO_DEPRECATE=1 -D_USING_V110_SDK71_=1
 
 # -WX -W4 -D_CRT_SECURE_NO_DEPRECATE=1 /wd4355 /wd4127 /wd4702 /wd4100 /wd4290
@@ -26,7 +26,7 @@ LDF3=
 COPYDLL1=echo no .dll
 COPYDLL2=echo no .dll
 
-ifeq ($(MPIR),1)
+ifneq ($(MPIR),0)
 # lib dependency on 3p
 MPIRD1=../3p/mpir_$(PLAT)/native
 MPIRD2=../3p/mpir_$(PLAT)/target

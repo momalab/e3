@@ -14,6 +14,13 @@ $NameUint<SZ>::$NameUint()
 }
 
 template <int SZ>
+$NameUint<SZ>::$NameUint(unsigned long long m) : $NameUint<SZ>()
+{
+    m &= e3::util::mask(SZ);
+    x = pek->enc(m);
+}
+
+template <int SZ>
 $NameUint<SZ>::$NameUint(const std::string & s) : $NameUint<SZ>()
 {
     string c = pek->decor(s, false);

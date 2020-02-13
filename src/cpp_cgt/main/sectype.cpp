@@ -25,8 +25,8 @@ SecType * SecType::load
     else if ( typ == secNames::typeNative ) return new Native(is, name);
     else if ( typ == secNames::typeCircuit ) return new Circuit(is, name, globs);
     else if ( typ == secNames::typeBridge ) return new Bridge(is, name, globs);
-    else if ( typ == secNames::typePartial ) return new Partial(is, name, globs);
-    else throw "Type '" + typ + "' is not valid or implemented";
+    else if ( typ == secNames::typeRing ) return new Partial(is, name, globs);
+    else throw "Type '" + typ + "' is not valid or not implemented";
 }
 
 bool SecType::readKeyVal(std::istream & is, pss & r, string end_word) const

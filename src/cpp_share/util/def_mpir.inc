@@ -1,4 +1,3 @@
-
 namespace e3
 {
 
@@ -63,6 +62,16 @@ Bigun Bigun::invmod(Bigun m) const
 bool Bigun::isZero() const
 {
     return this->p->isZero();
+}
+
+std::vector<uint32_t> Bigun::data() const
+{
+    return this->p->data();
+}
+
+void Bigun::data(const std::vector<uint32_t> & a)
+{
+    this->p->data(a);
 }
 
 } // e3

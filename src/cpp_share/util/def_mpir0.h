@@ -38,6 +38,10 @@ struct BigunNative
 
     bool operator==(const BigunNative & a) const { return n == a.n; }
     bool operator<(const BigunNative & a) const { return n < a.n; }
+
+    // CoPHEE
+    std::vector<uint32_t> data() const;
+    void data(const std::vector<uint32_t> &);
 };
 
 } // e3

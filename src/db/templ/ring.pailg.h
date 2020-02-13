@@ -8,6 +8,9 @@ class $NameBool;
 
 class $NameUint : public $Name
 {
+    private:
+        e3::cophee::Cophee cophee;
+
     protected:
         $NameUint G_d2(bool forceTable) const;
 
@@ -84,4 +87,3 @@ inline $NameBool $NameUint::operator>=(const $NameUint & a) const { return !(a >
 inline $NameUint operator*(const $NameBool & u, const $NameUint & a) { return a * u; }
 
 // === END  ring.pailg.h Name=$Name
-

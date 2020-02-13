@@ -68,11 +68,18 @@ echo "" >> $header
 echo "// TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD" >> $header
 echo "" >> $header
 
-if [ "$MPIR" = "1" ]; then
+
+if [ "$MPIR" != "0" ]; then
 echo "// including MPIR" >> $header
 echo "#include \"mpir.h\"" >> $header
 echo "#include \"mpirxx.h\"" >> $header
 echo "#include \"gmp-impl.h\"" >> $header
+fi
+
+if [ "$MPIR" == "2" ] || [ "$MPIR" == "3" ] ; then
+echo "#include <fcntl.h>" >> $header
+echo "#include <termios.h>" >> $header
+echo "#include <unistd.h>" >> $header
 fi
 
 if [ "$TFHE" = "1" ]; then
@@ -113,6 +120,7 @@ echo "// *** end $2" >> $1
 dof $header $util/e3util.h
 dof $header $util/e3math.h
 dof $header $util/base64.h
+dof $header $util/cophee.h
 dof $header $util/def_fhew.h
 dof $header $util/def_fhew$FHEW.h
 dof $header $util/def_heli.h
@@ -150,6 +158,7 @@ dof $header $keys/ek_native.h
 dof $cxfile $util/def_mpir.inc
 dof $header $util/e3math.inc
 dof $cxfile $util/e3util.cpp
+dof $cxfile $util/cophee$MPIR.cpp
 dof $cxfile $util/base64.cpp
 dof $cxfile $util/def_fhew$FHEW.cpp
 dof $cxfile $util/def_heli$HELI.cpp

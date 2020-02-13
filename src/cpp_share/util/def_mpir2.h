@@ -1,7 +1,7 @@
-#ifndef _E3_DEF_MPIR1_H_
-#define _E3_DEF_MPIR1_H_
+#ifndef _E3_DEF_MPIR2_H_
+#define _E3_DEF_MPIR2_H_
 
-// this header def_mpir1.h should not be included in any code except *mpir1.cpp
+// this header def_mpir2.h should not be included in any code except *mpir2.cpp
 
 // MPIR headers
 #include "mpir.h"
@@ -52,4 +52,4 @@ struct BigunNative
 
 } // e3
 
-#endif // _E3_DEF_MPIR1_H_
+#endif // _E3_DEF_MPIR2_H_

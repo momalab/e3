@@ -81,3 +81,12 @@ e3::BigunNative e3::BigunNative::invmod(BigunNative m) const
 
 bool e3::BigunNative::isZero() const { return n == 0; }
 
+std::vector<uint32_t> e3::BigunNative::data() const
+{
+    throw "Wrong MPIR implementation";
+}
+
+void e3::BigunNative::data(const std::vector<uint32_t> & a)
+{
+    throw "Wrong MPIR implementation";
+}

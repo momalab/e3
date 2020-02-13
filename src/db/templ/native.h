@@ -25,6 +25,8 @@ template<int SZ> class $NameUint
         $NameUint(const std::string &);
         $NameUint(const char * c) : $NameUint(std::string(c)) {}
 
+        explicit $NameUint(unsigned long long); // public encryption
+
         // Casting
         template <int Z> explicit operator $NameUint<Z> () const;
         explicit operator $NameBool () const;
@@ -94,6 +96,8 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         $NameInt(const std::string & s): $NameUint<SZ>(s) {}
         $NameInt(const char * c): $NameUint<SZ>(c) {}
         $NameInt(const $NameUint<SZ> & y): $NameUint<SZ>(y) {}
+        explicit $NameInt(long long x) : $NameUint<SZ>(x) {}
+
         explicit $NameInt(const $NameBool & y): $NameUint<SZ>(y) {}
 
         // Casting

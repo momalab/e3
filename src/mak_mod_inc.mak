@@ -9,7 +9,7 @@ ifeq ($(HELI),1)
 OPTS += -I./$(HELID0)/src
 endif
 
-ifeq ($(MPIR),1)
+ifneq ($(MPIR),0)
 OPTS += -I./$(MPIRD0)
 endif
 

@@ -5,6 +5,7 @@
 #include <memory>
 #include <istream>
 #include <ostream>
+#include <vector>
 
 using std::string;
 
@@ -87,6 +88,10 @@ class Bigun
         friend Bigun operator+(ull a, const Bigun & b) { return b + a; }
         friend Bigun operator-(ull a, const Bigun & b) { return b - a; }
         friend Bigun operator*(ull a, const Bigun & b) { return b * a; }
+
+        // CoPHEE
+        std::vector<uint32_t> data() const;
+        void data(const std::vector<uint32_t> &);
 };
 
 

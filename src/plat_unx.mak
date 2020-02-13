@@ -38,7 +38,7 @@ LDF2+=$(HELID2)/fhe.a
 LDF3+=-lntl -lgmp -lpthread
 endif
 
-ifeq ($(MPIR),1)
+ifneq ($(MPIR),0)
 # lib dependency on 3p
 MPIRD1=../3p/mpir_$(PLAT)/native
 MPIRD2=../3p/mpir_$(PLAT)/target

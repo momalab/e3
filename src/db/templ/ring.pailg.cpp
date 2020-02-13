@@ -61,17 +61,33 @@ $NameUint $NameUint::G_d2(bool recalc) const
 
 $NameUint $NameUint::G(const $NameUint & a) const
 {
-    static e3::Bigun phph1 {"$Pailgfkf"};
+    if (e3::mpir_impl() == 2) // cophee
+    {
+        // auto N2 = e3::Bigun(pek->getN2()).data();
+        auto x_arr = x.data();
+        auto y_arr = a.x.data();
+        std::cout << "GFUN .. " << std::flush;
+        auto r_arr = cophee.gfunc(x_arr, y_arr);
+        std::cout << "ok\n";
+        $NameUint r;
+        r.x.data(r_arr);
+        return r;
+    }
+    else
+    {
+        static e3::Bigun phph1 {"$Pailgfkf"};
 
-    const e3::Bigun & N2 = pek->getN2();
-    auto y = x.powmod(phph1, N2); // 1+Nm
-    auto b = pek->leq(y);
+        const e3::Bigun & N2 = pek->getN2();
+        auto y = x.powmod(phph1, N2); // 1+Nm
+        auto b = pek->leq(y);
 
-    static e3::Bigun rzN = get1().x.powmod(pek->getN(), N2);
-    rzN = rzN.mulmod(rzN, N2);
+        static e3::Bigun rzN = get1().x.powmod(pek->getN(), N2);
+        rzN = rzN.mulmod(rzN, N2);
 
-    if ( b ) return rzN;
-    return rzN.mulmod(a.x, N2);
+        if ( b ) return rzN;
+        return rzN.mulmod(a.x, N2);
+    }
+    throw "Wrong MPIR implementation";
 }
 
 int $NameUint::beta(int b)

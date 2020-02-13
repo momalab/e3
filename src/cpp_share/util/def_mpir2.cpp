@@ -1,10 +1,13 @@
 #include <sstream>
+#include <vector>
 
 #include "e3util.h"
-#include "def_mpir1.h"
+#include "def_mpir2.h"
 #include "def_mpir.inc"
 
-int e3::mpir_impl() { return 1; }
+using std::vector;
+
+int e3::mpir_impl() { return 2; }
 
 int e3::Bigun::maxbitsz() { return 10000000; } // enough
 
@@ -87,10 +90,24 @@ bool e3::BigunNative::isZero() const
 
 std::vector<uint32_t> e3::BigunNative::data() const
 {
-    throw "Wrong MPIR implementation";
+    const size_t nitems = 64;
+    const size_t nbits = nitems * sizeof(uint32_t);
+    const size_t endianess = 1;
+    const size_t nails = 0;
+    const size_t order = 1;
+    size_t * countp;
+    uint32_t arr[nitems];
+    if (mpz_cmp_ui(n.get_mpz_t(), 0)) mpz_export(arr, countp, order, nbits, endianess, nails, n.get_mpz_t());
+    else for (size_t i = 0; i < nitems; i++) arr[i] = 0;
+    return std::vector<uint32_t>(arr, arr + nitems);
 }
 
 void e3::BigunNative::data(const std::vector<uint32_t> & a)
 {
-    throw "Wrong MPIR implementation";
+    const uint32_t * arr = &a[0];
+    const size_t nitems = 64;
+    const size_t endianess = 1;
+    const size_t nails = 0;
+    const size_t order = 1;
+    mpz_import(n.get_mpz_t(), nitems, order, sizeof(uint32_t), endianess, nails, arr);
 }
