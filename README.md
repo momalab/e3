@@ -267,10 +267,11 @@ include TFHE headers and TFHE library.
     cp $E3/src/e3int.h ./
     cp $E3/src/cgtshared.* ./
     $E3/src/cgt.exe gen -r $E3/src
-    g++ -std=c++17 -I$E3/3p/tfhe_unx/inc/tfhe -I$E3/3p/tfhe_unx/inc/fftwa \
-       -I$E3/3p/tfhe_unx/inc/fftw3 a.cpp secint.cpp cgtshared.cpp \
-       -o bob.exe $E3/3p/tfhe_unx/target/libfftw3-3.lib \
-       $E3/3p/tfhe_unx/target/libtfhe.lib
+
+    g++ -std=c++17 -I$e3/3p/tfhe_unx/inc/tfhe -I$e3/3p/tfhe_unx/inc/fftwa \
+       -I$e3/3p/tfhe_unx/inc/fftw3 a.cpp secint.cpp cgtshared.cpp \
+       -o bob.exe $e3/3p/tfhe_unx/target/libtfhe.a \
+       $e3/3p/tfhe_unx/target/libfftw3.a
 
     ./bob.exe | $E3/src/cgt.exe dec
 it prints 6 as expected.
