@@ -143,7 +143,7 @@ Copy `cgtshared.cpp` to the current directory.
     cp $E3/src/cgtshared.* ./
 And compile (e.g. with GCC):
 
-	g++ a.cpp secint.cpp cgtshared.cpp -o bob.exe
+    g++ -std=c++17 a.cpp secint.cpp cgtshared.cpp -o bob.exe
 Any standard conforming C++ compiler can be used instead of GCC.
 This should build the executable which does not do anything useful. 
 
@@ -185,11 +185,11 @@ could use also `SecureUint` and `SecureBool`.
 Now regenerate classes according to the new configuration and rebuild the executable:
 
     $E3/src/cgt.exe gen -r $E3/src
-	g++ a.cpp secint.cpp cgtshared.cpp -o bob.exe
+    g++ -std=c++17 a.cpp secint.cpp cgtshared.cpp -o bob.exe
     ./bob.exe
 prints `Secure[0000000000000806]` and
 
-	./bob.exe | $E3/src/cgt.exe dec
+    ./bob.exe | $E3/src/cgt.exe dec
 prints `6`. Here cgt tool was used to decrypt the output.
 
 
@@ -223,7 +223,7 @@ Now in your project directory
     cp $E3/src/e3int.h ./
     cp $E3/src/cgtshared.* ./
     $E3/src/cgt.exe gen -r $E3/src
-    g++ a.cpp secint.cpp cgtshared.cpp -o bob.exe
+    g++ -std=c++17 a.cpp secint.cpp cgtshared.cpp -o bob.exe
     ./bob.exe | $E3/src/cgt.exe dec
 prints 6 as expected.
 
@@ -242,7 +242,7 @@ And in your project directory
     cp $E3/src/cgtshared.* ./
     cp $E3/src/cgtkey.* ./
     $E3/src/cgt.exe gen -r $E3/src
-    g++ -DE3KEY=1 a.cpp secint.cpp cgtshared.cpp cgtkey.cpp -o alice.exe
+    g++ -std=c++17 -DE3KEY=1 a.cpp secint.cpp cgtshared.cpp cgtkey.cpp -o alice.exe
 
     ./alice.exe
 Should print 6.
@@ -267,7 +267,7 @@ include TFHE headers and TFHE library.
     cp $E3/src/e3int.h ./
     cp $E3/src/cgtshared.* ./
     $E3/src/cgt.exe gen -r $E3/src
-    g++ -I$E3/3p/tfhe_unx/inc/tfhe -I$E3/3p/tfhe_unx/inc/fftwa \
+    g++ -std=c++17 -I$E3/3p/tfhe_unx/inc/tfhe -I$E3/3p/tfhe_unx/inc/fftwa \
        -I$E3/3p/tfhe_unx/inc/fftw3 a.cpp secint.cpp cgtshared.cpp \
        -o bob.exe $E3/3p/tfhe_unx/target/libfftw3-3.lib \
        $E3/3p/tfhe_unx/target/libtfhe.lib

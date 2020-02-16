@@ -22,7 +22,8 @@ else
 	echo "$me checking out SEAL"
 	mkdir -p $root
 	cd $root
-	git -c http.sslVerify=false clone --depth 1 --branch master https://github.com/Microsoft/SEAL
+	# git -c http.sslVerify=false clone --depth 1 --branch master https://github.com/Microsoft/SEAL
+	git -c http.sslVerify=false clone --depth 1 --branch 3.3.2 https://github.com/Microsoft/SEAL
 	cd $cwd
 	if [ -d "$path" ]; then
 		echo "$me done"
