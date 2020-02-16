@@ -120,7 +120,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator++(int)
 {
     $NameUint<SZ> r = (*this);
-    d_inc(bits, r.bits);
+    this->d_inc(bits, r.bits);
     return r;
 }
 
@@ -128,7 +128,7 @@ template <int SZ>
 inline $NameUint<SZ> & $NameUint<SZ>::operator++()
 {
     $NameUint<SZ> r = (*this);
-    d_inc(bits, r.bits);
+    this->d_inc(bits, r.bits);
     return (*this);
 }
 
@@ -136,7 +136,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator--(int)
 {
     $NameUint<SZ> r = (*this);
-    d_dec(bits, r.bits);
+    this->d_dec(bits, r.bits);
     return r;
 }
 
@@ -144,7 +144,7 @@ template <int SZ>
 inline $NameUint<SZ> & $NameUint<SZ>::operator--()
 {
     $NameUint<SZ> r = (*this);
-    d_dec(bits, r.bits);
+    this->d_dec(bits, r.bits);
     return (*this);
 }
 
@@ -152,7 +152,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::bitsum() const
 {
     $NameUint<SZ> r;
-    d_bitsum(r.bits, bits, *$NameBit::zero);
+    this->d_bitsum(r.bits, bits, *$NameBit::zero);
     return r;
 }
 
@@ -171,7 +171,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator-(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_sub(r.bits, bits, x.bits);
+    this->d_sub(r.bits, bits, x.bits);
     return r;
 }
 
@@ -179,7 +179,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator*(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_mul(r.bits, bits, x.bits);
+    this->d_mul(r.bits, bits, x.bits);
     return r;
 }
 
@@ -187,7 +187,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator/(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_div(r.bits, bits, x.bits);
+    this->d_div(r.bits, bits, x.bits);
     return r;
 }
 
@@ -195,7 +195,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator%(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_mod(r.bits, bits, x.bits);
+    this->d_mod(r.bits, bits, x.bits);
     return r;
 }
 
@@ -203,7 +203,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator&(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_bitand(r.bits, bits, x.bits);
+    this->d_bitand(r.bits, bits, x.bits);
     return r;
 }
 
@@ -211,7 +211,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator|(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_bitor(r.bits, bits, x.bits);
+    this->d_bitor(r.bits, bits, x.bits);
     return r;
 }
 
@@ -219,7 +219,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator^(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_bitxor(r.bits, bits, x.bits);
+    this->d_bitxor(r.bits, bits, x.bits);
     return r;
 }
 
@@ -227,7 +227,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator<<(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_sll(r.bits, bits, x.bits);
+    this->d_sll(r.bits, bits, x.bits);
     return r;
 }
 
@@ -235,7 +235,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator>>(const $NameUint<SZ> & x) const
 {
     $NameUint<SZ> r;
-    d_slr(r.bits, bits, x.bits);
+    this->d_slr(r.bits, bits, x.bits);
     return r;
 }
 
@@ -249,7 +249,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator~() const
 {
     $NameUint<SZ> r;
-    d_bitnot(r.bits, bits);
+    this->d_bitnot(r.bits, bits);
     return r;
 }
 
@@ -257,7 +257,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator!() const
 {
     $NameBool r;
-    d_lognot(r.bits, bits);
+    this->d_lognot(r.bits, bits);
     return r;
 }
 
@@ -265,7 +265,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator==(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_eq(r.bits, bits, x.bits);
+    this->d_eq(r.bits, bits, x.bits);
     return r;
 }
 
@@ -273,7 +273,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator!=(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_ineq(r.bits, bits, x.bits);
+    this->d_ineq(r.bits, bits, x.bits);
     return r;
 }
 
@@ -281,7 +281,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator<(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_lt(r.bits, bits, x.bits);
+    this->d_lt(r.bits, bits, x.bits);
     return r;
 }
 
@@ -289,7 +289,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator<=(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_le(r.bits, bits, x.bits);
+    this->d_le(r.bits, bits, x.bits);
     return r;
 }
 
@@ -297,7 +297,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator>(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_gt(r.bits, bits, x.bits);
+    this->d_gt(r.bits, bits, x.bits);
     return r;
 }
 
@@ -305,7 +305,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator>=(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_ge(r.bits, bits, x.bits);
+    this->d_ge(r.bits, bits, x.bits);
     return r;
 }
 
@@ -313,7 +313,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator&&(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_logand(r.bits, bits, x.bits);
+    this->d_logand(r.bits, bits, x.bits);
     return r;
 }
 
@@ -321,7 +321,7 @@ template <int SZ>
 inline $NameBool $NameUint<SZ>::operator||(const $NameUint<SZ> & x) const
 {
     $NameBool r;
-    d_logor(r.bits, bits, x.bits);
+    this->d_logor(r.bits, bits, x.bits);
     return r;
 }
 
@@ -329,7 +329,7 @@ template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::mux(const $NameUint<SZ> & a, const $NameUint<SZ> & b) const
 {
     $NameUint<SZ> r;
-    d_intmux(r.bits, bits, a.bits, b.bits);
+    this->d_intmux(r.bits, bits, a.bits, b.bits);
     return r;
 }
 
@@ -433,7 +433,7 @@ template <int SZ>
 inline $NameInt<SZ> $NameInt<SZ>::operator/(const $NameInt<SZ> & x) const
 {
     $NameInt<SZ> r;
-    d_divsig(r.bits, bits, x.bits);
+    this->d_divsig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -441,7 +441,7 @@ template <int SZ>
 inline $NameInt<SZ> $NameInt<SZ>::operator%(const $NameInt<SZ> & x) const
 {
     $NameInt<SZ> r;
-    d_modsig(r.bits, bits, x.bits);
+    this->d_modsig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -449,7 +449,7 @@ template <int SZ>
 inline $NameInt<SZ> $NameInt<SZ>::operator-(const $NameInt<SZ> & x) const
 {
     $NameInt<SZ> r;
-    d_sub(r.bits, bits, x.bits);
+    this->d_sub(r.bits, bits, x.bits);
     return r;
 }
 
@@ -457,7 +457,7 @@ template <int SZ>
 inline $NameInt<SZ> $NameInt<SZ>::operator*(const $NameInt<SZ> & x) const
 {
     $NameInt<SZ> r;
-    d_mul(r.bits, bits, x.bits);
+    this->d_mul(r.bits, bits, x.bits);
     return r;
 }
 
@@ -476,7 +476,7 @@ template <int SZ>
 inline $NameInt<SZ> $NameInt<SZ>::operator>>(const $NameInt<SZ> & x) const
 {
     $NameInt<SZ> r;
-    d_srasig(r.bits, bits, x.bits);
+    this->d_srasig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -484,7 +484,7 @@ template <int SZ>
 inline $NameBool $NameInt<SZ>::operator<(const $NameInt<SZ> & x) const
 {
     $NameBool r;
-    d_ltsig(r.bits, bits, x.bits);
+    this->d_ltsig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -492,7 +492,7 @@ template <int SZ>
 inline $NameBool $NameInt<SZ>::operator<=(const $NameInt<SZ> & x) const
 {
     $NameBool r;
-    d_lesig(r.bits, bits, x.bits);
+    this->d_lesig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -500,7 +500,7 @@ template <int SZ>
 inline $NameBool $NameInt<SZ>::operator>(const $NameInt<SZ> & x) const
 {
     $NameBool r;
-    d_gtsig(r.bits, bits, x.bits);
+    this->d_gtsig(r.bits, bits, x.bits);
     return r;
 }
 
@@ -508,7 +508,7 @@ template <int SZ>
 inline $NameBool $NameInt<SZ>::operator>=(const $NameInt<SZ> & x) const
 {
     $NameBool r;
-    d_gesig(r.bits, bits, x.bits);
+    this->d_gesig(r.bits, bits, x.bits);
     return r;
 }
 

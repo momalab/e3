@@ -75,9 +75,17 @@ void tim(SecureInt inp, int sz, F f)
 
 #endif
 
+void testMul()
+{
+    PilcInt<8> a(2), b(3);
+    std::cout << "2*3= " << de(a*b) << '\n';
+}
+
 int main(int ac, char * av[])
 try
 {
+    testMul();
+
 #ifdef FIBO
     SecureInt inp = _7_Eu;
     std::cout << "fibo_m( " << de(inp) << " ) = " << de(fibo_m(inp)) << '\n' ;
