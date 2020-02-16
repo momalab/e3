@@ -118,8 +118,11 @@ For this we need to
 3. Using cgt build `secint.cpp`
 4. Compile all into `bob.exe`
 
-First check out the E3 repository (let `$E3` be its path) and in `$E3/src` do `make`. 
-This builds `cgt.exe`. Now run `bash amalgam.sh` which builds `cgtshared.cpp`.
+First check out the E3 repository (let `$E3` be its path) and 
+in `$E3/src` build `cgt.exe` and `cgtshared.cpp`.
+
+    make
+    bash amalgam.sh
 Then go to you project directory where `a.cpp` is, and run
 
     $E3/src/cgt.exe
