@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstddef>
 #include <vector>
 
 using std::uint32_t;
