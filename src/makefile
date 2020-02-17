@@ -22,7 +22,7 @@ secint=secint.inc secint.cpp secint.h
 
 #all: cgt.exe $(secint) user.exe
 #all: bob.exe alice.exe
-all: cgt.exe
+all: cgt.exe cgtkey.cpp cgtshared.cpp
 
 cgt.exe: */*/*.cpp */*/*.h
 	cd cpp_crcl && $(MAKE)
@@ -40,6 +40,13 @@ alice: alice.exe
 
 alice.exe: $(secint)
 	$(MAKE) $(WUV) -f mak_alice.mak FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) TFHE=$(TFHE) CGT=$(CGT) USER=$(USER)
+
+
+cgtkey.cpp: cpp_cgt/util/*.*  cpp_cgt/keys/*.* amalkey.sh
+	bash amalkey.sh
+
+cgtshared.cpp: cpp_share/util/*.*  cpp_share/keys/*.* amalgam.sh
+	bash amalgam.sh
 
 clean:
 	rm -rf secint.* *.exe *.o *.obj bn_* bt_* e3x/emulate/e3x.obj .vs *.dll
