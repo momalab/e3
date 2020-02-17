@@ -12,6 +12,9 @@ Other information can be found at [doc](doc).
 
 ## Quick gentle introduction
 
+Examples for the following text are provided in `src/user/readme`.
+Windows commands are given in the `.sh` files in the readme examples.
+
 ### Simple code, quick overview
 
 The following program is an example of E3 program multiplying two numbers:
@@ -106,7 +109,7 @@ functions, i.e. custom encryption and decryption.
 Two C++ examples above match `bob` and `alice` versions correspondingly.
 
 
-### Hello, World! (Step 1, trivial)
+### Step 1, trivial. Almost "Hello, World!"
 
 Suppose we would like to build `bob.exe` out of our program `a.cpp`:
 ```C++
@@ -122,7 +125,6 @@ First check out the E3 repository (let `$E3` be its path) and
 in `$E3/src` build `cgt.exe` and `cgtshared.cpp`.
 
     make
-    bash amalgam.sh
 Then go to you project directory where `a.cpp` is, and run
 
     $E3/src/cgt.exe
@@ -147,7 +149,7 @@ And compile (e.g. with GCC):
 Any standard conforming C++ compiler can be used instead of GCC.
 This should build the executable which does not do anything useful. 
 
-### Hello, World! (Step 2, with type)
+### Step 2, with type
 
 This time we include in out trivial C++ program a bogus secure type.
 Let `a.cpp` now look like this:
@@ -193,12 +195,11 @@ prints `Secure[0000000000000806]` and
 prints `6`. Here cgt tool was used to decrypt the output.
 
 
-### Hello, World! (Step 3, with security)
+### Step 3, with security
 
 First in `$E3/src` do
 
     make
-    bash amalgam.sh
 The fist line builds `cgt.exe` and the second `cgtshared.h/cpp`.
 Assume in your project directory you have your file `a.cpp` as in Step 2 above.
 The configuration file `cgt.cfg` is set to:
@@ -227,14 +228,12 @@ Now in your project directory
     ./bob.exe | $E3/src/cgt.exe dec
 prints 6 as expected.
 
-### Hello, World! (Step 4, Alice's computation)
+### Step 4, Alice's computation
 
 This example is to show how Alice's executable is built.
 In `$E3/src` do
 
     make
-    bash amalgam.sh
-    bash amalkey.sh
 And in your project directory
 
     cp $E3/src/e3int.h ./
@@ -248,7 +247,7 @@ And in your project directory
 Should print 6.
 
 
-### Hello, World! (Step 5, with real security)
+### Step 5, with real security
 
 Above we used secure TFHE type, but no TFHE library was linked.
 Instead a TFHE mock-up had been used.
@@ -260,7 +259,6 @@ then in `$E3/src`
 
     make clean
     make TFHE=1
-    bash amalgam.sh
 And as before we copy files and execute the program. However, this time we
 include TFHE headers and TFHE library.
 
