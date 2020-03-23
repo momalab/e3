@@ -58,7 +58,7 @@ class $Name
         $Name operator++(int) { $Name r(*this); ++*this; return r; }
         $Name operator--(int) { $Name r(*this); --*this; return r; }
 
-        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(u, *this); }
+        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(*this, u, zero); }
         friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
         // $Name & operator++() { return *this += *unit; }
         // $Name & operator--() { return *this -= *unit; }
@@ -78,11 +78,16 @@ class $Name
         // $Name operator-(unsigned long long u) const { return *this - (*unit * u); }
         // friend $Name operator-(unsigned long long u, const $Name & a) { return a - u; }
 
+        $Name operator<<(unsigned long long u) const { $Name t(*this); t <<= u; return t; }
+        $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
+
         // Functions
         std::string str() const { return pek->decor(x.str(), true); }
 
         // $Name & operator*=(const $Name & a) = delete;
         // $Name operator*(const $Name & a) const = delete;
+
+        static size_t slots() { init0(); return pek->slots(); }
 };
 
 inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os << x.str(); }

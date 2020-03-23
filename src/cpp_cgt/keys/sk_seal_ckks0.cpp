@@ -14,12 +14,18 @@ namespace e3
 
 SealCkksBasePrivKey::SealCkksBasePrivKey
 (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam,
- string polyModulusDegree)
+ string polyModulusDegree, string primes, string scale)
     : PrivKey(name, seed, lam), ek(name)
 {
     if ( !polyModulusDegree.empty() )
         this->polyModulusDegree = uint64_t(1) << uint64_t(std::stoull(polyModulusDegree));
-
+    if ( !primes.empty() )
+    {
+        auto p = util::split(primes, ',');
+        this->primes.clear();
+        for ( auto & e : p ) this->primes.push_back( stoi( util::trim(e) ) );
+    }
+    if ( !scale.empty() ) this->scale = uint64_t( stoull(scale) );
     init_final(forceGen, forceLoad);
 }
 
@@ -33,6 +39,7 @@ void SealCkksBasePrivKey::gen()
     cout << "Generating keys .. " << std::flush;
     static e3seal_ckks::SealCkksEvalKey evalkey;
     evalkey.polyModulusDegree = polyModulusDegree;
+    evalkey.scale = scale;
     ek.key = &evalkey;
     cout << "ok\n";
 }

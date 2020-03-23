@@ -7,8 +7,10 @@
 #ifndef E3KEY
 
 namespace e3{
+inline bool decrypt(){ return false; }
 template<typename T> inline std::string decrypt(T x) { return x.str(); }
 } // e3
+
 
 #else
 
@@ -17,6 +19,8 @@ template<typename T> inline std::string decrypt(T x) { return x.str(); }
 #include "cgtkey.h"
 
 namespace e3{
+
+inline bool decrypt(){ return true; }
 
 template<typename T, typename SK>
 inline std::string decryptSk(const T & x, const SK sk) { return sk->decrypt(x.str()); }

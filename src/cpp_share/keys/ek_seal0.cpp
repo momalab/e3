@@ -1,4 +1,3 @@
-#include <iostream> //FIXME e remove
 #include <fstream>
 
 #include "ek_seal.h"

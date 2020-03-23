@@ -82,7 +82,8 @@ string SealBaseEvalKey::rawEncrypt(const string & s, int msz) const
             else tmp += c;
         }
         uint64_t value = stoull(tmp);
-        while ( idx < v.size() ) v[idx++] = value; // repeat the last value to the end
+        v[idx++] = value;
+        // while ( idx < v.size() ) v[idx++] = value; // repeat the last value to the end
         encoder->encode(v, p);
     }
     else p = evalkey->encoder->encode( (uint64_t) stoull(s) );

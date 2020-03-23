@@ -18,4 +18,10 @@ void $NameBaseBit::init_pek()
     if ( !unit ) unit = new $NameBit("$BitUnit");
 }
 
+std::string $NameBaseBit::fs(const string & s)
+{
+    if ( s.empty() || s[0] != '@' ) return s;
+    return e3::util::loadConst("$Name", s);
+}
+
 // === END circuit.cpp Name=$Name

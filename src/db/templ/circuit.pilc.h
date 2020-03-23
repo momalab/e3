@@ -11,7 +11,7 @@ class $NameBit : public $NameBaseBit
         $NameBit(const $NameBit & b) = default;
 
         $NameBit(const char * s): $NameBit(std::string(s)) {}
-        $NameBit(const std::string & s): $NameBaseBit(), x(s) {}
+        $NameBit(const std::string & s): $NameBaseBit(), x(fs(s)) {}
         e3::PilQuad native() const { return x; }
 
         static e3::CircuitEvalKey_pilc * k()

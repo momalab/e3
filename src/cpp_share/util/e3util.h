@@ -73,6 +73,9 @@ inline std::string merge(const std::vector<T> & v, std::string bind)
     return s;
 }
 
+std::string trim(const std::string & s);
+std::string loadConst(std::string typ, std::string id);
+
 } // util
 } // e3
 

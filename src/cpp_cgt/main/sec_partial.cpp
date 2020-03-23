@@ -21,10 +21,14 @@ Partial::Partial(std::istream & is, string nm,
     kv[secNames::polyModulusDegree] = &polyModulusDegree;
     kv[secNames::plaintextModulus] = &plaintextModulus;
     kv[secNames::encoder] = &encoder;
+    kv[secNames::scale] = &scale;
+    kv[secNames::primes] = &primes;
 
     string slambda, sbeta;
     kv[secNames::lambda] = &slambda;
     kv[secNames::pailBeta] = &sbeta;
+    kv[secNames::copheeIsArduino] = &copheeIsArduino;
+    kv[secNames::copheeBaudRate] = &copheeBaudRate;
 
     loadPairs(is, kv);
     globPairs(kv, globs);
@@ -80,7 +84,7 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
         sk = shared_ptr<PrivKey>
              (new SealCkksPrivKey
               (name, forceGen, forceLoad, seed,
-               lambda, polyModulusDegree));
+               lambda, polyModulusDegree, primes, scale));
 
     else if (encType[0] == '@')
     {
@@ -159,20 +163,22 @@ string Partial::loadDbTemplAri(string root, string fn) const
     {
         string n = "0";
         for ( size_t i = 1; i < sk->slots(); i++ ) n += "_0";
-        ol::replaceAll(f, R_ariZero, longConstDec(sk->encrypt(n, 1)));
+        ol::replaceAll(f, R_ariZero, longConstTyp(sk->encrypt(n, 1)));
     }
 
     if ( f.find(R_ariUnit) != string::npos )
     {
         string n = "1";
         for ( size_t i = 1; i < sk->slots(); i++ ) n += "_1";
-        ol::replaceAll(f, R_ariUnit, longConstDec(sk->encrypt(n, 1)));
+        ol::replaceAll(f, R_ariUnit, longConstTyp(sk->encrypt(n, 1)));
     }
 
     {
-        // fix fkf of PailG
+        // fkf of PailG
         auto p = dynamic_cast<PailgPrivKey *>(sk.get());
         if ( p ) ol::replaceAll(f, R_Pailgfkf, p->getFkf().str());
+        ol::replaceAll(f, R_copheeIsArduino, copheeIsArduino);
+        ol::replaceAll(f, R_copheeBaudRate, copheeBaudRate);
     }
 
     return f;

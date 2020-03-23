@@ -40,6 +40,7 @@ class $Name
 
         // public encryption
         explicit $Name(unsigned long long a) : $Name( pek->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(const std::vector<unsigned> & a) : $Name( pek->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
         explicit $Name(const std::vector<unsigned long long> & a) : $Name( pek->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
 
         // Operators
@@ -54,32 +55,30 @@ class $Name
         $Name & operator--() { return *this -= *unit; }
         $Name operator++(int) { $Name r(*this); ++*this; return r; }
         $Name operator--(int) { $Name r(*this); --*this; return r; }
+        $Name operator+() const { $Name r(*this); return r; }
+        $Name operator-() const;
 
-        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(u, *this); }
+        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(*this, u, zero); }
         friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
-        // $Name & operator++() { return *this += *unit; }
-        // $Name & operator--() { return *this -= *unit; }
-        // $Name operator++(int) { $Name r(*this); ++*this; return r; }
-        // $Name operator--(int) { $Name r(*this); --*this; return r; }
+        $Name operator*(const std::vector<unsigned long long> & v) const;
+        friend $Name operator*(const std::vector<unsigned long long> & v, const $Name & a) { return a * v; }
 
-        // $Name operator+(const $Name & a) const;
-        // $Name operator-(const $Name & a) const; // { return *this + (-a); }
-        // $Name operator-() const;
+        $Name operator+(unsigned long long u) const { return *this + (*unit * u); }
+        friend $Name operator+(unsigned long long u, const $Name & a) { return a + u; }
+        $Name operator+(const std::vector<unsigned long long> & v) const;
+        friend $Name operator+(const std::vector<unsigned long long> & v, const $Name & a) { return a + v; }
 
-        // $Name operator*(unsigned long long u) const { return multiply_by_ull(u, *this); }
-        // friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
-        //
-        // $Name operator+(unsigned long long u) const { return *this + (*unit * u); }
-        // friend $Name operator+(unsigned long long u, const $Name & a) { return a + u; }
-        //
-        // $Name operator-(unsigned long long u) const { return *this - (*unit * u); }
-        // friend $Name operator-(unsigned long long u, const $Name & a) { return a - u; }
+        $Name operator-(unsigned long long u) const { return *this - (*unit * u); }
+        friend $Name operator-(unsigned long long u, const $Name & a) { return -(a - u); }
+        $Name operator-(const std::vector<unsigned long long> & v) const;
+        friend $Name operator-(const std::vector<unsigned long long> & v, const $Name & a) { return -(a - v); }
+
+        $Name operator<<(unsigned long long u) const { $Name t(*this); t <<= u; return t; }
+        $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
 
         // Functions
         std::string str() const { return pek->decor(x.str(), true); }
-
-        // $Name & operator*=(const $Name & a) = delete;
-        // $Name operator*(const $Name & a) const = delete;
+        static size_t slots() { init0(); return pek->slots(); }
 };
 
 inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os << x.str(); }

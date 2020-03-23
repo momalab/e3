@@ -20,11 +20,11 @@ void $NameBit::s2vc(const std::string & x, std::vector<char> & v)
 
 $NameBit::$NameBit(const std::string & s) : $NameBit()
 {
-    try { s2vc(s, vc); }
+    try { s2vc(fs(s), vc); }
     catch (...)
     {
         // print, this exception may not be handled
-        std::string e = "Bad init in $NameBit [%s]";
+        std::string e = "(circuit.bdd) Bad init in $NameBit [%s]";
         std::printf((e + "\n").c_str(), s.c_str());
         throw e.substr(0, e.find('%')) + s + "]";
     }

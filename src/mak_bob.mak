@@ -52,7 +52,7 @@ bob.exe: $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) \
 	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2)
 	@echo -n "Starting user code compilation: "
 	@date
-	$(CCT) $(OPTU) $(USER)/*.cpp $(BIN)/secint.$(OEXT) \
+	$(CCT) $(OPTU) $(E3NOABORTMAK) $(USER)/*.cpp $(BIN)/secint.$(OEXT) \
 	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2) \
 	$(LDF3) $(EOUT)$@
 	@echo -n "Finished user code compilation: "

@@ -18,7 +18,7 @@ $NameUint<SZ>::$NameUint(unsigned long long x) : $NameUint()
     bits[0] = *$NameBit::unit;
 
     // this does not (must not) call indirectly this ctor
-    *this = e3::multiply_by_ull < $NameUint<SZ> > (x, *this);
+    *this = e3::multiply_by_ull < $NameUint<SZ> > (*this, x);
 }
 
 template <int SZ>
@@ -336,7 +336,7 @@ inline $NameUint<SZ> $NameUint<SZ>::mux(const $NameUint<SZ> & a, const $NameUint
 template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator*(unsigned long long u) const
 {
-    return e3::multiply_by_ull < $NameUint<SZ> > (u, *this);
+    return e3::multiply_by_ull < $NameUint<SZ> > (*this, u);
 }
 
 template <int SZ>
@@ -372,7 +372,7 @@ void $NameUint<SZ>::load(const std::string & c)
     auto s = $NameBit::k()->decor(c, false);
     if ( s.empty() ) throw "Bad decoration in $Name [" + c + "]";
     auto bs = $NameBit::k()->enc2bits(s);
-    if ( bs.empty() ) throw "Bad init in $Name [" + c + "]";
+    if ( bs.empty() ) throw "(circuit.inc) Bad init in $Name [" + c + "]";
 
     for ( int i = 0; i < SZ; i++ )
     {
@@ -518,16 +518,11 @@ inline $NameInt<SZ> $NameInt<SZ>::operator*(const $NameBool & a) const
     return a * (*this);
 }
 
-// FIXME edu check
 template <int SZ>
 inline $NameInt<SZ> abs(const $NameInt<SZ> & x)
 {
-    /// //$NameUint<1> nbit{$NameUint<SZ>(x) >> (SZ-1)};
-    /// $NameUint<SZ> a(x);
-    /// a >>= SZ - 1;
-    /// $NameUint<1> nbit(a);
-    /// $NameBool neg(nbit); // FIXME it would be better $NameBool neg(x[SZ-1]);
-    $NameBool neg(x[SZ - 1]);
+    $NameBool neg;
+    neg[0] = x[SZ - 1];
     return x * !neg - x * neg;
 }
 

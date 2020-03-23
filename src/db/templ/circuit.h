@@ -113,6 +113,9 @@ template<int SZ> class $NameUint
         $NameUint<SZ> operator++(int);
         $NameUint<SZ> operator--(int);
 
+        $NameUint<SZ> operator+() const { return *this; }
+        $NameUint<SZ> operator-() const { return ++~(*this); }
+
         $NameUint<SZ> operator+(const $NameUint<SZ> & a) const;
         $NameUint<SZ> operator-(const $NameUint<SZ> & a) const;
         $NameUint<SZ> operator*(const $NameUint<SZ> & a) const;
@@ -134,6 +137,7 @@ template<int SZ> class $NameUint
         $NameBool operator>=(const $NameUint<SZ> & a) const;
         $NameBool operator&&(const $NameUint<SZ> & a) const;
         $NameBool operator||(const $NameUint<SZ> & a) const;
+
         Bit operator[](int i) const { return bits[i]; }
         Bit & operator[](int i) { return bits[i]; }
         $NameUint<SZ> bitsum() const;
@@ -201,7 +205,8 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         $NameInt(const $NameUint<SZ> & y): $NameUint<SZ>(y) {}
         explicit $NameInt(const $NameBool & y): $NameUint<SZ>(y) {}
         explicit $NameInt(long long x) : $NameUint<SZ>(x) {}
-        // explicit $NameInt(vector<long long>); // FIXME e implement vector encryption
+        explicit $NameInt(const std::vector<long long> & x)
+            : $NameUint<SZ>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
 
         // Casting
         template <int Z> explicit operator $NameInt<Z> () const;
@@ -251,7 +256,7 @@ class $NameBool : public $NameUint<1>
         $NameBool(const std::string & s): $NameUint<1>(s) {}
         $NameBool(const char * c) : $NameBool(std::string(c)) {}
         explicit $NameBool(bool x) : $NameUint<1>(x) {}
-        // explicit $NameBool(vector<bool>); // FIXME e implement vector encryption
+        explicit $NameBool(const std::vector<bool> & x) : $NameUint<1>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
 
         // Operators
         $NameBool & operator+=(const $NameBool & a);

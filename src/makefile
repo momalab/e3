@@ -15,6 +15,7 @@ HELI=0
 MPIR=0
 SEAL=0
 TFHE=0
+E3NOABORT=0
 
 WUV=--warn-undefined-variables
 
@@ -26,7 +27,8 @@ all: cgt.exe cgtkey.cpp cgtshared.cpp
 
 cgt.exe: */*/*.cpp */*/*.h
 	cd cpp_crcl && $(MAKE)
-	$(MAKE) $(WUV) -f mak_cgt.mak CUDD=$(CUDD) FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) TFHE=$(TFHE)
+	$(MAKE) $(WUV) -f mak_cgt.mak CUDD=$(CUDD) FHEW=$(FHEW) HELI=$(HELI) \
+	MPIR=$(MPIR) SEAL=$(SEAL) TFHE=$(TFHE)
 
 $(secint): cgt.exe db/templ/*.* $(USER)/*
 	$(MAKE) $(WUV) -f mak_sec.mak CGT=$(CGT) USER=$(USER)
@@ -34,23 +36,25 @@ $(secint): cgt.exe db/templ/*.* $(USER)/*
 bob: bob.exe
 
 bob.exe: $(secint)
-	$(MAKE) $(WUV) -f mak_bob.mak FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) TFHE=$(TFHE) CGT=$(CGT) USER=$(USER)
+	$(MAKE) $(WUV) -f mak_bob.mak FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) \
+	TFHE=$(TFHE) CGT=$(CGT) USER=$(USER) E3NOABORT=$(E3NOABORT)
 
 alice: alice.exe
 
 alice.exe: $(secint)
-	$(MAKE) $(WUV) -f mak_alice.mak FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) TFHE=$(TFHE) CGT=$(CGT) USER=$(USER)
+	$(MAKE) $(WUV) -f mak_alice.mak FHEW=$(FHEW) HELI=$(HELI) MPIR=$(MPIR) SEAL=$(SEAL) \
+	TFHE=$(TFHE) CGT=$(CGT) USER=$(USER) E3NOABORT=$(E3NOABORT)
 
 
-cgtkey.cpp: cpp_cgt/util/*.*  cpp_cgt/keys/*.* amalkey.sh
+cgtkey.cpp: cpp_cgt/util/*.*  cpp_cgt/keys/*.* amalkey.sh cgt.exe
 	bash amalkey.sh
 
-cgtshared.cpp: cpp_share/util/*.*  cpp_share/keys/*.* amalgam.sh
+cgtshared.cpp: cpp_share/util/*.*  cpp_share/keys/*.* amalgam.sh cgt.exe
 	bash amalgam.sh
 
 clean:
 	rm -rf secint.* *.exe *.o *.obj bn_* bt_* e3x/emulate/e3x.obj .vs *.dll
-	rm -rf result.txt cgtshared.cpp cgtshared.h cgtkey.h cgtkey.cpp
+	rm -rf result.txt cgtshared.cpp cgtshared.h cgtkey.h cgtkey.cpp *.tmp
 
 cleankey:
 	rm -rf secint.* *.key *.*.key x.15* *.key.cpp *.key.exe *.key.obj *.const

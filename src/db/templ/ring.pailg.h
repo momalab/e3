@@ -9,17 +9,19 @@ class $NameBool;
 class $NameUint : public $Name
 {
     private:
+        static const int baud = $Cophee_baudRate; // Cophee::baudRate
+        static const bool ardu = $Cophee_isUsingArduino; // Cophee::isUsingArduino
         e3::cophee::Cophee cophee;
 
     protected:
         $NameUint G_d2(bool forceTable) const;
 
     public:
-        $NameUint() : $Name() {}
-        $NameUint(const std::string & s) : $Name(s) {}
-        $NameUint(const char * c) : $Name(c) {}
-        $NameUint(e3::Bigun a) : $Name(a) {}
-        $NameUint(const $Name & a) : $Name(a) {}
+        $NameUint() : $Name(), cophee(baud, ardu) {}
+        $NameUint(const std::string & s) : $Name(s), cophee(baud, ardu) {}
+        $NameUint(const char * c) : $Name(c), cophee(baud, ardu) {}
+        $NameUint(e3::Bigun a) : $Name(a), cophee(baud, ardu) {}
+        $NameUint(const $Name & a) : $Name(a), cophee(baud, ardu) {}
 
         // Operators
         $NameUint & operator+=(const $NameUint & a) { return *this = *this + a; }
@@ -34,7 +36,7 @@ class $NameUint : public $Name
 
         $NameUint operator-(const $NameUint & a) const { return *this + (-a); }
 
-        $NameUint operator*(unsigned long long u) const { return e3::multiply_by_ull(u, *this); }
+        $NameUint operator*(unsigned long long u) const { return e3::multiply_by_ull(*this, u); }
         friend $NameUint operator*(unsigned long long u, const $NameUint & a) { return a * u; }
 
         $NameUint operator+(unsigned long long u) const { return *this + (*unit * u); }
@@ -57,6 +59,10 @@ class $NameUint : public $Name
         $NameBool operator!=(const $NameUint & a) const;
         $NameBool operator<=(const $NameUint & a) const;
         $NameBool operator>=(const $NameUint & a) const;
+
+        $Name operator<<(unsigned long long u) const { $Name t(*this); t <<= u; return t; }
+        $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
+
 
         // Functions
 

@@ -13,6 +13,10 @@ class Partial : public SecType
         std::string plaintextModulus; // Seal
         std::string encoder; // Seal
         int beta; // PaillierG
+        std::string copheeIsArduino = "false";
+        std::string copheeBaudRate = "921600";
+        std::string scale; // Seal CKKS
+        std::string primes; // Seal CKKS
 
     public:
         Partial(std::istream & is, string nm, const std::map<string, string> & globs);

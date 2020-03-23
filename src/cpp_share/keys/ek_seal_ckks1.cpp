@@ -21,27 +21,25 @@ bool SealCkksBaseEvalKey::load(string fname)
     auto fileParams = fname + ".params.key";
     auto filePublicKey = fname + ".publickey.key";
     auto fileRelin  = fname + ".relin.key";
-    // auto fileConfig = fname + ".config.key";
+    auto fileConfig = fname + ".config.key";
     std::ifstream inParams(fileParams, std::ios::binary);
     std::ifstream inPublicKey(filePublicKey, std::ios::binary);
     std::ifstream inRelin (fileRelin , std::ios::binary);
-    // std::ifstream inConfig(fileConfig, std::ios::binary);
-    // if ( !inParams || !inPublicKey || !inRelin || !inConfig ) return false;
-    if ( !inParams || !inPublicKey || !inRelin ) return false;
+    std::ifstream inConfig(fileConfig, std::ios::binary);
+    if ( !inParams || !inPublicKey || !inRelin || !inConfig ) return false;
 
     static e3seal_ckks::SealCkksEvalKey evalkey;
     try
     {
-        // unsigned char be;
-        // inConfig.read(reinterpret_cast<char *>(&be), 1);
-        // evalkey.isBatchEncoder = be == 1;
+        string s;
+        getline(inConfig, s);
+        evalkey.scale = uint64_t ( stoull(s) );
         static auto params = EncryptionParameters::Load(inParams);
         evalkey.context = SEALContext::Create(params);
         evalkey.publickey.load(evalkey.context, inPublicKey);
         evalkey.relinkeys.load(evalkey.context, inRelin);
         static Evaluator evaluator(evalkey.context);
         static Encryptor encryptor(evalkey.context, evalkey.publickey);
-        // static IntegerEncoder encoder(evalkey.context);
         static CKKSEncoder encoder(evalkey.context);
         evalkey.encoder = &encoder;
         evalkey.encryptor = &encryptor;
@@ -60,7 +58,6 @@ string SealCkksBaseEvalKey::rawEncrypt(const string & s, int msz) const
 {
     SealCkksNativeCiphertext nb;
     auto evalkey = e3seal_ckks::toek(key);
-    // auto & isBatchEncoder = evalkey->isBatchEncoder;
     auto & encryptor = evalkey->encryptor;
     auto & encoder = evalkey->encoder;
     Plaintext p;
@@ -78,8 +75,9 @@ string SealCkksBaseEvalKey::rawEncrypt(const string & s, int msz) const
         else tmp += c;
     }
     auto value = stod(tmp);
-    while ( idx < v.size() ) v[idx++] = value; // repeat the last value to the end
-    double scale = pow(2.0, 40); // FIXME e add scale to config file
+    v[idx++] = value;
+    // while ( idx < v.size() ) v[idx++] = value; // repeat the last value to the end
+    double scale = pow(2.0, evalkey->scale);
     encoder->encode(v, scale, p);
     encryptor->encrypt(p, nb.p->ct);
     return nb.str();

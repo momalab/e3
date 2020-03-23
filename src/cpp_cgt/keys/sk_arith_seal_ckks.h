@@ -12,8 +12,10 @@ class SealCkksPrivKey : public SealCkksBasePrivKey
     public:
         SealCkksPrivKey(KeyName name, bool forceGen,
                         bool forceLoad, string seed, int lam,
-                        string polyModulusDegree)
-            : SealCkksBasePrivKey(name, forceGen, forceLoad, seed, lam, polyModulusDegree) {}
+                        string polyModulusDegree,
+                        string primes, string scale)
+            : SealCkksBasePrivKey(name, forceGen, forceLoad, seed, lam,
+                                  polyModulusDegree, primes, scale) {}
 
         SealCkksPrivKey(const SealCkksBasePrivKey & privkey, string nm)
             : SealCkksBasePrivKey(privkey, nm) {}

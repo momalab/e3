@@ -17,17 +17,25 @@ void e3::initEvalKey(e3::KeyName name, T *& pek, T *& gpek)
     pek = gpek;
 }
 
-template <class T> T e3::multiply_by_ull(unsigned long long u, const T & x)
+template <class T> T e3::multiply_by_ull(const T & x, unsigned long long u, const T * zero)
 {
-    if ( u == 0 ) return x - x;
+    if ( u == 0 ) return zero ? *zero : x - x;
     if ( u == 1 ) return x;
 
-    T y = x + x;
+    T y = x << 1;
     auto q = u / 2;
-    y = multiply_by_ull(q, y);
+    y = multiply_by_ull(y, q, zero);
 
     if ( u == 2 * q ) return y;
     return y + x;
 }
 
+template <class T> T e3::shiftL_by_ull(const T & x, unsigned long long u)
+{
+    T r = x;
+    while (u--) r += r;
+    return r;
+}
+
 // === END atop.inc
+

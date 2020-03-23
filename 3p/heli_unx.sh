@@ -1,17 +1,6 @@
 #!/bin/bash
 
-# FIXME gmp requires m4 -- add check for that
-
-# FIXME first successful run of this script the folling although the lib is working properly:
-# Step 8
-# === 3p === heli_unx/test.exe: NO
-# === 3p === compiling test
-# DONE
-#
-# Step 9 - faking plats
-# === 3p === heli_unx/native/fhe.a heli_unx/target/fhe.a: NO
-# === 3p === faking platforms
-
+# gmp requires m4
 
 PLAT=unx
 me="=== 3p ==="

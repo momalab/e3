@@ -10,6 +10,8 @@ class $NameBaseBit
 
         $NameBaseBit() { init_pek(); }
 
+        static std::string fs(const string & s);
+
     public:
         static const char * typname() { return "$Name"; } // User class
         static const char * filname() { return "$Filencname"; } // key file

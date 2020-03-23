@@ -16,7 +16,7 @@ class $NameBit : public $NameBaseBit
         $NameBit() : $NameBaseBit(), nb(k()->native()) {}
         $NameBit(HeliNativeBt ax) : $NameBaseBit(), nb(ax, k()->native()) {}
         $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb, k()->native()) {}
-        $NameBit(const std::string & s): $NameBaseBit(), nb(s, k()->native()) {}
+        $NameBit(const std::string & s): $NameBaseBit(), nb(fs(s), k()->native()) {}
 
         $NameBit(const char * s): $NameBit(std::string(s)) {}
         std::string str() const { return nb.str(k()->native()); }

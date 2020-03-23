@@ -50,8 +50,12 @@ class $Name
         $Name operator-(const $Name & a) const;
         $Name operator*(const $Name & a) const;
 
-        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(u, *this); }
+        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(*this, u); }
         friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
+
+        $Name operator<<(unsigned long long u) const { $Name t(*this); t <<= u; return t; }
+        $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
+
 
         // Functions
         std::string str() const { return pek->decor(x.str(), true); }

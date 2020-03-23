@@ -46,7 +46,7 @@ struct BigunNative
     bool operator<(const BigunNative & a) const { return n < a.n; }
 
     // CoPHEE
-    std::vector<uint32_t> data() const;
+    std::vector<uint32_t> data(size_t nitems = 64) const;
     void data(const std::vector<uint32_t> &);
 };
 

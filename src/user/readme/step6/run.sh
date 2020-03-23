@@ -14,9 +14,9 @@ cp $e3/src/e3int.h ./
 
 echo "compiling"
 if [ "$OS" =  "Windows_NT" ] ; then
-  cl -EHsc -std:c++17 -Ox -I$e3/3p/seal_unx/include \
+  cl -EHsc -std:c++17 -Ox -I$e3/3p/seal_win/include \
        a.cpp secint.cpp cgtshared.cpp \
-       -Febob.exe $e3/3p/seal_win/target/libseal.lib
+       -Febob.exe $e3/3p/seal_win/target/seal.lib
 else
   g++ -std=c++17 -O2 -I$e3/3p/seal_unx/include \
        a.cpp secint.cpp cgtshared.cpp \

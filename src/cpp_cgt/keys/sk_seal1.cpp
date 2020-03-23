@@ -26,7 +26,7 @@ SealBasePrivKey::SealBasePrivKey
  string polyModulusDegree, string plainModulus, string encoder)
     : PrivKey(name, seed, lam), ek(name)
 {
-    if ( !polyModulusDegree.empty() ) this->polyModulusDegree = 1 << uint64_t(stoull(polyModulusDegree));
+    if ( !polyModulusDegree.empty() ) this->polyModulusDegree = uint64_t(1) << uint64_t(stoull(polyModulusDegree));
     if ( !plainModulus.empty() ) this->plainModulus = uint64_t(stoull(plainModulus));
     transform( encoder.begin(), encoder.end(), encoder.begin(), [](unsigned char const & c) { return ::tolower(c); } );
     this->isBatch = encoder == "batch";

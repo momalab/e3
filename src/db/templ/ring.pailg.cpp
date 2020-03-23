@@ -61,9 +61,18 @@ $NameUint $NameUint::G_d2(bool recalc) const
 
 $NameUint $NameUint::G(const $NameUint & a) const
 {
-    if (e3::mpir_impl() == 2) // cophee
+    auto version = e3::mpir_impl();
+    if ( (version == 2) || (version == 3) ) // cophee
     {
-        // auto N2 = e3::Bigun(pek->getN2()).data();
+        if ( !cophee.is_params_set() )
+        {
+            std::cout << "INITIALIZATION\n";
+            static e3::Bigun phph1 {"$Pailgfkf"};
+            auto fkf = phph1.data();
+            auto n = e3::Bigun(pek->getN()).data();
+            auto n2 = e3::Bigun(pek->getN2()).data();
+            cophee.set_params(n, n2, fkf);
+        }
         auto x_arr = x.data();
         auto y_arr = a.x.data();
         std::cout << "GFUN .. " << std::flush;

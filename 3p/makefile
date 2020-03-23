@@ -27,4 +27,4 @@ TFHE:
 
 
 clean:
-	rm -rf fhew_win fhew_unx heli_win heli_unx seal_win seal_unx tfhe_win tfhe_unx
+	rm -rf fhew_win fhew_unx heli_win heli_unx seal_win seal_unx tfhe_win tfhe_unx mpir_win mapir_unx

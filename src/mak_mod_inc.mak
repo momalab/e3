@@ -22,3 +22,10 @@ OPTS += -I./$(TFHED0)/inc/tfhe
 OPTS += -I./$(TFHED0)/inc/fftwa
 OPTS += -I./$(TFHED0)/inc/fftw3
 endif
+
+E3NOABORTMAK =
+ifdef E3NOABORT
+ifeq ($(E3NOABORT),1)
+E3NOABORTMAK = -DE3NOABORT=1
+endif
+endif

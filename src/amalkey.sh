@@ -63,15 +63,6 @@ echo "" >> $cxfile
 #echo "using std::string;" >> $cxfile
 echo "" >> $cxfile
 
-## Need for timeval structure
-#echo "// FIXME remove when timer is fixed (timeval)" >> $cxfile
-#echo "#ifdef _MSC_VER" >> $cxfile
-#echo "#include <windows.h>" >> $cxfile
-#echo "#else" >> $cxfile
-#echo "#include <sys/time.h>" >> $cxfile
-#echo "#endif" >> $cxfile
-#echo "" >> $cxfile
-
 echo "// OS file functions" >> $cxfile
 echo "#ifdef _MSC_VER" >> $cxfile
 echo "#include <direct.h>" >> $cxfile

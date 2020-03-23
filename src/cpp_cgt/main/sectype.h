@@ -49,7 +49,7 @@ class SecType
         std::map<string, string *> stdParams();
 
         string longConstBit(const string & s) const;
-        string longConstDec(const string & s) const;
+        string longConstTyp(const string & s) const;
 
     private:
         static string find_next_constant

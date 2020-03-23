@@ -23,10 +23,17 @@ namespace e3
 
 SealCkksBasePrivKey::SealCkksBasePrivKey
 (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam,
- string polyModulusDegree)
+ string polyModulusDegree, string primes, string scale)
     : PrivKey(name, seed, lam), ek(name)
 {
-    if ( !polyModulusDegree.empty() ) this->polyModulusDegree = 1 << stoul(polyModulusDegree);
+    if ( !polyModulusDegree.empty() ) this->polyModulusDegree = uint64_t(1) << stoul(polyModulusDegree);
+    if ( !primes.empty() )
+    {
+        auto p = util::split(primes, ',');
+        this->primes.clear();
+        for ( auto & e : p ) this->primes.push_back( stoi( util::trim(e) ) );
+    }
+    if ( !scale.empty() ) this->scale = uint64_t( stoull(scale) );
     init_final(forceGen, forceLoad);
 }
 
@@ -43,10 +50,7 @@ void SealCkksBasePrivKey::gen()
     static e3seal_ckks::SealCkksEvalKey evalkey;
     static auto params = EncryptionParameters(scheme_type::CKKS);
     params.set_poly_modulus_degree(polyModulusDegree);
-    // params.set_coeff_modulus(CoeffModulus::BFVDefault(polyModulusDegree));
-    vector<int> prime_sizes = { 60, 40, 40, 60 }; // FIXME e add prime sizes to config file
-    params.set_coeff_modulus( CoeffModulus::Create(polyModulusDegree, prime_sizes) );
-    // params.set_plain_modulus(plainModulus);
+    params.set_coeff_modulus( CoeffModulus::Create(polyModulusDegree, primes) );
     evalkey.context = SEALContext::Create(params);
     KeyGenerator keygen(evalkey.context);
     privkey.secretkey = keygen.secret_key();
@@ -66,6 +70,7 @@ void SealCkksBasePrivKey::gen()
     evalkey.encryptor = &encryptor;
     evalkey.evaluator = &evaluator;
     evalkey.params = &params;
+    evalkey.scale = scale;
     ek.key = &evalkey;
     cout << "ok\n";
 }

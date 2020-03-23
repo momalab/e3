@@ -64,14 +64,6 @@ string e3::util::unsigned2signed(const string & dec, size_t bitsize)
     return ret;
 }
 
-string e3::util::trim(const string & s)
-{
-    auto posI = s.find_first_not_of(" \t\n\v\r");
-    if ( posI == string::npos ) return "";
-    auto posF = s.find_last_not_of(" \t\n\v\r");
-    return s.substr(posI, posF + 1);
-}
-
 e3::util::ull e3::util::gen_plain(const string & seed)
 {
     e3::util::ull h;
@@ -121,4 +113,3 @@ std::string e3::util::readVal(std::istream & is)
     }
     return r;
 }
-

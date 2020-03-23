@@ -27,9 +27,8 @@ const std::string param_name = "-n";
 const std::string param_signed = "-s";
 const std::string param_userdir = "-d";
 const std::string param_password = "-p";
-const std::string param_file = "-f"; // FIXME e finish -f for dec/enc and help
-const std::string param_root = "-r"; // FIXME e finish -r for dec/enc and help
-// we need also fix help pages
+const std::string param_file = "-f";
+const std::string param_root = "-r";
 
 const std::string cmd_cfg = param_cfg + " cfg";
 const std::string cmd_name = param_name + " name";

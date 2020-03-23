@@ -18,6 +18,10 @@ bool SealCkksBaseEvalKey::load(string fname)
     static e3seal_ckks::SealCkksEvalKey evalkey;
     getline(in, s);
     evalkey.polyModulusDegree = uint64_t( stoull(s) );
+
+    getline(in, s);
+    evalkey.scale = uint64_t ( stoull(s) );
+
     key = &evalkey;
     return !!in;
 }

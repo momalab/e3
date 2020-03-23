@@ -12,7 +12,9 @@ namespace e3
 
 template <class T, class N = T> void initEvalKey(e3::KeyName name, T *& pek, T *& gpek);
 
-template <class T> T multiply_by_ull(unsigned long long u, const T & x);
+// zero is necessary if FHE cannot do x-x
+template <class T> T multiply_by_ull(const T & x, unsigned long long u, const T * zero = nullptr);
+template <class T> T shiftL_by_ull(const T & x, unsigned long long u);
 
 // CarryAdd is a switch which changes operation add.
 // Normal operation add add all the bits of the arguments.

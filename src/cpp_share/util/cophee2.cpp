@@ -1,3 +1,6 @@
+// Using MPIR library
+// Using CophEE hardware as a root-of-trust only (G function)
+
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -20,9 +23,12 @@ namespace e3
 namespace cophee
 {
 
+// CONSTANTS
+
 uint32_t INIT_BAUD_RATE         = 9600;
 uint32_t RUN_BAUD_RATE          = 921600; //115200;
-uint32_t DIVIDER                = 24000000 / RUN_BAUD_RATE;
+uint32_t FREQUENCY              = 24000000;
+uint32_t DIVIDER                = FREQUENCY / RUN_BAUD_RATE;
 
 uint32_t GPCFG_HOSTIRQ_PAD_CTL  = 0x40020018 ;
 uint32_t GPCFG_N_ADDR0          = 0x40029000 ;
@@ -88,13 +94,16 @@ std::vector<uint32_t> cleq_fkf   = { 0X14124889, 0XD7B2F250, 0X8B3CF434, 0X153A4
 
 int Cophee::handler = -1;
 int Cophee::handlerArduino = -1;
+int Cophee::baudRate = RUN_BAUD_RATE;
 bool Cophee::inited = false;
-bool Cophee::isFasterUART = true;
 bool Cophee::isUsingArduino = false;
+bool Cophee::isParamsSet = false;
 
-Cophee::Cophee(bool isFasterUART, bool isUsingArduino)
+// INITIALIZATION
+
+Cophee::Cophee(int baudRate, bool isUsingArduino)
 {
-    Cophee::isFasterUART = isFasterUART;
+    Cophee::baudRate = baudRate;
     Cophee::isUsingArduino = isUsingArduino;
     init();
 }
@@ -149,7 +158,7 @@ void Cophee::init_arduino()
     SerialPortSettings.c_lflag = 0;
 
     if ((tcsetattr(handlerArduino, TCSANOW, &SerialPortSettings)) != 0) /* Set the attributes to the termios structure*/
-        printf("\n  ERROR ! in Setting attributes");
+        printf("\n  ERROR ! in setting attributes\n");
     else
         printf("\n  BaudRate = 2000000 \n  StopBits = 1 \n  Parity   = none \n");
 
@@ -172,13 +181,14 @@ void Cophee::init_chip()
 void Cophee::init_port()
 {
     init_port_baud(INIT_BAUD_RATE);
-    if (isFasterUART)
+    if (INIT_BAUD_RATE != baudRate)
     {
-        write_serial(GPCFG_UARTM_BAUD_CTL, DIVIDER);
+        unsigned divider = FREQUENCY / baudRate;
+        write_serial(GPCFG_UARTM_BAUD_CTL, divider);
         sleep(2);
         close(handler);
         sleep(1);
-        init_port_baud(RUN_BAUD_RATE);
+        init_port_baud(baudRate);
     }
 }
 
@@ -256,12 +266,14 @@ void Cophee::init_port_baud (uint32_t baud)
 
 
     if ((tcsetattr(handler, TCSANOW, &SerialPortSettings)) != 0) /* Set the attributes to the termios structure*/
-        printf("\n  ERROR ! in Setting attributes");
+        printf("\n  ERROR ! in setting attributes\n");
     else
         printf("\n  BaudRate = %u \n  StopBits = 1 \n  Parity   = none \n", baud);
 
     tcflush(handler, TCIFLUSH);   /* Discards old data in the rx buffer            */
 }
+
+// COMMUNICATION
 
 uint32_t Cophee::read_serial (uint32_t address) const
 {
@@ -291,7 +303,6 @@ vector<uint32_t> Cophee::read_serial_n(uint32_t address, size_t size) const
     return arr;
 }
 
-
 vector<uint32_t> Cophee::read_serial_1x (uint32_t address) const
 {
     return read_serial_n(address, 32);
@@ -309,7 +320,7 @@ void Cophee::write_serial (uint32_t address, uint32_t data) const
     uint32_t wrstring       = 0x34343434;
 
     uint32_t * ptr       = &wrstring;
-    uint32_t * addptr        = &address;
+    uint32_t * addptr    = &address;
     uint32_t * wrptr     = &data;
 
     bytes_written   = write(handler, ptr, 4);
@@ -339,6 +350,41 @@ void Cophee::write_serial_2x (uint32_t address, const vector<uint32_t> & data) c
     write_serial_n(address, data, 64);
 }
 
+// FUNCTIONS
+
+bool Cophee::is_params_set() const
+{
+    return isParamsSet;
+}
+
+void Cophee::set_params(
+    const std::vector<uint32_t> & n,
+    const std::vector<uint32_t> & n2,
+    const std::vector<uint32_t> & fkf
+) const
+{
+    write_serial_1x (GPCFG_N_ADDR0, cleq_N);
+    write_serial_2x (GPCFG_NSQ_ADDR0, cleq_NSQ);
+    write_serial_2x (GPCFG_FKF_ADDR0, cleq_fkf);
+    isParamsSet = true;
+}
+
+void Cophee::set_params(
+    const std::vector<uint32_t> & n,
+    const std::vector<uint32_t> & n2,
+    const std::vector<uint32_t> & rand0,
+    const std::vector<uint32_t> & rand1,
+    const std::vector<uint32_t> & fkf
+) const
+{
+    write_serial_1x (GPCFG_N_ADDR0, cleq_N);
+    write_serial_1x (GPCFG_RAND0_ADDR0, cleq_rand0);
+    write_serial_1x (GPCFG_RAND1_ADDR0, cleq_rand1);
+    write_serial_2x (GPCFG_NSQ_ADDR0, cleq_NSQ);
+    write_serial_2x (GPCFG_FKF_ADDR0, cleq_fkf);
+    isParamsSet = true;
+}
+
 vector<uint32_t> Cophee::mod_mul (const std::vector<uint32_t> & a, const vector<uint32_t> & b) const
 {
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000100);
@@ -346,8 +392,7 @@ vector<uint32_t> Cophee::mod_mul (const std::vector<uint32_t> & a, const vector<
     write_serial_2x (GPCFG_ARGB_ADDR0, b);
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000001);
 
-    if (isUsingArduino) wait_for_interrupt();
-    else sleep (1);
+    wait_for_interrupt();
 
     auto result = read_serial_2x (GPCFG_MUL_ADDR0);
     write_serial (GPCFG_GPIO0_PAD_CTL, 0x0111001A);
@@ -361,8 +406,7 @@ vector<uint32_t> Cophee::mod_exp (const std::vector<uint32_t> & a, const vector<
     write_serial_2x (GPCFG_ARGB_ADDR0, b);
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000002);
 
-    if (isUsingArduino) wait_for_interrupt();
-    else sleep (1);
+    wait_for_interrupt();
 
     auto result = read_serial_2x (GPCFG_EXP_ADDR0);
     write_serial (GPCFG_GPIO0_PAD_CTL, 0x0111001A);
@@ -376,8 +420,7 @@ vector<uint32_t> Cophee::mod_inv (const std::vector<uint32_t> & a, const vector<
     write_serial_2x (GPCFG_ARGB_ADDR0, b);
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000004);
 
-    if (isUsingArduino) wait_for_interrupt();
-    else sleep (1);
+    wait_for_interrupt();
 
     auto error = read_serial(GPCFG_CLSTATUS_ADDR);
     if (error != 0x1) return read_serial_2x (GPCFG_INV_ADDR0);
@@ -386,26 +429,29 @@ vector<uint32_t> Cophee::mod_inv (const std::vector<uint32_t> & a, const vector<
 
 vector<uint32_t> Cophee::gfunc (const vector<uint32_t> & a, const vector<uint32_t> & b) const
 {
+    std::cout << "AAA 1\n";
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000100);
     write_serial_2x (GPCFG_ARGA_ADDR0, a);
     write_serial_2x (GPCFG_ARGB_ADDR0, b);
     write_serial    (GPCFG_CLCTLP_ADDR, 0x00000008);
 
-    if (isUsingArduino) wait_for_interrupt();
-    else sleep (1);
+    std::cout << "AAA 2\n";
+    wait_for_interrupt();
+    std::cout << "AAA 3\n";
 
     return read_serial_2x (GPCFG_RES_ADDR0);
 }
 
 void Cophee::wait_for_interrupt () const
 {
-    char buf[2] = {0};
-    uint32_t count;
-    do
+    if (isUsingArduino)
     {
-        count = read(handlerArduino, buf, 1);
+        char buf[2] = {0};
+        uint32_t count;
+        do { count = read(handlerArduino, buf, 1); }
+        while (count == 0);
     }
-    while (count == 0);
+    else sleep (1);
 }
 
 } // cophee

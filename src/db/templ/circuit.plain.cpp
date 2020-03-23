@@ -2,11 +2,11 @@
 
 $NameBit::$NameBit(const std::string & s) : $NameBit()
 {
-    try { x = std::stoi(s); }
+    try { x = std::stoi(fs(s)); }
     catch (...)
     {
         // print, this exception may not be handled
-        std::string e = "Bad init in $NameBit [%s]";
+        std::string e = "(circuit.plain) Bad init in $NameBit [%s]";
         std::printf((e + "\n").c_str(), s.c_str());
         throw e.substr(0, e.find('%')) + s + "]";
     }

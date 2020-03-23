@@ -429,7 +429,7 @@ inline $NameUint<SZ> $NameBool::mux(const $NameUint<SZ> & a, const $NameUint<SZ>
 template <int SZ>
 inline $NameUint<SZ> $NameUint<SZ>::operator*(unsigned long long u) const
 {
-    return e3::multiply_by_ull < $NameUint<SZ >> (u, *this);
+    return e3::multiply_by_ull < $NameUint<SZ >> (*this, u);
 }
 
 

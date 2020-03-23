@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# FIXME replace with SPQLIOS for fast execution
+# for fast execution replace with SPQLIOS - see tfhe_unx_fast.txt
 
 PLAT=unx
 me="=== 3p ==="
@@ -148,8 +148,6 @@ else
 	mkdir tfhe_$PLAT/inc/fftw3
 	mkdir tfhe_$PLAT/libtfhe
 	mkdir tfhe_$PLAT/fftwa
-##	echo "#include <string>" > tfhe_$PLAT/$testfile2.cpp
-##	cat $tfhedir/src/test/$testfile1.cpp | grep -v "sys/time.h" >> tfhe_$PLAT/$testfile2.cpp
 	cp $tfhedir/src/test/$testfile1.cpp tfhe_$PLAT/$testfile2.cpp
 	cp $tfhedir/src/include/*.h tfhe_$PLAT/inc/tfhe/
 	cp $tfhedir/src/libtfhe/*.cpp tfhe_$PLAT/libtfhe/
@@ -157,7 +155,6 @@ else
 	cp $tfhedir/src/libtfhe/fft_processors/fftw/*.h tfhe_$PLAT/inc/fftwa
 	cp $fftwpath/api/fftw3.h tfhe_$PLAT/inc/fftw3/
 	cp $fftwpath/.libs/libfftw3.a tfhe_$PLAT/
-#	cp $fftwpath/$libfftw.dll tfhe_$PLAT/
 
 	echo "$me done"
 fi

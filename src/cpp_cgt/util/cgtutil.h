@@ -20,8 +20,6 @@ bool isPositiveNumber(const std::string & s);
 char addDec(char dec1, char dec2, bool * carry = nullptr);
 std::string unsigned2signed(const std::string & dec, size_t bitsize);
 
-std::string trim(const std::string &);
-
 e3::util::ull gen_plain(const std::string & seed);
 
 bool isCpp(std::string filename);

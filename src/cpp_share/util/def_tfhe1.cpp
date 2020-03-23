@@ -46,7 +46,7 @@ e3::TfheNativeBt::TfheNativeBt(const std::string & enc, cTfheNativeEvalKey ek) :
     }
     catch (...)
     {
-        throw "Bad init in TfheNativeBt [" + enc + "]";
+        throw "(def_tfhe1) Bad init in TfheNativeBt [" + enc + "]";
     }
 }
 

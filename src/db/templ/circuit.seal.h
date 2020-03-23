@@ -18,7 +18,7 @@ class $NameBit : public $NameBaseBit
         $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb) {}
         // NameBit(e3::SealNativeCiphertext ax) : $NameBaseBit(), nb(ax, k()->native()) {}
         // $NameBit(const $NameBit & b): $NameBaseBit(), nb(b.nb, k()->native()) {}
-        $NameBit(const std::string & s): $NameBaseBit(), nb(s, k()->native()) {}
+        $NameBit(const std::string & s): $NameBaseBit(), nb(fs(s), k()->native()) {}
         $NameBit(const char * s): $NameBit(std::string(s)) {}
 
         e3::SealNativeCiphertext native() const { return nb; }

@@ -15,9 +15,10 @@ class Cophee
     private:
         static int handler;
         static int handlerArduino;
+        static int baudRate;
         static bool inited;
-        static bool isFasterUART;
         static bool isUsingArduino;
+        static bool isParamsSet;
 
         void init();
         void init_arduino();
@@ -38,11 +39,17 @@ class Cophee
         void wait_for_interrupt() const;
 
     public:
-        Cophee() : Cophee(true) { }
-        Cophee(bool isFasterUART) : Cophee(isFasterUART, false) {}
-        Cophee(bool isFasterUART, bool isUsingArduino);
-        Cophee(const Cophee & a) : Cophee(a.isFasterUART, a.isUsingArduino) {}
+        Cophee() : Cophee(true) {}
+        Cophee(int baudRate) : Cophee(baudRate, false) {}
+        Cophee(int baudRate, bool isUsingArduino);
+        Cophee(const Cophee & a) : Cophee(a.baudRate, a.isUsingArduino) {}
 
+        bool is_params_set() const;
+        void set_params(const std::vector<uint32_t> & n, const std::vector<uint32_t> & n2,
+                        const std::vector<uint32_t> & fkf) const;
+        void set_params(const std::vector<uint32_t> & n, const std::vector<uint32_t> & n2,
+                        const std::vector<uint32_t> & rand0, const std::vector<uint32_t> & rand1,
+                        const std::vector<uint32_t> & fkf) const;
         std::vector<uint32_t> mod_mul (const std::vector<uint32_t> & a, const std::vector<uint32_t> & b) const;
         std::vector<uint32_t> mod_exp (const std::vector<uint32_t> & a, const std::vector<uint32_t> & b) const;
         std::vector<uint32_t> mod_inv (const std::vector<uint32_t> & a, const std::vector<uint32_t> & b) const;

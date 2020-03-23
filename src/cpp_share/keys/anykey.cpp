@@ -1,10 +1,6 @@
 
-#include <iostream> // debug
-#include <fstream>
-#include <vector>
-#include <map>
-
 #include "anykey.h"
+#include "e3util.h"
 
 using std::string;
 
@@ -13,36 +9,6 @@ namespace deco
 char begin = '[';
 char end = ']';
 }
-
-namespace
-{
-
-string loadConst(string file, int idx)
-{
-    // add mutex for multithreaded
-    static std::map< string, std::vector<string> > mres;
-
-    auto & res = mres[file];
-
-    if ( !res.empty() )
-    {
-        if ( idx >= (int) res.size() ) throw "Mismatch in file [" + file + "]";
-        return res[idx];
-    }
-
-    std::ifstream in(file);
-    if ( !in ) throw "Cannot open [" + file + "]";
-    for (string line; std::getline(in, line); ) res.push_back(line);
-
-    return loadConst(file, idx);
-}
-
-string loadConst(string typ, string id)
-{
-    return ::loadConst( typ + ".const", std::stoi(id.substr(1)) );
-}
-
-} // local
 
 namespace e3
 {
@@ -63,7 +29,7 @@ string AnyKey::prefix(const string & a, bool add, string pfx)
 
     if ( a.size() > 0 &&  a[0] == '@' )
     {
-        fs = loadConst(pfx, a);
+        fs = util::loadConst(pfx, a);
         ps = &fs;
     }
 

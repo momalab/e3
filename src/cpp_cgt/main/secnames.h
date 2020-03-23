@@ -53,6 +53,8 @@ const std::string R_bbshash = "$bbshash";
 const std::string R_ariUnit = "$ArithUnit";
 const std::string R_ariZero = "$ArithZero";
 const std::string R_Pailgfkf = "$Pailgfkf";
+const std::string R_copheeIsArduino = "$Cophee_isUsingArduino";
+const std::string R_copheeBaudRate = "$Cophee_baudRate";
 
 // Identifiers
 const std::string msize = "msize";
@@ -68,8 +70,12 @@ const std::string kernel = "kernel";
 const std::string module = "module";
 const std::string polyModulusDegree = "polyModulusDegree";
 const std::string plaintextModulus = "plaintextModulus";
+const std::string scale = "scale";
+const std::string primes = "primes";
 const std::string encoder = "encoder";
 const std::string pailBeta = "beta";
+const std::string copheeIsArduino = "arduino";
+const std::string copheeBaudRate = "baud";
 
 }
 #endif // _E3_SECNAMES_H_

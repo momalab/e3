@@ -23,6 +23,10 @@ class $Name
         static const $Name * zero, * unit;
 
     public:
+        static const bool is_signed = false;
+        static const int size = 0;
+        static const bool is_circuit = false;
+
         static const char * typname() { return "$Name"; }
         static const char * filname() { return "$Filencname"; }
         static const char * clsname() { return "$Clsencname"; }
@@ -57,7 +61,7 @@ class $Name
         $Name operator-(const $Name & a) const { return *this + (-a); }
         $Name operator-() const;
 
-        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(u, *this); }
+        $Name operator*(unsigned long long u) const { return e3::multiply_by_ull(*this, u); }
         friend $Name operator*(unsigned long long u, const $Name & a) { return a * u; }
 
         $Name operator+(unsigned long long u) const { return *this + (*unit * u); }
@@ -68,6 +72,9 @@ class $Name
 
         $Name & operator+=(unsigned long long u) { return *this = *this + u; }
         $Name & operator-=(unsigned long long u) { return *this = *this - u; }
+
+        $Name operator<<(unsigned long long u) const { $Name t(*this); t <<= u; return t; }
+        $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
 
         // Functions
         std::string str() const { return pek->decor(x.str(), true); }
@@ -81,4 +88,3 @@ inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os
 $PostfixDefines
 
 // === END  ring.pail.h Name=$Name
-

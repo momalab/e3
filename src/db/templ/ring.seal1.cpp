@@ -5,6 +5,23 @@ e3::SealEvalKey * $Name::pek = nullptr;
 const $Name * $Name::unit = nullptr;
 const $Name * $Name::zero = nullptr;
 
+namespace e3seal
+{
+
+template <class T>
+seal::Plaintext batchEncode(const std::vector<T> & v, seal::BatchEncoder & encoder)
+{
+    seal::Plaintext p;
+    size_t size = encoder.slot_count();
+    size_t max = v.size() < size ? v.size() : size;
+    vector<uint64_t> u( size, 0 );
+    for ( size_t i = 0; i < max; i++ ) u[i] = uint64_t(v[i]);
+    encoder.encode(u, p);
+    return p;
+}
+
+} // e3
+
 $Name & $Name::operator+=(const $Name & a)
 {
     e3seal::toek(pek->key)->evaluator->add_inplace(x.p->ct, a.x.p->ct);
@@ -43,6 +60,47 @@ $Name $Name::operator*(const $Name & a) const
 {
     $Name r(*this);
     r *= a;
+    return r;
+}
+
+$Name $Name::operator-() const
+{
+    $Name r(*this);
+    e3seal::toek(pek->key)->evaluator->negate(r.x.p->ct, x.p->ct);
+    return *this;
+}
+
+$Name $Name::operator*(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3seal::toek(pek->key);
+    if ( ek->isBatchEncoder ) p = e3seal::batchEncode( v, *(ek->batchEncoder) );
+    else ek->encoder->encode(uint64_t(v[0]), p);
+    ek->evaluator->multiply_plain_inplace(r.x.p->ct, p);
+    ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
+    return r;
+}
+
+$Name $Name::operator+(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3seal::toek(pek->key);
+    if ( ek->isBatchEncoder ) p = e3seal::batchEncode( v, *(ek->batchEncoder) );
+    else ek->encoder->encode(uint64_t(v[0]), p);
+    ek->evaluator->add_plain_inplace(r.x.p->ct, p);
+    return r;
+}
+
+$Name $Name::operator-(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3seal::toek(pek->key);
+    if ( ek->isBatchEncoder ) p = e3seal::batchEncode( v, *(ek->batchEncoder) );
+    else ek->encoder->encode(uint64_t(v[0]), p);
+    ek->evaluator->sub_plain_inplace(r.x.p->ct, p);
     return r;
 }
 

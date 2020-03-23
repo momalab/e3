@@ -52,11 +52,34 @@ $Name $Name::operator-(const $Name & a) const
     return r;
 }
 
+$Name $Name::operator-() const
+{
+    return *zero - *this;
+}
+
 $Name $Name::operator*(const $Name & a) const
 {
     $Name r(*this);
     r *= a;
     return r;
+}
+
+$Name $Name::operator*(const std::vector<unsigned long long> & v) const
+{
+    $Name u(v);
+    return *this * u;
+}
+
+$Name $Name::operator+(const std::vector<unsigned long long> & v) const
+{
+    $Name u(v);
+    return *this + u;
+}
+
+$Name $Name::operator-(const std::vector<unsigned long long> & v) const
+{
+    $Name u(v);
+    return *this - u;
 }
 
 // === END  ring.seal.cpp Name=$Name

@@ -31,6 +31,7 @@ struct SealCkksEvalKey
     seal::Evaluator * evaluator;
     seal::CKKSEncoder * encoder;
     std::shared_ptr<seal::SEALContext> context;
+    uint64_t scale;
 };
 
 using sk = SealCkksPrivKey;

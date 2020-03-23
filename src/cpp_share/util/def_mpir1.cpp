@@ -85,7 +85,7 @@ bool e3::BigunNative::isZero() const
     return 0 == mpz_cmp_ui(n.get_mpz_t(), 0);
 }
 
-std::vector<uint32_t> e3::BigunNative::data() const
+std::vector<uint32_t> e3::BigunNative::data(size_t nitems) const
 {
     throw "Wrong MPIR implementation";
 }

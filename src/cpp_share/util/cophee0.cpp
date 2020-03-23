@@ -1,3 +1,6 @@
+// Not using MPIR library
+// Not using CophEE hardware
+
 #include <vector>
 #include "cophee.h"
 
@@ -11,13 +14,13 @@ namespace cophee
 
 int Cophee::handler = -1;
 int Cophee::handlerArduino = -1;
+int Cophee::baudRate = 0;
 bool Cophee::inited = false;
-bool Cophee::isFasterUART = true;
 bool Cophee::isUsingArduino = false;
 
-Cophee::Cophee(bool isFasterUART, bool isUsingArduino)
+Cophee::Cophee(int baudRate, bool isUsingArduino)
 {
-    Cophee::isFasterUART = isFasterUART;
+    Cophee::baudRate = baudRate;
     Cophee::isUsingArduino = isUsingArduino;
 }
 
@@ -82,6 +85,31 @@ void Cophee::write_serial_1x (uint32_t address, const vector<uint32_t> & data) c
 void Cophee::write_serial_2x (uint32_t address, const vector<uint32_t> & data) const
 {
     throw "Cophee: 'write_serial_2x' shouldn't be called";
+}
+
+bool Cophee::is_params_set() const
+{
+    throw "Cophee: 'is_params_set' shouldn't be called";
+}
+
+void Cophee::set_params(
+    const std::vector<uint32_t> & n,
+    const std::vector<uint32_t> & n2,
+    const std::vector<uint32_t> & fkf
+) const
+{
+    throw "Cophee: 'set_params' shouldn't be called";
+}
+
+void Cophee::set_params(
+    const std::vector<uint32_t> & n,
+    const std::vector<uint32_t> & n2,
+    const std::vector<uint32_t> & rand0,
+    const std::vector<uint32_t> & rand1,
+    const std::vector<uint32_t> & fkf
+) const
+{
+    throw "Cophee: 'set_params' shouldn't be called";
 }
 
 vector<uint32_t> Cophee::mod_mul (const vector<uint32_t> & a, const vector<uint32_t> & b) const

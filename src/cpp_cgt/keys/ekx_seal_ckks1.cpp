@@ -15,14 +15,14 @@ void e3::SealCkksBaseEvalKeyExt::save()
     auto fileParams = filename() + ".params.key";
     auto filePublicKey = filename() + ".publickey.key";
     auto fileRelin  = filename() + ".relin.key";
-    // auto fileConfig = filename() + ".config.key";
+    auto fileConfig = filename() + ".config.key";
     std::ofstream ofParams(fileParams, std::ios::binary);
     std::ofstream ofPublicKey(filePublicKey, std::ios::binary);
     std::ofstream ofRelin (fileRelin , std::ios::binary);
-    // std::ofstream ofConfig(fileConfig, std::ios::binary);
+    std::ofstream ofConfig(fileConfig, std::ios::binary);
     EncryptionParameters::Save( *(e3seal_ckks::toek(key)->params), ofParams );
     e3seal_ckks::toek(key)->publickey.save(ofPublicKey);
     e3seal_ckks::toek(key)->relinkeys.save(ofRelin);
-    // ofConfig << (unsigned char) (e3seal_ckks::toek(key)->isBatchEncoder);
+    ofConfig << (e3seal_ckks::toek(key)->scale);
     cout << "ok\n";
 }

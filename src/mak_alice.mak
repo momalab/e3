@@ -46,11 +46,10 @@ $(BIN):
 	mkdir -p $(BIN)
 
 alice.exe: $(BIN) $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) \
-	$(LDF2) \
-	$(BIN)/cgtkey.$(OEXT) $(BIN)/cgtshared.$(OEXT)
+	$(LDF2) $(BIN)/cgtkey.$(OEXT) $(BIN)/cgtshared.$(OEXT)
 	@echo -n "Starting user code compilation: "
 	@date
-	$(CCT) $(OPTU) -DE3ALICE=1 -DE3KEY=1 $(USER)/*.cpp \
+	$(CCT) $(OPTU) -DE3ALICE=1 -DE3KEY=1 $(E3NOABORTMAK) $(USER)/*.cpp \
 	$(BIN)/secint.$(OEXT) \
 	$(BIN)/cgtkey.$(OEXT) $(BIN)/cgtshared.$(OEXT) \
 	$(LDF2) $(LDF3) $(LDFS) $(EOUT)$@
@@ -84,18 +83,10 @@ $(BIN)/secint.$(OEXT): secint.cpp cgtshared.cpp
 	@echo -n "Finished secint compilation: "
 	@date
 
-##$(objl): $(BIN)/%.$(OEXT):cpp_cgt/main/%.cpp cpp_cgt/main/*.h \
-##	${SKDIR}/*.h ${EKDIR}/*.h cpp_cgt/util/*.h cpp_share/util/*.h
-##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
-
-##$(objp): $(BIN)/%.$(OEXT):cpp_cgt/util/$(PLAT)/%.cpp cpp_cgt/main/*.h \
-##	cpp_cgt/util/*.h cpp_share/util/*.h
-##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
-
 ${SKDIR}/sk_circ_tfhe.cpp: ${SKDIR}/sk_circ_tfhe0.cpp ${SKDIR}/sk_circ_tfhe1.cpp
 
-$(objcr): $(BIN)/%.$(OEXT):$(CRDIR)/%.cpp $(CRDIR)/*.h
-	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+##$(objcr): $(BIN)/%.$(OEXT):$(CRDIR)/%.cpp $(CRDIR)/*.h
+##	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
 $(BIN)/cuddObj.$(OEXT): $(CUDIR)/cuddObj.cc
 	$(CCT) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@

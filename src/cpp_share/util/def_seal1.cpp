@@ -41,7 +41,7 @@ SealNativeCiphertext::SealNativeCiphertext(const std::string & enc, cSealNativeE
     }
     catch (...)
     {
-        throw "Bad init in SealNativeCiphertext [" + enc + "]";
+        throw "(def_seal1) Bad init in SealNativeCiphertext [" + enc + "]";
     }
 }
 

@@ -258,7 +258,8 @@ void usage(bool isHelp)
 
     cout << ' ' << nm::cgtexe << ' ' << nm::cmd_enc << ' '
          << optParam(nm::cmd_cfg) << ' ' << optParam(nm::cmd_name)
-         << ' ' << optParam(nm::cmd_password) << '\n';
+         << ' ' << optParam(nm::cmd_password)
+         << ' ' << optParam(nm::cmd_file) << '\n';
 
     cout << ' ' << nm::cgtexe << ' ' << nm::cmd_gen << ' '
          << optParam(nm::cmd_cfg) << ' ' << optParam(nm::cmd_userdir)
@@ -311,35 +312,34 @@ void usage(bool isHelp)
 
         cout << std::endl;
         cout << "Parameters:\n";
-        cout << " -c";
 
+        cout << " -c";
         cout << "\tconfiguration file; if not informed, '"
              + nm::default_cfg + "' is used\n";
 
-        cout << " -n";
-        cout << "\tthis parameter specifies the classname\n";
-        cout << " -s";
-
-        cout << "\tplaintexts are considered as signed numbers "
-             "(the default is unsigned)\n";
-
-        cout << "\t  the bitsize must be passed\n";
         cout << " -d";
-
         cout << "\tthis parameter informs the base directory of "
              "the user source files\n";
-
         cout << "\t  if not informed, the one indicated in the "
              "configuration file is used\n";
 
+        cout << " -f";
+        cout << "\tinput file to be encrypted/decrypted\n";
+
+        cout << " -n";
+        cout << "\tthis parameter specifies the classname\n";
+
         cout << " -p";
         cout << "\tthe user password is specified by this parameter\n";
-
         cout << "\t  When used with the keyword '" + nm::flag_random_password
              + "', a random password is generated\n";
-
         cout << "\t  if not informed, the one indicated in "
              "the configuration file is used\n";
+
+        cout << " -s";
+        cout << "\tplaintexts are considered as signed numbers "
+             "(the default is unsigned)\n";
+        cout << "\t  the bitsize must be passed\n";
     }
 }
 

@@ -2,6 +2,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <map>
+#include <fstream>
 
 #include "e3util.h"
 
@@ -380,4 +382,40 @@ vector<string> e3::util::split(const string & s, char c)
     }
     v.push_back(tmp);
     return v;
+}
+
+string e3::util::trim(const string & s)
+{
+    auto posI = s.find_first_not_of(" \t\n\v\r");
+    if ( posI == string::npos ) return "";
+    auto posF = s.find_last_not_of(" \t\n\v\r");
+    return s.substr(posI, posF + 1);
+}
+
+namespace
+{
+string loadConst(string file, int idx)
+{
+    // add mutex for multithreaded
+    static std::map< string, std::vector<string> > mres;
+
+    auto & res = mres[file];
+
+    if ( !res.empty() )
+    {
+        if ( idx >= (int) res.size() ) throw "Mismatch in file [" + file + "]";
+        return res[idx];
+    }
+
+    std::ifstream in(file);
+    if ( !in ) throw "Cannot open [" + file + "]";
+    for (string line; std::getline(in, line); ) res.push_back(line);
+
+    return loadConst(file, idx);
+}
+} // local
+
+string e3::util::loadConst(string typ, string id)
+{
+    return ::loadConst( typ + ".const", std::stoi(id.substr(1)) );
 }

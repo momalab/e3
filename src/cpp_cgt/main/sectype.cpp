@@ -253,7 +253,7 @@ string SecType::makeDefines(const std::set<string> & sx, bool neg) const
         string encrypted = encrypt(sign + md);
 
         r += "#define _" + ol::tos(m) + "_" + (neg ? postfixN : postfixP);
-        r += " \"" + longConstDec(encrypted) + "\"\n";
+        r += " \"" + longConstTyp(encrypted) + "\"\n";
     }
     return r;
 }
@@ -416,24 +416,30 @@ std::map<string, string *> SecType::stdParams()
 
 string SecType::longConstBit(const string & s) const
 {
-    const int MSZ = 1000;
-    int sz = (int)s.size();
-    if ( sz < MSZ ) return s;
-
-    string r;
-    for ( int i = 0, j; i < sz; i += MSZ )
+    // storing in file is preferred
+    if (0)
     {
-        j = i + MSZ;
-        if ( j >= sz )
-            r += s.substr(i);
-        else
-            r += s.substr(i, MSZ) + "\"\"";
+        const int MSZ = 1000;
+        int sz = (int)s.size();
+        if ( sz < MSZ ) return s;
+
+        string r;
+        for ( int i = 0, j; i < sz; i += MSZ )
+        {
+            j = i + MSZ;
+            if ( j >= sz )
+                r += s.substr(i);
+            else
+                r += s.substr(i, MSZ) + "\"\"";
+        }
+        return r;
     }
-    return r;
+
+    return longConstTyp(s);
 }
 
-// process decorated constants
-string SecType::longConstDec(const string & s) const
+// process constants
+string SecType::longConstTyp(const string & s) const
 {
     if ( maxinline_size < 0 ) return s;
 

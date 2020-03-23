@@ -18,6 +18,8 @@ class SealCkksBasePrivKey : public PrivKey
         SealCkksBaseEvalKeyExt ek;
 
         uint64_t polyModulusDegree = 1 << 15;
+        std::vector<int> primes = { 60, 40, 40, 60 };
+        uint64_t scale = 40;
 
     protected:
         virtual bool load();
@@ -27,7 +29,8 @@ class SealCkksBasePrivKey : public PrivKey
     public:
         SealCkksBasePrivKey(KeyName name, bool forceGen,
                             bool forceLoad, std::string seed, int lam,
-                            std::string polyModulusDegree);
+                            std::string polyModulusDegree, std::string primes,
+                            std::string scale);
         SealCkksBasePrivKey(const SealCkksBasePrivKey &) = default;
         SealCkksBasePrivKey(const SealCkksBasePrivKey & k, std::string nm)
             : SealCkksBasePrivKey(k) { ek.name.typ = name.typ = nm; }
