@@ -1,0 +1,15 @@
+{C=$CtSize}
+{R=C-1}
+
+# input
+(a,0[1,R]) = dec(x[1,C])
+
+# not
+c = !a
+
+# hashing
+(r[1,R]) = kernel(x[1,C],x[1,C])
+
+# output
+(y[1,C]) = enc(c,r[1,R])
+

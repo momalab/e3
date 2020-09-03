@@ -1,0 +1,18 @@
+# XOR1013 kernel 13 Mar 2019
+
+{P=1013}
+
+{C=$CtSize}
+{R=C-1}
+{D=C*2}
+
+{S = P % R}
+
+{i,1,C, j, -1 } cj = ai
+{i,1,C, j, +R } cj = bi
+
+{i,C,C,j, *2 *P % D } d1 = cj
+{i,C,C,k, *2 + 1 *P % D } d2 = ck
+{i,3,R, j, *P % R % 2 } di = j
+
+{i,1,R,j, *2 *P % D , k, *2 + 1 *P % D } ri = cj ^ ck ^ di

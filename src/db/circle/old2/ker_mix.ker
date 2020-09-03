@@ -1,0 +1,11 @@
+# MIX bits kernel 26 Feb 2019
+
+{C=$CtSize}
+{R=C-1}
+{S= C+1 / 2 }
+{Q= S+1 }
+
+{i,2,S} ri = ai
+{i,Q,C} 0 = ai 
+{i,2,S} 0 = bi
+{i,Q,C} ri = bi 

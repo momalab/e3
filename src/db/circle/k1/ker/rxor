@@ -1,0 +1,7 @@
+# ROLL XOR kernel 27 Feb 2019
+
+{C=$CtSize}
+{R=C-1}
+
+# roll-xor
+{i,2,C,j, -1 % R + 2 } ri = ai ^ bj

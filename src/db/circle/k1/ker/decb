@@ -1,0 +1,7 @@
+# Decryption B kernel 9 Mar 2019
+
+{C=$CtSize}
+{R=C-1}
+
+(0,c[2,C]) = dec(0,b[2,C])
+{i,2,C} ri = ai^ci
