@@ -32,19 +32,15 @@ class CircuitEvalKey_seal : public CircuitEvalKey
         virtual std::string encrypt(const std::string & s, int msz)
         {
             std::vector<string> numbers = e3::util::split(s, '_');
-
             std::vector<std::vector<bool>> bin(msz);
             for ( size_t i = 0; i < numbers.size(); i++ )
             {
-                auto sbit = e3::util::hex2bin
-                            ( e3::util::dec2hex(numbers[i], msz), msz );
-
+                auto hexvalue = e3::util::dec2hex(numbers[i], msz);
+                auto sbit = e3::util::hex2bin(hexvalue, msz);
                 for ( size_t j = 0; j < sbit.size(); j++ )
                     bin[j].push_back( sbit[j] );
             }
-
             std::vector<string> bits;
-
             for ( auto b : bin )
                 bits.push_back( bek.rawEncrypt(e3::util::merge(b, "_"), msz) );
 

@@ -42,20 +42,24 @@ class SealBasePrivKey : public PrivKey
             bool isTrailing = false;
             if ( v.size() > 1 )
             {
-                auto lastValue = v.back();
-                auto penultimate = v[ v.size()-2 ];
-                isTrailing = lastValue == penultimate;
-                r += "_" + penultimate + "_" + lastValue;
-                if ( isTrailing ) r += "...";
-                for ( size_t i = v.size() - 3; i > 0; i-- )
+                if ( v.size() == 2 ) r += v[0] + "_" + v[1];
+                else
                 {
-                    if ( !isTrailing || v[i] != v.back() )
+                    auto lastValue = v.back();
+                    auto penultimate = v[ v.size()-2 ];
+                    isTrailing = lastValue == penultimate;
+                    r += "_" + penultimate + "_" + lastValue;
+                    if ( isTrailing ) r += "...";
+                    for ( size_t i = v.size() - 3; i > 0; i-- )
                     {
-                        r = "_" + v[i] + r;
-                        isTrailing = false;
+                        if ( !isTrailing || v[i] != v.back() )
+                        {
+                            r = "_" + v[i] + r;
+                            isTrailing = false;
+                        }
                     }
+                    isTrailing &= v[0] == lastValue;
                 }
-                isTrailing &= v[0] == lastValue;
             }
             if ( isTrailing ) r = r.substr(1);
             else r = v[0] + r;

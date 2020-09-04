@@ -123,7 +123,6 @@ char e3::util::dec2hex(unsigned dec)
 string e3::util::dec2hex(const string & decStr, size_t bitsize)
 {
     if (decStr == "0") return zeroExtension("0", bitsize);
-
     string dec (decStr);
     bool isNegative = false;
     if ( dec[0] == '-' )
@@ -142,7 +141,6 @@ string e3::util::dec2hex(const string & decStr, size_t bitsize)
 
     if ( isNegative ) hex = twosComplement(hex, bitsize);
     else hex = zeroExtension(hex, bitsize);
-
     return hex;
 }
 
@@ -335,9 +333,9 @@ char e3::util::maskHex(char c, size_t bitsize)
 
 string e3::util::zeroExtension(const string & hex, size_t bitsize)
 {
-    auto size = (bitsize / 4) - hex.size() + ( bitsize % 4 ? 1 : 0 );
+    int size = (bitsize >> 2) - hex.size() + ( bitsize % 4 ? 1 : 0 );
     string out = "";
-    while (size--) out += "0";
+    while (size-- >= 0) out += "0";
     out += hex;
     return out;
 }

@@ -20,7 +20,9 @@ else
 	echo "$me checking out TFHE"
 	mkdir -p $root
 	pushd $root
-	git -c http.sslVerify=false clone --branch master https://github.com/tfhe/tfhe.git
+	git -c http.sslVerify=false clone --branch master https://github.com/tfhe/tfhe.git tfhe
+#	cd tfhe
+#	git reset --hard 76db530cf736a25115ea0b0ccdb9267b401bb9a7
 	popd
 		if test -f $path; then
 			echo "$me done"
@@ -30,8 +32,14 @@ else
 		fi
 fi
 
+x3264=`bash test_win.sh`
+
+if [ "$x3264" == "x64" ] ; then
+file_fftw_zip=fftw-3.3.5-dll64.zip
+else
 file_fftw_zip=fftw-3.3.5-dll32.zip
-fftwpath=$root/fftw/$PLAT
+fi
+fftwpath=$root/fftw/$PLAT.$x3264
 
 echo ""
 echo "Step 2"
@@ -186,7 +194,7 @@ else
 	echo "NO"
 	pushd tfhe_$PLAT/libtfhe	
 	echo "$me compiling libtfhe"
-	cl -wd4297 -nologo -EHsc -I../inc/tfhe -I../inc/fftwa -c -D"M_PI=std::acos(-1)" *.cpp
+	cl -wd4297 -nologo -EHsc -I../inc/tfhe -I../inc/fftwa -c -D"M_PI=std::acos(-1)" -D"and=&&" *.cpp
 	popd
 	pushd tfhe_$PLAT/fftwa
 	echo "$me compiling fftwa"
