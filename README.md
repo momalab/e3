@@ -1,11 +1,11 @@
 # Encrypt-Everything-Everywhere
-E<sup>3</sup> (Encrypt-Everything-Everywhere) is an easy-to-use open-source homomorphic encryption framework developed by the MoMA Lab at New York University Abu Dhabi. The framework provides C++ classes for supporting computation on private data. E<sup>3</sup> is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography.
+E3 (Encrypt-Everything-Everywhere) is an easy-to-use open-source homomorphic encryption framework developed by the MoMA Lab at New York University Abu Dhabi. The framework provides C++ classes for supporting computation on private data. E3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography.
 
-In its first version, E<sup>3</sup> encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
+In its first version, E3 encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
 
-Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and for installation and usage guides. For examples of programs that you can create with E<sup>3</sup>, check out the [Tutorials Tab](./tutorials).
+Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and for installation and usage guides. For examples of programs that you can create with E3, check out the [Tutorials Tab](./tutorials).
 
-If you use our framework, please cite our paper titled "E<sup>3</sup>: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of using E<sup>3</sup>, as well as how to add new libraries to the framework.
+If you use our framework, please cite our paper titled "E3: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of using E3, as well as how to add new libraries to the framework.
 
 # Quick setup
 
@@ -33,16 +33,16 @@ make
 
 Done!
 
-# Example - Hello world
+# Example
 
-Let's test E3 buy running a simple example that does some arithmetic.
+Let's test E3 by running a simple example that does some arithmetic. It could be simpler, but we want to show some nice features.
 
 1. Create a directory anywhere you want. For this example, we will create a directory 'examples/hello_world' at the root of E3:
 ```
 mkdir -p examples/hello_world
 ```
 
-2. Now we need to create a configuration file to tell the CGT tool which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file 'cgt.cfg':
+2. We need to create a configuration file to tell the CGT tool which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file called 'cgt.cfg':
 ```
 # this is a comment
 # name : type (name is arbitrary, type: bridge, circuit, native, ring)
@@ -50,16 +50,108 @@ Secure : circuit
 {
     encryption = tfhe # encryption library/scheme
     postfix = Ep # for encrypted constants >= 0
-	postneg = En # for encrypted constants < 0
-    sizes = 8,16 # plaintext bit-size
+    postneg = En # for encrypted constants < 0
+    sizes = 8,16 # plaintext bit-sizes
 }
 
-SealRing : ring
+SecureMod : ring
 {
     encryption = seal
-    encoder = integer
-    logn = 13 # degree of the polynomial n = 2^13
+    encoder = integer # integer or batch
+    logn = 13 # polynomial degree n = 2^13
     t = 65537 # plaintext modulus
-    postfix = Ea # for encrypted constants [0, t-1]
+    postfix = Er # for encrypted constants [0, t-1]
 }
+
 ```
+The configuration file we just wrote defines two encryption schemes to be used in the program: TFHE and SEAL, which we named Secure and SecureMod, respectively. We can use any combination of encryption schemes, inclusive the same encryption scheme with different parameters.
+The type 'circuit' works on bit-level arithmetic. CGT automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 and 16 bits).
+For SecureMod, we use the type 'ring', which works in modular arithmetic, therefore, the plaintexts are defined in the interval [0, t-1].
+
+3. Now, let's write our program. Create a text file called 'main.cpp' in 'examples/hello_world' and add the following code:
+```
+#include <iostream>
+#include "e3int.h"
+#include "e3key.h" // includes support for decryption
+
+using namespace std;
+
+int main()
+{
+    // SecureInt -- using TFHE
+    {
+        cout << "SecureInt<8> with TFHE\n";
+        // initializing variables
+        SecureInt<8> a = _3_Ep, b = _2_En; // a = 3, b = -2;
+        auto add = a + b; // homomorphic addition using boolean circuits
+        auto mul = a * b; // homomorphic multiplication using boolean circuits
+        // decrypting
+        auto plain_a = e3::decrypt(a);
+        auto plain_b = e3::decrypt(b);
+        auto plain_add = e3::decrypt(add);
+        auto plain_mul = e3::decrypt(mul);
+        cout << plain_a << " + " << plain_b << " = " << plain_add << '\n';
+        cout << plain_a << " * " << plain_b << " = " << plain_mul << '\n';
+    }
+
+    // SecureUint -- using TFHE
+    {
+        cout << "SecureUint<16> with TFHE\n";
+        // initializing variables
+        SecureUint<16> a = _3_Ep, b = _2_Ep; // a = 3, b = 2;
+        auto add = a + b; // homomorphic addition using boolean circuits
+        auto mul = a * b; // homomorphic multiplication using boolean circuits
+        // decrypting
+        auto plain_a = e3::decrypt(a);
+        auto plain_b = e3::decrypt(b);
+        auto plain_add = e3::decrypt(add);
+        auto plain_mul = e3::decrypt(mul);
+        cout << plain_a << " + " << plain_b << " = " << plain_add << '\n';
+        cout << plain_a << " * " << plain_b << " = " << plain_mul << '\n';
+    }
+
+    // SecureMod -- using SEAL
+    {
+        cout << "SecureMod with SEAL\n";
+        // initializing variables
+        SecureMod a = _3_Er, b = _2_Er; // a = 3, b = 2;
+        auto add = a + b; // native homomorphic addition
+        auto mul = a * b; // native homomorphic multiplication
+        // decrypting
+        auto plain_a = e3::decrypt(a);
+        auto plain_b = e3::decrypt(b);
+        auto plain_add = e3::decrypt(add);
+        auto plain_mul = e3::decrypt(mul);
+        cout << plain_a << " + " << plain_b << " = " << plain_add << '\n';
+        cout << plain_a << " * " << plain_b << " = " << plain_mul << '\n';
+    }
+}
+
+```
+
+4. To compile, go to 'e3/src':
+```
+cd ../../src
+make alice USER=../examples/hello_world
+```
+
+5. Run:
+```
+./alice.exe
+```
+You should see this:
+```
+SecureInt<8> with TFHE
+3 + -2 = 1
+3 * -2 = -6
+SecureUint<16> with TFHE
+3 + 2 = 5
+3 * 2 = 6
+SecureMod with SEAL
+3 + 2 = 5
+3 * 2 = 6
+```
+
+Done!
+
+For more advanced things, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [tutorials](./tutorials).
