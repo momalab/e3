@@ -51,12 +51,12 @@ Secure : circuit
     encryption = tfhe # encryption library/scheme
     postfix = Ep # for encrypted constants >= 0
     postneg = En # for encrypted constants < 0
-    sizes = 8,16 # plaintext bit-sizes
+    sizes = 8 # plaintext bit-size
 }
 
 ```
 The configuration file we just wrote defines one encryption scheme to be used in the program: TFHE, which we named Secure. We can use any combination of encryption schemes, inclusive the same encryption scheme with different parameters.
-The type 'circuit' works on bit-level arithmetic. CGT automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 and 16 bits).
+The type 'circuit' works on bit-level arithmetic. CGT automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 bits).
 
 3. Now, let's write our program. Create a text file called 'main.cpp' in 'examples/hello_world' and add the following code:
 ```
