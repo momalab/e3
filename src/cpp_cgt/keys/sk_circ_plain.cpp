@@ -61,7 +61,7 @@ bool CircuitPrivKey_plain::load()
     in >> s;
     if (!in) return false;
     try { key = std::stoi(s); }
-    catch (...) { throw "Bad key in " + filename(); }
+    catch (...) { throw "(l:64) Bad key in " + filename(); }
     return ek.load();
 }
 

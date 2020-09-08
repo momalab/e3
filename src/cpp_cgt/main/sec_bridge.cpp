@@ -16,8 +16,10 @@ Bridge::Bridge(std::istream & is, string nm, const std::map<string, string> & gl
     std::map<string, string *> kv = stdParams();
 
     kv[secNames::module] = &module;
-    kv[secNames::polyModulusDegree] = &polyModulusDegree;
-    kv[secNames::plaintextModulus] = &plaintextModulus;
+    kv[secNames::polyModulusDegree1] = &polyModulusDegree;
+    kv[secNames::plaintextModulus1] = &plaintextModulus;
+    kv[secNames::polyModulusDegree2] = &polyModulusDegree;
+    kv[secNames::plaintextModulus2] = &plaintextModulus;
     kv[secNames::encoder] = &encoder;
 
     string slambda;

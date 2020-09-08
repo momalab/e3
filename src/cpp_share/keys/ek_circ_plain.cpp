@@ -9,7 +9,7 @@ bool e3::CircuitEvalKey_plain::load()
     in >> s;
     if (!in) return false;
     try { key = std::stoi(s); }
-    catch (...) { throw "Bad key in " + filename(); }
+    catch (...) { throw "(l:12) Bad key in " + filename(); }
     return true;
 }
 

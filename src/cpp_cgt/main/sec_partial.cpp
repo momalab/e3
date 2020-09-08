@@ -18,8 +18,10 @@ Partial::Partial(std::istream & is, string nm,
 
     kv[secNames::postfix] = &postfixP;
     kv[secNames::postneg] = &postfixN;
-    kv[secNames::polyModulusDegree] = &polyModulusDegree;
-    kv[secNames::plaintextModulus] = &plaintextModulus;
+    kv[secNames::polyModulusDegree1] = &polyModulusDegree;
+    kv[secNames::plaintextModulus1] = &plaintextModulus;
+    kv[secNames::polyModulusDegree2] = &polyModulusDegree;
+    kv[secNames::plaintextModulus2] = &plaintextModulus;
     kv[secNames::encoder] = &encoder;
     kv[secNames::scale] = &scale;
     kv[secNames::primes] = &primes;

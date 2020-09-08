@@ -271,7 +271,7 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
     for ( pss p; readKeyVal( is, p, "}" ); )
     {
         auto it = kv.find(p.first);
-        if ( it == kv.end() ) throw "Bad key [" + p.first + "] for [" + name.typ + "]";
+        if ( it == kv.end() ) throw "(l:274) Bad key [" + p.first + "] for [" + name.typ + "]";
         *it->second = p.second;
     }
 

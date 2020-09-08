@@ -3,59 +3,63 @@ E<sup>3</sup> (Encrypt-Everything-Everywhere) is an easy-to-use open-source homo
 
 In its first version, E<sup>3</sup> encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
 
-Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and for installation and usage guides. For examples of programs that you can create with E<sup>3</sup>, check out the [Tutorials Tab](https://github.com/momalab/e3/tree/master/tutorials).
+Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and for installation and usage guides. For examples of programs that you can create with E<sup>3</sup>, check out the [Tutorials Tab](./tutorials).
 
 If you use our framework, please cite our paper titled "E<sup>3</sup>: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of using E<sup>3</sup>, as well as how to add new libraries to the framework.
 
-Current state: July 2020
+# Quick setup
 
-## E<sup>3</sup> Directory Structure
+Here we show how to set up and test E3 on Linux. For Windows or more information check our [wiki](https://github.com/momalab/e3/wiki).
 
-    |- 3p
-    |- circle
-    |  |- crcl            
-    |  |- cudd0
-    |      |- c30
-    |  |- cudd1
-    |      |- c30
-    |- src
-    |  |- cpp_cgt
-    |     |- keys
-    |     |- main
-    |     |- util
-    |        |- unx
-    |        |- win
-    |  |- cpp_crcl
-    |  |- cpp_share
-    |     |- keys
-    |     |- util
-    |  |- db
-    |     |- circle
-    |     |- circuit
-    |     |- templ
-    |  |- e3x/emulate
-    |- tutorials
-    |  |- basic
-    |  |- bench
-    |     |- batch
-    |     |- bit
-    |     |- bridge
-    |     |- mod
-    |     |- spec
-    |  |- other
-    |     |- gate
+## Dependencies
 
+* git
+* bash, sh
+* make (at least version 3.79.1)
+* a C++ compiler that supports C++17 (GNU G++, GCC (\verb->=5.4.0-)
 
+## Setup
 
+1. Clone E3:
+```
+git clone https://github.com/momalab/e3
+```
 
-### 3p
-This directory contains shell scripts for installing external encryption libraries
+2. Compile the CGT tool:
+```
+cd e3/src
+make
+```
 
-### circle
-This directory containts the files used to generate circuits for the BDD encryption scheme
+Done!
 
-### src
-This directory contains the source code for E<sup>3</sup>, including all the helper tools, circuit files, and programs that generate secure classes.
+# Example - Hello world
 
-### Tutorials
-This directory contains tutorials that demonstrate the usage of E<sup>3</sup>.
+Let's test E3 buy running a simple example that does some arithmetic.
+
+1. Create a directory anywhere you want. For this example, we will create a directory 'examples/hello_world' at the root of E3:
+```
+mkdir -p examples/hello_world
+```
+
+2. Now we need to create a configuration file to tell the CGT tool which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file 'cgt.cfg':
+```
+# this is a comment
+# name : type (name is arbitrary, type: bridge, circuit, native, ring)
+Secure : circuit
+{
+    encryption = tfhe # encryption library/scheme
+    postfix = Ep # for encrypted constants >= 0
+	postneg = En # for encrypted constants < 0
+    sizes = 8,16 # plaintext bit-size
+}
+
+SealRing : ring
+{
+    encryption = seal
+    encoder = integer
+    logn = 13 # degree of the polynomial n = 2^13
+    t = 65537 # plaintext modulus
+    postfix = Ea # for encrypted constants [0, t-1]
+}
+```

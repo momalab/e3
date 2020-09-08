@@ -54,7 +54,7 @@ ConfigParser::ConfigParser(string f) : file(f)
 
                 else if (name.size() > 1 && name[0] == '@') globs[name.substr(1)] = w;
 
-                else throw "Bad key in [" + file + "] : [" + name + "]";
+                else throw "(l:57) Bad key in [" + file + "] : [" + name + "]";
 
             }
             else if ( w == ":" )
