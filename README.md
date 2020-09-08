@@ -35,7 +35,7 @@ Done!
 
 # Example
 
-Let's test E3 by running a simple example that does some arithmetic. It could be simpler, but we want to show some nice features.
+Let's test E3 by running a simple example that does some arithmetic.
 
 1. Create a directory anywhere you want. For this example, we will create a directory 'examples/hello_world' at the root of E3:
 ```
