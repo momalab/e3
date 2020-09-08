@@ -55,9 +55,8 @@ Secure : circuit
 }
 
 ```
-The configuration file we just wrote defines two encryption schemes to be used in the program: TFHE and SEAL, which we named Secure and SecureMod, respectively. We can use any combination of encryption schemes, inclusive the same encryption scheme with different parameters.
+The configuration file we just wrote defines one encryption scheme to be used in the program: TFHE, which we named Secure. We can use any combination of encryption schemes, inclusive the same encryption scheme with different parameters.
 The type 'circuit' works on bit-level arithmetic. CGT automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 and 16 bits).
-For SecureMod, we use the type 'ring', which works in modular arithmetic, therefore, the plaintexts are defined in the interval [0, t-1].
 
 3. Now, let's write our program. Create a text file called 'main.cpp' in 'examples/hello_world' and add the following code:
 ```
