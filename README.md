@@ -9,7 +9,7 @@ If you use our framework, please cite our paper titled "E3: A Framework for Comp
 
 # Quick setup
 
-Here we show how to set up and test E3 on Linux. For Windows or more information check our [wiki](https://github.com/momalab/e3/wiki/Installing-E3).
+Here we show how to set up and test E3 on Linux. For Windows or more information check our [wiki](https://github.com/momalab/e3/wiki/installing-e3#setting-up-e3-in-windows).
 
 ## Dependencies
 
@@ -88,7 +88,6 @@ int main()
 
 4. To compile, go to 'e3/src':
 ```
-cd ../../src
 make alice USER=../examples/hello_world
 ```
 
