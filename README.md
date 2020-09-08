@@ -1,15 +1,13 @@
 # Encrypt-Everything-Everywhere
-E3 (Encrypt-Everything-Everywhere) is an easy-to-use open-source homomorphic encryption framework developed by the MoMA Lab at New York University Abu Dhabi. The framework provides C++ classes for supporting computation on private data. E3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography.
+E3 (Encrypt-Everything-Everywhere) is an easy-to-use open-source homomorphic encryption framework developed by the MoMA Lab at New York University Abu Dhabi. The framework provides C++ classes for supporting computation on private data. E3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography. In its first version, E3 encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
 
-In its first version, E3 encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
+Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and usage guides. For examples of programs that you can create with E3, check out the [Tutorials Tab](./tutorials).
 
-Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and for installation and usage guides. For examples of programs that you can create with E3, check out the [Tutorials Tab](./tutorials).
-
-If you use our framework, please cite our paper titled "E3: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of using E3, as well as how to add new libraries to the framework.
+If you use our framework, please cite our paper titled "E3: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of developing E3, as well as how to add new libraries to the framework.
 
 # Quick setup
 
-Here we show how to set up and test E3 on Linux. For Windows or more information check our [wiki](https://github.com/momalab/e3/wiki/installing-e3#setting-up-e3-in-windows).
+Here we show how to set up and test E3 on Linux. For Windows please check our [wiki](https://github.com/momalab/e3/wiki/installing-e3#setting-up-e3-in-windows).
 
 ## Dependencies
 
@@ -25,7 +23,7 @@ Here we show how to set up and test E3 on Linux. For Windows or more information
 git clone https://github.com/momalab/e3
 ```
 
-2. Compile the CGT tool:
+2. Compile:
 ```
 cd e3/src
 make
@@ -42,7 +40,7 @@ Let's test E3 by running a simple example that does some arithmetic.
 mkdir -p examples/hello_world
 ```
 
-2. We need to create a configuration file to tell the CGT tool which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file called 'cgt.cfg':
+2. We need to create a configuration file to tell E3 which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file called 'cgt.cfg':
 ```
 # this is a comment
 # name : type (name is arbitrary, type: bridge, circuit, native, ring)
@@ -55,8 +53,8 @@ Secure : circuit
 }
 
 ```
-The configuration file we just wrote defines one encryption scheme to be used in the program: TFHE, which we named Secure. We can use any combination of encryption schemes, inclusive the same encryption scheme with different parameters.
-The type 'circuit' works on bit-level arithmetic. CGT automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 bits).
+The configuration file we just wrote defines one FHE library to be used in the program: TFHE, which we named Secure. We can use any combination of FHE libraries schemes, including the same library with different parameters.
+The type 'circuit' works on bit-level arithmetic. E3 automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 bits).
 
 3. Now, let's write our program. Create a text file called 'main.cpp' in 'examples/hello_world' and add the following code:
 ```
