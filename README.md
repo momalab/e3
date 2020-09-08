@@ -101,4 +101,4 @@ You should see this:
 
 Done!
 
-For more advanced things, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [tutorials](./tutorials).
+For more advanced use, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [tutorials](./tutorials).
