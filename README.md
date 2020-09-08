@@ -99,15 +99,8 @@ make alice USER=../examples/hello_world
 ```
 You should see this:
 ```
-SecureInt<8> with TFHE
 3 + -2 = 1
 3 * -2 = -6
-SecureUint<16> with TFHE
-3 + 2 = 5
-3 * 2 = 6
-SecureMod with SEAL
-3 + 2 = 5
-3 * 2 = 6
 ```
 
 Done!
