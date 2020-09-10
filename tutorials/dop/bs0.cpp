@@ -8,11 +8,11 @@
 
 using namespace std;
 
-void swap(int * x, int * y)
+void swap(int & x, int & y)
 {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
+    int temp = x;
+    x = y;
+    y = temp;
 }
 
 // A function to implement bubble sort
@@ -22,7 +22,7 @@ void bubbleSort(int arr[], int n)
         // Last i elements are already in place
         for (int j = 0; j < n - i - 1; j++)
             if (arr[j + 1] < arr[j])
-                swap(&arr[j], &arr[j + 1]);
+                swap(arr[j], arr[j + 1]);
 }
 
 /* Function to print an array */
@@ -35,7 +35,7 @@ void printArray(int arr[], int size)
 // Driver program to test above functions
 int main()
 {
-    int arr[] = {64, 34, 25, 12, 22, 90, 11};
+    int arr[] = {5, 12, 9, 2};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     cout << "Original array :"; printArray(arr, n);

@@ -1,6 +1,6 @@
 #include <iostream>
 
-using Secure = int;
+#include "secure3.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ void printArray(Secure arr[], int size)
 
 int main()
 {
-    Secure arr[] = {5, 12, 9, 2};
+    Secure arr[] = {64, 34, 25, 12, 22, 90, 11};
     int n = sizeof(arr) / sizeof(arr[0]);
 
     cout << "Original array :"; printArray(arr, n);
