@@ -1,4 +1,6 @@
 # Encrypt-Everything-Everywhere
+
+
 E3 (Encrypt-Everything-Everywhere) is an easy-to-use open-source homomorphic encryption framework developed by the MoMA Lab at New York University Abu Dhabi. The framework provides C++ classes for supporting computation on private data. E3 is usability-oriented, allowing programmers to incorporate privacy to their programs without expertise in cryptography. In its first version, E3 encrypts variables using Fully Homomorphic Encryption and provides a rich set of C++ operators to the programmer.
 
 Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information about the framework and usage guides. For examples of programs that you can create with E3, check out the [Tutorials Tab](./tutorials).
@@ -7,14 +9,14 @@ If you use our framework, please cite our paper titled "E3: A Framework for Comp
 
 # Quick setup
 
-Here we show how to set up and test E3 on Linux. For Windows please check our [wiki](https://github.com/momalab/e3/wiki/installing-e3#setting-up-e3-in-windows).
+Here we show how to set up and test E3 on Linux. For Windows and MacOS please check our [wiki](https://github.com/momalab/e3/wiki/installing-e3).
 
 ## Dependencies
 
 * git
 * bash, sh
 * make (at least version 3.79.1)
-* a C++ compiler that supports C++17 (GNU G++, GCC (\verb->=5.4.0-)
+* a C++ compiler that supports C++17 (e.g. GCC ver >= 5.4.0)
 
 ## Setup
 
@@ -29,18 +31,17 @@ cd e3/src
 make
 ```
 
-Done!
 
 # Example
 
 Let's test E3 by running a simple example that does some arithmetic.
 
-1. Create a directory anywhere you want. For this example, we will create a directory 'examples/hello_world' at the root of E3:
+1. Create a directory anywhere you want. For this example, we will create a directory `examples/hello_world` at the root of E3:
 ```
 mkdir -p examples/hello_world
 ```
 
-2. We need to create a configuration file to tell E3 which encryption scheme(s) and parameters to use. At 'examples/hello_world', create a file called 'cgt.cfg':
+2. We need to create a configuration file to tell E3 which encryption scheme(s) and parameters to use. At `examples/hello_world`, create a file called `cgt.cfg`:
 ```
 # this is a comment
 # name : type (name is arbitrary, type: bridge, circuit, native, ring)
@@ -56,8 +57,9 @@ Secure : circuit
 The configuration file we just wrote defines one FHE library to be used in the program: TFHE, which we named Secure. We can use any combination of FHE libraries schemes, including the same library with different parameters.
 The type 'circuit' works on bit-level arithmetic. E3 automatically creates three template classes for this type: SecureUint, SecureInt, and SecureBool. They are equivalent to unsigned int, int, and bool. We also defined the sizes of plaintexts that we will use in the program (8 bits).
 
-3. Now, let's write our program. Create a text file called 'main.cpp' in 'examples/hello_world' and add the following code:
-```
+3. Now, let's write our program. Create a text file called `main.cpp` in `examples/hello_world` and add the following code:
+
+``` c++
 #include <iostream>
 #include "e3int.h"
 #include "e3key.h" // includes support for decryption
@@ -99,6 +101,7 @@ You should see this:
 3 * -2 = -6
 ```
 
-Done!
-
 For more advanced use, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [tutorials](./tutorials).
+
+###### Versions - Documentation: 20091618; Software: 20091618
+

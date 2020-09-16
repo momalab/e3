@@ -13,9 +13,11 @@ class NativeEvalKey : public EvalKey
         e3::util::ull key;
 
     public:
-        NativeEvalKey(User u, KeyName name) : EvalKey(name) { user(u); } // user must be called here
+        NativeEvalKey(User u, KeyName name)
+            : EvalKey(name), key() { user(u); } // user must be called here
 
-        virtual bool load(); // load has to be public so PrivKey can call it. Another solution would be SK calling the construction of EK
+        virtual bool load(); // load has to be public so PrivKey can call it.
+        // Another solution would be SK calling the construction of EK
 
         e3::util::ull dec(e3::util::ull x) const { return dec(x, key); }
         e3::util::ull enc(e3::util::ull x) const { return enc(x, key); }

@@ -18,8 +18,8 @@ class SealBaseEvalKey : public EvalKey
         std::string rawEncrypt(const std::string & s, int msz) const;
 
     public:
-        SealBaseEvalKey(int) : EvalKey({"", ""}) {} // when used as a member in key class
-        SealBaseEvalKey(User u, KeyName name) : EvalKey(name) { user(u); }
+        SealBaseEvalKey(int) : EvalKey({"", ""}), key() {} // when used as a member in key class
+        SealBaseEvalKey(User u, KeyName name) : EvalKey(name), key() { user(u); }
 
         bool load(std::string fname);
         virtual bool load() { return load(filename()); }

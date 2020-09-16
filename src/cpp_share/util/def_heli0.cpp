@@ -4,22 +4,22 @@
 
 int e3::heli_impl() { return 0; }
 
-e3::HeliNativeBt::HeliNativeBt(cHeliNativeEvalKey ek): ctxt(new HeliCtxt) {}
+e3::HeliNativeBt::HeliNativeBt(cHeliNativeEvalKey k): ek(k), ctxt(new HeliCtxt) {}
 
-e3::HeliNativeBt::HeliNativeBt(const std::string & enc, cHeliNativeEvalKey ek)
-    : HeliNativeBt(ek)
+e3::HeliNativeBt::HeliNativeBt(const std::string & enc, cHeliNativeEvalKey k)
+    : HeliNativeBt(k)
 {
     if ( enc == "0" ) ctxt->b = false;
     else if ( enc == "1" ) ctxt->b = true;
     else throw "Bad init in HeliNativeBt [" + enc + "]";
 }
 
-std::string e3::HeliNativeBt::str(cHeliNativeEvalKey ek) const
+std::string e3::HeliNativeBt::str(cHeliNativeEvalKey k) const
 {
     return ctxt->b ? "1" : "0";
 }
 
-e3::HeliNativeBt::HeliNativeBt(const HeliNativeBt & b, cHeliNativeEvalKey ek)
+e3::HeliNativeBt::HeliNativeBt(const HeliNativeBt & b, cHeliNativeEvalKey k)
     : HeliNativeBt(ek)
 {
     ctxt->b = b.ctxt->b;

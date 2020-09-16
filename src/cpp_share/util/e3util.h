@@ -97,6 +97,7 @@ std::string loadConst(std::string typ, std::string id);
 // using this macro during active development phase
 #define FIX throw std::string("\nFIX ")+(__FILE__)+":"+std::to_string(__LINE__);
 
+#ifndef NOVERCHK
 // === testing compiler versions
 // test MS VERSION
 #ifdef _MSC_VER
@@ -112,4 +113,6 @@ std::string loadConst(std::string typ, std::string id);
 #endif
 #endif
 // === END testing compiler versions
+#endif // NOVERCHK
+
 #endif // _E3_E3UTIL_H_

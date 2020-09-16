@@ -14,7 +14,7 @@ class PailEvalKey : public EvalKey
         struct Processor
         {
             Bigun N, N2, B2, A2;
-            int beta, high_bit_posN, high_bit_posN2;
+            int beta = 0, high_bit_posN = 0, high_bit_posN2 = 0;
             Bigun Xp1, Xp2;
 
             void setB2Beta(int beta);

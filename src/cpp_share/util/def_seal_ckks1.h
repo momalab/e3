@@ -19,19 +19,19 @@ namespace e3seal_ckks
 struct SealCkksPrivKey
 {
     seal::SecretKey secretkey;
-    seal::Decryptor * decryptor;
+    seal::Decryptor * decryptor = nullptr;
 };
 
 struct SealCkksEvalKey
 {
     seal::PublicKey publickey;
     seal::RelinKeys relinkeys;
-    seal::EncryptionParameters * params;
-    seal::Encryptor * encryptor;
-    seal::Evaluator * evaluator;
-    seal::CKKSEncoder * encoder;
+    seal::EncryptionParameters * params = nullptr;
+    seal::Encryptor * encryptor = nullptr;
+    seal::Evaluator * evaluator = nullptr;
+    seal::CKKSEncoder * encoder = nullptr;
     std::shared_ptr<seal::SEALContext> context;
-    uint64_t scale;
+    uint64_t scale = 0;
 };
 
 using sk = SealCkksPrivKey;

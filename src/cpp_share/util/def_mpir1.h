@@ -38,8 +38,8 @@ struct BigunNative
     BigunNative & operator<<=(const BigunNative & a);
     BigunNative & operator>>=(const BigunNative & a);
 
-    BigunNative & operator++(){ ++n; return *this; }
-    BigunNative & operator--(){ --n; return *this; }
+    BigunNative & operator++() { ++n; return *this; }
+    BigunNative & operator--() { --n; return *this; }
     BigunNative operator~() const { return ~n; }
     BigunNative operator-() const { return -n; }
 

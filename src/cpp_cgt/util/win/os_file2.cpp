@@ -93,20 +93,6 @@ bool os::rename(std::string old, std::string n)
     return !::rename(old.c_str(), n.c_str());
 }
 
-bool os::FileSys::truncate(const string & s, gl::intint size)
-{
-    bool ret = false;
-    int fd = _open(s.c_str(), _O_RDWR);
-
-    if ( fd != -1 )
-    {
-        if ( _chsize_s(fd, size) == 0 )
-            ret = true;
-        _close(fd);
-    }
-    return ret;
-}
-
 double os::FileSys::howold(const string & s)
 {
     struct _stat64 buf;
@@ -126,6 +112,22 @@ struct Setmode2binary
     }
 } Setmode2binary_dummy;
 //#endif
+
+/*///
+bool os::FileSys::truncate(const string & s, gl::intint size)
+{
+    bool ret = false;
+    int fd = _open(s.c_str(), _O_RDWR);
+
+    if ( fd != -1 )
+    {
+        if ( _chsize_s(fd, size) == 0 )
+            ret = true;
+        _close(fd);
+    }
+    return ret;
+}
+*/
 
 string os::execOut(const string & cmd, bool iscurdir)
 {
@@ -151,4 +153,3 @@ string os::execOut(const string & cmd, bool iscurdir)
     _pclose( pp );
     return r;
 }
-

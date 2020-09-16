@@ -16,8 +16,8 @@ namespace e3seal_ckks
 
 struct SealCkksEvalKey
 {
-    uint64_t polyModulusDegree;
-    uint64_t scale;
+    uint64_t polyModulusDegree = 0;
+    uint64_t scale = 0;
 };
 
 // using sk = SealCkksPrivKey;

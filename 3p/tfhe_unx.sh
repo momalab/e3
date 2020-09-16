@@ -42,22 +42,29 @@ echo -n "$me FFTW3 tar: "
 file=$file_fftw_tar
 down=http://www.fftw.org/$file
 path=$fftwpath/../$file
+wget=wgetZ
 if test -f $path; then
 	echo "YES"
 else
 	echo "NO"
 
-	if wget --help > /dev/null; then
+	if $wget --help > /dev/null; then
 		echo "$me using wget"
 	else
-		echo "$me wget not found, exiting"
-		exit
+		echo "$me wget not found, try curl"
+		if curl --help > /dev/null; then
+			echo "$me using curl"
+			wget="curl -o $file"
+		else
+			echo "$me no wget nor curl found, exiting"
+			exit
+		fi
 	fi
 
 	echo "$me downloading FFTW"
 	mkdir -p $fftwpath
 	cwd=`pwd`; cd $fftwpath/../
-	wget $down
+	$wget $down
 	cd $cwd
 
 	if test -f $path; then

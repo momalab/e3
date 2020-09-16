@@ -32,8 +32,8 @@ class Bigun
         Bigun(const Bigun & a);
         Bigun & operator=(const Bigun & a);
 
-        Bigun(Bigun && a);
-        Bigun & operator=(Bigun && a);
+        Bigun(Bigun && a) noexcept;
+        Bigun & operator=(Bigun && a) noexcept;
 
         static int maxbitsz();
 
@@ -60,9 +60,9 @@ class Bigun
         Bigun & operator<<=(const Bigun & a);
         Bigun & operator>>=(const Bigun & a);
 
-        Bigun & operator|=(ull a){ return *this |= Bigun(a); }
-        Bigun & operator<<=(ull a){ return *this <<= Bigun(a); }
-        Bigun & operator>>=(ull a){ return *this >>= Bigun(a); }
+        Bigun & operator|=(ull a) { return *this |= Bigun(a); }
+        Bigun & operator<<=(ull a) { return *this <<= Bigun(a); }
+        Bigun & operator>>=(ull a) { return *this >>= Bigun(a); }
         Bigun operator<<(ull a) const { Bigun r(*this); return r <<= a; }
         Bigun operator>>(ull a) const { Bigun r(*this); return r >>= a; }
 

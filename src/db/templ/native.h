@@ -78,8 +78,8 @@ template<int SZ> class $NameUint
         // Functions
         std::string str() const;
 
-        $NameUint<SZ> & operator<<=(e3::util::ull a){ return *this<<=$NameUint<SZ>(a); }
-        $NameUint<SZ> & operator>>=(e3::util::ull a){ return *this>>=$NameUint<SZ>(a); }
+        $NameUint<SZ> & operator<<=(e3::util::ull a) { return *this <<= $NameUint<SZ>(a); }
+        $NameUint<SZ> & operator>>=(e3::util::ull a) { return *this >>= $NameUint<SZ>(a); }
 };
 
 template<int SZ> class $NameInt : public $NameUint<SZ>

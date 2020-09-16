@@ -19,19 +19,19 @@ namespace e3seal
 struct SealPrivKey
 {
     seal::SecretKey secretkey;
-    seal::Decryptor * decryptor;
+    seal::Decryptor * decryptor = nullptr;
 };
 
 struct SealEvalKey
 {
     seal::PublicKey publickey;
     seal::RelinKeys relinkeys;
-    seal::EncryptionParameters * params;
-    seal::Encryptor * encryptor;
-    seal::Evaluator * evaluator;
-    seal::IntegerEncoder * encoder;
-    seal::BatchEncoder * batchEncoder;
-    bool isBatchEncoder;
+    seal::EncryptionParameters * params = nullptr;
+    seal::Encryptor * encryptor = nullptr;
+    seal::Evaluator * evaluator = nullptr;
+    seal::IntegerEncoder * encoder = nullptr;
+    seal::BatchEncoder * batchEncoder = nullptr;
+    bool isBatchEncoder = false;
     std::shared_ptr<seal::SEALContext> context;
 };
 

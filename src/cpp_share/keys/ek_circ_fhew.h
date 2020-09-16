@@ -20,7 +20,7 @@ class CircuitEvalKey_fhew : public CircuitEvalKey
 
     public:
         CircuitEvalKey_fhew(User u, KeyName name)
-            : CircuitEvalKey(name) { user(u); }
+            : CircuitEvalKey(name), key() { user(u); }
 
         bool load_oleg();
         bool load_fhew();

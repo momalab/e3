@@ -16,9 +16,9 @@ namespace e3seal
 
 struct SealEvalKey
 {
-    uint64_t plaintextModulus;
-    uint64_t polyModulusDegree;
-    bool isBatchEncoder;
+    uint64_t plaintextModulus = 0;
+    uint64_t polyModulusDegree = 0;
+    bool isBatchEncoder = false;
 };
 
 // using sk = SealPrivKey;

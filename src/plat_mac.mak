@@ -9,9 +9,7 @@ EEXT=exe
 #LEXT1=a
 #LEXT2=so
 
-#OPTS=-O2 -std=c++17 -Wall -Wno-parentheses
-OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses
-# changed c++17 to gnu++17 because popen did not work on cygwin
+OPTS=-O2 -std=c++11 -Wall -Wno-parentheses -DNOVERCHK=1 -Wno-c++1y-extensions
 
 #COPTS=-O2 -Wall -Wpointer-to-int-cast
 COPTS=-O2 -Wno-pointer-to-int-cast

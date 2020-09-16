@@ -46,7 +46,7 @@ class SealBasePrivKey : public PrivKey
                 else
                 {
                     auto lastValue = v.back();
-                    auto penultimate = v[ v.size()-2 ];
+                    auto penultimate = v[ v.size() - 2 ];
                     isTrailing = lastValue == penultimate;
                     r += "_" + penultimate + "_" + lastValue;
                     if ( isTrailing ) r += "...";

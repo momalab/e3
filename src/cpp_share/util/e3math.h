@@ -51,7 +51,7 @@ struct UnumberContractor<e3::util::ull>
     using Unumber = e3::util::ull;
 
     Unumber x;
-    UnumberContractor() {}
+    UnumberContractor(): x() {}
     UnumberContractor(const Unumber & a) : x(a) {}
 
     // Constrains
@@ -118,7 +118,7 @@ class Meuclid
         T gcd() const { return v[v.size() - 1].b; }
 
         std::string str() const;
-        int size() const { return v.size(); }
+        int size() const { return int(v.size()); }
 
         const Rec & operator[](int i) const { return v[i]; }
 

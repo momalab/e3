@@ -11,7 +11,7 @@ using std::vector;
 int e3::seal_impl() { return 0; }
 std::string e3::SealNativeCiphertext::str() const
 {
-    if( p->ct.empty() ) return "";
+    if ( p->ct.empty() ) return "";
     string s = to_string(p->ct[0]);
     for ( size_t i = 1; i < p->ct.size(); i++ ) s += "_" + to_string(p->ct[i]);
     return s;

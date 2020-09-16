@@ -333,7 +333,7 @@ char e3::util::maskHex(char c, size_t bitsize)
 
 string e3::util::zeroExtension(const string & hex, size_t bitsize)
 {
-    int size = (bitsize >> 2) - hex.size() + ( bitsize % 4 ? 1 : 0 );
+    int size = int( (bitsize >> 2) - hex.size() + ( bitsize % 4 ? 1 : 0 ) );
     string out = "";
     while (size-- >= 0) out += "0";
     out += hex;

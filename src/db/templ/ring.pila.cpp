@@ -8,25 +8,6 @@ const $Name * $Name::zero = nullptr;
 // public encryption
 $Name::$Name(unsigned long long z) : $Name()
 {
-    /*///
-        std::string e = pek->encrypt(std::to_string(z), 0);
-        if ( !e.empty() )
-        {
-            x = decltype(x)( (pek->decor(e, false)) );
-            return;
-        }
-
-        if ( !z )
-        {
-            *this = *zero;
-            return;
-        }
-
-        *this = *unit;
-
-        // this does not (must not) call indirectly this ctor
-        *this = e3::multiply_by_ull < $Name > (*this, z);
-    */
     e3::init_by_ull < $Name, e3::PilQuad, e3::PilaEvalKey >
     (*this, x, z, *zero, *unit, pek);
 }

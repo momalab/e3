@@ -29,7 +29,7 @@ class CircuitEvalKey_seal : public CircuitEvalKey
             return bek.rawEncrypt(std::to_string(unsigned(b)), 1);
         }
 
-        virtual std::string encrypt(const std::string & s, int msz)
+        virtual std::string encrypt(const std::string & s, int msz) const
         {
             std::vector<string> numbers = e3::util::split(s, '_');
             std::vector<std::vector<bool>> bin(msz);

@@ -5,9 +5,9 @@ string Bigun::str() const { return p->str(); }
 
 Bigun::Bigun(unsigned long long x): p(new BigunNative(x)) {}
 Bigun::Bigun(const Bigun & a) : Bigun() { *p = *a.p; }
-Bigun::Bigun(Bigun && a): p(nullptr) { p.swap(a.p); }
+Bigun::Bigun(Bigun && a) noexcept : p(nullptr)  { p.swap(a.p); }
 Bigun & Bigun::operator=(const Bigun & a) { *p = *a.p; return *this; }
-Bigun & Bigun::operator=(Bigun && a) { p.swap(a.p); return *this; }
+Bigun & Bigun::operator=(Bigun && a) noexcept { p.swap(a.p); return *this; }
 
 
 Bigun & Bigun::operator+=(const Bigun & a) { *p += *a.p; return *this; }

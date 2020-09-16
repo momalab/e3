@@ -1,12 +1,22 @@
-
 PLAT=unx
 
+ifneq (,$(wildcard macos))
+PLAT=mac
+endif
+
 ifdef OS
+
 ifeq ($(OS),Windows_NT)
 PLAT=win
-#else
-#PLAT=unx
 endif
+
+else
+#PLAT=unx
+ ifdef MACHTYPE
+ ifneq (,$(findstring apple,$(MACHTYPE)))
+ PLAT=mac
+ endif
+ endif
 endif
 
 BINN=bn_$(PLAT)
@@ -25,3 +35,5 @@ HELID0=../3p/heli_$(PLAT)
 MPIRD0=../3p/mpir_$(PLAT)
 SEALD0=../3p/seal_$(PLAT)
 TFHED0=../3p/tfhe_$(PLAT)
+
+$(info $(PLAT))

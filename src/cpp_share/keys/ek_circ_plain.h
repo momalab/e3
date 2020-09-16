@@ -14,7 +14,7 @@ class CircuitEvalKey_plain : public CircuitEvalKey
 
     public:
         CircuitEvalKey_plain(User u, KeyName name)
-            : CircuitEvalKey(name) { user(u); }
+            : CircuitEvalKey(name), key() { user(u); }
 
         virtual bool load();
 

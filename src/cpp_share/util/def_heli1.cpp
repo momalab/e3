@@ -7,7 +7,7 @@
 int e3::heli_impl() { return 1; }
 
 
-std::string e3::HeliNativeBt::str(cHeliNativeEvalKey ek) const
+std::string e3::HeliNativeBt::str(cHeliNativeEvalKey k) const
 {
     std::ostringstream os;
     os << ctxt->b;

@@ -24,7 +24,7 @@ void e3::math::Meuclid<T>::fillAB(T x, T y)
     r.b = y;
     v.push_back(r);
 
-    int i = 0;
+    size_t i = 0;
     if ( v[i].b != 0 )
         while ( 1 )
         {
@@ -42,7 +42,7 @@ void e3::math::Meuclid<T>::fillAB(T x, T y)
 template <class T>
 void e3::math::Meuclid<T>::fillEF()
 {
-    int n = v.size() - 1;
+    int n = int(v.size()) - 1;
 
     for ( int i = n; i >= 0; i-- )
     {
@@ -50,8 +50,8 @@ void e3::math::Meuclid<T>::fillEF()
         v[i].f = ft;
         for ( int j = i - 1; j >= 0; j-- )
         {
-            v[j].e = v[j + 1].f;
-            v[j].f = sub( v[j + 1].e, mul( v[j].d, v[j].e ) );
+            v[j].e = v[size_t(j) + 1].f;
+            v[j].f = sub( v[size_t(j) + 1].e, mul( v[j].d, v[j].e ) );
         }
 
         v[i].e = v[0].e;
@@ -75,7 +75,7 @@ string e3::math::Meuclid<T>::str() const
 template <class T>
 void e3::math::Meuclid<T>::fillG()
 {
-    int n = v.size() - 1;
+    int n = int(v.size()) - 1;
 
     for ( int i = n; i >= 0; i-- )
     {

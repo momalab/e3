@@ -14,14 +14,14 @@ class CircuitEvalKey_heli : public CircuitEvalKey
 
     public:
         using Hnek = HeliNativeEvalKey;
-        NativeProperties * properties;
+        NativeProperties * properties = nullptr;
 
     protected:
         Hnek key;
 
     public:
         CircuitEvalKey_heli(User u, KeyName name)
-            : CircuitEvalKey(name) { user(u); }
+            : CircuitEvalKey(name), key() { user(u); }
 
         virtual bool load();
 

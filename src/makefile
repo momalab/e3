@@ -1,10 +1,10 @@
 # E3 main makefile, 2018
 
-ifeq ($(OS),Windows_NT)
- PLAT=win
-else
- PLAT=unx
-endif
+#ifeq ($(OS),Windows_NT)
+# PLAT=win
+#else
+# PLAT=unx
+#endif
 
 USER=../tests/user/def
 USER=user/def
