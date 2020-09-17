@@ -70,6 +70,23 @@ template<int SZ> class $NameUint
         $NameBool operator&&(const $NameUint<SZ> & a) const;
         $NameBool operator||(const $NameUint<SZ> & a) const;
 
+
+        $NameUint<SZ> operator+() const { return *this; }
+        $NameUint<SZ> operator-() const { return $NameUint(0ull - x); }
+
+        template <class T> $NameUint<SZ> operator<<(T u) const
+        { $NameUint<SZ> r(*this); return r <<= u; }
+
+        template <class T> $NameUint<SZ> operator>>(T u) const
+        { $NameUint<SZ> r(*this); return r >>= u; }
+
+        template <class T> $NameUint<SZ> & operator<<=(T u)
+        { int k = static_cast<int>(u); x <<= k; return *this; }
+
+        template <class T> $NameUint<SZ> & operator>>=(T u)
+        { int k = static_cast<int>(u); x >>= k; return *this; }
+
+
         $NameUint<SZ> mux(const $NameUint<SZ> & a, const $NameUint<SZ> & b) const;
 
         $NameUint<SZ> operator*(unsigned long long u) const;
@@ -109,14 +126,39 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         // Operators
         $NameInt<SZ> & operator/=(const $NameInt<SZ> & a);
         $NameInt<SZ> & operator%=(const $NameInt<SZ> & a);
-        $NameInt<SZ> & operator>>=(const $NameInt<SZ> & a);
         $NameInt<SZ> operator/(const $NameInt<SZ> & a) const;
         $NameInt<SZ> operator%(const $NameInt<SZ> & a) const;
+
+        $NameInt<SZ> & operator>>=(const $NameInt<SZ> & a);
         $NameInt<SZ> operator>>(const $NameInt<SZ> & a) const;
+
+        $NameInt<SZ> & operator<<=(const $NameInt<SZ> & a)
+        { NativeUint<SZ>::operator<<=(NativeUint<SZ>(a)); return *this; }
+
+        $NameInt<SZ> operator<<(const $NameInt<SZ> & a) const { auto r = *this; r <<= a; return r; }
+
         $NameBool operator<(const $NameInt<SZ> & a) const;
         $NameBool operator<=(const $NameInt<SZ> & a) const;
         $NameBool operator>(const $NameInt<SZ> & a) const;
         $NameBool operator>=(const $NameInt<SZ> & a) const;
+
+        $NameInt<SZ> operator+(const $NameInt<SZ> & a) const { auto r = *this; r += a; return r; }
+        $NameInt<SZ> operator-(const $NameInt<SZ> & a) const { auto r = *this; r -= a; return r; }
+
+
+        $NameInt<SZ> operator+() const { return *this; }
+        $NameInt<SZ> operator-() const { return $NameInt<SZ>(0ll)-*this; }
+
+        template <class T> $NameInt<SZ> operator<<(T u) const
+        { $NameInt<SZ> r(*this); return r <<= u; }
+
+        template <class T> $NameInt<SZ> operator>>(T u) const
+        { $NameInt<SZ> r(*this); return r >>= u; }
+
+        template <class T> $NameInt<SZ> & operator<<=(T u)
+        { NativeUint<SZ>::operator<<=(u); return *this; }
+        template <class T> $NameInt<SZ> & operator>>=(T u)
+        { NativeUint<SZ>::operator>>=(u); return *this; }
 
         // Functions
 };
