@@ -20,7 +20,7 @@ std::string e3::HeliNativeBt::str(cHeliNativeEvalKey k) const
 }
 
 e3::HeliNativeBt::HeliNativeBt(const HeliNativeBt & b, cHeliNativeEvalKey k)
-    : HeliNativeBt(ek)
+    : HeliNativeBt(k)
 {
     ctxt->b = b.ctxt->b;
 }

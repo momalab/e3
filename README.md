@@ -103,5 +103,5 @@ You should see this:
 
 For more advanced use, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [tutorials](./tutorials).
 
-###### Versions - Documentation: 20091618; Software: 20091618
+###### Versions - Documentation: 20091618; Software: 20091711
 
