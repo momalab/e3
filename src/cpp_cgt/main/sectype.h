@@ -24,7 +24,7 @@ class SecType
         string postfixN;
         int plaintext_size = -1;
         int lambda;
-        int maxinline_size = -1; // unlimited
+        int maxinline_size = 120; // about 1 line; -1 for unlimited
 
         std::string encType;
         std::shared_ptr<e3::PrivKey> sk;

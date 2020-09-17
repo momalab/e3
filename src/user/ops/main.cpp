@@ -264,8 +264,8 @@ try
 
     special<SecureUint<8>>();
 
-    general<NativeUint<64>>();
-    general<NativeInt<64>>();
+    general<NatUint<64>>();
+    general<NatInt<64>>();
 
     general_ring<int>();
     special_ring<Ring>();

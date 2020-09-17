@@ -133,7 +133,7 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         $NameInt<SZ> operator>>(const $NameInt<SZ> & a) const;
 
         $NameInt<SZ> & operator<<=(const $NameInt<SZ> & a)
-        { NativeUint<SZ>::operator<<=(NativeUint<SZ>(a)); return *this; }
+        { $NameUint<SZ>::operator<<=($NameUint<SZ>(a)); return *this; }
 
         $NameInt<SZ> operator<<(const $NameInt<SZ> & a) const { auto r = *this; r <<= a; return r; }
 
@@ -147,7 +147,7 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
 
 
         $NameInt<SZ> operator+() const { return *this; }
-        $NameInt<SZ> operator-() const { return $NameInt<SZ>(0ll)-*this; }
+        $NameInt<SZ> operator-() const { return $NameInt<SZ>(0ll) - *this; }
 
         template <class T> $NameInt<SZ> operator<<(T u) const
         { $NameInt<SZ> r(*this); return r <<= u; }
@@ -156,9 +156,9 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
         { $NameInt<SZ> r(*this); return r >>= u; }
 
         template <class T> $NameInt<SZ> & operator<<=(T u)
-        { NativeUint<SZ>::operator<<=(u); return *this; }
+        { $NameUint<SZ>::operator<<=(u); return *this; }
         template <class T> $NameInt<SZ> & operator>>=(T u)
-        { NativeUint<SZ>::operator>>=(u); return *this; }
+        { $NameUint<SZ>::operator>>=(u); return *this; }
 
         // Functions
 };
