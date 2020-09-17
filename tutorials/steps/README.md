@@ -154,7 +154,7 @@ This should build the executable which does not do anything useful.
 This time we include in out trivial C++ program a bogus secure type.
 Let `a.cpp` now look like this:
 
-```C++
+``` c++
  #include <iostream>
  #include "e3int.h"
 
@@ -231,6 +231,25 @@ prints 6 as expected.
 ### Step 4, Alice's computation
 
 This example is to show how Alice's executable is built.
+
+First change `a.cpp` to:
+``` c++
+ #include <iostream>
+
+ #include "e3int.h"
+ #include "e3key.h"
+
+ int main()
+ {
+	SecureInt<8> a = _2_E;
+	SecureInt<8> b = _3_E;
+	std::cout << e3::decrypt(a*b) << '\n';
+ }
+
+```
+
+Here we add `e3key.h` to include decryption function and change the output to decrypted.
+
 In `$E3/src` do
 
     make
