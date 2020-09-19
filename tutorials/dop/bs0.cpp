@@ -35,7 +35,7 @@ void printArray(int arr[], int size)
 // Driver program to test above functions
 int main()
 {
-    int arr[] = {5, 12, 9, 2};
+    int arr[] = {5, 12, 9, 2}; // values to be secret
     int n = sizeof(arr) / sizeof(arr[0]);
 
     cout << "Original array :"; printArray(arr, n);
