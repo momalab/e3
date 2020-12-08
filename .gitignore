@@ -52,6 +52,7 @@ src/secint.*
 out.txt
 
 # other
+g_pull_hard.bat
 g_pull.bat
 g_push.bat
 
