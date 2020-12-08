@@ -145,4 +145,28 @@ $NameBit $NameBit::gate_mux(const $NameBit & a, const $NameBit & b, const $NameB
     return r;
 }
 
+$NameBit & $NameBit::rotate_columns()
+{
+    auto n = nb.p->ct.size();
+    auto half = n >> 1;
+    for ( size_t i = 0; i < half; i++ )
+        std::swap( nb.p->ct[i], nb.p->ct[i + half] );
+    return *this;
+}
+
+$NameBit & $NameBit::rotate_rows(size_t s)
+{
+    $NameBit a(*this);
+    auto n = nb.p->ct.size();
+    auto half = n >> 1;
+    s %= half;
+    if (s < 0) s += half;
+    for ( size_t i = 0; i < half; i++ )
+    {
+        nb.p->ct[i] = a.nb.p->ct[ (i + s) % half ];
+        nb.p->ct[i + half] = a.nb.p->ct[ half + ((i + s) % half) ];
+    }
+    return *this;
+}
+
 // === END circuit.seal.cpp Name=$Name

@@ -54,3 +54,7 @@ SEALD2=../3p/seal_$(PLAT)/target
 LDF1+=$(SEALD1)/seal.lib
 LDF2+=$(SEALD2)/seal.lib
 endif
+
+ifeq ($(PALI),1)
+$(error Palisade is not supported with MS, use MSYS)
+endif

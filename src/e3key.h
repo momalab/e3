@@ -6,8 +6,9 @@
 
 #ifndef E3KEY
 
-namespace e3{
-inline bool decrypt(){ return false; }
+namespace e3
+{
+inline bool decrypt() { return false; }
 template<typename T> inline std::string decrypt(T x) { return x.str(); }
 } // e3
 
@@ -18,9 +19,10 @@ template<typename T> inline std::string decrypt(T x) { return x.str(); }
 #include <iostream>
 #include "cgtkey.h"
 
-namespace e3{
+namespace e3
+{
 
-inline bool decrypt(){ return true; }
+inline bool decrypt() { return true; }
 
 template<typename T, typename SK>
 inline std::string decryptSk(const T & x, const SK sk) { return sk->decrypt(x.str()); }
@@ -43,12 +45,13 @@ inline std::string decrypt(T x)
         if ( sc == "pilc" ) sk = new CircuitPrivKey_pilc(kn, false, true, "", 0);
         if ( sc == "pila" ) sk = new PilaPrivKey(kn, false, true, "", 0);
         if ( sc == "pail" ) sk = new PailPrivKey(kn, false, true, "", 0);
-        if ( sc == "pailg" ) sk = new PailgPrivKey(kn, false, true, "", 0,0);
+        if ( sc == "palisade" ) sk = new PaliBfvPrivKey(kn, false, true, "", 0, "", "", 0, "", "");
+        if ( sc == "pailg" ) sk = new PailgPrivKey(kn, false, true, "", 0, 0);
         if ( sc == "seal" )
         {
             if ( x.is_circuit ) sk = new CircuitPrivKey_seal(kn, false, true, "", 0, "", "", "");
             else sk = new SealPrivKey(kn, false, true, "", 0, "", "", "");
-         }
+        }
         if ( sc == "bddn" ) sk = new CircuitPrivKey_bddn(kn, false, true, "",
                     0, "FLF", "", "default", false);
     }
@@ -61,7 +64,7 @@ inline std::string decrypt(T x)
     }
 
     string de = decryptSk(x, sk);
-    if( T::is_signed ) de = util::unsigned2signed(de, T::size);
+    if ( T::is_signed ) de = util::unsigned2signed(de, T::size);
     return de;
 }
 

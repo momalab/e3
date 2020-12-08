@@ -5,6 +5,7 @@ extern e3::SealEvalKey * g_pek_$Name;
 class $Name
 {
         struct Init { Init() { init0(); } } init_object;
+        template<typename T> T init(const T & s) { init0(); return s; }
 
     protected:
         e3::SealNativeCiphertext x;
@@ -39,11 +40,11 @@ class $Name
         $Name(const std::string & s) : x( pek->decor(s, false), pek->key ) {}
 
         // public encryption
-        explicit $Name(unsigned long long a) : $Name( pek->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(unsigned long long a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
         explicit $Name(const std::vector<unsigned> & a)
-            : $Name( pek->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0U), "_" ), 0 ) ) {}
+            : $Name( init(pek)->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0U), "_" ), 0 ) ) {}
         explicit $Name(const std::vector<unsigned long long> & a)
-            : $Name( pek->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0ULL), "_" ), 0 ) ) {}
+            : $Name( init(pek)->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0ULL), "_" ), 0 ) ) {}
 
         // Operators
         $Name & operator=(const $Name & a) { $Name r(a); x = r.x; return *this; }
@@ -79,6 +80,12 @@ class $Name
         $Name & operator<<=(unsigned long long u) { return *this = e3::shiftL_by_ull(*this, u); }
 
         // Functions
+        $Name & rotate_columns();
+        $Name & rotate_rows(size_t s);
+
+        static $Name rotate_columns(const $Name & a) { $Name r(a); return r.rotate_columns(); }
+        static $Name rotate_rows(const $Name & a, size_t s) { $Name r(a); return r.rotate_rows(s); }
+
         std::string str() const { return pek->decor(x.str(), true); }
         static size_t slots() { init0(); return pek->slots(); }
 };

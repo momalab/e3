@@ -48,6 +48,7 @@ class CircuitEvalKey_seal : public CircuitEvalKey
         }
 
         virtual string filename() const { return EvalKey::filename(); }
+        virtual size_t slots() { return bek.slots(); }
 };
 
 } // e3

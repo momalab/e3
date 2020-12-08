@@ -44,7 +44,6 @@ void e3::init_by_ull(T & r, U & x, unsigned long long y,
     std::string e = pek->encrypt(std::to_string(y), 0);
     if ( !e.empty() )
     {
-        ///x = decltype(x)( (pek->decor(e, false)) );
         x = U( (pek->decor(e, false)) );
         return;
     }

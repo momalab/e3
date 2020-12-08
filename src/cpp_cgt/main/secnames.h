@@ -7,7 +7,6 @@ namespace secNames
 // Types
 const std::string typeNative = "native";
 const std::string typeCircuit = "circuit";
-const std::string typePartialX = "partial";
 const std::string typeRing = "ring";
 const std::string typeBridge = "bridge";
 
@@ -34,6 +33,11 @@ const std::string encPila = "pila";
 
 const std::string encSeal = "seal";
 const std::string encSealCkks = "seal_ckks";
+const std::string encBfvProt = "bfv_prot";
+const std::string encPali = "palisade";
+const std::string encCkks = "ckks";
+const std::string encBgv = "bgv";
+const std::string encBfv = "bfv";
 
 
 // Keywords for replacement
@@ -68,7 +72,7 @@ const std::string lambda = "lambda";
 const std::string compile = "compile";
 const std::string kernel = "kernel";
 const std::string module = "module";
-const std::string polyModulusDegree1 = "polyModulusDegree";
+const std::string polyModulusDegree1 = "polyModulusDegree"; // FIXME this is a mess
 const std::string plaintextModulus1 = "plaintextModulus";
 const std::string polyModulusDegree2 = "logn";
 const std::string plaintextModulus2 = "t";
@@ -78,6 +82,11 @@ const std::string encoder = "encoder";
 const std::string pailBeta = "beta";
 const std::string copheeIsArduino = "arduino";
 const std::string copheeBaudRate = "baud";
+const std::string scheme = "scheme";
+const std::string muldepth = "muldepth";
+const std::string maxdepth = "maxdepth";
+const std::string useslots = "useslots";
+const std::string paramn = "polyn";
 
 }
 #endif // _E3_SECNAMES_H_

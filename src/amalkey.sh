@@ -18,6 +18,9 @@ cxfile=$amaname.cpp
 PLAT=unx
 if [ "$OS" = "Windows_NT" ]; then
 PLAT=win
+ if test -f mingw || [ "$MINGW_CHOST" != "" ]; then
+ PLAT=mgw
+ fi
 fi
 
 echo "Amalgamating of cgt priv files (PLAT=$PLAT)"
@@ -29,24 +32,7 @@ echo "Error: cgt.exe not found"
 exit 1
 fi
 
-# check CGT libraries
-libstfh=(`./cgt.exe | grep LibsTSFHMC`)
-libs=${libstfh[6]}
-code=${libstfh[7]}
-if [ "$libs" != "LibsTSFHMC" ]; then
-  echo "Bad libs name in CGT [$libs]"
-  exit 1
-fi
-##code=123456
-#echo "Libs build: code=$code"
-TFHE=${code:0:1}
-SEAL=${code:1:1}
-FHEW=${code:2:1}
-HELI=${code:3:1}
-MPIR=${code:4:1}
-CUDD=${code:5:1}
-echo "Libs build: code=$code TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD"
-##exit
+source ./codelib.sh
 
 
 : > $cxfile
@@ -102,7 +88,7 @@ echo "#include \"$amanamesh.h\"" >> $header
 echo "" >> $header
 
 # include specific libraries
-echo "// TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD" >> $header
+echo "// TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD PALI=$PALI" >> $header
 echo "" >> $header
 
 #if [ "$CUDD" = "1" ]; then
@@ -155,6 +141,8 @@ dof $header $keys/ekx_pil.h
 dof $header $keys/ekx_pail.h
 dof $header $keys/ekx_seal.h
 dof $header $keys/ekx_seal_ckks.h
+dof $header $keys/ekx_bfv_prot.h
+dof $header $keys/ekx_pali.h
 dof $header $keys/ekx_circ_plain.h
 dof $header $keys/ekx_circ_fhew.h
 dof $header $keys/ekx_circ_heli.h
@@ -169,6 +157,8 @@ dof $header $keys/sk_pil.h
 dof $header $keys/sk_pail.h
 dof $header $keys/sk_seal.h
 dof $header $keys/sk_seal_ckks.h
+dof $header $keys/sk_bfv_prot.h
+dof $header $keys/sk_pali.h
 dof $header $keys/sk_arith_seal.h
 dof $header $keys/sk_arith_seal_ckks.h
 dof $header $keys/sk_circ_plain.h
@@ -215,6 +205,10 @@ dof $cxfile $keys/ekx_seal$SEAL.cpp
 dof $cxfile $keys/ekx_seal_ckks$SEAL.cpp
 dof $cxfile $keys/sk_seal$SEAL.cpp
 dof $cxfile $keys/sk_seal_ckks$SEAL.cpp
+dof $cxfile $keys/ekx_bfv_prot.cpp
+dof $cxfile $keys/sk_bfv_prot.cpp
+dof $cxfile $keys/ekx_pali$PALI.cpp
+dof $cxfile $keys/sk_pali$PALI.cpp
 
 # do main cpps
 dof $cxfile $main/platname.cpp

@@ -25,7 +25,7 @@ SecType * SecType::load
     else if ( typ == secNames::typeNative ) return new Native(is, name);
     else if ( typ == secNames::typeCircuit ) return new Circuit(is, name, globs);
     else if ( typ == secNames::typeBridge ) return new Bridge(is, name, globs);
-    else if ( typ == secNames::typeRing ) return new Partial(is, name, globs);
+    else if ( typ == secNames::typeRing ) return new Modular(is, name, globs);
     else throw "Type '" + typ + "' is not valid or not implemented";
 }
 
@@ -271,7 +271,7 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
     for ( pss p; readKeyVal( is, p, "}" ); )
     {
         auto it = kv.find(p.first);
-        if ( it == kv.end() ) throw "(l:274) Bad key [" + p.first + "] for [" + name.typ + "]";
+        if ( it == kv.end() ) throw "(L274) Bad key [" + p.first + "] for [" + name.typ + "]";
         *it->second = p.second;
     }
 
@@ -280,7 +280,8 @@ void SecType::loadPairs(std::istream & is, std::map<string, string *> & kv)
 
 std::string SecType::encrypt(const std::string & s) const
 {
-    if ( plaintext_size <= 0 ) throw "Unknown plaintext size in " + name.typ;
+    auto circ = dynamic_cast<const Circuit *>(this);
+    if ( plaintext_size <= 0 && circ ) throw "Unknown plaintext size in " + name.typ;
     auto r = get_sk_raw()->encrypt(s, plaintext_size);
     return r;
 }

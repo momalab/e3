@@ -14,5 +14,7 @@
 #include "sk_pail.h"
 #include "sk_arith_seal.h"
 #include "sk_arith_seal_ckks.h"
+#include "sk_bfv_prot.h"
+#include "sk_pali.h"
 
 #endif // _E3_PRIVKEYS_H_

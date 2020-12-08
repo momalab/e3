@@ -18,6 +18,7 @@ srch := $(src:%=$C/%)
 
 
 circle: $C $D/cuddObj.hh $(srch) exp/cuddObj.hh
+	chmod -R 0777 cr $D exp
 
 $C:
 	mkdir -p $C

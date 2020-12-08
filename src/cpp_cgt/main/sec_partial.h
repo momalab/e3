@@ -3,7 +3,7 @@
 
 #include "sectype.h"
 
-class Partial : public SecType
+class Modular : public SecType
 {
     private:
 
@@ -17,10 +17,15 @@ class Partial : public SecType
         std::string copheeBaudRate = "921600";
         std::string scale; // Seal CKKS
         std::string primes; // Seal CKKS
+        std::string scheme; // ckks,bfv,bgv
+        std::string smuldepth; // circuit depth, used by Pali
+        int useSlots = 1;
+        std::string smaxdepth; // circuit depth, used by Pali
+        std::string sp_n; // param n, used by Pali
 
     public:
-        Partial(std::istream & is, string nm, const std::map<string, string> & globs);
-        ~Partial() {}
+        Modular(std::istream & is, string nm, const std::map<string, string> & globs);
+        ~Modular() {}
 
         virtual void writeH(string root, std::ostream & os, string user_dir) const;
         virtual void writeInc(string root, std::ostream & os) const;

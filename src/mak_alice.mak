@@ -21,7 +21,7 @@ CRDIR=cpp_crcl/cr
 CUDIR=cpp_crcl/d$(CUDD)
 
 
-OPTU = $(OPTS) -I./
+OPTU = $(OPTS) -I.
 OPTS += -I./$(CRDIR)/
 OPTS += -I./$(CUDIR)/
 OPTS += -I./cpp_cgt/main/

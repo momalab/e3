@@ -15,13 +15,13 @@ void abortion()
     std::exit(1);
 }
 
-namespace
+namespace e3local
 {
 int set_abortion() { std::set_terminate(abortion); return 1; }
 }
 
 #ifndef E3NOABORT
-int abortion_set_variable = set_abortion();
+int abortion_set_variable = e3local::set_abortion();
 #endif
 
 

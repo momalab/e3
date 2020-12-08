@@ -28,7 +28,7 @@ SealBasePrivKey::SealBasePrivKey
 {
     if ( !polyModulusDegree.empty() ) this->polyModulusDegree = uint64_t(1) << uint64_t(stoull(polyModulusDegree));
     if ( !plainModulus.empty() ) this->plainModulus = uint64_t(stoull(plainModulus));
-    transform( encoder.begin(), encoder.end(), encoder.begin(), [](unsigned char const & c) { return ::tolower(c); } );
+    std::transform( encoder.begin(), encoder.end(), encoder.begin(), [](char c) { return std::tolower(c); } );
     this->isBatch = encoder == "batch";
     init_final(forceGen, forceLoad);
 }
@@ -65,6 +65,7 @@ void SealBasePrivKey::gen()
     cout << "Generating evaluation key .. " << std::flush;
     evalkey.publickey = keygen.public_key();
     evalkey.relinkeys = keygen.relin_keys();
+    evalkey.galoiskeys = keygen.galois_keys();
     evalkey.evaluator = new Evaluator(evalkey.context);
     evalkey.encryptor = new Encryptor(evalkey.context, evalkey.publickey);
     if ( this->isBatch ) evalkey.batchEncoder = new BatchEncoder(evalkey.context);

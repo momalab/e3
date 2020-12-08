@@ -1,6 +1,6 @@
-
-// FIXME mm copyright message for source files
-// (then) FIXME e Add copyright message to source files
+// E3 (Encrypt-Everything-Everywhere) for Fully Homomorphic Encryption
+// Oleg Mazonka, Eduardo Chielle
+// MoMA lab, New York University Abu Dhabi, 2018-2020
 
 
 #include <cstdlib>
@@ -347,7 +347,7 @@ void usage(bool isHelp)
 string libsTFH()
 {
     ol::ostr r;
-    r << "LibsTSFHMC " << e3::tfhe_impl() << e3::seal_impl() << e3::fhew_impl()
-      << e3::heli_impl() << e3::mpir_impl() << e3::cr::cudd_impl();
+    r << "LibsTSFHMCP " << e3::tfhe_impl() << e3::seal_impl() << e3::fhew_impl()
+      << e3::heli_impl() << e3::mpir_impl() << e3::cr::cudd_impl() << e3::pali_impl();
     return r.str();
 }

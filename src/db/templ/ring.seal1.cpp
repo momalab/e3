@@ -87,4 +87,20 @@ $Name $Name::operator-(const std::vector<unsigned long long> & v) const
     return r;
 }
 
+$Name & $Name::rotate_columns()
+{
+    auto ek = e3seal::toek(pek->key);
+    if ( ek->isBatchEncoder )
+        ek->evaluator->rotate_columns_inplace(x.p->ct, ek->galoiskeys );
+    return *this;
+}
+
+$Name & $Name::rotate_rows(size_t s)
+{
+    auto ek = e3seal::toek(pek->key);
+    if ( ek->isBatchEncoder )
+        ek->evaluator->rotate_rows_inplace(x.p->ct, s, ek->galoiskeys );
+    return *this;
+}
+
 // === END  ring.seal.cpp Name=$Name

@@ -4,10 +4,10 @@
 #include <string>
 #include <memory>
 
-struct SealCkksCiphertext;
 
 namespace e3
 {
+struct SealCkksCiphertext;
 
 using SealCkksNativePrivKey = void * ;
 using SealCkksNativeEvalKey = void * ;

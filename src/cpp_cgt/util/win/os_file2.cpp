@@ -113,22 +113,6 @@ struct Setmode2binary
 } Setmode2binary_dummy;
 //#endif
 
-/*///
-bool os::FileSys::truncate(const string & s, gl::intint size)
-{
-    bool ret = false;
-    int fd = _open(s.c_str(), _O_RDWR);
-
-    if ( fd != -1 )
-    {
-        if ( _chsize_s(fd, size) == 0 )
-            ret = true;
-        _close(fd);
-    }
-    return ret;
-}
-*/
-
 string os::execOut(const string & cmd, bool iscurdir)
 {
     FILE * pp = _popen(cmd.c_str(), "r");

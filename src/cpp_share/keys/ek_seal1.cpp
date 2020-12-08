@@ -21,10 +21,12 @@ bool SealBaseEvalKey::load(string fname)
     auto fileParams = fname + ".params.key";
     auto filePublicKey = fname + ".publickey.key";
     auto fileRelin  = fname + ".relin.key";
+    auto fileGalois = fname + ".galois.key";
     auto fileConfig = fname + ".config.key";
     std::ifstream inParams(fileParams, std::ios::binary);
     std::ifstream inPublicKey(filePublicKey, std::ios::binary);
     std::ifstream inRelin (fileRelin , std::ios::binary);
+    std::ifstream inGalois(fileGalois, std::ios::binary);
     std::ifstream inConfig(fileConfig, std::ios::binary);
     if ( !inParams || !inPublicKey || !inRelin || !inConfig ) return false;
 
@@ -39,6 +41,7 @@ bool SealBaseEvalKey::load(string fname)
         evalkey.context = SEALContext::Create(params);
         evalkey.publickey.load(evalkey.context, inPublicKey);
         evalkey.relinkeys.load(evalkey.context, inRelin);
+        evalkey.galoiskeys.load(evalkey.context, inGalois);
         evalkey.evaluator = new Evaluator(evalkey.context);
         evalkey.encryptor = new Encryptor(evalkey.context, evalkey.publickey);
         if ( evalkey.isBatchEncoder ) evalkey.batchEncoder = new BatchEncoder(evalkey.context);

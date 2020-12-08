@@ -11,10 +11,10 @@ exit 1
 fi
 
 # check CGT libraries
-libstfh=(`./cgt.exe | grep LibsTSFHMC`)
+libstfh=(`./cgt.exe | grep LibsTSFHMCP`)
 libs=${libstfh[6]}
 code=${libstfh[7]}
-if [ "$libs" != "LibsTSFHMC" ]; then
+if [ "$libs" != "LibsTSFHMCP" ]; then
   echo "Bad libs name in CGT [$libs]"
   exit 1
 fi
@@ -26,5 +26,7 @@ FHEW=${code:2:1}
 HELI=${code:3:1}
 MPIR=${code:4:1}
 CUDD=${code:5:1}
-echo "Libs build: code=$code TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD"
+PALI=${code:6:1}
+echo "Libs build: code=$code TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD PALI=$PALI"
+
 

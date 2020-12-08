@@ -14,23 +14,12 @@ E3X=e3x/openrisc
 E3X=e3x/riscv
 E3X=e3x/emulate
 
-##SKDIR=cpp_cgt/keysXXX # Bob - no access to SK
-##EKDIR=cpp_share/keys
-
-OPTU = $(OPTS) -I./
-##OPTS += -I./cpp_share/util/
-##OPTS += -I./${EKDIR}/
+OPTU = $(OPTS) -I.
 
 OPTS += -I./${USER}/
 
 
 include mak_mod_inc.mak
-
-
-##srcl=cpp_cgt/main/cgt.cpp cpp_cgt/main/cfgparser.cpp \
-##	cpp_cgt/main/sec_circuit.cpp cpp_cgt/main/sectype.cpp \
-##	cpp_cgt/main/sec_native.cpp
-##objl := $(srcl:cpp_cgt/main/%.cpp=$(BIN)/%.$(OEXT))
 
 srcp=cpp_cgt/util/$(PLAT)/os_file2.cpp
 objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
@@ -48,13 +37,25 @@ $(BIN):
 	mkdir -p $(BIN)
 
 
+#bob.exe: $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) \
+#	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2)
+#	@echo -n "Starting user code compilation: "
+#	@date
+#	$(CCT) $(OPTU) $(E3NOABORTMAK) $(USER)/*.cpp $(BIN)/secint.$(OEXT) \
+#	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2) \
+#	$(LDF3) $(LDFS) $(EOUT)$@
+#	@echo -n "Finished user code compilation: "
+#	@date
+#	rm -f *.$(OEXT)
+#	@$(COPYDLL2)
+
 bob.exe: $(USER)/* secint.h secint.inc $(BIN)/secint.$(OEXT) \
-	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2)
+	$(BIN)/cgtshared.$(OEXT) $(LDF2)
 	@echo -n "Starting user code compilation: "
 	@date
 	$(CCT) $(OPTU) $(E3NOABORTMAK) $(USER)/*.cpp $(BIN)/secint.$(OEXT) \
-	$(BIN)/cgtshared.$(OEXT) $(E3X)/e3x.$(OEXT) $(LDF2) \
-	$(LDF3) $(EOUT)$@
+	$(BIN)/cgtshared.$(OEXT) $(LDF2) \
+	$(LDF3) $(LDFS) $(EOUT)$@
 	@echo -n "Finished user code compilation: "
 	@date
 	rm -f *.$(OEXT)
@@ -78,4 +79,5 @@ $(BIN)/cgtshared.$(OEXT): cgtshared.cpp $(BIN)
 
 
 $(E3X)/e3x.$(OEXT): $(E3X)/e3x.c
-	cd $(E3X); make
+	cd $(E3X); make PLAT=$(PLAT)
+

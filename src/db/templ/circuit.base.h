@@ -18,6 +18,9 @@ class $NameBaseBit
         static const char * clsname() { return "$Clsencname"; } // key class
 
         static const $NameBit * zero, * unit;
+
+        $NameBaseBit & rotate_columns() { return *this; }
+        $NameBaseBit & rotate_rows(size_t s) { return *this; }
 };
 
 // === END circuit.base.h Name=$Name

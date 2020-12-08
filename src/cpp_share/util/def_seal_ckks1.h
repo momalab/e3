@@ -7,6 +7,9 @@
 
 #include "seal/seal.h"
 
+namespace e3
+{
+
 struct SealCkksCiphertext
 {
     seal::Ciphertext ct;
@@ -42,4 +45,6 @@ inline  ek * toek(e3::SealCkksNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(e3::cSealCkksNativeEvalKey a) { return static_cast<const ek *>(a); }
 
 } // e3seal_ckks
+} // e3
+
 #endif // _E3_DEF_SEAL_CKKS1_H_

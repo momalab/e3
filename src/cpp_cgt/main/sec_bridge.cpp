@@ -56,7 +56,7 @@ void Bridge::genKeys(bool forceGen, bool forceLoad,
                  )
              );
     else
-        throw "Partial: Bad encryption type ["
+        throw "Bridge: Bad encryption type ["
         + encType + "] in " + name.typ;
 }
 

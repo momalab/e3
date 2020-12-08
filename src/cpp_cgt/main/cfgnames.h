@@ -38,7 +38,7 @@ const std::string circuitFilename = "circuits.inc";
 const std::string dbfileNative = "native";
 const std::string dbfileCircuit = "circuit";
 const std::string dbfileCircuitBase = "circuit.base";
-const std::string dbfilePartial = "ring";
+const std::string dbfileModular = "ring";
 const std::string dbfileModPilx = "bridge.pilx";
 const std::string dbfileModSeal = "bridge.seal";
 

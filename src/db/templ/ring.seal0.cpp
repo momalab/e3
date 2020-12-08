@@ -82,4 +82,34 @@ $Name $Name::operator-(const std::vector<unsigned long long> & v) const
     return *this - u;
 }
 
+$Name & $Name::rotate_columns()
+{
+    if ( slots() > 1 )
+    {
+        auto n = x.p->ct.size();
+        auto half = n >> 1;
+        for ( size_t i = 0; i < half; i++ )
+            std::swap( x.p->ct[i], x.p->ct[i + half] );
+    }
+    return *this;
+}
+
+$Name & $Name::rotate_rows(size_t s)
+{
+    if ( slots() > 1 )
+    {
+        $Name a(*this);
+        auto n = x.p->ct.size();
+        auto half = n >> 1;
+        s %= half;
+        if (s < 0) s += half;
+        for ( size_t i = 0; i < half; i++ )
+        {
+            x.p->ct[i] = a.x.p->ct[ (i + s) % half ];
+            x.p->ct[i + half] = a.x.p->ct[ half + ((i + s) % half) ];
+        }
+    }
+    return *this;
+}
+
 // === END  ring.seal.cpp Name=$Name

@@ -14,4 +14,6 @@
 #include "ek_circ_pil.h"
 #include "ek_pil.h"
 #include "ek_pail.h"
+#include "ek_bfv_prot.h"
+
 #endif // _E3_EVALKEYS_H_

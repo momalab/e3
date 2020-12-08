@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 #include "e3util.h"
 #include "sk_seal.h"
@@ -21,7 +22,7 @@ SealBasePrivKey::SealBasePrivKey
         this->polyModulusDegree = uint64_t(1) << uint64_t(std::stoull(polyModulusDegree));
 
     if ( !plainModulus.empty() ) this->plainModulus = uint64_t(std::stoull(plainModulus));
-    transform(encoder.begin(), encoder.end(), encoder.begin(), ::tolower);
+    std::transform( encoder.begin(), encoder.end(), encoder.begin(), [](char c) { return std::tolower(c); } );
     this->isBatch = encoder == "batch";
     init_final(forceGen, forceLoad);
 }

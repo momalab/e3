@@ -382,6 +382,22 @@ void $NameUint<SZ>::load(const std::string & c)
 }
 
 template <int SZ>
+$NameUint<SZ> & $NameUint<SZ>::rotate_columns()
+{
+    if ( slots() > 1 )
+        for ( size_t i = 0; i < bits.size(); i++ ) bits[i].rotate_columns();
+    return *this;
+}
+
+template <int SZ>
+$NameUint<SZ> & $NameUint<SZ>::rotate_rows(size_t s)
+{
+    if ( slots() > 1 )
+        for ( size_t i = 0; i < bits.size(); i++ ) bits[i].rotate_rows(s);
+    return *this;
+}
+
+template <int SZ>
 std::string $NameUint<SZ>::str() const
 {
     std::vector<std::string> bs;

@@ -6,6 +6,9 @@
 
 #include "def_seal.h"
 
+namespace e3
+{
+
 struct SealCiphertext { std::vector<uint64_t> ct; };
 
 namespace e3seal
@@ -28,4 +31,5 @@ using ek = SealEvalKey;
 inline  ek * toek(e3::SealNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(e3::cSealNativeEvalKey a) { return static_cast<const ek *>(a); }
 } //e3seal
+} // e3
 #endif // _E3_DEF_SEAL0_H_

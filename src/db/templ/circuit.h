@@ -163,7 +163,14 @@ template<int SZ> class $NameUint
         { int k = static_cast<int>(u); shiftLR(k, 1); return *this; }
 
         // Functions
+        $NameUint<SZ> & rotate_columns();
+        $NameUint<SZ> & rotate_rows(size_t s);
+
+        static $NameUint<SZ> rotate_columns(const $NameUint<SZ> & a) { $NameUint<SZ> r(a); return r.rotate_columns(); }
+        static $NameUint<SZ> rotate_rows(const $NameUint<SZ> & a, size_t s) { $NameUint<SZ> r(a); return r.rotate_rows(s); }
+
         std::string str() const;
+        static size_t slots() { return $NameBit::k()->slots(); }
 
     private:
         // Gates

@@ -54,7 +54,6 @@ Dir readDir(Path d);
 Dir readDirEx(Path d, bool dsort, bool fsort);
 void move(Path o, Path n);
 bool erase(Path x);
-///bool truncate(const string & s, gl::intint size);
 double howold(const string & s);
 };
 

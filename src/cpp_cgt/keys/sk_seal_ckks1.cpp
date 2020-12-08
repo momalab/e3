@@ -18,6 +18,8 @@ using std::transform;
 using std::vector;
 
 
+// static forms used here - no multiple Seal keys are possible
+
 namespace e3
 {
 

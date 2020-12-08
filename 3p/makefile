@@ -11,20 +11,24 @@ all:
 	@echo "make FHEW|HELI|MPIR|SEAL|TFHE"
 
 FHEW:
-	sh fhew_$(PLAT).sh
+	bash fhew_$(PLAT).sh
 
 HELI:
-	sh heli_$(PLAT).sh
+	bash heli_$(PLAT).sh
 
 MPIR:
-	sh mpir_$(PLAT).sh
+	bash mpir_$(PLAT).sh
 
 SEAL:
-	sh seal_$(PLAT).sh
+	bash seal_$(PLAT).sh
 
 TFHE:
-	sh tfhe_$(PLAT).sh
+	bash tfhe_$(PLAT).sh
 
+PALI:
+	bash pali.sh
 
-clean:
-	rm -rf fhew_win fhew_unx heli_win heli_unx seal_win seal_unx tfhe_win tfhe_unx mpir_win mapir_unx
+clean c:
+	rm -rf fhew_win heli_win seal_win tfhe_win mpir_win pali_win
+	rm -rf fhew_unx heli_unx seal_unx tfhe_unx mpir_unx pali_unx
+	rm -rf fhew_mgw heli_mgw seal_mgw tfhe_mgw mpir_mgw pali_mgw

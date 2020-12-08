@@ -11,7 +11,6 @@ using std::vector;
 #include <iostream>
 std::string e3::SealCkksNativeCiphertext::str() const
 {
-    std::cout << "AAA ckks FIXME " << p->ct.size() << '\n';
     if ( p->ct.empty() ) return "";
     string s = to_string(p->ct[0]);
     for ( size_t i = 1; i < p->ct.size(); i++ ) s += "_" + to_string(p->ct[i]);

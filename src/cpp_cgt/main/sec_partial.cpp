@@ -10,7 +10,7 @@ using namespace e3::cr;
 using e3::cr::ol::replaceAll;
 using std::shared_ptr;
 
-Partial::Partial(std::istream & is, string nm,
+Modular::Modular(std::istream & is, string nm,
                  const std::map<string, string> & globs)
     : SecType(nm), beta(0)
 {
@@ -25,12 +25,17 @@ Partial::Partial(std::istream & is, string nm,
     kv[secNames::encoder] = &encoder;
     kv[secNames::scale] = &scale;
     kv[secNames::primes] = &primes;
+    kv[secNames::scheme] = &scheme;
+    kv[secNames::muldepth] = &smuldepth;
+    kv[secNames::maxdepth] = &smaxdepth;
+    kv[secNames::paramn] = &sp_n; // FIXME polyModulusDegree1 polyModulusDegree2
 
-    string slambda, sbeta;
+    string slambda, sbeta, suseSlots;
     kv[secNames::lambda] = &slambda;
     kv[secNames::pailBeta] = &sbeta;
     kv[secNames::copheeIsArduino] = &copheeIsArduino;
     kv[secNames::copheeBaudRate] = &copheeBaudRate;
+    kv[secNames::useslots] = &suseSlots;
 
     loadPairs(is, kv);
     globPairs(kv, globs);
@@ -40,24 +45,34 @@ Partial::Partial(std::istream & is, string nm,
     if ( sbeta.empty() ) beta = 0;
     else beta = std::stoi(sbeta);
 
+    std::vector<string> valid_names {secNames::encPila, secNames::encPila,
+                                     secNames::encPail, secNames::encPailg,
+                                     secNames::encSeal, secNames::encSealCkks,
+                                     secNames::encBfvProt, secNames::encPali
+                                    };
+
     if ( encType.empty() ) throw "encryption type must be defined for " + nm;
-    else if ( encType == secNames::encPila ) {}
-    else if ( encType == secNames::encPail ) {}
-    else if ( encType == secNames::encPailg ) {}
-    else if ( encType == secNames::encSeal ) {}
-    else if ( encType == secNames::encSealCkks ) {}
+    else if ( e3::cr::ol::isin(valid_names, encType) ) {}
+
     else if ( encType[0] == '@' ) {}
-    else throw "encryption type [" + encType + "] is not known; valid=("
-        + secNames::encPila + "," + secNames::encPail + "," + secNames::encPailg + ")";
+
+    else
+    {
+        string s; for ( auto x : valid_names ) s += ' ' + x;
+        throw "(Modular) Bad encryption type [" + encType + "]; valid:" + s + " )";
+    }
 
     if ( encType[0] != '@' )
     {
         if ( slambda.empty() ) lambda = 2;
         else lambda = std::stoi(slambda);
     }
+
+    if ( suseSlots.empty() ) useSlots = 1;
+    else useSlots = std::stoi(suseSlots);
 }
 
-void Partial::genKeys(bool forceGen, bool forceLoad,
+void Modular::genKeys(bool forceGen, bool forceLoad,
                       std::string seed, const ConfigParser * par)
 {
     seed = name.typ + seed;
@@ -82,11 +97,35 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
               (name, forceGen, forceLoad, seed,
                lambda, polyModulusDegree, plaintextModulus, encoder));
 
+    else if ( encType == secNames::encBfvProt )
+        sk = shared_ptr<PrivKey>
+             (new BfvProtPrivKey
+              (name, forceGen, forceLoad, seed,
+               lambda, polyModulusDegree, plaintextModulus, encoder));
+
     else if ( encType == secNames::encSealCkks )
         sk = shared_ptr<PrivKey>
              (new SealCkksPrivKey
               (name, forceGen, forceLoad, seed,
                lambda, polyModulusDegree, primes, scale));
+
+    else if ( encType == secNames::encPali )
+    {
+        if (0) {}
+        else if ( scheme == secNames::encBfv )
+            sk = shared_ptr<PrivKey>
+                 (new PaliBfvPrivKey
+                  (name, forceGen, forceLoad, seed,
+                   lambda, polyModulusDegree, smuldepth,
+                   useSlots, smaxdepth, sp_n));
+
+        else if ( scheme == secNames::encCkks ) throw "L113 " + encType;
+        else if ( scheme == secNames::encBgv ) throw "L114 " + encType;
+
+        else
+            throw "Scheme is not supperted for type ["
+            + encType + "] in " + name.typ;
+    }
 
     else if (encType[0] == '@')
     {
@@ -109,20 +148,20 @@ void Partial::genKeys(bool forceGen, bool forceLoad,
         }
 
         else
-            throw "Circuit: Bridge is not supperted for type ["
+            throw "Modular: Bridge is not supperted for type ["
             + encType + "] in " + name.typ;
     }
 
     else
-        throw "(Partial::genKeys) Bad encryption type [" + encType + "] in " + name.typ;
+        throw "(Modular::genKeys) Bad encryption type [" + encType + "] in " + name.typ;
 
     // set max size for constants
     if ( plaintext_size < 0 ) plaintext_size = lambda - 1;
 }
 
-void Partial::writeH(string root, std::ostream & os, string user_dir) const
+void Modular::writeH(string root, std::ostream & os, string user_dir) const
 {
-    string dbf = cfgNames::dotH(cfgNames::dbfilePartial + '.' + encType);
+    string dbf = cfgNames::dotH(cfgNames::dbfileModular + '.' + encType);
 
     using namespace secNames;
 
@@ -134,28 +173,28 @@ void Partial::writeH(string root, std::ostream & os, string user_dir) const
     os << f;
 }
 
-void Partial::writeInc(string root, std::ostream & os) const
+void Modular::writeInc(string root, std::ostream & os) const
 {
-    string dbf = cfgNames::dotInc(cfgNames::dbfilePartial + '.' + encType + implVer());
+    string dbf = cfgNames::dotInc(cfgNames::dbfileModular + '.' + encType + implVer());
 
     string f = loadDbTemplAri(root, dbf);
     os << f;
 }
 
-void Partial::writeCpp(string root, std::ostream & os) const
+void Modular::writeCpp(string root, std::ostream & os) const
 {
-    string dbf = cfgNames::dotCpp(cfgNames::dbfilePartial + '.' + encType + implVer());
+    string dbf = cfgNames::dotCpp(cfgNames::dbfileModular + '.' + encType + implVer());
 
     string f = loadDbTemplAri(root, dbf);
     os << f;
 }
 
-void Partial::fixEncType()
+void Modular::fixEncType()
 {
     if ( encType == secNames::encPilBase ) { encType = secNames::encPila; }
 }
 
-string Partial::loadDbTemplAri(string root, string fn) const
+string Modular::loadDbTemplAri(string root, string fn) const
 {
     using namespace secNames;
 

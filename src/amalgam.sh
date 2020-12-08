@@ -12,31 +12,7 @@ cxfile=$amaname.cpp
 
 echo "Amalgamating of cgt shared files"
 
-if test -f cgt.exe; then
-:
-else
-echo "Error: cgt.exe not found"
-exit 1
-fi
-
-# check CGT libraries
-libstfh=(`./cgt.exe | grep LibsTSFHMC`)
-libs=${libstfh[6]}
-code=${libstfh[7]}
-if [ "$libs" != "LibsTSFHMC" ]; then
-  echo "Bad libs name in CGT [$libs]"
-  exit 1
-fi
-##code=123456
-#echo "Libs build: code=$code"
-TFHE=${code:0:1}
-SEAL=${code:1:1}
-FHEW=${code:2:1}
-HELI=${code:3:1}
-MPIR=${code:4:1}
-CUDD=${code:5:1}
-echo "Libs build: code=$code TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD"
-##exit
+source ./codelib.sh
 
 
 : > $cxfile
@@ -65,7 +41,7 @@ echo "#include <ostream>" >> $header
 echo "" >> $header
 
 # include specific libraries
-echo "// TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD" >> $header
+echo "// TFHE=$TFHE SEAL=$SEAL FHEW=$FHEW HELI=$HELI MPIR=$MPIR CUDD=$CUDD PALI=$PALI" >> $header
 echo "" >> $header
 
 
@@ -105,6 +81,15 @@ echo "#include \"FHE.h\"" >> $header
 echo "#include \"EncryptedArray.h\"" >> $header
 fi
 
+if [ "$PALI" = "1" ]; then
+echo "// including PALI" >> $header
+echo "#include \"palisade.h\"" >> $header
+echo "#include \"ciphertext-ser.h\"" >> $header
+echo "#include \"cryptocontext-ser.h\"" >> $header
+echo "#include \"pubkeylp-ser.h\"" >> $header
+echo "#include \"scheme/bfvrns/bfvrns-ser.h\"" >> $header
+echo "#include \"utils/serialize-binary.h\"" >> $header
+fi
 
 echo "// start header amalgama" >> $header
 
@@ -134,6 +119,9 @@ dof $header $util/def_seal_ckks.h
 dof $header $util/def_seal_ckks$SEAL.h
 dof $header $util/def_tfhe.h
 dof $header $util/def_tfhe$TFHE.h
+dof $header $util/def_bfv.h
+dof $header $util/def_pali.h
+dof $header $util/def_pali$PALI.h
 
 # do key headers
 dof $header $keys/anykey.h
@@ -153,6 +141,8 @@ dof $header $keys/ek_circ_plain.h
 dof $header $keys/ek_circ_seal.h
 dof $header $keys/ek_circ_tfhe.h
 dof $header $keys/ek_native.h
+dof $header $keys/ek_bfv_prot.h
+dof $header $keys/ek_pali.h
 
 # do util cpps
 dof $cxfile $util/def_mpir.inc
@@ -167,6 +157,9 @@ dof $cxfile $util/def_pil.cpp
 dof $cxfile $util/def_seal$SEAL.cpp
 dof $cxfile $util/def_seal_ckks$SEAL.cpp
 dof $cxfile $util/def_tfhe$TFHE.cpp
+dof $cxfile $util/def_bfv.cpp
+dof $cxfile $util/def_pali$PALI.cpp
+dof $cxfile $util/def_pali_sis$PALI.cpp
 
 # do keys cpps
 dof $cxfile $keys/anykey.cpp
@@ -183,6 +176,8 @@ dof $cxfile $keys/ek_pil.cpp
 dof $cxfile $keys/ek_pail.cpp
 dof $cxfile $keys/ek_seal$SEAL.cpp
 dof $cxfile $keys/ek_seal_ckks$SEAL.cpp
+dof $cxfile $keys/ek_bfv_prot.cpp
+dof $cxfile $keys/ek_pali$PALI.cpp
 
 # test compilation - remove later
 #cl -c -EHsc $amaname.cpp

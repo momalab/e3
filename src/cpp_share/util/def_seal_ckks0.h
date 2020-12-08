@@ -6,6 +6,9 @@
 #include <vector>
 #include "def_seal_ckks.h"
 
+namespace e3
+{
+
 struct SealCkksCiphertext { std::vector<double> ct; };
 
 namespace e3seal_ckks
@@ -27,4 +30,5 @@ using ek = SealCkksEvalKey;
 inline  ek * toek(e3::SealCkksNativeEvalKey a) { return static_cast<ek *>(a); }
 inline  const ek * toek(e3::cSealCkksNativeEvalKey a) { return static_cast<const ek *>(a); }
 } // e3seal_ckks
+} // e3
 #endif // _E3_DEF_SEAL_CKKS0_H_

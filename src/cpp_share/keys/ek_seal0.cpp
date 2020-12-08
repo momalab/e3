@@ -35,7 +35,7 @@ string SealBaseEvalKey::rawEncrypt(const string & s, int) const
     {
         auto v = e3::util::split(s, '_');
         auto & slots = evalkey->polyModulusDegree;
-        v.resize(slots, v.back());
+        v.resize(size_t(slots), v.back());
         strout = e3::util::merge(v, "_");
     }
     else strout = s;

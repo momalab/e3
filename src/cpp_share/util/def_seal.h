@@ -4,10 +4,11 @@
 #include <string>
 #include <memory>
 
-struct SealCiphertext;
 
 namespace e3
 {
+
+struct SealCiphertext;
 
 using SealNativePrivKey = void * ;
 using SealNativeEvalKey = void * ;

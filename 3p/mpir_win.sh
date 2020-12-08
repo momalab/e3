@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Visual Studio version, reset if different
 VS=19

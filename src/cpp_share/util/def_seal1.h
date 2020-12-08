@@ -7,6 +7,9 @@
 
 #include "seal/seal.h"
 
+namespace e3
+{
+
 struct SealCiphertext
 {
     seal::Ciphertext ct;
@@ -26,6 +29,7 @@ struct SealEvalKey
 {
     seal::PublicKey publickey;
     seal::RelinKeys relinkeys;
+    seal::GaloisKeys galoiskeys;
     seal::EncryptionParameters * params = nullptr;
     seal::Encryptor * encryptor = nullptr;
     seal::Evaluator * evaluator = nullptr;
@@ -55,4 +59,6 @@ seal::Plaintext batchEncode(const std::vector<T> & v, seal::BatchEncoder & encod
 }
 
 } // e3seal
+} // e3
+
 #endif // _E3_DEF_SEAL1_H_

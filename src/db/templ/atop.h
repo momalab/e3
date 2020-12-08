@@ -20,8 +20,6 @@ T multiply_by_ull(const T & x, unsigned long long u, const T * zero = nullptr);
 template <class T>
 T shiftL_by_ull(const T & x, unsigned long long u);
 
-///template <class T, class U>
-///void init_by_ull(T & r, U & x, unsigned long long y, const T & z, const T & u);
 template <class T, class U, class K>
 void init_by_ull(T & r, U & x, unsigned long long y,
                  const T & z, const T & u, const K * pek);

@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <cstdio>
+
 namespace e3
 {
 namespace util
@@ -61,9 +63,7 @@ std::string zeroExtension(const std::string & hex, size_t bitsize);
 std::vector<std::string> split(const std::string & s, char c);
 
 inline std::string to_string(const std::string & s) { return s; }
-
-template <class T>
-inline std::string to_string(const T & s) { return std::to_string(s); }
+template <class T> inline std::string to_string(const T & s) { return std::to_string(s); }
 
 template <class T>
 inline std::string merge(const std::vector<T> & v, std::string bind)
@@ -94,8 +94,12 @@ std::string loadConst(std::string typ, std::string id);
 } // e3
 
 
-// using this macro during active development phase
-#define FIX throw std::string("\nFIX ")+(__FILE__)+":"+std::to_string(__LINE__);
+// using these macro during active development phase
+#ifdef DEVMACROS
+#define HALT throw std::string("\nFIX: ")+(__FILE__)+":"+std::to_string(__LINE__);
+#define WARN std::printf("FIX: %s:%d\n", __FILE__, __LINE__);
+#define MSGE(x) std::printf("FIX: %s\n", x);
+#endif
 
 #ifndef NOVERCHK
 // === testing compiler versions

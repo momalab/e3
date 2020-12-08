@@ -17,7 +17,7 @@ class SealBasePrivKey : public PrivKey
         SealNativePrivKey key;
         SealBaseEvalKeyExt ek;
 
-        uint64_t polyModulusDegree = 1 << 15;
+        uint64_t polyModulusDegree = 1 << 15; // FIXME global - replace name to polyDegree
         uint64_t plainModulus = 2;
         bool isBatch = false;
 

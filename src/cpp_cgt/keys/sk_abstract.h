@@ -18,7 +18,7 @@ class PrivKey : public AnyKey
         mutable cr::Rnd * rnd; // no delete
         int lambda;
 
-        string filenamex(string fx) const { return name.fil + fx + ".priv.key"; }
+        string filenamex(string fx) const { return name.fil + fx + ".secret.key"; }
         virtual string filename() const { return filenamex(""); }
 
         void init_final(bool forceGen, bool forceLoad);

@@ -23,9 +23,18 @@ OPTS += -I./$(TFHED0)/inc/fftwa
 OPTS += -I./$(TFHED0)/inc/fftw3
 endif
 
+ifeq ($(PALI),1)
+OPTS += -I./$(PALID0)
+OPTS += -I./$(PALID0)/include/palisade/pke
+OPTS += -I./$(PALID0)/include/palisade/core
+OPTS += -DPALISADE_VERSION=1.10.5 -fopenmp
+endif
+
 E3NOABORTMAK =
 ifdef E3NOABORT
 ifeq ($(E3NOABORT),1)
 E3NOABORTMAK = -DE3NOABORT=1
 endif
 endif
+
+include mak_mod_dev.mak

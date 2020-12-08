@@ -79,11 +79,6 @@ bool os::rename(std::string old, std::string n)
     return !::rename(old.c_str(), n.c_str());
 }
 
-///bool os::FileSys::truncate(const string & s, gl::intint size)
-///{
-///    return ::truncate(s.c_str(), size) == 0;
-///}
-
 double os::FileSys::howold(const string & s)
 {
     struct stat buf;

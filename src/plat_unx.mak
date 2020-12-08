@@ -9,9 +9,16 @@ EEXT=exe
 #LEXT1=a
 #LEXT2=so
 
+#ifndef SOEXT
+SOEXT ?= .so
+#endif
+
 #OPTS=-O2 -std=c++17 -Wall -Wno-parentheses
 OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses
 # changed c++17 to gnu++17 because popen did not work on cygwin
+
+# palisade header has pragmas
+OPTS += -Wno-unknown-pragmas
 
 #COPTS=-O2 -Wall -Wpointer-to-int-cast
 COPTS=-O2 -Wno-pointer-to-int-cast
@@ -67,3 +74,11 @@ LDF2+=$(TFHED2)/libtfhe.a $(TFHED2)/libfftw3.a
 #LDF1+=$(TFHED1)/libtfhe-spqlios-fma.so
 #LDF2+=$(TFHED2)/libtfhe-spqlios-fma.so
 endif
+
+ifeq ($(PALI),1)
+PALID1=../3p/pali_$(PLAT)/native
+PALID2=../3p/pali_$(PLAT)/target
+LDF1+=$(PALID1)/libPALISADEpke$(SOEXT) $(PALID1)/libPALISADEcore$(SOEXT)
+LDF2+=$(PALID2)/libPALISADEpke$(SOEXT) $(PALID2)/libPALISADEcore$(SOEXT)
+endif
+

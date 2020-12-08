@@ -94,4 +94,20 @@ $NameBit $NameBit::gate_mux(const $NameBit & a, const $NameBit & b, const $NameB
 
 }
 
+$NameBit & $NameBit::rotate_columns()
+{
+    auto ek = $NameBit_ek();
+    if ( ek->isBatchEncoder )
+        ek->evaluator->rotate_columns_inplace( nb.p->ct, ek->galoiskeys );
+    return *this;
+}
+
+$NameBit & $NameBit::rotate_rows(size_t s)
+{
+    auto ek = $NameBit_ek();
+    if ( ek->isBatchEncoder )
+        ek->evaluator->rotate_rows_inplace( nb.p->ct, s, ek->galoiskeys );
+    return *this;
+}
+
 // === END circuit.seal.cpp Name=$Name
