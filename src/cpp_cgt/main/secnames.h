@@ -32,7 +32,7 @@ const std::string encPilc = "pilc";
 const std::string encPila = "pila";
 
 const std::string encSeal = "seal";
-const std::string encSealCkks = "seal_ckks";
+///const std::string encSealCkks = "seal_ckks";
 const std::string encBfvProt = "bfv_prot";
 const std::string encPali = "palisade";
 const std::string encCkks = "ckks";

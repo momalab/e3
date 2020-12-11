@@ -400,9 +400,13 @@ string SecType::implVer() const
     if ( encType == secNames::encFhew ) iver = e3::fhew_impl();
     if ( encType == secNames::encHeli ) iver = e3::heli_impl();
     if ( encType == secNames::encTfhe ) iver = e3::tfhe_impl();
+    if ( encType == secNames::encSeal ) iver = e3::seal_impl();
 
-    if ( encType == secNames::encSeal || encType == secNames::encSealCkks )
-        iver = e3::seal_impl();
+	// no using pali because db files are generic
+    //if ( encType == secNames::encPali ) iver = e3::pali_impl();
+
+//    if ( encType == secNames::encSeal || encType == secNames::encSealCkks )
+//        iver = e3::seal_impl();
 
     if ( iver != -1 ) ver = ol::tos(iver);
     return ver;

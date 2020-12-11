@@ -1,8 +1,8 @@
 // === BEGIN circuit.seal.cpp Name=$Name
 
-inline const e3seal::SealEvalKey * $NameBit_ek()
+inline const e3::e3seal::SealEvalKey * $NameBit_ek()
 {
-    return e3seal::toek($NameBit::k()->native());
+    return e3::e3seal::toek($NameBit::k()->native());
 }
 
 $NameBit $NameBit::gate_buf(const $NameBit & a)

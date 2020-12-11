@@ -5,6 +5,7 @@ extern e3::SealCkksEvalKey * g_pek_$Name;
 class $Name
 {
         struct Init { Init() { init0(); } } init_object;
+        template<typename T> T init(const T & s) { init0(); return s; }
 
     protected:
         e3::SealCkksNativeCiphertext x;
@@ -40,10 +41,11 @@ class $Name
 
         // public encryption
         explicit $Name(int a) : $Name( (unsigned long long)(a) ) {}
-        explicit $Name(unsigned long long a) : $Name( pek->encrypt( std::to_string(a), 0 ) ) {}
-        explicit $Name(double a) : $Name( pek->encrypt( std::to_string(a), 0 ) ) {}
-        explicit $Name(const std::vector<unsigned long long> & a) : $Name( pek->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
-        explicit $Name(const std::vector<double> & a) : $Name( pek->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
+        ///explicit $Name(unsigned long long a) : $Name( pek->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(unsigned long long a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(double a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(const std::vector<unsigned long long> & a) : $Name( init(pek)->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
+        explicit $Name(const std::vector<double> & a) : $Name( init(pek)->encrypt( e3::util::merge(a, "_"), 0 ) ) {}
 
         // Operators
         $Name & operator=(const $Name & a) { $Name r(a); x = r.x; return *this; }

@@ -6,7 +6,7 @@ class $NameBit : public $NameBaseBit
 
         e3::SealNativeCiphertext nb;
 
-        static const SealCiphertext * op(const std::shared_ptr<SealCiphertext> & p)
+        static const e3::SealCiphertext * op(const std::shared_ptr<e3::SealCiphertext> & p)
         {
             if ( !p.get() ) throw "Operation on uninitialized bit in $Name";
             return p.get();

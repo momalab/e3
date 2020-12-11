@@ -7,7 +7,7 @@ const $Name * $Name::zero = nullptr;
 
 $Name & $Name::operator+=(const $Name & a)
 {
-    auto plaintextModulus = e3seal::toek(pek->key)->plaintextModulus;
+    auto plaintextModulus = e3::e3seal::toek(pek->key)->plaintextModulus;
     for ( size_t i = 0; i < x.p->ct.size(); i++ )
     {
         x.p->ct[i] += a.x.p->ct[i];
@@ -18,7 +18,7 @@ $Name & $Name::operator+=(const $Name & a)
 
 $Name & $Name::operator-=(const $Name & a)
 {
-    auto plaintextModulus = e3seal::toek(pek->key)->plaintextModulus;
+    auto plaintextModulus = e3::e3seal::toek(pek->key)->plaintextModulus;
     for ( size_t i = 0; i < x.p->ct.size(); i++ )
     {
         x.p->ct[i] += plaintextModulus - a.x.p->ct[i];
@@ -29,7 +29,7 @@ $Name & $Name::operator-=(const $Name & a)
 
 $Name & $Name::operator*=(const $Name & a)
 {
-    auto plaintextModulus = e3seal::toek(pek->key)->plaintextModulus;
+    auto plaintextModulus = e3::e3seal::toek(pek->key)->plaintextModulus;
     for ( size_t i = 0; i < x.p->ct.size(); i++ )
     {
         x.p->ct[i] *= a.x.p->ct[i];

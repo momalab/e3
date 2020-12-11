@@ -47,7 +47,7 @@ Modular::Modular(std::istream & is, string nm,
 
     std::vector<string> valid_names {secNames::encPila, secNames::encPila,
                                      secNames::encPail, secNames::encPailg,
-                                     secNames::encSeal, secNames::encSealCkks,
+                                     secNames::encSeal, ///secNames::encSealCkks,
                                      secNames::encBfvProt, secNames::encPali
                                     };
 
@@ -91,23 +91,43 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
         sk = shared_ptr<PrivKey>
              (new PailgPrivKey(name, forceGen, forceLoad, seed, lambda, beta));
 
-    else if ( encType == secNames::encSeal )
-        sk = shared_ptr<PrivKey>
-             (new SealPrivKey
-              (name, forceGen, forceLoad, seed,
-               lambda, polyModulusDegree, plaintextModulus, encoder));
-
     else if ( encType == secNames::encBfvProt )
         sk = shared_ptr<PrivKey>
              (new BfvProtPrivKey
               (name, forceGen, forceLoad, seed,
                lambda, polyModulusDegree, plaintextModulus, encoder));
+    /*///
+        else if ( encType == secNames::encSeal )
+            sk = shared_ptr<PrivKey>
+                 (new SealPrivKey
+                  (name, forceGen, forceLoad, seed,
+                   lambda, polyModulusDegree, plaintextModulus, encoder));
 
-    else if ( encType == secNames::encSealCkks )
-        sk = shared_ptr<PrivKey>
-             (new SealCkksPrivKey
-              (name, forceGen, forceLoad, seed,
-               lambda, polyModulusDegree, primes, scale));
+        else if ( encType == secNames::encSealCkks )
+            sk = shared_ptr<PrivKey>
+                 (new SealCkksPrivKey
+                  (name, forceGen, forceLoad, seed,
+                   lambda, polyModulusDegree, primes, scale));
+    */
+    else if ( encType == secNames::encSeal )
+    {
+        if (0) {}
+        else if ( scheme == secNames::encBfv || scheme.empty() )
+            sk = shared_ptr<PrivKey>
+                 (new SealPrivKey
+                  (name, forceGen, forceLoad, seed,
+                   lambda, polyModulusDegree, plaintextModulus, encoder));
+
+        else if ( scheme == secNames::encCkks )
+            sk = shared_ptr<PrivKey>
+                 (new SealCkksPrivKey
+                  (name, forceGen, forceLoad, seed,
+                   lambda, polyModulusDegree, primes, scale));
+
+        else
+            throw "Scheme is not supperted for type ["
+            + encType + "] in " + name.typ;
+    }
 
     else if ( encType == secNames::encPali )
     {
