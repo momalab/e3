@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# https://gitlab.com/palisade/palisade-release.git
+
+git -c http.sslVerify=false clone --depth 1 https://gitlab.com/palisade/palisade-release.git
+
+cd palisade-release 
+git submodule sync --recursive
+git submodule update --init  --recursive
+
+mkdir build
+cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=_ins ..
+
+# faster
+make -j 3
+# slower
+make
+
+make install
+
+# check run : bin/examples/pke/simple-integers
