@@ -36,7 +36,10 @@ class PrivKey : public AnyKey
         PrivKey(KeyName nm, const string & seed, int lam)
             : AnyKey(nm), loaded(true), rnd(cr::Rnd::newRnd(seed)), lambda(lam) {}
 
-        virtual string decrypt(const string & s) const = 0;
+        virtual std::string decrypt(const string & s) const = 0;
+        virtual void decrypt(const std::string & s, std::vector<std::complex<double>> & r)  { throw "Cannot decrypt to std::vector<std::complex<double>>."; }
+        virtual void decrypt(const std::string & s, std::vector<double> & r)  { throw "Cannot decrypt to std::vector<double>."; }
+        virtual void decrypt(const std::string & s, std::vector<int> & r)  { throw "Cannot decrypt to std::vector<int>."; }
         virtual string encrypt(const string & s, int msz) const = 0;
 
         virtual bool load() = 0;

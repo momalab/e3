@@ -81,10 +81,10 @@ class $Name
 
         // Functions
         $Name & rotate_columns();
-        $Name & rotate_rows(size_t s);
+        $Name & rotate_rows(int s);
 
         static $Name rotate_columns(const $Name & a) { $Name r(a); return r.rotate_columns(); }
-        static $Name rotate_rows(const $Name & a, size_t s) { $Name r(a); return r.rotate_rows(s); }
+        static $Name rotate_rows(const $Name & a, int s) { $Name r(a); return r.rotate_rows(s); }
 
         std::string str() const { return pek->decor(x.str(), true); }
         static size_t slots() { init0(); return pek->slots(); }

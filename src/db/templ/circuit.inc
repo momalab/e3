@@ -390,7 +390,7 @@ $NameUint<SZ> & $NameUint<SZ>::rotate_columns()
 }
 
 template <int SZ>
-$NameUint<SZ> & $NameUint<SZ>::rotate_rows(size_t s)
+$NameUint<SZ> & $NameUint<SZ>::rotate_rows(int s)
 {
     if ( slots() > 1 )
         for ( size_t i = 0; i < bits.size(); i++ ) bits[i].rotate_rows(s);

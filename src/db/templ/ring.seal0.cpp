@@ -94,7 +94,7 @@ $Name & $Name::rotate_columns()
     return *this;
 }
 
-$Name & $Name::rotate_rows(size_t s)
+$Name & $Name::rotate_rows(int s)
 {
     if ( slots() > 1 )
     {

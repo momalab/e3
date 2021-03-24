@@ -9,7 +9,7 @@
 namespace e3
 {
 
-struct SealCiphertext { std::vector<uint64_t> ct; };
+struct SealCiphertext { std::vector<uint64_t> ct = {0}; };
 
 namespace e3seal
 {

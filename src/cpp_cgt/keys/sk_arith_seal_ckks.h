@@ -10,6 +10,7 @@ namespace e3
 class SealCkksPrivKey : public SealCkksBasePrivKey
 {
     public:
+        SealCkksPrivKey(KeyName name) : SealCkksPrivKey(name, false, true, "", 0, "", "", "") {}
         SealCkksPrivKey(KeyName name, bool forceGen,
                         bool forceLoad, string seed, int lam,
                         string polyModulusDegree,

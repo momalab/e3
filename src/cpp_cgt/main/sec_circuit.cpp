@@ -49,6 +49,7 @@ Circuit::Circuit(std::istream & is, string nm,
     else if ( basType == secNames::encPilc ) {}
     else if ( encType == secNames::encSeal ) {}
     else if ( encType == secNames::encTfhe ) {}
+    else if ( encType == secNames::encGatcou ) {}
     else if ( encType == secNames::encExt ) {}
     else if ( encType[0] == '@' ) {}
     else throw "encryption type ["
@@ -167,6 +168,11 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
              (csk = new CircuitPrivKey_pilc(name, forceGen,
                                             forceLoad, seed, lambda));
 
+    else if ( encType == secNames::encGatcou )
+        sk = shared_ptr<PrivKey>
+             (csk = new CircuitPrivKey_gatcou(name, forceGen,
+                                              forceLoad, seed, lambda));
+
     else if ( encType == secNames::encExt )
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_ext());
@@ -214,7 +220,7 @@ void Circuit::writeH(string root, std::ostream & os, string user_dir) const
     // write Bit class defintion
     {
         string dbf = cfgNames::dotH(
-                         cfgNames::dbfileCircuit + '.' + encType);
+                         cfgNames::dbfileCircuit + '.' + clsname());
 
         string f = loadDbTemplCir(root, dbf);
         os << f;
@@ -256,7 +262,7 @@ void Circuit::writeCpp(string root, std::ostream & os) const
         string cf = ol::file2str(root + path);
         ol::replaceAll(cf, secNames::R_TypName, name.typ);
         ol::replaceAll(cf, secNames::R_FilName, name.fil);
-        ol::replaceAll(cf, secNames::R_ClsName, encType);
+        ol::replaceAll(cf, secNames::R_ClsName, clsname() /*///encType*/ );
         ol::replaceAll(cf, secNames::R_lambda, ol::tos(lambda) );
         os << cf;
     }
@@ -283,7 +289,8 @@ void Circuit::writeCpp(string root, std::ostream & os) const
 
         {
             string dbf = cfgNames::dotCpp(cfgNames::dbfileCircuit
-                                          + '.' + encType + ver);
+                                          + '.' + clsname() + ver);
+///                                          + '.' + encType + ver);
 
             string f = loadDbTemplCir(root, dbf);
             os << f;

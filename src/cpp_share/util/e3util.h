@@ -1,9 +1,10 @@
 #ifndef _E3_E3UTIL_H_
 #define _E3_E3UTIL_H_
 
+#include <complex>
+#include <cstdio>
 #include <string>
 #include <vector>
-#include <cstdio>
 
 namespace e3
 {
@@ -63,6 +64,7 @@ std::string zeroExtension(const std::string & hex, size_t bitsize);
 std::vector<std::string> split(const std::string & s, char c);
 
 inline std::string to_string(const std::string & s) { return s; }
+template <class T> inline std::string to_string(const std::complex<T> & s) { return std::to_string(s.real()) + "+" + std::to_string(s.imag()) + "i"; }
 template <class T> inline std::string to_string(const T & s) { return std::to_string(s); }
 
 template <class T>

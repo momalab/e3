@@ -24,7 +24,7 @@ class $NameBit : public $NameBaseBit
         e3::SealNativeCiphertext native() const { return nb; }
 
         $NameBit & rotate_columns();
-        $NameBit & rotate_rows(size_t s);
+        $NameBit & rotate_rows(int s);
         std::string str() const { return nb.str(); }
 
         static e3::CircuitEvalKey_seal * k() { return static_cast<e3::CircuitEvalKey_seal *>(pek); }

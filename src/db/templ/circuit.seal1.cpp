@@ -102,7 +102,7 @@ $NameBit & $NameBit::rotate_columns()
     return *this;
 }
 
-$NameBit & $NameBit::rotate_rows(size_t s)
+$NameBit & $NameBit::rotate_rows(int s)
 {
     auto ek = $NameBit_ek();
     if ( ek->isBatchEncoder )

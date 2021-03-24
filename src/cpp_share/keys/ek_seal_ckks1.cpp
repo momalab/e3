@@ -5,7 +5,7 @@
 #include "ek_seal_ckks.h"
 #include "def_seal_ckks1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::cout;
 using std::stoull;
 using std::string;
@@ -34,13 +34,13 @@ bool SealCkksBaseEvalKey::load(string fname)
         string s;
         getline(inConfig, s);
         evalkey.scale = uint64_t ( stoull(s) );
-        static auto params = EncryptionParameters::Load(inParams);
-        evalkey.context = SEALContext::Create(params);
+        static auto params = seal::EncryptionParameters::Load(inParams);
+        evalkey.context = seal::SEALContext::Create(params);
         evalkey.publickey.load(evalkey.context, inPublicKey);
         evalkey.relinkeys.load(evalkey.context, inRelin);
-        static Evaluator evaluator(evalkey.context);
-        static Encryptor encryptor(evalkey.context, evalkey.publickey);
-        static CKKSEncoder encoder(evalkey.context);
+        static seal::Evaluator evaluator(evalkey.context);
+        static seal::Encryptor encryptor(evalkey.context, evalkey.publickey);
+        static seal::CKKSEncoder encoder(evalkey.context);
         evalkey.encoder = &encoder;
         evalkey.encryptor = &encryptor;
         evalkey.evaluator = &evaluator;
@@ -60,7 +60,7 @@ string SealCkksBaseEvalKey::rawEncrypt(const string & s, int msz) const
     auto evalkey = e3seal_ckks::toek(key);
     auto & encryptor = evalkey->encryptor;
     auto & encoder = evalkey->encoder;
-    Plaintext p;
+    seal::Plaintext p;
     vector<double> v( encoder->slot_count(), 0LL );
     string tmp = "";
     size_t idx = 0;

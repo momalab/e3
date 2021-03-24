@@ -125,7 +125,7 @@ string e3::PilBasePrivKey::decrypt(const string & c) const
     Bigun m = ekb.kv.N;
     PilArith pilArith(&ekb);
 
-    auto x = (a + b * Q) % P;
+    auto x = (a + b * PilNum(Q)) % PilNum(P);
 
     return x.n.str();
 }
@@ -137,29 +137,29 @@ string e3::PilBasePrivKey::encrypt(const string & s, int msz) const
     Bigun m = ekb.kv.N;
     PilArith pilArith(&ekb);
 
-    PilNum ra = euler::random(m, rnd);
-    PilNum rb = euler::random(m, rnd);
-    PilNum r1 = euler::random(m, rnd);
-    PilNum r2 = euler::random(m, rnd);
+    PilNum ra(euler::random(m, rnd));
+    PilNum rb(euler::random(m, rnd));
+    PilNum r1(euler::random(m, rnd));
+    PilNum r2(euler::random(m, rnd));
 
     // testing
     if (0)
     {
-        ra = 0;
-        rb = 0;
-        r1 = 0;
-        r2 = 4;
+        ra = PilNum(0);
+        rb = PilNum(0);
+        r1 = PilNum(0);
+        r2 = PilNum(4);
     }
 
     e3::PilPair ab;
 
     Bigun nbm(s);
 
-    ab.b = rb % m;
-    ab.a = ra - (ra + rb * Q) % P + nbm;
+    ab.b = rb % PilNum(m);
+    ab.a = ra - (ra + rb * PilNum(Q)) % PilNum(P) + PilNum(nbm);
 
     // validate
-    e3::PilNum x = (ab.a + ab.b * Q) % P;
+    e3::PilNum x = (ab.a + ab.b * PilNum(Q)) % PilNum(P);
 
     if ( x.n != nbm ) never("Encryption failed");
 
@@ -188,18 +188,18 @@ void e3::PilBasePrivKey::initmatrix()
     for ( int i = 0; i < 1000; i++ ) // try 1000 times
     {
         // gen random
-        L.d11 = euler::random(m, rnd);
-        L.d12 = euler::random(m, rnd);
-        L.d21 = euler::random(m, rnd);
-        L.d22 = euler::random(m, rnd);
+        L.d11 = PilNum(euler::random(m, rnd));
+        L.d12 = PilNum(euler::random(m, rnd));
+        L.d21 = PilNum(euler::random(m, rnd));
+        L.d22 = PilNum(euler::random(m, rnd));
 
         // testing
         if (0)
         {
-            L.d11 = Bigun(1);
-            L.d12 = Bigun(1);
-            L.d21 = Bigun(0);
-            L.d22 = Bigun(1);
+            L.d11 = PilNum(Bigun(1));
+            L.d12 = PilNum(Bigun(1));
+            L.d21 = PilNum(Bigun(0));
+            L.d22 = PilNum(Bigun(1));
         }
 
         while (1)
@@ -224,13 +224,13 @@ void e3::PilBasePrivKey::findT()
     Bigun m = ekb.kv.N;
     PilArith pilArith(&ekb);
     auto det = L.det();
-    T = det.n.powmod(phi - 1, m);
+    T = PilNum(det.n.powmod(phi - 1, m));
 
     // validate
     if (0) // testing
     {
         auto u = det.n.powmod(phi, m);
-        if (u != 1) never("bad powmod phi");
+        if (u != Bigun(1) ) never("bad powmod phi");
         if (T * det != PilNum(1) ) never("bad T*det");
     }
 }
@@ -276,7 +276,7 @@ void e3::PilBasePrivKey::initNS(PilEvalValues & kv)
 {
     auto q = Q % P;
     kv.N = P * Q;
-    kv.S = q.mulmod(q, P);
+    kv.S = PilNum(q.mulmod(q, P));
 }
 
 void e3::PilBasePrivKey::initAF(PilEvalValues & kv)

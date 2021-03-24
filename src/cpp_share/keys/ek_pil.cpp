@@ -15,13 +15,13 @@ bool e3::PilBaseEvalKey::load(string fname)
 
     if ( kv.ver != 22 ) throw "e3::PilBaseEvalKey::load: version";
     in >> s; kv.N = Bigun(s);
-    in >> s; kv.S = Bigun(s);
-    in >> s; kv.A = Bigun(s);
-    in >> s; kv.B = Bigun(s);
-    in >> s; kv.C = Bigun(s);
-    in >> s; kv.D = Bigun(s);
-    in >> s; kv.E = Bigun(s);
-    in >> s; kv.F = Bigun(s);
+    in >> s; kv.S = PilNum(Bigun(s));
+    in >> s; kv.A = PilNum(Bigun(s));
+    in >> s; kv.B = PilNum(Bigun(s));
+    in >> s; kv.C = PilNum(Bigun(s));
+    in >> s; kv.D = PilNum(Bigun(s));
+    in >> s; kv.E = PilNum(Bigun(s));
+    in >> s; kv.F = PilNum(Bigun(s));
 
     if (!in) return false;
     return true;

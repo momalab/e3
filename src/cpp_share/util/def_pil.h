@@ -14,8 +14,8 @@ struct PilNum
 {
     Bigun n;
     PilNum() {}
-    PilNum(Bigun a): n(a) {}
-    PilNum(unsigned long long a): n(a) {}
+    explicit PilNum(Bigun a): n(a) {}
+    explicit PilNum(unsigned long long a): n(a) {}
 };
 
 struct PilPair
@@ -30,7 +30,7 @@ struct PilQuad
     PilPair x, y;
     PilQuad() {}
     PilQuad(PilPair qa, PilPair qb): x(qa), y(qb) {}
-    PilQuad(string s);
+    explicit PilQuad(string s);
     string str() const;
 };
 

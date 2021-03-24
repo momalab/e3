@@ -20,7 +20,7 @@ class $NameBaseBit
         static const $NameBit * zero, * unit;
 
         $NameBaseBit & rotate_columns() { return *this; }
-        $NameBaseBit & rotate_rows(size_t s) { return *this; }
+        $NameBaseBit & rotate_rows(int s) { return *this; }
 };
 
 // === END circuit.base.h Name=$Name

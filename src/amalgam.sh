@@ -33,11 +33,12 @@ echo "" >> $cxfile
 
 echo "#pragma once" > $header
 echo "" >> $header
-echo "#include <string>" >> $header
-echo "#include <vector>" >> $header
-echo "#include <memory>" >> $header
+echo "#include <complex>" >> $header
 echo "#include <istream>" >> $header
+echo "#include <memory>"  >> $header
 echo "#include <ostream>" >> $header
+echo "#include <string>"  >> $header
+echo "#include <vector>"  >> $header
 echo "" >> $header
 
 # include specific libraries
@@ -88,6 +89,7 @@ echo "#include \"ciphertext-ser.h\"" >> $header
 echo "#include \"cryptocontext-ser.h\"" >> $header
 echo "#include \"pubkeylp-ser.h\"" >> $header
 echo "#include \"scheme/bfvrns/bfvrns-ser.h\"" >> $header
+echo "#include \"scheme/ckks/ckks-ser.h\"" >> $header
 echo "#include \"utils/serialize-binary.h\"" >> $header
 fi
 
@@ -122,6 +124,8 @@ dof $header $util/def_tfhe$TFHE.h
 dof $header $util/def_bfv.h
 dof $header $util/def_pali.h
 dof $header $util/def_pali$PALI.h
+dof $header $util/def_palisade_ckks.h
+dof $header $util/def_palisade_ckks$PALI.h
 
 # do key headers
 dof $header $keys/anykey.h
@@ -143,6 +147,8 @@ dof $header $keys/ek_circ_tfhe.h
 dof $header $keys/ek_native.h
 dof $header $keys/ek_bfv_prot.h
 dof $header $keys/ek_pali.h
+dof $header $keys/ek_circ_gatcou.h
+dof $header $keys/ek_palisade_ckks.h
 
 # do util cpps
 dof $cxfile $util/def_mpir.inc
@@ -160,6 +166,8 @@ dof $cxfile $util/def_tfhe$TFHE.cpp
 dof $cxfile $util/def_bfv.cpp
 dof $cxfile $util/def_pali$PALI.cpp
 dof $cxfile $util/def_pali_sis$PALI.cpp
+dof $cxfile $util/def_palisade_ckks$PALI.cpp
+dof $cxfile $util/def_palisade_ckks_util$PALI.cpp
 
 # do keys cpps
 dof $cxfile $keys/anykey.cpp
@@ -178,6 +186,7 @@ dof $cxfile $keys/ek_seal$SEAL.cpp
 dof $cxfile $keys/ek_seal_ckks$SEAL.cpp
 dof $cxfile $keys/ek_bfv_prot.cpp
 dof $cxfile $keys/ek_pali$PALI.cpp
+dof $cxfile $keys/ek_palisade_ckks$PALI.cpp
 
 # test compilation - remove later
 #cl -c -EHsc $amaname.cpp

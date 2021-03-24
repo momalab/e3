@@ -40,7 +40,7 @@ vector<bool> CircuitPrivKey_pilc::decbitstr(const std::string & s, bool * ok) co
     Bigun m = sk.ekb.kv.N;
     PilArith pilArith(&sk.ekb);
 
-    auto x = (a + b * sk.Q) % sk.P;
+    auto x = (a + b * PilNum(sk.Q)) % PilNum(sk.P);
 
     if ( x.n == Bigun(1) ) return vector<bool>(1, true);
     if ( x.n == Bigun(0) ) return vector<bool>(1, false);
@@ -56,29 +56,29 @@ std::string CircuitPrivKey_pilc::encbitstr(vector<bool> v) const
     Bigun m = sk.ekb.kv.N;
     PilArith pilArith(&sk.ekb);
 
-    PilNum ra = euler::random(m, rnd);
-    PilNum rb = euler::random(m, rnd);
-    PilNum r1 = euler::random(m, rnd);
-    PilNum r2 = euler::random(m, rnd);
+    PilNum ra(euler::random(m, rnd));
+    PilNum rb(euler::random(m, rnd));
+    PilNum r1(euler::random(m, rnd));
+    PilNum r2(euler::random(m, rnd));
 
     // testing
     if (0)
     {
-        ra = 0;
-        rb = 0;
-        r1 = 0;
-        r2 = 4;
+        ra = PilNum(0);
+        rb = PilNum(0);
+        r1 = PilNum(0);
+        r2 = PilNum(4);
     }
 
     PilPair ab;
 
     Bigun nbm = bm ? Bigun(1) : Bigun(0);
 
-    ab.b = rb % m;
-    ab.a = ra - (ra + rb * sk.Q) % sk.P + nbm;
+    ab.b = rb % PilNum(m);
+    ab.a = ra - (ra + rb * PilNum(sk.Q)) % PilNum(sk.P) + PilNum(nbm);
 
     // validate
-    PilNum x = (ab.a + ab.b * sk.Q) % sk.P;
+    PilNum x = (ab.a + ab.b * PilNum(sk.Q)) % PilNum(sk.P);
 
     if ( x.n != nbm ) never("Encryption failed");
 

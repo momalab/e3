@@ -6,7 +6,7 @@
 #include "ekx_seal.h"
 #include "def_seal1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::cout;
 
 void e3::SealBaseEvalKeyExt::save()
@@ -22,7 +22,7 @@ void e3::SealBaseEvalKeyExt::save()
     std::ofstream ofRelin (fileRelin , std::ios::binary);
     std::ofstream ofGalois(fileGalois, std::ios::binary);
     std::ofstream ofConfig(fileConfig, std::ios::binary);
-    EncryptionParameters::Save( *(e3seal::toek(key)->params), ofParams );
+    seal::EncryptionParameters::Save( *(e3seal::toek(key)->params), ofParams );
     e3seal::toek(key)->publickey.save(ofPublicKey);
     e3seal::toek(key)->relinkeys.save(ofRelin);
     e3seal::toek(key)->galoiskeys.save(ofGalois);

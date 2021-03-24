@@ -14,7 +14,6 @@ class PaliBfvPrivKey : public PrivKey
         virtual void gen();
 
     private:
-        ///PaliBfvNativePrivKey key;
         PaliBfvEvalKeyExt ek;
         PaliBfvNativePrivKey sk;
 

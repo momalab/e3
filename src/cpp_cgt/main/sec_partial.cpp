@@ -1,3 +1,4 @@
+#include <map>
 #include <set>
 
 #include "cfgparser.h"
@@ -8,7 +9,9 @@
 using namespace e3;
 using namespace e3::cr;
 using e3::cr::ol::replaceAll;
+using std::map;
 using std::shared_ptr;
+using std::string;
 
 Modular::Modular(std::istream & is, string nm,
                  const std::map<string, string> & globs)
@@ -36,6 +39,8 @@ Modular::Modular(std::istream & is, string nm,
     kv[secNames::copheeIsArduino] = &copheeIsArduino;
     kv[secNames::copheeBaudRate] = &copheeBaudRate;
     kv[secNames::useslots] = &suseSlots;
+    kv[secNames::rotations] = &rotations;
+    kv[secNames::rescale] = &rescale;
 
     loadPairs(is, kv);
     globPairs(kv, globs);
@@ -47,7 +52,7 @@ Modular::Modular(std::istream & is, string nm,
 
     std::vector<string> valid_names {secNames::encPila, secNames::encPila,
                                      secNames::encPail, secNames::encPailg,
-                                     secNames::encSeal, ///secNames::encSealCkks,
+                                     secNames::encSeal,
                                      secNames::encBfvProt, secNames::encPali
                                     };
 
@@ -96,19 +101,7 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
              (new BfvProtPrivKey
               (name, forceGen, forceLoad, seed,
                lambda, polyModulusDegree, plaintextModulus, encoder));
-    /*///
-        else if ( encType == secNames::encSeal )
-            sk = shared_ptr<PrivKey>
-                 (new SealPrivKey
-                  (name, forceGen, forceLoad, seed,
-                   lambda, polyModulusDegree, plaintextModulus, encoder));
 
-        else if ( encType == secNames::encSealCkks )
-            sk = shared_ptr<PrivKey>
-                 (new SealCkksPrivKey
-                  (name, forceGen, forceLoad, seed,
-                   lambda, polyModulusDegree, primes, scale));
-    */
     else if ( encType == secNames::encSeal )
     {
         if (0) {}
@@ -139,7 +132,22 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
                    lambda, polyModulusDegree, smuldepth,
                    useSlots, smaxdepth, sp_n));
 
-        else if ( scheme == secNames::encCkks ) throw "L113 " + encType;
+        else if ( scheme == secNames::encCkks )
+        {
+            // FIXME e conversion to map format
+            params["seed"     ] = seed;
+            params["lambda"   ] = std::to_string(lambda);
+            params["muldepth" ] = smuldepth;
+            params["scale"    ] = scale;
+            params["useslots" ] = std::to_string(useSlots);
+            if ( !polyModulusDegree.empty() ) params["logn"     ] = polyModulusDegree;
+            if ( !rotations.empty()         ) params["rotations"] = rotations;
+            if ( !rescale.empty()           ) params["rescale"  ] = rescale;
+            sk = shared_ptr<PrivKey>(
+                     new PalisadeCkksPrivKey(name, forceGen, forceLoad, params)
+                 );
+        }
+
         else if ( scheme == secNames::encBgv ) throw "L114 " + encType;
 
         else
@@ -181,7 +189,7 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
 
 void Modular::writeH(string root, std::ostream & os, string user_dir) const
 {
-    string dbf = cfgNames::dotH(cfgNames::dbfileModular + '.' + encType);
+    string dbf = cfgNames::dotH(cfgNames::dbfileModular + '.' + clsname());
 
     using namespace secNames;
 
@@ -195,7 +203,7 @@ void Modular::writeH(string root, std::ostream & os, string user_dir) const
 
 void Modular::writeInc(string root, std::ostream & os) const
 {
-    string dbf = cfgNames::dotInc(cfgNames::dbfileModular + '.' + encType + implVer());
+    string dbf = cfgNames::dotInc(cfgNames::dbfileModular + '.' + clsname() + implVer());
 
     string f = loadDbTemplAri(root, dbf);
     os << f;
@@ -203,7 +211,7 @@ void Modular::writeInc(string root, std::ostream & os) const
 
 void Modular::writeCpp(string root, std::ostream & os) const
 {
-    string dbf = cfgNames::dotCpp(cfgNames::dbfileModular + '.' + encType + implVer());
+    string dbf = cfgNames::dotCpp(cfgNames::dbfileModular + '.' + clsname() + implVer());
 
     string f = loadDbTemplAri(root, dbf);
     os << f;

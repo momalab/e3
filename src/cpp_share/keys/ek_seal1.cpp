@@ -5,7 +5,7 @@
 #include "ek_seal.h"
 #include "def_seal1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::cout;
 using std::stoull;
 using std::string;
@@ -37,15 +37,15 @@ bool SealBaseEvalKey::load(string fname)
         unsigned char be;
         inConfig.read(reinterpret_cast<char *>(&be), 1);
         evalkey.isBatchEncoder = be == 1;
-        auto params = EncryptionParameters::Load(inParams);
-        evalkey.context = SEALContext::Create(params);
+        auto params = seal::EncryptionParameters::Load(inParams);
+        evalkey.context = seal::SEALContext::Create(params);
         evalkey.publickey.load(evalkey.context, inPublicKey);
         evalkey.relinkeys.load(evalkey.context, inRelin);
         evalkey.galoiskeys.load(evalkey.context, inGalois);
-        evalkey.evaluator = new Evaluator(evalkey.context);
-        evalkey.encryptor = new Encryptor(evalkey.context, evalkey.publickey);
-        if ( evalkey.isBatchEncoder ) evalkey.batchEncoder = new BatchEncoder(evalkey.context);
-        else evalkey.encoder = new IntegerEncoder(evalkey.context);
+        evalkey.evaluator = new seal::Evaluator(evalkey.context);
+        evalkey.encryptor = new seal::Encryptor(evalkey.context, evalkey.publickey);
+        if ( evalkey.isBatchEncoder ) evalkey.batchEncoder = new seal::BatchEncoder(evalkey.context);
+        else evalkey.encoder = new seal::IntegerEncoder(evalkey.context);
         evalkey.params = &params;
     }
     catch (...) { throw "Bad " + fname + " eval key"; }
@@ -61,7 +61,7 @@ string SealBaseEvalKey::rawEncrypt(const string & s, int) const
     auto evalkey = e3seal::toek(key);
     auto & isBatchEncoder = evalkey->isBatchEncoder;
     auto & encryptor = evalkey->encryptor;
-    Plaintext p;
+    seal::Plaintext p;
     if ( isBatchEncoder )
     {
         auto & encoder = evalkey->batchEncoder;

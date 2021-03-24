@@ -4,7 +4,7 @@
 #include "base64.h"
 #include "def_seal_ckks1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::string;
 
 std::string e3::SealCkksNativeCiphertext::str() const

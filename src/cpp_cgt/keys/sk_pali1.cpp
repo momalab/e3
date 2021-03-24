@@ -10,11 +10,11 @@
 
 #include "palisade.h"
 
-using std::cout; // debug FIXME remove
+///using std::cout; // debug FIXME remove
 
 using std::stoi;
 
-using namespace lbcrypto;
+///using namespace lbcrypto;
 
 namespace e3
 {

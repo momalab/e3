@@ -2,6 +2,8 @@
 srcu2=cpp_share/util/e3util.cpp \
 	cpp_share/util/def_pali_sis$(PALI).cpp \
 	cpp_share/util/def_pali$(PALI).cpp \
+	cpp_share/util/def_palisade_ckks_util$(PALI).cpp \
+	cpp_share/util/def_palisade_ckks$(PALI).cpp \
 	cpp_share/util/def_fhew$(FHEW).cpp \
 	cpp_share/util/def_heli$(HELI).cpp \
 	cpp_share/util/def_seal$(SEAL).cpp \
@@ -26,6 +28,7 @@ srck2= ${EKDIR}/ek_abstract.cpp ${EKDIR}/ek_native.cpp \
 	${EKDIR}/ek_pil.cpp \
 	${EKDIR}/ek_pail.cpp \
 	${EKDIR}/ek_pali$(PALI).cpp \
+	${EKDIR}/ek_palisade_ckks$(PALI).cpp \
 	${EKDIR}/ek_seal$(SEAL).cpp \
 	${EKDIR}/ek_seal_ckks$(SEAL).cpp \
 	${EKDIR}/ek_bfv_prot.cpp

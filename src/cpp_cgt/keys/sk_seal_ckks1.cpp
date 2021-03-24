@@ -8,7 +8,7 @@
 #include "sk_seal_ckks.h"
 #include "def_seal_ckks1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::cout;
 using std::stoul;
 using std::string;
@@ -50,13 +50,13 @@ void SealCkksBasePrivKey::gen()
     cout << "Generating private key (" << lambda << ") .. " << std::flush;
     static e3seal_ckks::SealCkksPrivKey privkey;
     static e3seal_ckks::SealCkksEvalKey evalkey;
-    static auto params = EncryptionParameters(scheme_type::CKKS);
+    static auto params = seal::EncryptionParameters(seal::scheme_type::CKKS);
     params.set_poly_modulus_degree(polyModulusDegree);
-    params.set_coeff_modulus( CoeffModulus::Create(polyModulusDegree, primes) );
-    evalkey.context = SEALContext::Create(params);
-    KeyGenerator keygen(evalkey.context);
+    params.set_coeff_modulus( seal::CoeffModulus::Create(polyModulusDegree, primes) );
+    evalkey.context = seal::SEALContext::Create(params);
+    seal::KeyGenerator keygen(evalkey.context);
     privkey.secretkey = keygen.secret_key();
-    static Decryptor decryptor(evalkey.context, privkey.secretkey);
+    static seal::Decryptor decryptor(evalkey.context, privkey.secretkey);
     privkey.decryptor = &decryptor;
     key = &privkey;
     cout << "ok\n";
@@ -65,9 +65,9 @@ void SealCkksBasePrivKey::gen()
     cout << "Generating evaluation key .. " << std::flush;
     evalkey.publickey = keygen.public_key();
     evalkey.relinkeys = keygen.relin_keys();
-    static Evaluator evaluator(evalkey.context);
-    static Encryptor encryptor(evalkey.context, evalkey.publickey);
-    static CKKSEncoder encoder(evalkey.context);
+    static seal::Evaluator evaluator(evalkey.context);
+    static seal::Encryptor encryptor(evalkey.context, evalkey.publickey);
+    static seal::CKKSEncoder encoder(evalkey.context);
     evalkey.encoder = &encoder;
     evalkey.encryptor = &encryptor;
     evalkey.evaluator = &evaluator;
@@ -91,7 +91,7 @@ bool SealCkksBasePrivKey::load()
     {
         auto & context = e3seal_ckks::toek(ek.key)->context;
         privkey.secretkey.load(context, inSecretKey);
-        static Decryptor decryptor(context, privkey.secretkey);
+        static seal::Decryptor decryptor(context, privkey.secretkey);
         privkey.decryptor = &decryptor;
     }
     catch (...)
@@ -110,7 +110,7 @@ vector<string> SealCkksBasePrivKey::rawDecrypt(const string & undecorated) const
     auto evalkey = e3seal_ckks::toek(ek.key);
     auto & decryptor = e3seal_ckks::tosk(key)->decryptor;
     auto & encoder = evalkey->encoder;
-    Plaintext p;
+    seal::Plaintext p;
     vector<string> m;
     decryptor->decrypt(nb.p->ct, p);
     vector<double> v;

@@ -4,7 +4,7 @@
 #include "base64.h"
 #include "def_seal1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::string;
 
 int e3::seal_impl() { return 1; }

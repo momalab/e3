@@ -29,7 +29,9 @@ vector<bool> CircuitPrivKey_plain::decbitstr(const std::string & s, bool * ok) c
 {
     vector<bool> m(1, false);
     if (ok) *ok = false;
-    if ( e3::util::isNumber(s) )
+    // if ( e3::util::isNumber(s) ) // deprecated
+    if ( e3::util::isInteger(s) )
+        // if ( e3::util::isFloat(s) ) // use this if CKKS circuit becomes a thing
     {
         try
         {

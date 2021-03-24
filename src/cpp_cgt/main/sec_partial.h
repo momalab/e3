@@ -17,11 +17,12 @@ class Modular : public SecType
         std::string copheeBaudRate = "921600";
         std::string scale; // Seal CKKS
         std::string primes; // Seal CKKS
-        std::string scheme; // ckks,bfv,bgv
         std::string smuldepth; // circuit depth, used by Pali
         int useSlots = 1;
         std::string smaxdepth; // circuit depth, used by Pali
         std::string sp_n; // param n, used by Pali
+        std::string rotations, rescale; // Palisade CKKS
+        std::map<std::string, std::string> params; // used by Palisade CKKS (trying to standardize)
 
     public:
         Modular(std::istream & is, string nm, const std::map<string, string> & globs);

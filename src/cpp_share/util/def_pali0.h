@@ -27,7 +27,8 @@ struct PaliBfvCiphertext
     PaliBfvCiphertext operator*(const PaliBfvCiphertext & a) const;
 };
 
-namespace pali{
+namespace pali
+{
 void load_dummy();
 } // pali
 

@@ -77,7 +77,8 @@ Params parse(int ac, char ** av)
 
             std::string sbs = av[++i];
             int bitsize = 0;
-            if ( !e3::util::isNumber(sbs) || ((bitsize = std::stoi(sbs)) <= 0) )
+            // if ( !e3::util::isNumber(sbs) || ((bitsize = std::stoi(sbs)) <= 0) ) // deprecated
+            if ( !e3::util::isPositiveInteger(sbs) || ((bitsize = std::stoi(sbs)) <= 0) )
                 throw errorMsg("invalid bitsize '" + sbs
                                + "' for option '" + s + "'");
 
@@ -140,4 +141,3 @@ Params parse(int ac, char ** av)
 
     return params;
 }
-

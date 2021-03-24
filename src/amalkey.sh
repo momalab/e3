@@ -143,6 +143,7 @@ dof $header $keys/ekx_seal.h
 dof $header $keys/ekx_seal_ckks.h
 dof $header $keys/ekx_bfv_prot.h
 dof $header $keys/ekx_pali.h
+dof $header $keys/ekx_palisade_ckks.h
 dof $header $keys/ekx_circ_plain.h
 dof $header $keys/ekx_circ_fhew.h
 dof $header $keys/ekx_circ_heli.h
@@ -150,6 +151,7 @@ dof $header $keys/ekx_circ_seal.h
 dof $header $keys/ekx_circ_tfhe.h
 dof $header $keys/ekx_circ_bdd.h
 dof $header $keys/ekx_circ_pil.h
+dof $header $keys/ekx_circ_gatcou.h
 
 dof $header $keys/sk_native.h
 dof $header $keys/sk_circ.h
@@ -159,6 +161,7 @@ dof $header $keys/sk_seal.h
 dof $header $keys/sk_seal_ckks.h
 dof $header $keys/sk_bfv_prot.h
 dof $header $keys/sk_pali.h
+dof $header $keys/sk_palisade_ckks.h
 dof $header $keys/sk_arith_seal.h
 dof $header $keys/sk_arith_seal_ckks.h
 dof $header $keys/sk_circ_plain.h
@@ -168,6 +171,8 @@ dof $header $keys/sk_circ_seal.h
 dof $header $keys/sk_circ_tfhe.h
 dof $header $keys/sk_circ_bdd.h
 dof $header $keys/sk_circ_pil.h
+dof $header $keys/sk_circ_gatcou.h
+
 dof $header $keys/privkeys.h
 
 # do cudd header
@@ -209,6 +214,8 @@ dof $cxfile $keys/ekx_bfv_prot.cpp
 dof $cxfile $keys/sk_bfv_prot.cpp
 dof $cxfile $keys/ekx_pali$PALI.cpp
 dof $cxfile $keys/sk_pali$PALI.cpp
+dof $cxfile $keys/ekx_palisade_ckks$PALI.cpp
+dof $cxfile $keys/sk_palisade_ckks$PALI.cpp
 
 # do main cpps
 dof $cxfile $main/platname.cpp

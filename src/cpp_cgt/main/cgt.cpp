@@ -164,7 +164,8 @@ void enc(Params params)
         {
             std::string sx;
             s = e3::util::trim(s);
-            if ( e3::util::isNumber(s) ) sx = sectype->encrypt(s);
+            // if ( e3::util::isNumber(s) ) sx = sectype->encrypt(s); // deprecated
+            if ( e3::util::isFloat(s) ) sx = sectype->encrypt(s);
             else sx = s;
             if ( !newline ) cout << ' ';
             newline = false;

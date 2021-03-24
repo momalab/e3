@@ -13,16 +13,24 @@ namespace e3
 bool SealBaseEvalKey::load(string fname)
 {
     std::ifstream in(fname, std::ios::binary);
-    string s;
-    e3seal::SealEvalKey * ekey = new e3seal::SealEvalKey;
-    e3seal::SealEvalKey & evalkey = *ekey;
-    getline(in, s);
-    evalkey.polyModulusDegree = uint64_t( stoull(s) );
-    getline(in, s);
-    evalkey.plaintextModulus  = uint64_t( stoull(s) );
-    getline(in, s);
-    evalkey.isBatchEncoder    = bool( stoi(s) );
-    key = ekey;
+
+    if ( !in ) throw "Cannot open " + fname;
+
+    try
+    {
+        string s;
+        e3seal::SealEvalKey * ekey = new e3seal::SealEvalKey;
+        e3seal::SealEvalKey & evalkey = *ekey;
+        getline(in, s);
+        evalkey.polyModulusDegree = uint64_t( stoull(s) );
+        getline(in, s);
+        evalkey.plaintextModulus  = uint64_t( stoull(s) );
+        getline(in, s);
+        evalkey.isBatchEncoder    = bool( stoi(s) );
+        key = ekey;
+    }
+    catch (...) { throw "Bad data in " + fname; }
+
     return !!in;
 }
 

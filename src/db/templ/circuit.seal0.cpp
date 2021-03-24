@@ -154,14 +154,14 @@ $NameBit & $NameBit::rotate_columns()
     return *this;
 }
 
-$NameBit & $NameBit::rotate_rows(size_t s)
+$NameBit & $NameBit::rotate_rows(int s)
 {
     $NameBit a(*this);
-    auto n = nb.p->ct.size();
+    auto n = (int)nb.p->ct.size();
     auto half = n >> 1;
     s %= half;
     if (s < 0) s += half;
-    for ( size_t i = 0; i < half; i++ )
+    for ( int i = 0; i < half; i++ )
     {
         nb.p->ct[i] = a.nb.p->ct[ (i + s) % half ];
         nb.p->ct[i + half] = a.nb.p->ct[ half + ((i + s) % half) ];

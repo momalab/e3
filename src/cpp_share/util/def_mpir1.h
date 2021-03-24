@@ -40,8 +40,8 @@ struct BigunNative
 
     BigunNative & operator++() { ++n; return *this; }
     BigunNative & operator--() { --n; return *this; }
-    BigunNative operator~() const { return ~n; }
-    BigunNative operator-() const { return -n; }
+    BigunNative operator~() const { return BigunNative(~n); }
+    BigunNative operator-() const { return BigunNative(-n); }
 
     bool operator==(const BigunNative & a) const { return n == a.n; }
     bool operator<(const BigunNative & a) const { return n < a.n; }

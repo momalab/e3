@@ -98,8 +98,9 @@ else
 	pushd build
 #	cmake -DCMAKE_INSTALL_PREFIX=_ins ..
 	echo " *** DEBUG build ***"
-	echo cmake -DCMAKE_INSTALL_PREFIX=_ins -DCMAKE_BUILD_TYPE=Debug ..
-	cmake -DCMAKE_INSTALL_PREFIX=_ins -DCMAKE_BUILD_TYPE=Debug ..
+#	echo cmake -DCMAKE_INSTALL_PREFIX=_ins -DCMAKE_BUILD_TYPE=Debug -DUSE_OpenMP=OFF ..
+	echo cmake -DCMAKE_INSTALL_PREFIX=_ins -DCMAKE_BUILD_TYPE=Debug -DBUILD_STATIC=ON ..
+	cmake -DCMAKE_INSTALL_PREFIX=_ins -DCMAKE_BUILD_TYPE=Debug -DBUILD_STATIC=ON ..
 	make
 	make install
 	popd

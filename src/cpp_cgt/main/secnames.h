@@ -32,12 +32,12 @@ const std::string encPilc = "pilc";
 const std::string encPila = "pila";
 
 const std::string encSeal = "seal";
-///const std::string encSealCkks = "seal_ckks";
 const std::string encBfvProt = "bfv_prot";
 const std::string encPali = "palisade";
 const std::string encCkks = "ckks";
 const std::string encBgv = "bgv";
 const std::string encBfv = "bfv";
+const std::string encGatcou = "gatcou";
 
 
 // Keywords for replacement
@@ -68,7 +68,7 @@ const std::string encryption = "encryption";
 const std::string circDb = "circuitDB";
 const std::string sizes = "sizes";
 const std::string formula = "formula";
-const std::string lambda = "lambda";
+const std::string lambda = "lambda"; // security level
 const std::string compile = "compile";
 const std::string kernel = "kernel";
 const std::string module = "module";
@@ -76,17 +76,19 @@ const std::string polyModulusDegree1 = "polyModulusDegree"; // FIXME this is a m
 const std::string plaintextModulus1 = "plaintextModulus";
 const std::string polyModulusDegree2 = "logn";
 const std::string plaintextModulus2 = "t";
-const std::string scale = "scale";
+const std::string scale = "scale"; // Seal and Palisade (CKKS)
 const std::string primes = "primes";
 const std::string encoder = "encoder";
 const std::string pailBeta = "beta";
 const std::string copheeIsArduino = "arduino";
 const std::string copheeBaudRate = "baud";
 const std::string scheme = "scheme";
-const std::string muldepth = "muldepth";
+const std::string muldepth = "muldepth"; // Palisade (BFV and CKKS)
 const std::string maxdepth = "maxdepth";
-const std::string useslots = "useslots";
+const std::string useslots = "useslots"; // Palisade (BFV and CKKS)
 const std::string paramn = "polyn";
+const std::string rotations = "rotations"; // Palisade (CKKS)
+const std::string rescale = "rescale"; // Palisade (CKKS)
 
 }
 #endif // _E3_SECNAMES_H_

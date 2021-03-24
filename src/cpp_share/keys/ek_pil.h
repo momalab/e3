@@ -58,10 +58,10 @@ struct PilArith
 
 // arithmetic
 
-inline PilNum operator+(PilNum a, PilNum b) { return a.n.addmod(b.n, PilArith::u()->N); }
-inline PilNum operator-(PilNum a, PilNum b) { return a.n.submod(b.n, PilArith::u()->N); }
-inline PilNum operator*(PilNum a, PilNum b) { return a.n.mulmod(b.n, PilArith::u()->N); }
-inline PilNum operator%(PilNum a, PilNum b) { return a.n % b.n; }
+inline PilNum operator+(PilNum a, PilNum b) { return PilNum(a.n.addmod(b.n, PilArith::u()->N)); }
+inline PilNum operator-(PilNum a, PilNum b) { return PilNum(a.n.submod(b.n, PilArith::u()->N)); }
+inline PilNum operator*(PilNum a, PilNum b) { return PilNum(a.n.mulmod(b.n, PilArith::u()->N)); }
+inline PilNum operator%(PilNum a, PilNum b) { return PilNum(a.n % b.n); }
 
 inline bool operator==(PilNum a, PilNum b) { return a.n == b.n; }
 inline bool operator!=(PilNum a, PilNum b) { return !(a == b); }

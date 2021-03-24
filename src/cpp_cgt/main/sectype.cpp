@@ -385,7 +385,7 @@ string SecType::loadDbTemplRep(string root, string fn) const
 
     ol::replaceAll(f, R_TypName, name.typ);
     ol::replaceAll(f, R_FilName, name.fil);
-    ol::replaceAll(f, R_ClsName, encType);
+    ol::replaceAll(f, R_ClsName, clsname() );
     ol::replaceAll(f, R_lambda, ol::tos(lambda) );
 
     return f;
@@ -402,7 +402,7 @@ string SecType::implVer() const
     if ( encType == secNames::encTfhe ) iver = e3::tfhe_impl();
     if ( encType == secNames::encSeal ) iver = e3::seal_impl();
 
-	// no using pali because db files are generic
+    // no using pali because db files are generic
     //if ( encType == secNames::encPali ) iver = e3::pali_impl();
 
 //    if ( encType == secNames::encSeal || encType == secNames::encSealCkks )
@@ -463,3 +463,7 @@ void SecType::saveConsts() const
     for ( const auto & x : fileConsts ) of << x << '\n';
 }
 
+std::string SecType::clsname() const
+{
+    return encType + (scheme.empty() ? "" : ("." + scheme));
+}

@@ -8,7 +8,7 @@
 #include "sk_seal.h"
 #include "def_seal1.h"
 
-using namespace seal;
+// using namespace seal;
 using std::cout;
 using std::stoull;
 using std::string;
@@ -48,16 +48,16 @@ void SealBasePrivKey::gen()
     e3seal::SealEvalKey * evalkey_ptr = new e3seal::SealEvalKey;
     e3seal::SealEvalKey & evalkey = *evalkey_ptr;
 
-    evalkey.params = new EncryptionParameters(scheme_type::BFV);
+    evalkey.params = new seal::EncryptionParameters(seal::scheme_type::BFV);
     auto & params = *evalkey.params;
     params.set_poly_modulus_degree(polyModulusDegree);
-    params.set_coeff_modulus(CoeffModulus::BFVDefault(polyModulusDegree));
+    params.set_coeff_modulus(seal::CoeffModulus::BFVDefault(polyModulusDegree));
     params.set_plain_modulus(plainModulus);
-    evalkey.context = SEALContext::Create(params);
+    evalkey.context = seal::SEALContext::Create(params);
 
-    KeyGenerator keygen(evalkey.context);
+    seal::KeyGenerator keygen(evalkey.context);
     privkey.secretkey = keygen.secret_key();
-    privkey.decryptor = new Decryptor(evalkey.context, privkey.secretkey);
+    privkey.decryptor = new seal::Decryptor(evalkey.context, privkey.secretkey);
     key = privkey_ptr;
     cout << "ok\n";
 
@@ -66,10 +66,10 @@ void SealBasePrivKey::gen()
     evalkey.publickey = keygen.public_key();
     evalkey.relinkeys = keygen.relin_keys();
     evalkey.galoiskeys = keygen.galois_keys();
-    evalkey.evaluator = new Evaluator(evalkey.context);
-    evalkey.encryptor = new Encryptor(evalkey.context, evalkey.publickey);
-    if ( this->isBatch ) evalkey.batchEncoder = new BatchEncoder(evalkey.context);
-    else evalkey.encoder = new IntegerEncoder(evalkey.context);
+    evalkey.evaluator = new seal::Evaluator(evalkey.context);
+    evalkey.encryptor = new seal::Encryptor(evalkey.context, evalkey.publickey);
+    if ( this->isBatch ) evalkey.batchEncoder = new seal::BatchEncoder(evalkey.context);
+    else evalkey.encoder = new seal::IntegerEncoder(evalkey.context);
     evalkey.isBatchEncoder = isBatch;
     ek.key = evalkey_ptr;
     cout << "ok\n";
@@ -91,7 +91,7 @@ bool SealBasePrivKey::load()
     {
         auto & context = e3seal::toek(ek.key)->context;
         privkey.secretkey.load(context, inSecretKey);
-        privkey.decryptor = new Decryptor(context, privkey.secretkey);
+        privkey.decryptor = new seal::Decryptor(context, privkey.secretkey);
     }
     catch (...)
     {
@@ -109,7 +109,7 @@ vector<string> SealBasePrivKey::rawDecrypt(const string & undecorated) const
     auto evalkey = e3seal::toek(ek.key);
     auto & isBatchEncoder = evalkey->isBatchEncoder;
     auto & decryptor = e3seal::tosk(key)->decryptor;
-    Plaintext p;
+    seal::Plaintext p;
     vector<string> m;
     // std::cout << "DEBUG noise budget: " << decryptor->invariant_noise_budget(nb.p->ct) << "\n";
     decryptor->decrypt(nb.p->ct, p);

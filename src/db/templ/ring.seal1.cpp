@@ -95,7 +95,7 @@ $Name & $Name::rotate_columns()
     return *this;
 }
 
-$Name & $Name::rotate_rows(size_t s)
+$Name & $Name::rotate_rows(int s)
 {
     auto ek = e3::e3seal::toek(pek->key);
     if ( ek->isBatchEncoder )

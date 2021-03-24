@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <exception>
 #include <vector>
+#include <iomanip>
 
 #include "secint.h"
 #include "secint.inc"

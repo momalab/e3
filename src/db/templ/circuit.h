@@ -164,15 +164,15 @@ template<int SZ> class $NameUint
 
         // Functions
         $NameUint<SZ> & rotate_columns();
-        $NameUint<SZ> & rotate_rows(size_t s);
+        $NameUint<SZ> & rotate_rows(int s);
 
         static $NameUint<SZ> rotate_columns(const $NameUint<SZ> & a) { $NameUint<SZ> r(a); return r.rotate_columns(); }
-        static $NameUint<SZ> rotate_rows(const $NameUint<SZ> & a, size_t s) { $NameUint<SZ> r(a); return r.rotate_rows(s); }
+        static $NameUint<SZ> rotate_rows(const $NameUint<SZ> & a, int s) { $NameUint<SZ> r(a); return r.rotate_rows(s); }
 
         std::string str() const;
         static size_t slots() { return $NameBit::k()->slots(); }
 
-    private:
+    protected:
         // Gates
         static Bit gate_buf(const Bit & a) { return Bit::gate_buf(a); }
         static Bit gate_not(const Bit & a) { return Bit::gate_not(a); }
@@ -182,8 +182,10 @@ template<int SZ> class $NameUint
         static Bit gate_nor(const Bit & a, const Bit & b) { return Bit::gate_nor(a, b); }
         static Bit gate_xnor(const Bit & a, const Bit & b) { return Bit::gate_xnor(a, b); }
         static Bit gate_xor(const Bit & a, const Bit & b) { return Bit::gate_xor(a, b); }
+
         static Bit gate_mux(const Bit & a, const Bit & b, const Bit & c)
-        { return Bit::gate_mux(c, b, a); } // the operators are switched because the netlist is FTS, while our MUX is STF
+        { return Bit::gate_mux(c, b, a); }
+        // the operators are switched because the netlist is FTS, while our MUX is STF
 };
 
 template<int SZ> class $NameInt : public $NameUint<SZ>
@@ -265,6 +267,10 @@ class $NameBool : public $NameUint<1>
         $NameBool(const char * c) : $NameBool(std::string(c)) {}
         explicit $NameBool(bool x) : $NameUint<1>(x) {}
         explicit $NameBool(const std::vector<bool> & x) : $NameUint<1>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
+        explicit $NameBool(Bit x) { (*this)[0] = x; }
+
+        Bit bit() const { return (*this)[0]; }
+        Bit & bit() { return (*this)[0]; }
 
         // Operators
         $NameBool & operator+=(const $NameBool & a);
@@ -282,6 +288,21 @@ class $NameBool : public $NameUint<1>
 
         template <int SZ>
         $NameUint<SZ> mux(const $NameUint<SZ> & x, const $NameUint<SZ> & y) const;
+
+        $NameBool g_buf() const { return $NameBool {gate_buf(bit())}; }
+        $NameBool g_not() const { return $NameBool {gate_not(bit())}; }
+        $NameBool g_xor(const $NameBool & b) const { return $NameBool {gate_xor(bit(), b[0])}; }
+        $NameBool g_and(const $NameBool & b) const { return $NameBool {gate_and(bit(), b[0])}; }
+        $NameBool g_or (const $NameBool & b) const { return $NameBool {gate_or (bit(), b[0])}; }
+        $NameBool g_nand(const $NameBool & b) const { return $NameBool {gate_nand(bit(), b[0])}; }
+        $NameBool g_xnor(const $NameBool & b) const { return $NameBool {gate_xnor(bit(), b[0])}; }
+        $NameBool g_nor(const $NameBool & b) const { return $NameBool {gate_nor(bit(), b[0])}; }
+
+        // this is unusual order because the generated circuits are using
+        // order cba, therefore gate_mux is in that weird form
+        $NameBool g_mux(const $NameBool & b, const $NameBool & c) const
+        { return $NameBool {gate_mux(c[0], b[0], bit())}; }
+
 };
 
 template <int SZ> std::ostream &

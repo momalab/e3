@@ -70,9 +70,9 @@ void load_pub_eval(Cc & cc, string file);
 PubKey load_pub_main(string file);
 bool load_pub_possible(string file);
 
-Ct encrypt(Cc & cc, PubKey & pubKey, const vi64 & v);
-Pt decrypt_pt(Cc & cc, SecKey & pubKey, Ct & ct);
-template <class T> T decrypt(Cc & cc, SecKey & pubKey, Ct & ct, int sz);
+Ct encrypt(Cc & cc, PubKey & key, const vi64 & v);
+Pt decrypt_pt(Cc & cc, SecKey & key, Ct & ct);
+template <class T> T decrypt(Cc & cc, SecKey & key, Ct & ct, int sz);
 
 void save_ct(Ct & ct, string f);
 Ct load_ct(string f);

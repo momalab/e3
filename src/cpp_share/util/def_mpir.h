@@ -45,6 +45,7 @@ class Bigun
         Bigun invmod(Bigun m) const;
 
         bool isZero() const;
+        explicit operator bool() { return !isZero(); }
 
         friend std::istream & operator>>(std::istream & is, Bigun & x);
         friend std::ostream & operator<<(std::ostream & os, const Bigun & x);
@@ -60,11 +61,19 @@ class Bigun
         Bigun & operator<<=(const Bigun & a);
         Bigun & operator>>=(const Bigun & a);
 
+        /*///
         Bigun & operator|=(ull a) { return *this |= Bigun(a); }
         Bigun & operator<<=(ull a) { return *this <<= Bigun(a); }
         Bigun & operator>>=(ull a) { return *this >>= Bigun(a); }
         Bigun operator<<(ull a) const { Bigun r(*this); return r <<= a; }
         Bigun operator>>(ull a) const { Bigun r(*this); return r >>= a; }
+        */
+
+        Bigun & operator|=(int a) { return *this |= Bigun(ull(a)); }
+        Bigun & operator<<=(int a) { return *this <<= Bigun(ull(a)); }
+        Bigun & operator>>=(int a) { return *this >>= Bigun(ull(a)); }
+        Bigun operator<<(int a) const { Bigun r(*this); return r <<= a; }
+        Bigun operator>>(int a) const { Bigun r(*this); return r >>= a; }
 
         Bigun & operator++();
         Bigun & operator--();
@@ -100,6 +109,8 @@ class Bigun
         friend Bigun operator+(const Bigun & b, ull a) { return b + Bigun(a); }
         friend Bigun operator-(const Bigun & b, ull a) { return b - Bigun(a); }
         friend Bigun operator*(const Bigun & b, ull a) { return b * Bigun(a); }
+        friend Bigun operator/(const Bigun & b, ull a) { return b / Bigun(a); }
+        friend Bigun operator%(const Bigun & b, ull a) { return b % Bigun(a); }
 
         // CoPHEE
         std::vector<uint32_t> data() const;

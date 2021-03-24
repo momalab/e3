@@ -77,20 +77,20 @@ static e3::PaliBfvCiphertext e3_PaliBfvCiphertext_op
 {
     e3::PaliBfvCiphertext r;
 
-    int sz1 = (int)a.x.size();
-    int sz2 = (int)b.x.size();
-    int sz = std::max(sz1, sz2);
+    int sza = (int)a.x.size();
+    int szb = (int)b.x.size();
+    int sz = std::max(sza, szb);
     r.x = a.x;
     r.x.resize(sz, 0);
 
-    for ( int i = 0; i < sz; i++ ) if ( i < sz2 )
-            switch (op)
-            {
-                case 0: r.x[i] += b.x[i]; break;
-                case 1: r.x[i] -= b.x[i]; break;
-                case 2: r.x[i] *= b.x[i]; break;
-                default: throw "Internal error 88115";
-            }
+    for ( int i = 0; i < szb; i++ ) /// if ( i < sz2 )
+        switch (op)
+        {
+            case 0: r.x[i] += b.x[i]; break;
+            case 1: r.x[i] -= b.x[i]; break;
+            case 2: r.x[i] *= b.x[i]; break;
+            default: throw "Internal error 88115";
+        }
 
     return r;
 }

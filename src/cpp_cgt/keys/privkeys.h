@@ -16,5 +16,7 @@
 #include "sk_arith_seal_ckks.h"
 #include "sk_bfv_prot.h"
 #include "sk_pali.h"
+#include "sk_palisade_ckks.h"
+#include "sk_circ_gatcou.h"
 
 #endif // _E3_PRIVKEYS_H_
