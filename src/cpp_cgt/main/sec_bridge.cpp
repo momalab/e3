@@ -50,6 +50,7 @@ void Bridge::genKeys(bool forceGen, bool forceLoad,
         sk = shared_ptr<PrivKey>
              (new PilBasePrivKey(name, forceGen,
                                  forceLoad, seed, lambda));
+
     else if ( encType == secNames::encSeal )
     {
         if ( scheme == secNames::encBfv || scheme.empty() )
@@ -62,13 +63,7 @@ void Bridge::genKeys(bool forceGen, bool forceLoad,
         else throw "Scheme not supported for type ["
             + encType + "] in " + name.typ;
     }
-    // FIXME o remove old code below
-    // sk = shared_ptr<PrivKey>(
-    //          new SealBasePrivKey(
-    //              name, forceGen, forceLoad, seed, lambda,
-    //              polyModulusDegree, plaintextModulus, encoder
-    //          )
-    //      );
+
     else
         throw "Bridge: Bad encryption type ["
         + encType + "] in " + name.typ;

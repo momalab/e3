@@ -157,14 +157,6 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
             + encType + "] in " + name.typ;
 
     }
-    // FIXME o remove old code below
-    // sk = shared_ptr<PrivKey>
-    //      (csk = new CircuitPrivKey_seal(name, forceGen,
-    //                                     forceLoad, seed, lambda));
-    // sk = shared_ptr<PrivKey>
-    //      (csk = new CircuitPrivKey_seal
-    // (name, forceGen, forceLoad, seed,
-    //  lambda, polyModulusDegree, plaintextModulus, encoder));
 
     else if ( encType == secNames::encTfhe )
         sk = shared_ptr<PrivKey>

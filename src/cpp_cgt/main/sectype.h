@@ -26,7 +26,7 @@ class SecType
         int lambda;
         int maxinline_size = 120; // about 1 line; -1 for unlimited
 
-        std::string encType; // library e.g. Palisade FIXME o rename
+        std::string encType; // library e.g. Palisade
         std::string scheme; // ckks,bfv,bgv
         std::string clsname() const; // class name for the $Name type (see e3key.h)
 
