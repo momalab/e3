@@ -16,6 +16,8 @@ Circuit::Circuit(std::istream & is, string nm,
 {
     std::map<string, string *> kv = stdParams();
 
+    kv[secNames::scheme] = &scheme;
+
     kv[secNames::postfix] = &postfixP;
     kv[secNames::postneg] = &postfixN;
     kv[secNames::circDb] = &circDb;
@@ -145,13 +147,24 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
                                             forceLoad, seed, lambda));
 
     else if ( encType == secNames::encSeal )
-        // sk = shared_ptr<PrivKey>
-        //      (csk = new CircuitPrivKey_seal(name, forceGen,
-        //                                     forceLoad, seed, lambda));
-        sk = shared_ptr<PrivKey>
-             (csk = new CircuitPrivKey_seal
-        (name, forceGen, forceLoad, seed,
-         lambda, polyModulusDegree, plaintextModulus, encoder));
+    {
+        if ( scheme == secNames::encBfv || scheme.empty() )
+            sk = shared_ptr<PrivKey>
+                 (csk = new CircuitPrivKey_seal_bfv
+            (name, forceGen, forceLoad, seed,
+             lambda, polyModulusDegree, plaintextModulus, encoder));
+        else throw "Scheme not supported for type ["
+            + encType + "] in " + name.typ;
+
+    }
+    // FIXME o remove old code below
+    // sk = shared_ptr<PrivKey>
+    //      (csk = new CircuitPrivKey_seal(name, forceGen,
+    //                                     forceLoad, seed, lambda));
+    // sk = shared_ptr<PrivKey>
+    //      (csk = new CircuitPrivKey_seal
+    // (name, forceGen, forceLoad, seed,
+    //  lambda, polyModulusDegree, plaintextModulus, encoder));
 
     else if ( encType == secNames::encTfhe )
         sk = shared_ptr<PrivKey>
@@ -194,7 +207,7 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
         {
             SealBasePrivKey * p = dynamic_cast<SealBasePrivKey *>(bridge->get_sk_raw());
             if ( !p ) never("bad bridge");
-            sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_seal(*p, name.typ));
+            sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_seal_bfv(*p, name.typ));
         }
 
         else

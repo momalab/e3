@@ -7,13 +7,13 @@
 namespace e3
 {
 
-class CircuitEvalKey_seal_X : public CircuitEvalKey_seal
+class CircuitEvalKey_seal_X : public CircuitEvalKey_seal_bfv
 {
     public:
-        CircuitEvalKey_seal_X(KeyName name) : CircuitEvalKey_seal(User::Alice, name) {}
+        CircuitEvalKey_seal_X(KeyName name) : CircuitEvalKey_seal_bfv(User::Alice, name) {}
 
         void save() { never("call to e3::CircuitEvalKey_seal_X::save"); }
-        using CircuitEvalKey_seal::bek;
+        using CircuitEvalKey_seal_bfv::bek;
 };
 
 } // e3

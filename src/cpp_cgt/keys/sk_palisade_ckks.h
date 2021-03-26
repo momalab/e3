@@ -1,6 +1,7 @@
 #ifndef _E3_SK_PALISADE_CKKS_H_
 #define _E3_SK_PALISADE_CKKS_H_
 
+#include <cmath>
 #include <complex>
 #include <map>
 #include <string>
@@ -104,7 +105,7 @@ inline void PalisadeCkksPrivKey::decrypt(const std::string & s, std::vector<int>
     v.clear();
     std::vector<std::complex<double>> vc;
     decrypt(s, vc);
-    for ( auto & c : vc ) v.push_back( int( c.real() ) );
+    for ( auto & c : vc ) v.push_back( int( std::round( c.real() ) ) );
 }
 
 // vector<double> decrypt(const std::string & s) const

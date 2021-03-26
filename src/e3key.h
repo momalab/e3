@@ -42,13 +42,13 @@ std::map<std::string, SchemeType> schemeTable
     { "native"       , SchemeType::NATIVE        },
     { "pail"         , SchemeType::PAIL          },
     { "pailg"        , SchemeType::PAILG         },
-    { "palisade.bfv" , SchemeType::PALISADE_BFV  },
-    { "palisade.ckks", SchemeType::PALISADE_CKKS },
+    { "palisade_bfv" , SchemeType::PALISADE_BFV  },
+    { "palisade_ckks", SchemeType::PALISADE_CKKS },
     { "pila"         , SchemeType::PILA          },
     { "pilc"         , SchemeType::PILC          },
     { "plain"        , SchemeType::PLAIN         },
-    { "seal.bfv"     , SchemeType::SEAL_BFV      },
-    { "seal.ckks"    , SchemeType::SEAL_CKKS     },
+    { "seal_bfv"     , SchemeType::SEAL_BFV      },
+    { "seal_ckks"    , SchemeType::SEAL_CKKS     },
     { "tfhe"         , SchemeType::TFHE          }
 };
 
@@ -80,7 +80,7 @@ void getSecretKey(T x, PrivKey *& sk)
             case SchemeType::PILC         : sk = new CircuitPrivKey_pilc(kn, false, true, "", 0); break;
             case SchemeType::PLAIN        : sk = new CircuitPrivKey_plain(kn, false, true, ""); break;
             case SchemeType::SEAL_BFV     : {
-                if ( x.is_circuit ) sk = new CircuitPrivKey_seal(kn, false, true, "", 0, "", "", "");
+                if ( x.is_circuit ) sk = new CircuitPrivKey_seal_bfv(kn, false, true, "", 0, "", "", "");
                 else sk = new SealPrivKey(kn, false, true, "", 0, "", "", "");
                 break;
             }

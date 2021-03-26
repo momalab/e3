@@ -465,5 +465,8 @@ void SecType::saveConsts() const
 
 std::string SecType::clsname() const
 {
-    return encType + (scheme.empty() ? "" : ("." + scheme));
+    // return encType + (scheme.empty() ? "" : ("." + scheme));
+    // FIXME o (remove comments)
+    // changed form "." to "_" to have valid class names for circuit
+    return encType + (scheme.empty() ? "" : ("_" + scheme));
 }

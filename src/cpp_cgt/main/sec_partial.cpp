@@ -19,6 +19,8 @@ Modular::Modular(std::istream & is, string nm,
 {
     std::map<string, string *> kv = stdParams();
 
+    kv[secNames::scheme] = &scheme;
+
     kv[secNames::postfix] = &postfixP;
     kv[secNames::postneg] = &postfixN;
     kv[secNames::polyModulusDegree1] = &polyModulusDegree;
@@ -28,7 +30,6 @@ Modular::Modular(std::istream & is, string nm,
     kv[secNames::encoder] = &encoder;
     kv[secNames::scale] = &scale;
     kv[secNames::primes] = &primes;
-    kv[secNames::scheme] = &scheme;
     kv[secNames::muldepth] = &smuldepth;
     kv[secNames::maxdepth] = &smaxdepth;
     kv[secNames::paramn] = &sp_n; // FIXME polyModulusDegree1 polyModulusDegree2
@@ -105,7 +106,7 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
     else if ( encType == secNames::encSeal )
     {
         if (0) {}
-        else if ( scheme == secNames::encBfv || scheme.empty() )
+        else if ( scheme == secNames::encBfv )
             sk = shared_ptr<PrivKey>
                  (new SealPrivKey
                   (name, forceGen, forceLoad, seed,
@@ -117,8 +118,11 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
                   (name, forceGen, forceLoad, seed,
                    lambda, polyModulusDegree, primes, scale));
 
+        else if ( scheme.empty() )
+            throw "Specify scheme for type [" + encType + "] in " + name.typ;
+
         else
-            throw "Scheme is not supperted for type ["
+            throw "Scheme is not supported for type ["
             + encType + "] in " + name.typ;
     }
 
@@ -148,7 +152,11 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
                  );
         }
 
-        else if ( scheme == secNames::encBgv ) throw "L114 " + encType;
+        else if ( scheme == secNames::encBgv )
+            throw "Pali BGV is not yet implemented for " + encType;
+
+        else if ( scheme.empty() )
+            throw "Specify scheme for type [" + encType + "] in " + name.typ;
 
         else
             throw "Scheme is not supperted for type ["

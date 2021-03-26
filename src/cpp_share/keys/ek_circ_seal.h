@@ -9,7 +9,7 @@ using std::string;
 namespace e3
 {
 
-class CircuitEvalKey_seal : public CircuitEvalKey
+class CircuitEvalKey_seal_bfv : public CircuitEvalKey
 {
         static const bool NOCOUT = true;
 
@@ -17,7 +17,7 @@ class CircuitEvalKey_seal : public CircuitEvalKey
         SealBaseEvalKey bek;
 
     public:
-        CircuitEvalKey_seal(User u, KeyName name)
+        CircuitEvalKey_seal_bfv(User u, KeyName name)
             : CircuitEvalKey(name), bek(0) { user(u); }
 
         virtual bool load() { return bek.load(filename()); }

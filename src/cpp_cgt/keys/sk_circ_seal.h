@@ -8,11 +8,11 @@
 namespace e3
 {
 
-class CircuitPrivKey_seal : public CircuitPrivKey
+class CircuitPrivKey_seal_bfv : public CircuitPrivKey
 {
         using Bit = SealNativeCiphertext;
 
-        virtual void gen() { never("called e3::CircuitPrivKey_seal::gen"); }
+        virtual void gen() { never("called e3::CircuitPrivKey_seal_bfv::gen"); }
         Bit encbit(bool b) const;
         bool decbit(const Bit & y) const;
 
@@ -25,13 +25,13 @@ class CircuitPrivKey_seal : public CircuitPrivKey
         virtual void save() { bsk.save(); }
 
     public:
-        CircuitPrivKey_seal(KeyName name, bool forceGen, bool forceLoad, std::string seed,
-                            int lam, std::string polyModulusDegree, std::string plainModulus, std::string encoder)
+        CircuitPrivKey_seal_bfv(KeyName name, bool forceGen, bool forceLoad, std::string seed,
+                                int lam, std::string polyModulusDegree, std::string plainModulus, std::string encoder)
             : CircuitPrivKey(name, seed, lam),
               bsk(name, forceGen, forceLoad, seed, lam, polyModulusDegree, plainModulus, encoder)
         { }
 
-        CircuitPrivKey_seal(const SealBasePrivKey & key, std::string name)
+        CircuitPrivKey_seal_bfv(const SealBasePrivKey & key, std::string name)
             : CircuitPrivKey(KeyName { name, key.name.fil }, "dummy", 0), bsk(key, name)
         { }
 

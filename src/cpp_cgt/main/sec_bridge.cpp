@@ -15,6 +15,8 @@ Bridge::Bridge(std::istream & is, string nm, const std::map<string, string> & gl
 {
     std::map<string, string *> kv = stdParams();
 
+    kv[secNames::scheme] = &scheme;
+
     kv[secNames::module] = &module;
     kv[secNames::polyModulusDegree1] = &polyModulusDegree;
     kv[secNames::plaintextModulus1] = &plaintextModulus;
@@ -49,12 +51,24 @@ void Bridge::genKeys(bool forceGen, bool forceLoad,
              (new PilBasePrivKey(name, forceGen,
                                  forceLoad, seed, lambda));
     else if ( encType == secNames::encSeal )
-        sk = shared_ptr<PrivKey>(
-                 new SealBasePrivKey(
-                     name, forceGen, forceLoad, seed, lambda,
-                     polyModulusDegree, plaintextModulus, encoder
-                 )
-             );
+    {
+        if ( scheme == secNames::encBfv || scheme.empty() )
+            sk = shared_ptr<PrivKey>(
+                     new SealBasePrivKey(
+                         name, forceGen, forceLoad, seed, lambda,
+                         polyModulusDegree, plaintextModulus, encoder
+                     )
+                 );
+        else throw "Scheme not supported for type ["
+            + encType + "] in " + name.typ;
+    }
+    // FIXME o remove old code below
+    // sk = shared_ptr<PrivKey>(
+    //          new SealBasePrivKey(
+    //              name, forceGen, forceLoad, seed, lambda,
+    //              polyModulusDegree, plaintextModulus, encoder
+    //          )
+    //      );
     else
         throw "Bridge: Bad encryption type ["
         + encType + "] in " + name.typ;

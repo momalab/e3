@@ -8,7 +8,7 @@
 namespace e3
 {
 
-class CircuitPrivKey_seal;
+class CircuitPrivKey_seal_bfv;
 class SealBasePrivKey : public PrivKey
 {
         virtual void gen();
@@ -68,7 +68,7 @@ class SealBasePrivKey : public PrivKey
         virtual std::string encrypt(const std::string & s, int msz) const { return ek.encrypt(s, msz); }
         virtual std::string filename() const;
 
-        friend class CircuitPrivKey_seal;
+        friend class CircuitPrivKey_seal_bfv;
         friend class SealPrivKey;
         size_t slots() { return ek.slots(); }
 };

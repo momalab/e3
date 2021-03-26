@@ -27,7 +27,7 @@ class $NameBit : public $NameBaseBit
         $NameBit & rotate_rows(int s);
         std::string str() const { return nb.str(); }
 
-        static e3::CircuitEvalKey_seal * k() { return static_cast<e3::CircuitEvalKey_seal *>(pek); }
+        static e3::CircuitEvalKey_seal_bfv * k() { return static_cast<e3::CircuitEvalKey_seal_bfv *>(pek); }
 
         static $NameBit gate_buf(const $NameBit & a);
         static $NameBit gate_not(const $NameBit & a);
