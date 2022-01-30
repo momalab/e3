@@ -29,14 +29,11 @@ bool validateParams(std::map<std::string, std::string> params)
 int getRingDimension(uint32_t multDepth, uint32_t batchSize)
 {
     int ringDimension;
-    switch ( multDepth )
-    {
-        case 0: ringDimension = 1 << 12; break;
-        case 1: ringDimension = 1 << 13; break;
-        case 2: ringDimension = 1 << 14; break;
-        default: ringDimension = 1 << 15;
-    }
-    if ( int(batchSize) > ringDimension ) ringDimension = batchSize;
+    if ( multDepth <= 1 ) ringDimension = 1 << 13;
+    else if ( multDepth <= 5 ) ringDimension = 1 << 14;
+    else ringDimension = 1 << 15;
+    if ( int(batchSize) > (ringDimension << 1) )
+        throw "The batch size cannot be larger than ring dimension / 2.";
     return ringDimension;
 }
 

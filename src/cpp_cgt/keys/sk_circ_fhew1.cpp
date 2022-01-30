@@ -13,7 +13,7 @@ namespace e3
 
 CircuitPrivKey_fhew::CircuitPrivKey_fhew
 (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam), ek(name)
+    : CircuitPrivKey(name, seed, lam), key(nullptr), ek(name)
 {
     init_final(forceGen, forceLoad);
 }

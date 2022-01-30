@@ -111,7 +111,7 @@ void CircuitPrivKey_bdd::gen_init(string & tid, string & dir)
         cout << "Warning: Encryption will not be secure!!!\n\n";
     }
 
-    if ( formula.empty() ) never("Bad formula");
+    if ( formula.empty() ) nevers("Bad formula");
     if ( lambda < 3 ) throw "Lambda cannot be <3 for BDD encryption";
 
     static int tid_cntr = 0;

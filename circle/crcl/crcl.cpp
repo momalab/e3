@@ -764,7 +764,7 @@ std::set<string> Module::getAllVars() const
 
 void Module::replaceAllVars()
 {
-    if (!chkReuse().empty()) never("reuse");
+    if (!chkReuse().empty()) nevers("reuse");
 
     auto allvars = getAllVars();
 
@@ -923,7 +923,7 @@ void Statement::chVar(string nv, string ov, bool outonly)
 string Statement::getOutName() const
 {
     auto r = oexpr.getVars();
-    if (r.size() != 1) never(0);
+    if (r.size() != 1) never;
     return r[0];
 }
 

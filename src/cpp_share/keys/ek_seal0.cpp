@@ -56,4 +56,9 @@ size_t SealBaseEvalKey::slots()
     return size_t(k->isBatchEncoder ? k->polyModulusDegree : 1);
 }
 
+uint64_t SealBaseEvalKey::getPlaintextModulus() const
+{
+    return e3seal::toek(key)->getPlaintextModulus();
+}
+
 } // e3

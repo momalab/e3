@@ -33,8 +33,11 @@ ReturnType decrypt(const SecureType & ct)
 namespace e3
 {
 
-enum class SchemeType { BDDN, GATCOU, NATIVE, PAIL, PAILG, PALISADE_BFV,
-    PALISADE_CKKS, PILA, PILC, PLAIN, SEAL_BFV, SEAL_CKKS, TFHE };
+enum class SchemeType
+{
+    BDDN, GATCOU, NATIVE, PAIL, PAILG, PALISADE_BFV,
+    PALISADE_CKKS, PILA, PILC, PLAIN, SEAL_BFV, SEAL_CKKS, TFHE
+};
 std::map<std::string, SchemeType> schemeTable
 {
     { "bddn"         , SchemeType::BDDN          },
@@ -64,9 +67,10 @@ void getSecretKey(T x, PrivKey *& sk)
     e3::KeyName kn {x.typname(), x.filname()};
     try
     {
-        switch( schemeTable[sc] )
+        switch ( schemeTable[sc] )
         {
-            case SchemeType::BDDN         : {
+            case SchemeType::BDDN         :
+            {
                 sk = new CircuitPrivKey_bddn(kn, false, true, "", 0, "FLF", "", "default", false);
                 break;
             }
@@ -79,7 +83,8 @@ void getSecretKey(T x, PrivKey *& sk)
             case SchemeType::PILA         : sk = new PilaPrivKey(kn, false, true, "", 0); break;
             case SchemeType::PILC         : sk = new CircuitPrivKey_pilc(kn, false, true, "", 0); break;
             case SchemeType::PLAIN        : sk = new CircuitPrivKey_plain(kn, false, true, ""); break;
-            case SchemeType::SEAL_BFV     : {
+            case SchemeType::SEAL_BFV     :
+            {
                 if ( x.is_circuit ) sk = new CircuitPrivKey_seal_bfv(kn, false, true, "", 0, "", "", "");
                 else sk = new SealPrivKey(kn, false, true, "", 0, "", "", "");
                 break;
@@ -121,8 +126,8 @@ ReturnType decrypt(const SecureType & ct)
     catch (...)
     {
         throw "Cannot decrypt " + std::string( ct.clsname() ) + " ("
-            + std::string( typeid(ct).name() ) + ") into "
-            + std::string( typeid(ReturnType).name() ) + ".";
+        + std::string( typeid(ct).name() ) + ") into "
+        + std::string( typeid(ReturnType).name() ) + ".";
     }
 }
 

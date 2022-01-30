@@ -10,8 +10,8 @@ namespace e3
 
 struct BigunNative
 {
-    using ull = e3::util::ull;
-    ull n;
+    using ull_t = e3::util::ull;
+    ull_t n;
     BigunNative(unsigned long long x = 0): n(x) {}
 
     string str() const;
@@ -39,6 +39,8 @@ struct BigunNative
 
     bool operator==(const BigunNative & a) const { return n == a.n; }
     bool operator<(const BigunNative & a) const { return n < a.n; }
+
+    ull_t ull() const { return n; }
 
     // CoPHEE
     std::vector<uint32_t> data(size_t nitems = 64) const;

@@ -19,6 +19,8 @@ std::string e3::SealNativeCiphertext::str() const
 namespace e3
 {
 
+SealNativeCiphertext::~SealNativeCiphertext(){}
+
 SealNativeCiphertext::SealNativeCiphertext()
 {
     p = std::shared_ptr<SealCiphertext>(new SealCiphertext());
@@ -37,7 +39,11 @@ SealNativeCiphertext::SealNativeCiphertext(const std::string & enc, cSealNativeE
     try
     {
         auto & context = e3seal::toek(ek)->context;
+#if SEALVER == 332
         p->ct.load( context, is );
+#else
+        p->ct.load( context, is );
+#endif
     }
     catch (...)
     {

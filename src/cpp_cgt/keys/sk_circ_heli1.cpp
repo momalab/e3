@@ -13,7 +13,7 @@ namespace e3
 
 CircuitPrivKey_heli::CircuitPrivKey_heli
 (KeyName name, bool forceGen, bool forceLoad, std::string seed, int lam)
-    : CircuitPrivKey(name, seed, lam), key(0), ek(name)
+    : CircuitPrivKey(name, seed, lam), key(nullptr), ek(name)
 {
     init_final(forceGen, forceLoad);
 }

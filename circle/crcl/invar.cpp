@@ -123,7 +123,7 @@ vector< std::map<string, bool> > Module::progressTable() const
             // this statement can be evaluated at this step
             //string outname = s->getOutName(); cannot do this as "0="
             vstr voutname = s->getOutVars();
-            if (voutname.size() > 1) never("not flat");
+            if (voutname.size() > 1) nevers("not flat");
             if (voutname.empty()) continue; // "0=" case
             string outname = voutname[0];
             if (known.find(outname) != known.end()) continue;
@@ -155,7 +155,7 @@ void e3::cr::findInvariants(string file_in, string file_ttb,
     using vvb = TableIterator::vvb;
     vvb ve;
 
-    if (file_ttb.empty()) never("empty ttb");
+    if (file_ttb.empty()) nevers("empty ttb");
 
     {
         std::ifstream in(file_ttb);

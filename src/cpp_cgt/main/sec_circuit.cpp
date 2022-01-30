@@ -52,6 +52,7 @@ Circuit::Circuit(std::istream & is, string nm,
     else if ( encType == secNames::encSeal ) {}
     else if ( encType == secNames::encTfhe ) {}
     else if ( encType == secNames::encGatcou ) {}
+    else if ( encType == secNames::encGatcow ) {}
     else if ( encType == secNames::encExt ) {}
     else if ( encType[0] == '@' ) {}
     else throw "encryption type ["
@@ -178,27 +179,32 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
              (csk = new CircuitPrivKey_gatcou(name, forceGen,
                                               forceLoad, seed, lambda));
 
+    else if ( encType == secNames::encGatcow )
+        sk = shared_ptr<PrivKey>
+             (csk = new CircuitPrivKey_gatcou(name, forceGen,
+                                              forceLoad, seed, lambda));
+
     else if ( encType == secNames::encExt )
         sk = shared_ptr<PrivKey>
              (csk = new CircuitPrivKey_ext());
 
     else if ( encType[0] == '@' )
     {
-        makeBridge(par, 0); if ( !bridge ) never("bridge");
+        makeBridge(par, 0); if ( !bridge ) nevers("bridge");
 
         if (0) {}
 
         else if ( encType == secNames::encPilc )
         {
             PilBasePrivKey * p = dynamic_cast<PilBasePrivKey *>(bridge->get_sk_raw());
-            if ( !p ) never("bad bridge");
+            if ( !p ) nevers("bad bridge");
             sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_pilc(*p, name.typ));
         }
 
         else if ( encType == secNames::encSeal )
         {
             SealBasePrivKey * p = dynamic_cast<SealBasePrivKey *>(bridge->get_sk_raw());
-            if ( !p ) never("bad bridge");
+            if ( !p ) nevers("bad bridge");
             sk = shared_ptr<PrivKey>(csk = new CircuitPrivKey_seal_bfv(*p, name.typ));
         }
 

@@ -11,7 +11,7 @@ Rnd * Rnd::newRnd(const string & seed)
 {
     if ( use == Cpp ) return new RndCpp(seed);
     if ( use == Kiss ) return new RndKiss(seed);
-    never("Bad Rnd type");
+    nevers("Bad Rnd type");
 }
 
 

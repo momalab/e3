@@ -28,6 +28,8 @@ bool SealCkksBaseEvalKey::load(string fname)
     std::ifstream inConfig(fileConfig, std::ios::binary);
     if ( !inParams || !inPublicKey || !inRelin || !inConfig ) return false;
 
+#if SEALVER == 332
+
     static e3seal_ckks::SealCkksEvalKey evalkey;
     try
     {
@@ -49,6 +51,34 @@ bool SealCkksBaseEvalKey::load(string fname)
     catch (...) { throw "Bad " + fname + " eval key"; }
 
     key = &evalkey;
+#else
+
+    try
+    {
+        static seal::EncryptionParameters params;
+        params.load(inParams);
+
+        static e3seal_ckks::SealCkksEvalKey evalkey(params);
+
+        string s;
+        getline(inConfig, s);
+        evalkey.scale = uint64_t ( stoull(s) );
+        evalkey.context = seal::SEALContext(params);
+        evalkey.publickey.load(evalkey.context, inPublicKey);
+        evalkey.relinkeys.load(evalkey.context, inRelin);
+        static seal::Evaluator evaluator(evalkey.context);
+        static seal::Encryptor encryptor(evalkey.context, evalkey.publickey);
+        static seal::CKKSEncoder encoder(evalkey.context);
+        evalkey.encoder = &encoder;
+        evalkey.encryptor = &encryptor;
+        evalkey.evaluator = &evaluator;
+        evalkey.params = &params;
+
+        key = &evalkey;
+    }
+    catch (...) { throw "Bad " + fname + " eval key"; }
+
+#endif
 
     if (!NOCOUT) cout << "ok\n";
     return true;

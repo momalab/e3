@@ -11,7 +11,7 @@ void e3::PilBaseEvalKeyExt::save()
 {
     std::ofstream of(filename(), std::ios::binary);
 
-    if ( kv.ver != 22 ) never("version");
+    if ( kv.ver != 22 ) nevers("version");
 
     of << kv.N << "\t";
     of << kv.S.n << "\n";

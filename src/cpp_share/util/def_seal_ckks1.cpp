@@ -35,7 +35,11 @@ SealCkksNativeCiphertext::SealCkksNativeCiphertext(const std::string & enc, cSea
     try
     {
         auto & context = e3seal_ckks::toek(ek)->context;
+#if SEALVER == 332
         p->ct.load( context, is );
+#else
+        p->ct.load( context, is );
+#endif
     }
     catch (...)
     {

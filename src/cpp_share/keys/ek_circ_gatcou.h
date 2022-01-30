@@ -24,6 +24,7 @@ class CircuitEvalKey_gatcou : public CircuitEvalKey
         void dummy() const;
 };
 
+using CircuitEvalKey_gatcow = CircuitEvalKey_gatcou;
 
 } // e3
 #endif // _E3_EK_CIRC_GATCOU_H_

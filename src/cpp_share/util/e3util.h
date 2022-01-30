@@ -92,6 +92,61 @@ inline std::vector<T> extend(const std::vector<T> & v, size_t size, const T & va
 std::string trim(const std::string & s);
 std::string loadConst(std::string typ, std::string id);
 
+inline size_t msb(size_t n)
+{
+    size_t msb = 0;
+    for (; n; n >>= 1 ) msb++;
+    return msb;
+}
+
+template <class T>
+inline T sum_inplace(std::vector<T> & v)
+{
+    auto size = v.size();
+    for ( auto n = 1 << msb(size); n > 1; )
+    {
+        n >>= 1;
+        for ( size_t i = n; i < size; i++ ) v[i - n] += v[i];
+        size = n;
+    }
+    v.resize(1);
+    return v[0];
+}
+
+template <class T>
+inline T sum(const std::vector<T> & v)
+{
+    std::vector<T> vtmp;
+    auto half = v.size() >> 1;
+    for ( size_t i = 0; i < half; i++ ) vtmp.push_back( v[i] + v[i + half] );
+    if ( v.size() & 1 ) vtmp.push_back( v.back() ); // if v.size is odd
+    return sum_inplace(vtmp);
+}
+
+template <class T>
+inline T product_inplace(std::vector<T> & v)
+{
+    auto size = v.size();
+    for ( auto n = 1 << msb(size); n > 1; )
+    {
+        n >>= 1;
+        for ( size_t i = n; i < size; i++ ) v[i - n] *= v[i];
+        size = n;
+    }
+    v.resize(1);
+    return v[0];
+}
+
+template <class T>
+inline T product(const std::vector<T> & v)
+{
+    std::vector<T> vtmp;
+    auto half = v.size() >> 1;
+    for ( size_t i = 0; i < half; i++ ) vtmp.push_back( v[i] * v[i + half] );
+    if ( v.size() & 1 ) vtmp.push_back( v.back() ); // if v.size is odd
+    return product_inplace(vtmp);
+}
+
 } // util
 } // e3
 

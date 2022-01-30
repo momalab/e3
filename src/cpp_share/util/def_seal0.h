@@ -22,6 +22,7 @@ struct SealEvalKey
     uint64_t plaintextModulus = 0;
     uint64_t polyModulusDegree = 0;
     bool isBatchEncoder = false;
+    uint64_t getPlaintextModulus() const { return plaintextModulus; }
 };
 
 // using sk = SealPrivKey;

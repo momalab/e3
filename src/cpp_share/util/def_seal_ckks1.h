@@ -33,7 +33,12 @@ struct SealCkksEvalKey
     seal::Encryptor * encryptor = nullptr;
     seal::Evaluator * evaluator = nullptr;
     seal::CKKSEncoder * encoder = nullptr;
+#if SEALVER == 332
     std::shared_ptr<seal::SEALContext> context;
+#else
+    seal::SEALContext context;
+    SealCkksEvalKey(seal::EncryptionParameters &p): params(&p), context(p) {}
+#endif
     uint64_t scale = 0;
 };
 

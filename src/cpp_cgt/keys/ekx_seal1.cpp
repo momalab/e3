@@ -22,7 +22,13 @@ void e3::SealBaseEvalKeyExt::save()
     std::ofstream ofRelin (fileRelin , std::ios::binary);
     std::ofstream ofGalois(fileGalois, std::ios::binary);
     std::ofstream ofConfig(fileConfig, std::ios::binary);
+
+#if SEALVER == 332
     seal::EncryptionParameters::Save( *(e3seal::toek(key)->params), ofParams );
+#else
+    e3seal::toek(key)->params->save( ofParams );
+#endif
+
     e3seal::toek(key)->publickey.save(ofPublicKey);
     e3seal::toek(key)->relinkeys.save(ofRelin);
     e3seal::toek(key)->galoiskeys.save(ofGalois);

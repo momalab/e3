@@ -165,21 +165,21 @@ void Modular::genKeys(bool forceGen, bool forceLoad,
 
     else if (encType[0] == '@')
     {
-        makeBridge(par, 1); if (!bridge) never("bridge");
+        makeBridge(par, 1); if (!bridge) nevers("bridge");
 
         if (0) {}
 
         else if (encType == secNames::encPila)
         {
             PilBasePrivKey * p = dynamic_cast<PilBasePrivKey *>(bridge->get_sk_raw());
-            if (!p) never("bad bridge");
+            if (!p) nevers("bad bridge");
             sk = shared_ptr<PrivKey>(new PilaPrivKey(*p, name.typ));
         }
 
         else if (encType == secNames::encSeal)
         {
             SealBasePrivKey * p = dynamic_cast<SealBasePrivKey *>(bridge->get_sk_raw());
-            if (!p) never("bad bridge");
+            if (!p) nevers("bad bridge");
             sk = shared_ptr<PrivKey>(new SealPrivKey(*p, name.typ));
         }
 

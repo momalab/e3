@@ -49,11 +49,20 @@ void SealCkksBasePrivKey::gen()
     // generate SK
     cout << "Generating private key (" << lambda << ") .. " << std::flush;
     static e3seal_ckks::SealCkksPrivKey privkey;
-    static e3seal_ckks::SealCkksEvalKey evalkey;
+#if SEALVER == 332
     static auto params = seal::EncryptionParameters(seal::scheme_type::CKKS);
+    static e3seal_ckks::SealCkksEvalKey evalkey;
+#else
+    static auto params = seal::EncryptionParameters(seal::scheme_type::ckks);
+    static e3seal_ckks::SealCkksEvalKey evalkey(params);
+#endif
     params.set_poly_modulus_degree(polyModulusDegree);
     params.set_coeff_modulus( seal::CoeffModulus::Create(polyModulusDegree, primes) );
+#if SEALVER == 332
     evalkey.context = seal::SEALContext::Create(params);
+#else
+    evalkey.context = seal::SEALContext(params);
+#endif
     seal::KeyGenerator keygen(evalkey.context);
     privkey.secretkey = keygen.secret_key();
     static seal::Decryptor decryptor(evalkey.context, privkey.secretkey);
@@ -63,8 +72,13 @@ void SealCkksBasePrivKey::gen()
 
     // generate EK and set it
     cout << "Generating evaluation key .. " << std::flush;
+#if SEALVER == 332
     evalkey.publickey = keygen.public_key();
     evalkey.relinkeys = keygen.relin_keys();
+#else
+    keygen.create_public_key(evalkey.publickey);
+    keygen.create_relin_keys(evalkey.relinkeys);
+#endif
     static seal::Evaluator evaluator(evalkey.context);
     static seal::Encryptor encryptor(evalkey.context, evalkey.publickey);
     static seal::CKKSEncoder encoder(evalkey.context);

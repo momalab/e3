@@ -30,6 +30,7 @@ bool SealBaseEvalKey::load(string fname)
     std::ifstream inConfig(fileConfig, std::ios::binary);
     if ( !inParams || !inPublicKey || !inRelin || !inConfig ) return false;
 
+#if SEALVER == 332
     e3seal::SealEvalKey * ekey = new e3seal::SealEvalKey;
     e3seal::SealEvalKey & evalkey = *ekey;
     try
@@ -50,6 +51,30 @@ bool SealBaseEvalKey::load(string fname)
     }
     catch (...) { throw "Bad " + fname + " eval key"; }
     key = ekey;
+#else
+    try
+    {
+        seal::EncryptionParameters params;
+        params.load(inParams);
+        e3seal::SealEvalKey * ekey = new e3seal::SealEvalKey(params);
+        e3seal::SealEvalKey & evalkey = *ekey;
+        unsigned char be;
+        inConfig.read(reinterpret_cast<char *>(&be), 1);
+        evalkey.isBatchEncoder = be == 1;
+        evalkey.context = seal::SEALContext(params);
+        evalkey.publickey.load(evalkey.context, inPublicKey);
+        evalkey.relinkeys.load(evalkey.context, inRelin);
+        evalkey.galoiskeys.load(evalkey.context, inGalois);
+        evalkey.evaluator = new seal::Evaluator(evalkey.context);
+        evalkey.encryptor = new seal::Encryptor(evalkey.context, evalkey.publickey);
+        if ( evalkey.isBatchEncoder ) evalkey.batchEncoder = new seal::BatchEncoder(evalkey.context);
+        else throw "no seal::IntegerEncoder - "+fname;
+        evalkey.params = &params;
+        key = ekey;
+    }
+    catch (...) { throw "Bad " + fname + " eval key"; }
+#endif
+
 
     if (!NOCOUT) cout << "ok\n";
     return true;
@@ -86,7 +111,11 @@ string SealBaseEvalKey::rawEncrypt(const string & s, int) const
         // while ( idx < v.size() ) v[idx++] = value; // repeat the last value to the end
         encoder->encode(v, p);
     }
+#if SEALVER == 332
     else p = evalkey->encoder->encode( (uint64_t) stoull(s) );
+#else
+    else throw "no seal::IntegerEncoder - "+s;
+#endif
     encryptor->encrypt(p, nb.p->ct);
     return nb.str();
 }
@@ -96,6 +125,11 @@ size_t SealBaseEvalKey::slots()
     const auto & k = e3seal::toek(key);
     bool isB = k->isBatchEncoder;
     return size_t(isB ? k->batchEncoder->slot_count() : 1);
+}
+
+uint64_t SealBaseEvalKey::getPlaintextModulus() const
+{
+    return e3seal::toek(key)->getPlaintextModulus();
 }
 
 } // e3

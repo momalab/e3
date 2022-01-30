@@ -96,11 +96,11 @@ bool Module::simplify()
     {
         int idxo = findStatement(r.first);
         int idxm = findStatement(r.second);
-        if ( idxo < 0 || idxm < 0 ) never("bad idx " + r.first + " = " + r.second);
+        if ( idxo < 0 || idxm < 0 ) nevers("bad idx " + r.first + " = " + r.second);
 
         // find last use and check that it is actually idxo
         int nu = findNofUse(r.second);
-        if ( nu < 1 ) never("not expected nofuse");
+        if ( nu < 1 ) nevers("not expected nofuse");
 
         // do not remove - it is used in other places
         if ( nu != 1 ) continue;
@@ -119,7 +119,7 @@ bool Module::simplify()
     if ( !changed )
     {
         if ( inps == inputs && outs == outputs ) return false;
-        never("Internal error: bad inouts");
+        nevers("Internal error: bad inouts");
     }
 
     if ( inps != inputs )
@@ -147,7 +147,7 @@ bool Module::simplify()
         {
             if ( ol::isin(outs, i) ) continue;
             int idx = findStatement(i);
-            if ( idx < 0 ) never("Bad statement with [" + i + "]");
+            if ( idx < 0 ) nevers("Bad statement with [" + i + "]");
             Statement *& s = statements[idx];
             // disable statement
             delete s;
@@ -185,7 +185,7 @@ void Expr::simplify(Node ** p, const mss & m)
             *p = new Prim(v);
             return;
         }
-        else never("simplify");
+        else nevers("simplify");
     }
 
     if (nelems.size() > 1)
@@ -218,7 +218,7 @@ void Xorm::simplify(Node ** p, const mss & m)
         if (!x->isConst(&v)) nelems.push_back(x);
         else if (v == "1") nelems.push_back(x);
         else if (v == "0") { delete x; }
-        else never("simplify");
+        else nevers("simplify");
     }
 
     if (nelems.size() > 1)
@@ -257,7 +257,7 @@ void Term::simplify(Node ** p, const mss & m)
             *p = new Prim(v);
             return;
         }
-        else never("simplify");
+        else nevers("simplify");
     }
 
     if (nelems.size() > 1)

@@ -82,3 +82,51 @@ void Bigun::data(const std::vector<uint32_t> & a)
 }
 
 } // e3
+
+string e3::Bigun::sth() const
+{
+    static const char ch[16] =
+    {
+        '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
+
+    std::vector<char> stk;
+
+    Bigun x(*this);
+
+    while (!x.isZero())
+    {
+        auto k = x % 16;
+        int q = 0;
+        for ( int j = 0; j < 4; j++ ) { int p = 1 << j; q |= (k & Bigun(p)).isZero() ? 0 : p; }
+        stk.push_back(ch[q]);
+        x >>= 4;
+    }
+
+    if ( stk.empty() ) return "0";
+
+    string r;
+    for ( auto i = stk.size(); i > 0; ) r += stk[--i];
+    return r;
+}
+
+e3::Bigun::ull_t e3::Bigun::ull() const
+{
+    return this->p->ull();
+}
+
+void e3::Bigun::BitRef::setbit(Bigun::BitVal a)
+{
+    if ( !p ) throw "uninitialized bit reference in " + std::string(__func__);
+    e3::Bigun b(1); b <<= i;
+    *p |= b;
+    if ( !a.v ) *p ^= b;
+}
+
+e3::Bigun::BitVal e3::Bigun::BitRef::val() const
+{
+    if ( !p ) throw "uninitialized bit reference in " + std::string(__func__);
+	Bigun q(*p);
+    return BitVal { !((q >> i) & Bigun(1)).isZero() };
+}

@@ -269,6 +269,9 @@ class $NameBool : public $NameUint<1>
         explicit $NameBool(const std::vector<bool> & x) : $NameUint<1>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
         explicit $NameBool(Bit x) { (*this)[0] = x; }
 
+        $NameBool(const $NameBool &) = default;
+        $NameBool & operator=(const $NameBool & x) = default;
+
         Bit bit() const { return (*this)[0]; }
         Bit & bit() { return (*this)[0]; }
 

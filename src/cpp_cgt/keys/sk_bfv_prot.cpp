@@ -32,14 +32,7 @@ string BfvProtPrivKey::filename() const
 
 void BfvProtPrivKey::gen()
 {
-    //never("");
     cout << "Generating keys .. " << std::flush;
-    //e3seal::SealEvalKey * evalkey_ptr = new e3seal::SealEvalKey;
-    //e3seal::SealEvalKey & evalkey = *evalkey_ptr;
-    //evalkey.polyModulusDegree = polyModulusDegree;
-    //evalkey.plaintextModulus = plainModulus;
-    //evalkey.isBatchEncoder = isBatch;
-    //ek.key = evalkey_ptr;
     cout << " BfvProtPrivKey::gen()-NI ";
     cout << "ok\n";
 }

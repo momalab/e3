@@ -1,4 +1,4 @@
-// === BEGIN circuit.seal.cpp Name=$Name
+// === BEGIN circuit.seal_bfv1.cpp Name=$Name
 #include <iostream>
 
 inline const e3::e3seal::SealEvalKey * $NameBit_ek()
@@ -110,4 +110,4 @@ $NameBit & $NameBit::rotate_rows(int s)
     return *this;
 }
 
-// === END circuit.seal.cpp Name=$Name
+// === END circuit.seal_bfv1.cpp Name=$Name

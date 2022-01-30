@@ -1,4 +1,4 @@
-// === BEGIN circuit.seal.cpp Name=$Name
+// === BEGIN circuit.seal_bfv0.cpp Name=$Name
 
 inline const e3::e3seal::SealEvalKey * $NameBit_ek()
 {
@@ -18,7 +18,7 @@ $NameBit $NameBit::gate_not(const $NameBit & a)
     r.nb.p->ct.resize( slots );
     for ( size_t i = 0; i < r.nb.p->ct.size(); i++ )
     {
-        r.nb.p->ct[i] = !a.nb.p->ct[i];
+        r.nb.p->ct[i] = (a.nb.p->ct[i]?0:1);
         // r.nb.p->ct[i] %= plaintextModulus;
     }
     return r;
@@ -68,7 +68,7 @@ $NameBit $NameBit::gate_nand(const $NameBit & a, const $NameBit & b)
     {
         auto ma = a.nb.p->ct[i];
         auto mb = b.nb.p->ct[i];
-        ma = !(ma & mb);
+        ma = (ma & mb)?0:1;
         r.nb.p->ct[i] = ma;
         // r.nb.p->ct[i] %= plaintextModulus;
     }
@@ -85,7 +85,7 @@ $NameBit $NameBit::gate_nor(const $NameBit & a, const $NameBit & b)
     {
         auto ma = a.nb.p->ct[i];
         auto mb = b.nb.p->ct[i];
-        ma = !(ma | mb);
+        ma = (ma | mb)?0:1;
         r.nb.p->ct[i] = ma;
         // r.nb.p->ct[i] %= plaintextModulus;
     }
@@ -102,7 +102,7 @@ $NameBit $NameBit::gate_xnor(const $NameBit & a, const $NameBit & b)
     {
         auto ma = a.nb.p->ct[i];
         auto mb = b.nb.p->ct[i];
-        ma = !(ma ^ mb);
+        ma = (ma ^ mb)?0:1;
         r.nb.p->ct[i] = ma;
         // r.nb.p->ct[i] %= plaintextModulus;
     }
@@ -169,4 +169,4 @@ $NameBit & $NameBit::rotate_rows(int s)
     return *this;
 }
 
-// === END circuit.seal.cpp Name=$Name
+// === END circuit.seal_bfv0.cpp Name=$Name

@@ -39,6 +39,8 @@ class $Name
         $Name(const $Name & a) : x(a.x) {}
         $Name(const std::string & s) : x( pek->decor(s, false), pek->key ) {}
 
+        e3::SealNativeCiphertext native() const { return x; }
+
         // public encryption
         explicit $Name(unsigned long long a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
         explicit $Name(const std::vector<unsigned> & a)
@@ -88,6 +90,7 @@ class $Name
 
         std::string str() const { return pek->decor(x.str(), true); }
         static size_t slots() { init0(); return pek->slots(); }
+		static uint64_t getPlaintextModulus() { return pek->getPlaintextModulus(); }
 };
 
 inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os << x.str(); }

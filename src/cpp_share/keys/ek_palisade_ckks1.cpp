@@ -54,7 +54,7 @@ string PalisadeCkksEvalKey::rawEncrypt(const string & strPlaintext, int msz) con
 
 size_t PalisadeCkksEvalKey::slots() const
 {
-    return ( *palisade_ckks::toContext(key.cc) )->GetRingDimension();
+    return ( *palisade_ckks::toContext(key.cc) )->GetRingDimension() >> 1;
 }
 
 } // e3

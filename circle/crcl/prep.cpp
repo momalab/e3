@@ -217,7 +217,7 @@ bool Preprocessor::procConDef(const string & ln)
     istr is(ln);
 
     string s; is >> s;
-    if ( s != "{") never("procConDef");
+    if ( s != "{") nevers("procConDef");
 
     auto i = ln.find('=');
     auto j = ln.find('}');

@@ -65,6 +65,8 @@ class SealBasePrivKey : public PrivKey
             else r = v[0] + r;
             return r;
         }
+        virtual void decrypt(const std::string & s, std::vector<int> & r);
+
         virtual std::string encrypt(const std::string & s, int msz) const { return ek.encrypt(s, msz); }
         virtual std::string filename() const;
 
@@ -72,6 +74,13 @@ class SealBasePrivKey : public PrivKey
         friend class SealPrivKey;
         size_t slots() { return ek.slots(); }
 };
+
+inline void SealBasePrivKey::decrypt(const std::string & s, std::vector<int> & v)
+{
+    v.clear();
+    auto vs = rawDecrypt( ek.decor(s, false) );
+    for ( auto & s : vs ) v.push_back( std::stoi(s) );
+}
 
 } // e3
 #endif // _E3_SK_SEAL_H_

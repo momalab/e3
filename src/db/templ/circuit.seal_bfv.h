@@ -1,4 +1,4 @@
-// === BEGIN circuit.seal.h Name=$Name
+// === BEGIN circuit.seal_bfv.h Name=$Name
 
 class $NameBit : public $NameBaseBit
 {
@@ -40,4 +40,4 @@ class $NameBit : public $NameBaseBit
         static $NameBit gate_mux(const $NameBit & a, const $NameBit & b, const $NameBit & c);
 };
 
-// === END circuit.seal.h Name=$Name
+// === END circuit.seal_bfv.h Name=$Name

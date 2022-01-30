@@ -285,7 +285,7 @@ void Fbs::generate()
         if ( (int)idxs.size() == vsz ) return;
     }
 
-    never("Cannot generate F: random generator fails");
+    nevers("Cannot generate F: random generator fails");
 }
 
 void Lbs::generate()
@@ -305,9 +305,9 @@ void Lbs::generate()
         // validate
         vvbool U = unit(sz);
         vvbool A3 = mul(A1, A2);
-        if (!equal(A3, U)) never("bad");
+        if (!equal(A3, U)) never;
         A3 = mul(A2, A1);
-        if (!equal(A3, U)) never("bad");
+        if (!equal(A3, U)) never;
     }
 
     for ( int i = 0; i < sz; i++ )
@@ -455,7 +455,7 @@ void Fbs::cir(std::ostream & of, bool fwdmx, bool & xy)
 
     auto typ = element.typ;
 
-    if ( idxs.size() < 2 ) never("Not enough variables for F");
+    if ( idxs.size() < 2 ) nevers("Not enough variables for F");
     of << vm.xy(xy, idxs[0]) << " = " << vm.xy(xy, idxs[0]) << " ^ ";
     if ( typ == 'N' )
     {
@@ -467,7 +467,7 @@ void Fbs::cir(std::ostream & of, bool fwdmx, bool & xy)
     string op = " * ";
     if ( typ == 'A' ) {}
     else if ( typ == 'R' ) op = " | ";
-    else never("Bad element type");
+    else nevers("Bad element type");
 
     for ( size_t i = 2; i < idxs.size(); i++ ) of << op << vm.xy(xy, idxs[i]);
 

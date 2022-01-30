@@ -43,30 +43,39 @@ struct Gcounter
 
 struct GcStat
 {
-    Gcounter ops, gates;
+    Gcounter ops, gates, crit;
     bool gates_on = true;
+    bool crit_on = true;
 
-    void not_() { ++ops.not_; if (gates_on) ++gates.not_; }
-    void and_() { ++ops.and_; if (gates_on) ++gates.and_; }
-    void nand_() { ++ops.nand_; if (gates_on) ++gates.nand_; }
-    void or_() { ++ops.or_; if (gates_on) ++gates.or_; }
-    void xor_() { ++ops.xor_; if (gates_on) ++gates.xor_; }
-    void xnor_() { ++ops.xnor_; if (gates_on) ++gates.xnor_; }
-    void mux_() { ++ops.mux_; if (gates_on) ++gates.mux_; }
-    void nor_() { ++ops.nor_; if (gates_on) ++gates.nor_; }
+    void not_() { ++ops.not_; if (gates_on) ++gates.not_; if (crit_on) ++crit.not_; }
+    void and_() { ++ops.and_; if (gates_on) ++gates.and_; if (crit_on) ++crit.and_; }
+    void nand_() { ++ops.nand_; if (gates_on) ++gates.nand_; if (crit_on) ++crit.nand_;}
+    void or_() { ++ops.or_; if (gates_on) ++gates.or_;  if (crit_on) ++crit.or_; }
+    void xor_() { ++ops.xor_; if (gates_on) ++gates.xor_;  if (crit_on) ++crit.xor_; }
+    void xnor_() { ++ops.xnor_; if (gates_on) ++gates.xnor_; if (crit_on) ++crit.xnor_; }
+    void mux_() { ++ops.mux_; if (gates_on) ++gates.mux_; if (crit_on) ++crit.mux_; }
+    void nor_() { ++ops.nor_; if (gates_on) ++gates.nor_; if (crit_on) ++crit.nor_; }
 };
 
 extern GcStat gc_stat;
 
 // this object saves the current state set by 'void gates(bool z)'
-struct Saver { bool a; Saver() { a = gc_stat.gates_on; } ~Saver() { gc_stat.gates_on = a; } };
+struct Saver
+{
+    bool ag, ac;
+    Saver() { ag = gc_stat.gates_on; ac = gc_stat.crit_on; }
+    ~Saver() { gc_stat.gates_on = ag; gc_stat.crit_on = ac; }
+};
 
-inline void reset() { gc_stat.ops = gc_stat.gates = Gcounter(); }
-inline void gates(bool z, const Saver & s) { gc_stat.gates_on = (z && s.a); }
+inline void reset() { gc_stat.crit = gc_stat.ops = gc_stat.gates = Gcounter(); }
+inline void gates(bool z, const Saver & s) { gc_stat.gates_on = (z && s.ag); }
+inline void crit(bool z, const Saver & s) { gc_stat.crit_on = (z && s.ac); }
+inline void cgates(bool z, const Saver & s) { gates(z, s); crit(z, s); }
+
 inline GcStat get() { return gc_stat; }
 
 void print(int w = 7);
-std::string sum(int t = 3);
+std::string sum(int t = 0);
 
 
 } // gatcou

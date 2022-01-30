@@ -25,7 +25,7 @@ std::vector<Vx> Module::eval(Visitor & vis, const std::vector<Vx> & inps, bool t
         if ( !vis.m ) vis.m = &mlocal; // let Visitor collect info
         std::map<std::string, Vx> & m = *vis.m;
 
-        if (inps.size() != inputs.size()) never("inputs");
+        if (inps.size() != inputs.size()) nevers("inputs");
         int i = 0;
         for (auto x : inputs) m[x] = inps[i++];
 
@@ -37,7 +37,7 @@ std::vector<Vx> Module::eval(Visitor & vis, const std::vector<Vx> & inps, bool t
             // handle bogus assignment, e.g. 0=x+y
             if (outvars.empty()) continue;
 
-            if (outvars.size() != 1) never("not flat");
+            if (outvars.size() != 1) nevers("not flat");
             m[outvars[0]] = s.eval<Visitor, Vx>(vis);
 
             if ( vis.callback ) vis.callback();
@@ -71,8 +71,8 @@ template<typename Visitor, typename Vx> Vx Statement::eval(Visitor & vis) const
 
 template<typename Visitor, typename Vx> Vx Iexpr::eval(Visitor & vis) const
 {
-    if (typ != EXP) throw "Cannot evaluate on non-flat circle";
-    if (!node) never("node");
+    if (typ != Typ::EXP) throw "Cannot evaluate on non-flat circle";
+    if (!node) nevers("node");
     return node->eval<Visitor, Vx>(vis);
 }
 
@@ -91,7 +91,7 @@ template<typename Visitor, typename Vx> Vx Node::eval(Visitor & vis) const
     else if (p) return p->eval<Visitor, Vx>(vis);
     else if (x) return x->eval<Visitor, Vx>(vis);
 
-    never("node");
+    nevers("node");
 }
 
 template<typename Visitor, typename Vx> Vx Expr::eval(Visitor & vis) const
@@ -120,7 +120,7 @@ template<typename Visitor, typename Vx> Vx Prim::eval(Visitor & vis) const
 {
     if (expr)
     {
-        if (!name.empty()) never("prim");
+        if (!name.empty()) nevers("prim");
         Vx r = expr->eval<Visitor, Vx>(vis);
         if (neg) r = vis.Not(r);
         return r;

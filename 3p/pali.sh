@@ -3,7 +3,7 @@
 ## https://gitlab.com/palisade/palisade-release.git
 
 #git -c http.sslVerify=false clone --depth 1 https://gitlab.com/palisade/palisade-release.git
-#cd palisade-release 
+#cd palisade-release
 #git submodule sync --recursive
 #git submodule update --init  --recursive
 #mkdir build
@@ -16,6 +16,25 @@
 #make install
 ## check run : bin/examples/pke/simple-integers
 
+echo "== Checking dependencies =="
+dependencies=( autoconf cmake git libtool lzip make g++ )
+dependenciesInstalled=true
+for dependency in "${dependencies[@]}"; do
+    echo -n "${dependency} .. "
+    dpkg -s ${dependency} &> /dev/null
+    if [ $? -eq 0 ]; then
+        echo "ok"
+    else
+        echo "failed"
+        dependenciesInstalled=false
+    fi
+done
+
+if [ "${dependenciesInstalled}" = false ]; then
+    echo "Install missing dependencies"
+    exit
+fi
+echo
 
 PLAT=unx
 test -f ../src/mingw && PLAT=mgw
@@ -94,7 +113,14 @@ else
 	pushd $palipath
 	mkdir -p build
 	pushd build
-	cmake -DCMAKE_INSTALL_PREFIX=_ins ..
+	# cmake -DCMAKE_INSTALL_PREFIX=_ins ..
+    # cmake -DWITH_NTL=Y -DCMAKE_INSTALL_PREFIX=_ins ..
+	cmake -DWITH_NTL=Y -DWITH_TCM=Y -DCMAKE_INSTALL_PREFIX=_ins ..
+    make gmp_unpack
+    make ntl_unpack
+    make gmp_all
+    make ntl_all
+    make tcm
 	make
 	make install
 	popd
@@ -144,6 +170,10 @@ fi
 if [ ! -d target ]; then
 	mkdir target
 fi
+# palipath=../$palipath
+# cp $palipath/build/third-party/lib/lib* lib/
+# cp $palipath/build/third-party/include/gmp.h include/
+# cp -R $palipath/build/third-party/include/NTL include/
 cp lib/lib* native/
 cp lib/lib* target/
 

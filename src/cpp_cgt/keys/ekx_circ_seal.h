@@ -12,7 +12,7 @@ class CircuitEvalKey_seal_X : public CircuitEvalKey_seal_bfv
     public:
         CircuitEvalKey_seal_X(KeyName name) : CircuitEvalKey_seal_bfv(User::Alice, name) {}
 
-        void save() { never("call to e3::CircuitEvalKey_seal_X::save"); }
+        void save() { never; }
         using CircuitEvalKey_seal_bfv::bek;
 };
 

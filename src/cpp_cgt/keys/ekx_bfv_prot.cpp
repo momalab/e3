@@ -11,7 +11,6 @@ using std::cout;
 
 void e3::BfvProtEvalKeyExt::save()
 {
-    //never("");
     cout << "Saving evaluation key .. " << std::flush;
     std::ofstream of(filename(), std::ios::binary);
 //    of << (e3seal::toek(key)->polyModulusDegree) << "\n";

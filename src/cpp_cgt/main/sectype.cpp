@@ -313,7 +313,7 @@ void SecType::globPairs(std::map<string, string *> & kv,
     {
         string n = p.first;
         string * ps = p.second;
-        if (!ps) never("Null pointer in loading table");
+        if (!ps) nevers("Null pointer in loading table");
         string & s = *ps;
         if (!s.empty()) continue; // defined
         auto g = globs.find(n); // look in globs

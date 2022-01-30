@@ -99,11 +99,11 @@ $Name & $Name::rotate_rows(int s)
     if ( slots() > 1 )
     {
         $Name a(*this);
-        auto n = x.p->ct.size();
+        auto n = static_cast<int>(x.p->ct.size());
         auto half = n >> 1;
         s %= half;
         if (s < 0) s += half;
-        for ( size_t i = 0; i < half; i++ )
+        for ( int i = 0; i < half; i++ )
         {
             x.p->ct[i] = a.x.p->ct[ (i + s) % half ];
             x.p->ct[i + half] = a.x.p->ct[ half + ((i + s) % half) ];

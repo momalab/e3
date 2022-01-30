@@ -108,6 +108,7 @@ inline std::vector<T> operator+(const std::vector<T> & x, const std::vector<T> &
     return e3::cr::ol::vplus(x, y);
 }
 
-#define never(x) throw "bug at "+e3::cr::ol::tos(__FILE__)+":"+e3::cr::ol::tos(__LINE__) + " ["+e3::cr::ol::tos(x)+"]";
+#define nevers(x) throw "err at "+e3::cr::ol::tos(__FILE__)+":"+e3::cr::ol::tos(__LINE__) + " ["+e3::cr::ol::tos(x)+"]";
+#define never throw "err at "+e3::cr::ol::tos(__FILE__)+":"+e3::cr::ol::tos(__LINE__) + " ["+e3::cr::ol::tos(__func__)+"]";
 
 #endif // _E3_OLC_H_

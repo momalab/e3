@@ -11,5 +11,5 @@ using std::cout;
 
 void e3::CircuitEvalKey_pilc_X::save()
 {
-    never("call to e3::CircuitEvalKey_pilc_X::save");
+    never;
 }

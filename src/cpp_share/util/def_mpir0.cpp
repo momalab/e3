@@ -11,7 +11,7 @@
 
 int e3::mpir_impl() { return 0; }
 
-int e3::Bigun::maxbitsz() { return 8 * sizeof(ull) - 1; }
+int e3::Bigun::maxbitsz() { return 8 * sizeof(ull_t) - 1; }
 
 e3::Bigun::Bigun(string s) : Bigun(0)
 {
@@ -58,7 +58,7 @@ static e3::util::ull powmod(e3::util::ull x, e3::util::ull p, e3::util::ull m)
 static e3::util::ull invmod(e3::util::ull x, e3::util::ull m)
 {
     e3::util::ull r;
-    if ( e3::math::invert<e3::util::ull>(x, m, &r) ) return r;
+    if ( e3::math::invert<e3::util::ull>(x % m, m, &r) ) return r;
     return 0;
 }
 

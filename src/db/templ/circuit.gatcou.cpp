@@ -7,20 +7,20 @@ void e3::gatcou::print(int w)
     using std::cout;
     using std::setw;
     auto gc = e3::gatcou::get();
-    cout << "---------------------\n";
-    cout << setw(w) << ' ' << setw(w) << "ops" << setw(w) << "gates" << '\n';
-    cout << "---------------------\n";
-    cout << setw(w) << "not" << setw(w) << gc.ops.not_ << setw(w) << gc.gates.not_ << '\n';
-    cout << setw(w) << "and" << setw(w) << gc.ops.and_ << setw(w) << gc.gates.and_ << '\n';
-    cout << setw(w) << "or" << setw(w) << gc.ops.or_ << setw(w) << gc.gates.or_ << '\n';
-    cout << setw(w) << "nand" << setw(w) << gc.ops.nand_ << setw(w) << gc.gates.nand_ << '\n';
-    cout << setw(w) << " nor" << setw(w) << gc.ops.nor_ << setw(w) << gc.gates.nor_ << '\n';
-    cout << setw(w) << "xnor" << setw(w) << gc.ops.xnor_ << setw(w) << gc.gates.xnor_ << '\n';
-    cout << setw(w) << " xor" << setw(w) << gc.ops.xor_ << setw(w) << gc.gates.xor_ << '\n';
-    cout << setw(w) << " mux" << setw(w) << gc.ops.mux_ << setw(w) << gc.gates.mux_ << '\n';
-    cout << "---------------------\n";
-    cout << setw(w) << "total" << setw(w) << gc.ops.total() << setw(w) << gc.gates.total() << '\n';
-    cout << "---------------------\n";
+    cout << "----------------------------\n";
+    cout << setw(w) << ' ' << setw(w) << "ops" << setw(w) << "gates" << setw(w) << "crit" << '\n';
+    cout << "----------------------------\n";
+    cout << setw(w) << "not" << setw(w) << gc.ops.not_ << setw(w) << gc.gates.not_ << setw(w) << gc.crit.not_ << '\n';
+    cout << setw(w) << "and" << setw(w) << gc.ops.and_ << setw(w) << gc.gates.and_ << setw(w) << gc.crit.and_ << '\n';
+    cout << setw(w) << "or" << setw(w) << gc.ops.or_ << setw(w) << gc.gates.or_ << setw(w) << gc.crit.or_ << '\n';
+    cout << setw(w) << "nand" << setw(w) << gc.ops.nand_ << setw(w) << gc.gates.nand_ << setw(w) << gc.crit.nand_ << '\n';
+    cout << setw(w) << " nor" << setw(w) << gc.ops.nor_ << setw(w) << gc.gates.nor_ << setw(w) << gc.crit.nor_ << '\n';
+    cout << setw(w) << "xnor" << setw(w) << gc.ops.xnor_ << setw(w) << gc.gates.xnor_ << setw(w) << gc.crit.xnor_ << '\n';
+    cout << setw(w) << " xor" << setw(w) << gc.ops.xor_ << setw(w) << gc.gates.xor_ << setw(w) << gc.crit.xor_ << '\n';
+    cout << setw(w) << " mux" << setw(w) << gc.ops.mux_ << setw(w) << gc.gates.mux_ << setw(w) << gc.crit.mux_ << '\n';
+    cout << "----------------------------\n";
+    cout << setw(w) << "total" << setw(w) << gc.ops.total() << setw(w) << gc.gates.total() << setw(w) << gc.crit.total() << '\n';
+    cout << "----------------------------\n";
 }
 
 std::string e3::gatcou::sum(int t)
@@ -29,6 +29,18 @@ std::string e3::gatcou::sum(int t)
 
     auto ops = gc.ops.total();
     auto gts = gc.gates.total();
+    auto crs = gc.crit.total();
+
+    if ( t == 0 )
+    {
+        string r;
+        r += std::to_string(ops);
+        r += ',';
+        r += std::to_string(gts);
+        r += ',';
+        r += std::to_string(crs);
+        return r;
+    }
 
     auto sh = [](auto & x) -> std::string
     {
@@ -41,11 +53,14 @@ std::string e3::gatcou::sum(int t)
 
     auto ox = sh(ops);
     auto gx = sh(gts);
+    auto cx = sh(crs);
 
     string r;
     if ( t & 1 ) r += std::to_string(ops) + ox;
     if ( t & 3 ) r += '/';
     if ( t & 2 ) r += std::to_string(gts) + gx;
+    if ( t & 7 ) r += '/';
+    if ( t & 4 ) r += std::to_string(crs) + cx;
     return r;
 }
 

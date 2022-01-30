@@ -70,7 +70,7 @@ void e3::cr::writePrime(string ofile, const Module & prog)
             else if ( i.op == Val::And ) of << vars[i.a].n() << " * " << vars[i.b].n();
             else if ( i.op == Val::Xor ) of << vars[i.a].n() << " ^ " << vars[i.b].n();
             else if ( i.op == Val::Or ) of << vars[i.a].n() << " | " << vars[i.b].n();
-            else never("Bad op: " + ol::tos(i.op));
+            else nevers("Bad op: " + ol::tos(i.op));
 
             of << '\n';
         }

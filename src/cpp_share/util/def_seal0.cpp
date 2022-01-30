@@ -20,6 +20,11 @@ std::string e3::SealNativeCiphertext::str() const
 namespace e3
 {
 
+SealNativeCiphertext::~SealNativeCiphertext()
+{
+	std::ignore = std::ignore;
+}
+
 SealNativeCiphertext::SealNativeCiphertext()
     : p(new SealCiphertext) {}
 

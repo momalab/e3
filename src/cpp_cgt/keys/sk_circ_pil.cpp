@@ -27,7 +27,7 @@ CircuitPrivKey_pilc::CircuitPrivKey_pilc(const PilBasePrivKey & pil, string nm)
 
 vector<bool> CircuitPrivKey_pilc::decbitstr(const std::string & s, bool * ok) const
 {
-    if (!sk.mxinited) never("Matrix not initialized");
+    if (!sk.mxinited) nevers("Matrix not initialized");
 
     PilQuad bit(s);
     bit = sk.rotate_tr(bit, sk.L);
@@ -50,7 +50,7 @@ vector<bool> CircuitPrivKey_pilc::decbitstr(const std::string & s, bool * ok) co
 
 std::string CircuitPrivKey_pilc::encbitstr(vector<bool> v) const
 {
-    if (!sk.mxinited) never("Matrix not initialized");
+    if (!sk.mxinited) nevers("Matrix not initialized");
     auto bm = v[0];
 
     Bigun m = sk.ekb.kv.N;
@@ -80,7 +80,7 @@ std::string CircuitPrivKey_pilc::encbitstr(vector<bool> v) const
     // validate
     PilNum x = (ab.a + ab.b * PilNum(sk.Q)) % PilNum(sk.P);
 
-    if ( x.n != nbm ) never("Encryption failed");
+    if ( x.n != nbm ) nevers("Encryption failed");
 
     PilQuad bit( ab, PilPair(r1, r2) );
 
@@ -93,7 +93,7 @@ void CircuitPrivKey_pilc::gen()
 {
     // since init_final is not called, this is never called
     // sk is PilBasePrivKey
-    never("called CircuitPrivKey_pilc::gen");
+    never;
 }
 
 bool CircuitPrivKey_pilc::load()

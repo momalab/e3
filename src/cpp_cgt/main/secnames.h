@@ -38,6 +38,7 @@ const std::string encCkks = "ckks";
 const std::string encBgv = "bgv";
 const std::string encBfv = "bfv";
 const std::string encGatcou = "gatcou";
+const std::string encGatcow = "gatcow";
 
 
 // Keywords for replacement

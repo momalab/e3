@@ -53,6 +53,8 @@ $Name $Name::operator-() const
     return *this;
 }
 
+#if SEALVER == 332
+
 $Name $Name::operator*(const std::vector<unsigned long long> & v) const
 {
     $Name r(*this);
@@ -86,6 +88,41 @@ $Name $Name::operator-(const std::vector<unsigned long long> & v) const
     ek->evaluator->sub_plain_inplace(r.x.p->ct, p);
     return r;
 }
+
+#else
+
+$Name $Name::operator*(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3::e3seal::toek(pek->key);
+    p = e3::e3seal::batchEncode( v, *(ek->batchEncoder) );
+    ek->evaluator->multiply_plain_inplace(r.x.p->ct, p);
+    ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
+    return r;
+}
+
+$Name $Name::operator+(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3::e3seal::toek(pek->key);
+    p = e3::e3seal::batchEncode( v, *(ek->batchEncoder) );
+    ek->evaluator->add_plain_inplace(r.x.p->ct, p);
+    return r;
+}
+
+$Name $Name::operator-(const std::vector<unsigned long long> & v) const
+{
+    $Name r(*this);
+    seal::Plaintext p;
+    auto ek = e3::e3seal::toek(pek->key);
+    p = e3::e3seal::batchEncode( v, *(ek->batchEncoder) );
+    ek->evaluator->sub_plain_inplace(r.x.p->ct, p);
+    return r;
+}
+
+#endif
 
 $Name & $Name::rotate_columns()
 {

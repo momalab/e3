@@ -108,7 +108,7 @@ struct Setmode2binary
     Setmode2binary()
     {
         std::ios_base::sync_with_stdio(true);
-        _setmode( _fileno(stdout), _O_BINARY );
+        std::ignore = _setmode( _fileno(stdout), _O_BINARY );
     }
 } Setmode2binary_dummy;
 //#endif

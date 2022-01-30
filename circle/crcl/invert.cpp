@@ -140,7 +140,7 @@ void Invertor::invert(std::ostream & of)
         {
             vstr oe = x->getOutVars();
             if (oe.empty()) continue;
-            if (oe.size() != 1) never("");
+            if (oe.size() != 1) never;
             chain.push_back(Invrec { x });
             for (const auto & y : lastuse)
             {

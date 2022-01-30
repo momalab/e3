@@ -12,7 +12,7 @@ class CircuitPrivKey_seal_bfv : public CircuitPrivKey
 {
         using Bit = SealNativeCiphertext;
 
-        virtual void gen() { never("called e3::CircuitPrivKey_seal_bfv::gen"); }
+        virtual void gen() { never; }
         Bit encbit(bool b) const;
         bool decbit(const Bit & y) const;
 

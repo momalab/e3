@@ -46,7 +46,7 @@ $NameBit $NameBit::gate_nand(const $NameBit & a, const $NameBit & b)
     auto ma = a.nb.p->b;
     auto mb = b.nb.p->b;
 
-    ma = !(ma & mb);
+    ma = !(ma && mb);
 
     r.nb.p->b = ma;
     return r;
@@ -58,7 +58,7 @@ $NameBit $NameBit::gate_nor(const $NameBit & a, const $NameBit & b)
     auto ma = a.nb.p->b;
     auto mb = b.nb.p->b;
 
-    ma = !(ma | mb);
+    ma = !(ma || mb);
 
     r.nb.p->b = ma;
     return r;

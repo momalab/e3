@@ -135,7 +135,7 @@ struct Oexpr
 
 struct Iexpr
 {
-        enum Typ { NUL, MOD, EXP } typ = NUL;
+        enum class Typ { NUL, MOD, EXP } typ = Typ::NUL;
         Node * node = nullptr;
         Args args;
         std::string modname;
@@ -151,7 +151,7 @@ struct Iexpr
         ol::vstr getVars() const;
 
         void chVar(std::string nv, std::string ov)
-        { if (typ == EXP) node->chVar(nv, ov); }
+        { if (typ == Typ::EXP) node->chVar(nv, ov); }
 
         bool isConst(std::string * v) const { return node && node->isConst(v); }
         bool isVar(std::string * v) const;

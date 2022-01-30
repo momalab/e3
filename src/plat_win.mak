@@ -11,7 +11,9 @@ EEXT=exe
 #LEXT2=obj
 
 #OPTS=-EHsc -nologo -D_USING_V110_SDK71_=1
+#OPTS=-EHsc -nologo -Ox -D_USING_V110_SDK71_=1 -bigobj /std:c++17 -DSEALVER=332
 OPTS=-EHsc -nologo -Ox -D_USING_V110_SDK71_=1 -bigobj /std:c++17
+
 COPTS=-nologo -Ox -D_CRT_SECURE_NO_DEPRECATE=1 -D_USING_V110_SDK71_=1
 
 # -WX -W4 -D_CRT_SECURE_NO_DEPRECATE=1 /wd4355 /wd4127 /wd4702 /wd4100 /wd4290
@@ -19,6 +21,7 @@ COPTS=-nologo -Ox -D_CRT_SECURE_NO_DEPRECATE=1 -D_USING_V110_SDK71_=1
 
 LEXT=lib
 LDFS=WS2_32.Lib advapi32.lib psapi.lib
+LDFS=WS2_32.Lib advapi32.lib
 LDF1=
 LDF2=
 LDF3=

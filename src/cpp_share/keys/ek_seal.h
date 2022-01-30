@@ -28,6 +28,8 @@ class SealBaseEvalKey : public EvalKey
         { return decor(rawEncrypt(s, msz), true); }
 
         virtual size_t slots();
+
+		uint64_t getPlaintextModulus() const;
 };
 
 } // e3

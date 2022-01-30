@@ -16,6 +16,8 @@ SOEXT ?= .so
 #OPTS=-O2 -std=c++17 -Wall -Wno-parentheses
 OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses
 # changed c++17 to gnu++17 because popen did not work on cygwin
+OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses -Werror -DSEALVER=332
+OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses -Werror
 
 # palisade header has pragmas
 OPTS += -Wno-unknown-pragmas
@@ -81,4 +83,3 @@ PALID2=../3p/pali_$(PLAT)/target
 LDF1+=$(PALID1)/libPALISADEpke$(SOEXT) $(PALID1)/libPALISADEcore$(SOEXT)
 LDF2+=$(PALID2)/libPALISADEpke$(SOEXT) $(PALID2)/libPALISADEcore$(SOEXT)
 endif
-

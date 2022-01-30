@@ -116,22 +116,22 @@ void Iexpr::load(Pstream & is)
         if (s == "(") throw "Assign blocks not allowed, use {} syntax";
         is >> args;
         modname = s;
-        typ = MOD;
+        typ = Typ::MOD;
         return;
     }
     is << s;
     node = Node::newnode(is);
-    typ = EXP;
+    typ = Typ::EXP;
 }
 
 void Iexpr::out(std::ostream & os) const
 {
     switch (typ)
     {
-        case NUL: break;
-        case MOD: os << ' ' << modname << args; break;
-        case EXP: os << node->str(); break;
-        default: never("typ");
+        case Typ::NUL: break;
+        case Typ::MOD: os << ' ' << modname << args; break;
+        case Typ::EXP: os << node->str(); break;
+        default: nevers("typ");
     }
 }
 
@@ -139,10 +139,10 @@ vstr Iexpr::getVars() const
 {
     switch (typ)
     {
-        case NUL: return vstr();
-        case MOD: return args.getVars();
-        case EXP: return node->getVars();
-        default: never("typ");
+        case Typ::NUL: return vstr();
+        case Typ::MOD: return args.getVars();
+        case Typ::EXP: return node->getVars();
+        default: nevers("typ");
     }
 }
 
@@ -181,7 +181,7 @@ Node * Expr::load(Pstream & is)
     }
 
     if ( e.xorms.size() == 1 ) return e.xorms[0];
-    if ( e.xorms.empty() ) never("bad expr");
+    if ( e.xorms.empty() ) nevers("bad expr");
     return new Expr(std::move(e));
 }
 
@@ -219,7 +219,7 @@ Node * Xorm::load(Pstream & is)
     }
 
     if (x.terms.size() == 1) return x.terms[0];
-    if (x.terms.empty()) never("bad xorm");
+    if (x.terms.empty()) nevers("bad xorm");
     return new Xorm(std::move(x));
 }
 
@@ -261,7 +261,7 @@ Node * Term::load(Pstream & is)
     }
 
     if ( t.prims.size() == 1 ) return t.prims[0];
-    if ( t.prims.empty() ) never("bad term");
+    if ( t.prims.empty() ) nevers("bad term");
     return new Term(std::move(t));
 }
 

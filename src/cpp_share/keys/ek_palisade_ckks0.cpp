@@ -34,7 +34,8 @@ string PalisadeCkksEvalKey::rawEncrypt(const string & strPlaintext, int msz) con
 
 size_t PalisadeCkksEvalKey::slots() const
 {
-    return batchSize;
+    // return batchSize;
+    return ringDimension >> 1;
 }
 
 } // e3

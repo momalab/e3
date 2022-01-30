@@ -168,7 +168,7 @@ string e3::PailBasePrivKey::encrypt(const string & s, int msz) const
         auto g = e3::euler::gcd(r, N);
         if ( g == Bigun(1) ) break;
         r = euler::random(N, rnd);
-        if ( i > 90 ) never("Failed to generate random");
+        if ( i > 90 ) nevers("Failed to generate random");
     }
 
     auto rN = r.powmod(N, N2);

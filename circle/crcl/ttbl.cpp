@@ -293,7 +293,7 @@ bool validate(Module & p1, Module & p2, vector<Val> & input, string fil1, string
     vector<Val> out2 = p2.eval(bitVisitor, input);
 
     auto szo = out1.size();
-    if (szo != out2.size()) never("validate");
+    if (szo != out2.size()) nevers("validate");
 
     for (int i = 0; i < (int)szo; i++)
     {

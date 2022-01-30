@@ -33,10 +33,19 @@ struct SealEvalKey
     seal::EncryptionParameters * params = nullptr;
     seal::Encryptor * encryptor = nullptr;
     seal::Evaluator * evaluator = nullptr;
+#if SEALVER == 332
     seal::IntegerEncoder * encoder = nullptr;
+#endif
     seal::BatchEncoder * batchEncoder = nullptr;
     bool isBatchEncoder = false;
+#if SEALVER == 332
     std::shared_ptr<seal::SEALContext> context;
+#else
+    seal::SEALContext context;
+    SealEvalKey(seal::EncryptionParameters &p): params(&p), context(p) {}
+#endif
+
+    uint64_t getPlaintextModulus() const { return params->plain_modulus().value(); }
 };
 
 using sk = SealPrivKey;

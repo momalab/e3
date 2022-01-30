@@ -45,15 +45,27 @@ void SealBasePrivKey::gen()
     e3seal::SealPrivKey * privkey_ptr = new e3seal::SealPrivKey;
     e3seal::SealPrivKey & privkey = *privkey_ptr;
 
+
+#if SEALVER == 332
     e3seal::SealEvalKey * evalkey_ptr = new e3seal::SealEvalKey;
     e3seal::SealEvalKey & evalkey = *evalkey_ptr;
-
     evalkey.params = new seal::EncryptionParameters(seal::scheme_type::BFV);
+#else
+    auto evalkey_params = new seal::EncryptionParameters(seal::scheme_type::bfv);
+    e3seal::SealEvalKey * evalkey_ptr = new e3seal::SealEvalKey(*evalkey_params);
+    e3seal::SealEvalKey & evalkey = *evalkey_ptr;
+    evalkey.params = evalkey_params;
+#endif
+
     auto & params = *evalkey.params;
     params.set_poly_modulus_degree(polyModulusDegree);
     params.set_coeff_modulus(seal::CoeffModulus::BFVDefault(polyModulusDegree));
     params.set_plain_modulus(plainModulus);
+#if SEALVER == 332
     evalkey.context = seal::SEALContext::Create(params);
+#else
+    evalkey.context = seal::SEALContext(params);
+#endif
 
     seal::KeyGenerator keygen(evalkey.context);
     privkey.secretkey = keygen.secret_key();
@@ -63,13 +75,25 @@ void SealBasePrivKey::gen()
 
     // generate EK and set it
     cout << "Generating evaluation key .. " << std::flush;
+
+#if SEALVER == 332
     evalkey.publickey = keygen.public_key();
     evalkey.relinkeys = keygen.relin_keys();
     evalkey.galoiskeys = keygen.galois_keys();
+#else
+    keygen.create_public_key(evalkey.publickey);
+    keygen.create_relin_keys(evalkey.relinkeys);
+    keygen.create_galois_keys(evalkey.galoiskeys);
+#endif
+
     evalkey.evaluator = new seal::Evaluator(evalkey.context);
     evalkey.encryptor = new seal::Encryptor(evalkey.context, evalkey.publickey);
     if ( this->isBatch ) evalkey.batchEncoder = new seal::BatchEncoder(evalkey.context);
+#if SEALVER == 332
     else evalkey.encoder = new seal::IntegerEncoder(evalkey.context);
+#else
+    else nevers("No integer encoder supported for this SEAL version");
+#endif
     evalkey.isBatchEncoder = isBatch;
     ek.key = evalkey_ptr;
     cout << "ok\n";
@@ -120,7 +144,11 @@ vector<string> SealBasePrivKey::rawDecrypt(const string & undecorated) const
         encoder->decode(p, v);
         for ( auto e : v ) m.push_back( to_string(e) );
     }
+#if SEALVER == 332
     else m.push_back( to_string( evalkey->encoder->decode_uint64(p) ) );
+#else
+    else never;
+#endif
     return m;
 }
 
@@ -138,3 +166,4 @@ void SealBasePrivKey::save()
 }
 
 } // e3
+

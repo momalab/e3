@@ -5,6 +5,7 @@
 #include <exception>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 
 #include "secint.h"
 #include "secint.inc"

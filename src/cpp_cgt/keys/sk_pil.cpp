@@ -111,7 +111,7 @@ bool e3::PilBasePrivKey::load()
 
 string e3::PilBasePrivKey::decrypt(const string & c) const
 {
-    if (!mxinited) never("Matrix not initialized");
+    if (!mxinited) nevers("Matrix not initialized");
 
     string s = ekb.decor(c, false);
     if ( s.empty() ) return s;
@@ -132,7 +132,7 @@ string e3::PilBasePrivKey::decrypt(const string & c) const
 
 string e3::PilBasePrivKey::encrypt(const string & s, int msz) const
 {
-    if (!mxinited) never("Matrix not initialized");
+    if (!mxinited) nevers("Matrix not initialized");
 
     Bigun m = ekb.kv.N;
     PilArith pilArith(&ekb);
@@ -161,7 +161,7 @@ string e3::PilBasePrivKey::encrypt(const string & s, int msz) const
     // validate
     e3::PilNum x = (ab.a + ab.b * PilNum(Q)) % PilNum(P);
 
-    if ( x.n != nbm ) never("Encryption failed");
+    if ( x.n != nbm ) nevers("Encryption failed");
 
     e3::PilQuad bit( ab, e3::PilPair(r1, r2) );
 
@@ -230,8 +230,8 @@ void e3::PilBasePrivKey::findT()
     if (0) // testing
     {
         auto u = det.n.powmod(phi, m);
-        if (u != Bigun(1) ) never("bad powmod phi");
-        if (T * det != PilNum(1) ) never("bad T*det");
+        if (u != Bigun(1) ) nevers("bad powmod phi");
+        if (T * det != PilNum(1) ) nevers("bad T*det");
     }
 }
 
@@ -251,7 +251,7 @@ void e3::PilBasePrivKey::invertL()
         {
             cout << "N=" << ekb.kv.N << " S=" << ekb.kv.S.n << '\n';
             cout << "det=" << L.det().n << " T=" << T.n << " u=" << u.n << '\n';
-            never("bad T");
+            nevers("bad T");
         }
     }
 
@@ -259,10 +259,10 @@ void e3::PilBasePrivKey::invertL()
     auto I12 = L.d11 * Li.d12 + L.d12 * Li.d22;
     auto I21 = L.d21 * Li.d11 + L.d22 * Li.d21;
     auto I22 = L.d21 * Li.d12 + L.d22 * Li.d22;
-    if ( Bigun(1) != I11.n ) never("bad Inv1");
-    if ( Bigun(0) != I12.n ) never("bad Inv2");
-    if ( Bigun(0) != I21.n ) never("bad Inv3");
-    if ( Bigun(1) != I22.n ) never("bad Inv4");
+    if ( Bigun(1) != I11.n ) nevers("bad Inv1");
+    if ( Bigun(0) != I12.n ) nevers("bad Inv2");
+    if ( Bigun(0) != I21.n ) nevers("bad Inv3");
+    if ( Bigun(1) != I22.n ) nevers("bad Inv4");
 
     mxinited = true;
 }

@@ -1,6 +1,8 @@
 #ifndef _E3_SK_PALI_H_
 #define _E3_SK_PALI_H_
 
+// #include <map> // FIXME move to the declaration place
+
 #include "sk_abstract.h"
 #include "ekx_pali.h"
 #include "e3util.h"
@@ -23,16 +25,19 @@ class PaliBfvPrivKey : public PrivKey
         std::vector<std::string> rawDecrypt(const std::string & s) const;
 
     public:
+        // PaliBfvPrivKey(KeyName name) // forceLoad constructor
+        //     : PaliBfvPrivKey(name, false, truestd::map<std::string, std::string> { {"seed", ""}, {"lambda", "0"} }) {}
+        // PaliBfvPrivKey(KeyName name, bool forceGen, bool forceLoad, std::map<std::string, std::string> params);
         PaliBfvPrivKey(KeyName name, bool forceGen,
                        bool forceLoad, std::string seed, int lam,
                        std::string polyDegree, std::string depth,
                        int useSlots, string maxdep, string sp_n);
-
         PaliBfvPrivKey(const PaliBfvPrivKey &) = default;
         PaliBfvPrivKey(const PaliBfvPrivKey & k, std::string nm)
             : PaliBfvPrivKey(k) { ek.name.typ = name.typ = nm; }
 
         virtual std::string decrypt(const std::string & s) const;
+        virtual void decrypt(const std::string & s, std::vector<int> & r);
 
         virtual std::string encrypt(const std::string & s, int msz) const { return ek.encrypt(s, msz); }
         virtual std::string filename() const;
@@ -70,6 +75,13 @@ inline std::string PaliBfvPrivKey::decrypt(const std::string & s) const
     if ( isTrailing ) r = r.substr(1);
     else r = v[0] + r;
     return r;
+}
+
+inline void PaliBfvPrivKey::decrypt(const std::string & s, std::vector<int> & v)
+{
+    v.clear();
+    auto vs = rawDecrypt( ek.decor(s, false) );
+    for ( auto & s : vs ) v.push_back( std::stoi(s) );
 }
 
 } // e3
