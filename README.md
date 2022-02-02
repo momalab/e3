@@ -105,3 +105,32 @@ For more advanced use, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [
 
 ###### Versions - Documentation: 20091618; Software: 20091711
 
+-----
+
+### Cite us:
+
+E. Chielle, O. Mazonka, H. Gamil, N. G. Tsoutsos and M. Maniatakos, "E3: A Framework for Compiling C++ Programs with Encrypted Operands," Cryptology ePrint Archive, Report 2018/1013, 2018, https://ia.cr/2018/1013.
+
+```
+@misc{cryptoeprint:2018:1013,
+    author       = {Eduardo Chielle and
+		    Oleg Mazonka and
+		    Homer Gamil and
+		    Nektarios Georgios Tsoutsos and
+		    Michail Maniatakos},
+    title        = {E3: A Framework for Compiling C++ Programs with Encrypted Operands},
+    howpublished = {Cryptology ePrint Archive, Report 2018/1013},
+    year         = {2018},
+    note         = {\url{https://ia.cr/2018/1013}},
+}
+```
+
+-----
+
+This software is under GPLv3 [license](license.txt)
+
+<pre>
+Copyright (C) 2022 NYUAD, MoMA lab
+<https://wp.nyu.edu/momalab/>
+<pre/>
+
