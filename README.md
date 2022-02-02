@@ -131,6 +131,6 @@ This software is under GPLv3 [license](license.txt)
 
 <pre>
 Copyright (C) 2022 NYUAD, MoMA lab
-<https://wp.nyu.edu/momalab/>
-<pre/>
+https://wp.nyu.edu/momalab/
+</pre>
 
