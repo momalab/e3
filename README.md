@@ -127,7 +127,7 @@ E. Chielle, O. Mazonka, H. Gamil, N. G. Tsoutsos and M. Maniatakos, "E3: A Frame
 
 -----
 
-This software is under GPLv3 [license](license.txt)
+This software is under GPLv3 [license](license.md)
 
 <pre>
 Copyright (C) 2022 NYUAD, MoMA lab
