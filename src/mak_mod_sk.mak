@@ -1,3 +1,4 @@
+# Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 
 srcu1=cpp_cgt/util/os_filesys.cpp cpp_cgt/util/cgtutil.cpp \
 	cpp_cgt/util/timer.cpp cpp_cgt/util/euler.cpp

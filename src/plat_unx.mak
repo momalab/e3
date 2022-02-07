@@ -1,3 +1,4 @@
+# Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 CCN=g++
 CNC=gcc
 CCT=g++
@@ -16,7 +17,7 @@ SOEXT ?= .so
 #OPTS=-O2 -std=c++17 -Wall -Wno-parentheses
 OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses
 # changed c++17 to gnu++17 because popen did not work on cygwin
-OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses -Werror -DSEALVER=332
+# OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses -Werror -DSEALVER=332
 OPTS=-O2 -std=gnu++17 -Wall -Wno-parentheses -Werror
 
 # palisade header has pragmas
