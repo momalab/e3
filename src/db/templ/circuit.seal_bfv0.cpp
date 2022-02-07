@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.seal_bfv0.cpp Name=$Name
 
 inline const e3::e3seal::SealEvalKey * $NameBit_ek()

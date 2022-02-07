@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN ring.palisade.ckks.cpp Name=$Name
 
 e3::PalisadeCkksEvalKey * g_pek_$Name = nullptr;

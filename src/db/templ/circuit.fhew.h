@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.fhew.h Name=$Name
 
 class $NameBit : public $NameBaseBit

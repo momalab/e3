@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.tfhe.cpp Name=$Name
 
 inline const TFheGateBootstrappingCloudKeySet * $NameBit_ek()

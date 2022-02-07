@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN  ring.seal_ckks.h Name=$Name
 
 extern e3::SealCkksEvalKey * g_pek_$Name;

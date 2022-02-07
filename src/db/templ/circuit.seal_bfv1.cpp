@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.seal_bfv1.cpp Name=$Name
 #include <iostream>
 

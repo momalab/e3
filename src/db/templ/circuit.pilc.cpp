@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.pilc.cpp Name=$Name
 
 $NameBit $NameBit::gate_buf(const $NameBit & a)

@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.bdd.cpp Name=$Name
 
 // this flag used for debug and must be the same as in sk_circ_bdd.cpp

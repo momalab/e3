@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN  ring.palisade.h Name=$Name
 
 extern e3::PaliBfvEvalKey * g_pek_$Name;

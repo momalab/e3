@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.bddf.cpp Name=$Name
 
 #include "x.$tid/bdd_and.c"

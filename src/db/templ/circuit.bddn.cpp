@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // === BEGIN circuit.bddn.cpp Name=$Name
 
 // using BDD not is faster with BDDing NOT via NAND
