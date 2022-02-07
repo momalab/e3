@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 #ifndef _E3_EKX_CIRC_SEAL_H_
 #define _E3_EKX_CIRC_SEAL_H_
 

@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // E3 (Encrypt-Everything-Everywhere) for Fully Homomorphic Encryption
 // Oleg Mazonka, Eduardo Chielle
 // MoMA lab, New York University Abu Dhabi, 2018-2020

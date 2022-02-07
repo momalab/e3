@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // Hasq Technology Pty Ltd (C) 2013-2016
 // MomaLab modified for E3, 2018
 

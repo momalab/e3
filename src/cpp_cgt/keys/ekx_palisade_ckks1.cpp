@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 #include "def_palisade_ckks1.h"
 #include "ekx_palisade_ckks.h"
 
