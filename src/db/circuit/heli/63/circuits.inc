@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 template<> void $NameUint<63>::d_add
 (vector<Bit> & y, const vector<Bit> & a, const vector<Bit> & b) noexcept
 {
