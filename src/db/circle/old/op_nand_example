@@ -1,0 +1,18 @@
+{C=10}
+{R=C-1}
+
+# input
+(a[1,C]) = dec(x[1,C])
+(b[1,C]) = dec(z[1,C])
+
+# op
+c = !(a1&b1)
+
+# kernel
+r4 = 1
+{i,2,C,j, -1 % R +2} ri = !(aj & bj)
+r2 = r2 ^ r4*r3
+
+# output
+(y[1,C]) = enc(c,r[2,C])
+

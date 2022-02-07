@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 
 # this file sets Libs link variables
 

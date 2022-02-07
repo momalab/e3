@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 // Using MPIR library
 // Using CophEE hardware as a root-of-trust and an accelerator
 

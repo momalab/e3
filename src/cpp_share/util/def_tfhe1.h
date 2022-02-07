@@ -1,3 +1,4 @@
+// Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 #ifndef _E3_DEF_TFHE1_H_
 #define _E3_DEF_TFHE1_H_
 
