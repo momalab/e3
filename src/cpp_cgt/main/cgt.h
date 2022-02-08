@@ -12,7 +12,7 @@
 namespace nm
 {
 // Careful with logo: number of words importand for amalgam
-const std::string logo = "E3 FHE, NYUAD, 2018-2022, ver 0.3.0";
+const std::string logo = "E3 FHE, NYUAD, 2018-2022, ver 0.3.1";
 const std::string cgt = "cgt";
 const std::string cgtexe = cgt + ".exe";
 const std::string default_cfg = cgt + ".cfg";
