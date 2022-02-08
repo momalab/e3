@@ -34,8 +34,8 @@ srcl=cpp_cgt/main/cgt.cpp cpp_cgt/main/cfgparser.cpp cpp_cgt/main/platname.cpp \
 	cpp_cgt/main/sec_partial.cpp cpp_cgt/main/sec_bridge.cpp
 objl := $(srcl:cpp_cgt/main/%.cpp=$(BIN)/%.$(OEXT))
 
-srcp=cpp_cgt/util/$(PLAT)/os_file2.cpp
-objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
+##srcp=cpp_cgt/util/$(PLAT)/os_file2.cpp
+##objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
 
 
 # srcu1 obju1 srck1 objk1
@@ -53,9 +53,16 @@ $(BIN):
 $(CRDIR):
 	cd cpp_crcl && $(MAKE)
 
-cgt.exe: $(BIN) $(CRDIR) $(objl) $(obju2) $(obju1) $(objp) $(objk1) $(objk2) \
+##cgt.exe: $(BIN) $(CRDIR) $(objl) $(obju2) $(obju1) $(objp) $(objk1) $(objk2) \
+##	$(objcr) $(BIN)/cuddObj.$(OEXT) $(objcu) $(LDF1)
+##	$(CCN) $(OPTS) $(objl) $(obju2) $(obju1) $(objp) \
+##	$(objcu) $(objk1) $(objk2) $(objcr) $(BIN)/cuddObj.$(OEXT) \
+##	$(LDF1) $(LDF3) $(LDFS) $(EOUT)$@
+##	@$(COPYDLL1)
+
+cgt.exe: $(BIN) $(CRDIR) $(objl) $(obju2) $(obju1) $(objk1) $(objk2) \
 	$(objcr) $(BIN)/cuddObj.$(OEXT) $(objcu) $(LDF1)
-	$(CCN) $(OPTS) $(objl) $(obju2) $(obju1) $(objp) \
+	$(CCN) $(OPTS) $(objl) $(obju2) $(obju1) \
 	$(objcu) $(objk1) $(objk2) $(objcr) $(BIN)/cuddObj.$(OEXT) \
 	$(LDF1) $(LDF3) $(LDFS) $(EOUT)$@
 	@$(COPYDLL1)
@@ -70,9 +77,9 @@ $(obju1): $(BIN)/%.$(OEXT):cpp_cgt/util/%.cpp cpp_cgt/util/*.h
 $(obju2): $(BIN)/%.$(OEXT):cpp_share/util/%.cpp cpp_share/util/*.h cpp_share/util/*.inc
 	$(CCN) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
-$(objp): $(BIN)/%.$(OEXT):cpp_cgt/util/$(PLAT)/%.cpp cpp_cgt/main/*.h \
-	cpp_cgt/util/*.h cpp_share/util/*.h
-	$(CCN) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
+##$(objp): $(BIN)/%.$(OEXT):cpp_cgt/util/$(PLAT)/%.cpp cpp_cgt/main/*.h \
+##	cpp_cgt/util/*.h cpp_share/util/*.h
+##	$(CCN) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@
 
 $(objk1): $(BIN)/%.$(OEXT):${SKDIR}/%.cpp cpp_cgt/main/*.h ${SKDIR}/*.h ${EKDIR}/*.h
 	$(CCN) -c -DPLAT=$(PLAT) $(OPTS) $< $(OOUT)$@

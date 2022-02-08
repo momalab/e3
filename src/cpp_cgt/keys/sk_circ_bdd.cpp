@@ -119,7 +119,8 @@ void CircuitPrivKey_bdd::gen_init(string & tid, string & dir)
     tid = ol::tos(std::time(0) - 10000 * (tid_cntr++) );
 
     string xid = "x." + tid;
-    os::makeDir(xid);
+    ///os::makeDir(xid);
+    fs::create_directories(xid);
     dir = xid + '/';
 }
 
@@ -438,7 +439,8 @@ void CircuitPrivKey_bdd::save()
         in << cpp;
     }
 
-    os::rmFile(fileexe());
+    ///os::rmFile(fileexe());
+    fs::remove(fileexe());
 
     // try compilation
     if ( !compile.empty() )
@@ -485,7 +487,8 @@ std::string CircuitPrivKey_bdd::encbitstr(vector<bool> v) const
 {
     auto b = v[0];
     string exe = fileexe();
-    if ( !os::isFile(exe) )
+    ///if ( !os::isFile(exe) )
+    if ( !fs::is_regular_file(exe) )
         throw "No private key executable [" + exe + "] found";
 
     string inp;
@@ -515,7 +518,8 @@ vector<bool> CircuitPrivKey_bdd::decbitstr(const std::string & as, bool * ok) co
     for ( int i = 0; i < lambda; i++ ) inp += '0' + char(vb[i]);
 
     string exe = fileexe();
-    if ( !os::isFile(exe) )
+    ///if ( !os::isFile(exe) )
+    if ( !fs::is_regular_file(exe) )
         throw "No private key executable [" + exe + "] found";
 
     string cmd = exe + " dec " + inp;

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "os_filesys.h"
 #include "cgt.h"
@@ -190,16 +192,19 @@ SecType::Consts SecType::find_constants(string dirnames) const
     ol::istr is(dirnames);
     for ( string sdir; std::getline(is, sdir, ';'); )
     {
-        if ( !os::isDir(sdir) )
+        ///if ( !os::isDir(sdir) )
+        if ( !fs::is_directory(sdir) )
             throw "Cannot enter directory [" + sdir + "]";
 
-        os::Dir dir = os::FileSys::readDir(sdir);
+        ///os::Dir dir = os::FileSys::readDir(sdir);
+        os::Dir dir = os::readDir(sdir);
 
         for ( auto entry : dir.files )
         {
             if ( !e3::util::isCpp(entry.first) ) continue;
 
-            string file = (os::Path(sdir) + entry.first).str();
+            ///string file = (os::Path(sdir) + entry.first).str();
+            string file = (fs::path(sdir) / entry.first).string();
 
             std::cout << " [" << file << "]";
 

@@ -22,8 +22,8 @@ OPTS += -I./${USER}/
 
 include mak_mod_inc.mak
 
-srcp=cpp_cgt/util/$(PLAT)/os_file2.cpp
-objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
+##srcp=cpp_cgt/util/$(PLAT)/os_file2.cpp
+##objp := $(srcp:cpp_cgt/util/$(PLAT)/%.cpp=$(BIN)/%.$(OEXT))
 
 
 

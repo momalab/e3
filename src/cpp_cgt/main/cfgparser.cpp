@@ -1,11 +1,13 @@
 // Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 #include <iostream>
+#include <filesystem>
 
 #include "cfgparser.h"
 #include "cgt.h"
 #include "os_filesys.h"
 #include "cgtutil.h"
 
+namespace fs = std::filesystem;
 using namespace e3::cr;
 
 using std::cout;
@@ -48,7 +50,8 @@ ConfigParser::ConfigParser(string f) : file(f)
                 else if ( name == cfgNames::sourceDir )
                 {
                     userdir = w;
-                    if ( w.find(';') == string::npos && !os::isDir(userdir) )
+                    ///if ( w.find(';') == string::npos && !os::isDir(userdir) )
+                    if ( w.find(';') == string::npos && !fs::is_directory(userdir) )
                         throw "invalid directory '" + userdir
                         + "' in the configuration file '" + file + "'";
                 }

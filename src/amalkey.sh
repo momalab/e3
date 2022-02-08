@@ -82,6 +82,7 @@ echo "#include <algorithm>" >> $header
 echo "#include <memory>" >> $header
 echo "#include <map>" >> $header
 echo "#include <set>" >> $header
+echo "#include <filesystem>" >> $header
 echo "" >> $header
 
 
@@ -184,7 +185,7 @@ dof $cxfile $util/euler.cpp
 dof $cxfile $util/timer.cpp
 dof $cxfile $util/cgtutil.cpp
 dof $cxfile $util/os_filesys.cpp
-dof $cxfile $util/$PLAT/os_file2.cpp
+##dof $cxfile $util/$PLAT/os_file2.cpp
 
 # do keys cpps
 dof $cxfile $keys/sk_abstract.cpp

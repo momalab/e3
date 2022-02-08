@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <exception>
+#include <filesystem>
 
 #include "bdda.h"
 
@@ -18,6 +19,7 @@
 
 #include "cgt.h"
 
+namespace fs = std::filesystem;
 using namespace e3::cr;
 
 using std::cout;
@@ -43,7 +45,8 @@ try
     }
     catch (...)
     {
-        cout << "working dir: " << os::FileSys::cwd().str() << '\n';
+        ///cout << "working dir: " << os::FileSys::cwd().str() << '\n';
+        cout << "working dir: " << fs::current_path().string() << '\n';
         throw;
     }
 }
@@ -220,9 +223,12 @@ void key(Params params)
 
 void cleanup()
 {
-    os::FileSys::erase(nm::lib_h);
-    os::FileSys::erase(nm::lib_inc);
-    os::FileSys::erase(nm::lib_cpp);
+    ///os::FileSys::erase(nm::lib_h);
+    ///os::FileSys::erase(nm::lib_inc);
+    ///os::FileSys::erase(nm::lib_cpp);
+	fs::remove(nm::lib_h);
+	fs::remove(nm::lib_inc);
+	fs::remove(nm::lib_cpp);
 }
 
 std::vector<SecType *> loadSecTypes(std::string name, ConfigParser & par)
@@ -276,7 +282,8 @@ void usage(bool isHelp)
 
     if (isHelp)
     {
-        cout << "Current working dir: " << os::FileSys::cwd().str() << '\n';
+        ///cout << "Current working dir: " << os::FileSys::cwd().str() << '\n';
+        cout << "Current working dir: " << fs::current_path().string() << '\n';
 
         cout << std::endl;
         cout << "Commands:\n";

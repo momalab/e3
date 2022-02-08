@@ -1,5 +1,8 @@
 // Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include "os_filesys.h"
 #include "cgtutil.h"
 
@@ -39,7 +42,8 @@ Params parse(int ac, char ** av)
                 throw errorMsg("missing filename for option '" + s + "'");
 
             std::string cfg = av[++i];
-            if ( !os::isFile(cfg) )
+            ///if ( !os::isFile(cfg) )
+            if ( !fs::is_regular_file(cfg) )
                 throw errorMsg("invalid filename '" + cfg
                                + "' for option '" + s + "'");
 
@@ -99,7 +103,8 @@ Params parse(int ac, char ** av)
                 throw errorMsg("missing directory name for option '" + s + "'");
 
             std::string userdir = av[++i];
-            if ( !os::isDir(userdir) )
+            ///if ( !os::isDir(userdir) )
+            if ( !fs::is_directory(userdir) )
                 throw errorMsg("invalid directory '" + userdir
                                + "' for option '" + s + "'");
 
