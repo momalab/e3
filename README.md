@@ -111,6 +111,8 @@ For more advanced use, check [E3 Wiki](https://github.com/momalab/e3/wiki) and [
 
 E. Chielle, O. Mazonka, H. Gamil, N. G. Tsoutsos and M. Maniatakos, "E3: A Framework for Compiling C++ Programs with Encrypted Operands," Cryptology ePrint Archive, Report 2018/1013, 2018, https://ia.cr/2018/1013.
 
+Eduardo Chielle, Oleg Mazonka, Homer Gamil, and Michail Maniatakos. 2022. Accelerating Fully Homomorphic Encryption by Bridging Modular and Bit-Level Arithmetic. In Proceedings of the 41st International Conference on Computer-Aided Design (ICCAD '22). Association for Computing Machinery, New York, NY, USA. https://doi.org/10.1145/3508352.3549415
+
 ```
 @misc{cryptoeprint:2018:1013,
     author       = {Eduardo Chielle and
@@ -123,6 +125,18 @@ E. Chielle, O. Mazonka, H. Gamil, N. G. Tsoutsos and M. Maniatakos, "E3: A Frame
     year         = {2018},
     note         = {\url{https://ia.cr/2018/1013}},
 }
+
+@inproceedings{bridging,
+    author = {Chielle, Eduardo and Mazonka, Oleg and Gamil, Homer and Maniatakos, Michail},
+    title = {Accelerating Fully Homomorphic Encryption by Bridging Modular and Bit-Level Arithmetic},
+    year = {2022},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    doi = {10.1145/3508352.3549415},
+    booktitle = {Proceedings of the 41st International Conference on Computer-Aided Design},
+    location = {San Diego, CA, USA},
+    series = {ICCAD '22}
+}
 ```
 
 -----
@@ -133,4 +147,3 @@ This software is under GPLv3 [license](license.md)
 Copyright (C) 2022 NYUAD, MoMA lab
 https://wp.nyu.edu/momalab/
 </pre>
-
