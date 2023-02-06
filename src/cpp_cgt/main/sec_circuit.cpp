@@ -155,7 +155,7 @@ void Circuit::genKeys(bool forceGen, bool forceLoad,
                  (csk = new CircuitPrivKey_seal_bfv
             (name, forceGen, forceLoad, seed,
              lambda, polyModulusDegree, plaintextModulus, encoder));
-        else throw "Scheme not supported for type ["
+        else throw "Circuit: Scheme not supported for type ["
             + encType + "] in " + name.typ;
 
     }

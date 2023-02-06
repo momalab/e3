@@ -75,13 +75,16 @@ fi
 
 echo ""
 echo "Step 3"
-echo -n "$me unzip.exe: "
-file=unzip.exe
-down=http://mazonka.com/bin/$file
-path=$fftwpath/$file
-if test -f $path; then
-	echo "YES"
+if unzip.exe > /dev/null; then
+ echo unzip is installed
 else
+ echo -n "$me unzip.exe: "
+ file=unzip.exe
+ down=http://mazonka.com/bin/$file
+ path=$fftwpath/$file
+ if test -f $path; then
+	echo "YES"
+ else
 	echo "NO"
 	echo "$me downloading unzip"
 	pushd $fftwpath
@@ -94,6 +97,7 @@ else
 		echo "$me failed to download $unzipfile"
 		exit
 	fi
+ fi
 fi
 
 libfftw=libfftw3-3
@@ -109,8 +113,8 @@ else
 	echo "NO"
 	echo "$me unzipping FFTW"
 	pushd $fftwpath
-	chmod 0777 unzip.exe
-	./unzip.exe $file_fftw_zip
+	test -f unzip.exe && chmod 0777 unzip.exe
+	unzip.exe $file_fftw_zip
 	popd
 
 	if test -f $path; then

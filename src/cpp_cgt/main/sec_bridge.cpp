@@ -61,7 +61,7 @@ void Bridge::genKeys(bool forceGen, bool forceLoad,
                          polyModulusDegree, plaintextModulus, encoder
                      )
                  );
-        else throw "Scheme not supported for type ["
+        else throw "Bridge: Scheme not supported for type ["
             + encType + "] in " + name.typ;
     }
 

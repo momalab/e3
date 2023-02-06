@@ -7,6 +7,21 @@ Check out the [E3 Wiki](https://github.com/momalab/e3/wiki) for more information
 
 If you use our framework, please cite our paper titled "E3: A Framework for Compiling C++ Programs with Encrypted Operands", which can be found here: https://eprint.iacr.org/2018/1013. The paper describes the process of developing E3, as well as how to add new libraries to the framework.
 
+# Features
+
+## Programming Features 
+E3 supports all the C++ operators (addition, subtraction, multiplication, division, comparison, bitwise operations), including division, a feature many frameworks currently do not support. E3 also provides flexibility and allows code reusability, as it enables users to operate with the same code on different FHE libraries or encryption schemes. In addition, E3 allows the integration with other root-of-trusts that emulate homomorphism.
+
+## Technical Features
+E3 supports a big variety of Homomorphic Encryption libraries. This includes FHEW, HELib, SEAL, TFHE, as well as Paillier. Consequently, the framework also supports a number of schemes including BFV, BGV, CKKS, and GSW. It also provides support for two novel features, those of Bridging, and Batching.
+
+### Bridging
+A unique feature of E3 is bridging. This novel technique mixes different arithmetic abstractions, or, in other words mixes both Modular and Bit-level arithmetic in one program. This provides the ability to convert variables from integral type to modular, which eventually results in performance improvements of several orders of magnitude in certain cases. As a result, regarding the plaintext space E3 is capable of operating on both modular arithmetic and binary circuits.
+
+### Batching
+E3 also fully supports batching capabilities as it allows for the parallel processing of plaintexts in a Single Instruction Multiple Data fashion, along with rotation operations. Regarding parameter selection methods, the user is required to manually select the parameters that will be used according to the application at hand. In addition, E3 automatically handles ciphertext relinearization and rescaling. Lastly,
+
+
 # Quick setup
 
 Here we show how to set up and test E3 on Linux. For Windows and MacOS please check our [wiki](https://github.com/momalab/e3/wiki/installing-e3).

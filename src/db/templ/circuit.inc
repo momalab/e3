@@ -585,6 +585,24 @@ inline $NameBool & $NameBool::operator%=(const $NameBool & x)
     return (*this);
 }
 
+inline $NameBool & $NameBool::operator&=(const $NameBool & x)
+{
+    (*this) = (*this) & x;
+    return (*this);
+}
+
+inline $NameBool & $NameBool::operator|=(const $NameBool & x)
+{
+    (*this) = (*this) | x;
+    return (*this);
+}
+
+inline $NameBool & $NameBool::operator^=(const $NameBool & x)
+{
+    (*this) = (*this) ^ x;
+    return (*this);
+}
+
 inline $NameBool $NameBool::operator+(const $NameBool & x) const
 {
     $NameBool r;
@@ -614,6 +632,27 @@ inline $NameBool $NameBool::operator/(const $NameBool & x) const
 }
 
 inline $NameBool $NameBool::operator%(const $NameBool & x) const
+{
+    $NameBool r;
+    r = $NameBool ( $NameUint<1>(*this) ^ $NameUint<1>(x) );
+    return r;
+}
+
+inline $NameBool $NameBool::operator&(const $NameBool & x) const
+{
+    $NameBool r;
+    r = $NameBool ( $NameUint<1>(*this) & $NameUint<1>(x) );
+    return r;
+}
+
+inline $NameBool $NameBool::operator|(const $NameBool & x) const
+{
+    $NameBool r;
+    r = $NameBool ( $NameUint<1>(*this) | $NameUint<1>(x) );
+    return r;
+}
+
+inline $NameBool $NameBool::operator^(const $NameBool & x) const
 {
     $NameBool r;
     r = $NameBool ( $NameUint<1>(*this) ^ $NameUint<1>(x) );

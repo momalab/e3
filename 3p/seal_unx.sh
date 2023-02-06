@@ -51,7 +51,7 @@ if [ ! -d "$target" ]; then
 	mkdir $target
 fi
 cd $path
-cmake -S . -B build
+cmake -S . -B build -DSEAL_THROW_ON_TRANSPARENT_CIPHERTEXT=OFF
 cmake --build build
 #cmake -DCMAKE_INSTALL_PREFIX=$target .
 #make

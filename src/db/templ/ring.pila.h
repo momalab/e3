@@ -68,6 +68,7 @@ class $Name
 
         // Functions
         std::string str() const { return pek->decor(x.str(), true); }
+        static uint64_t getPlaintextModulus() { throw 0; }
 };
 
 inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os << x.str(); }

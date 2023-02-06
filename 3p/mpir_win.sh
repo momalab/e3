@@ -23,7 +23,7 @@ else
 	echo "$me checking out MPIR"
 	mkdir -p $root
 	pushd $root
-	git -c http.sslVerify=false clone --depth 1 --branch master git://github.com/BrianGladman/mpir.git
+	git -c http.sslVerify=false clone --depth 1 --branch master https://github.com/BrianGladman/mpir.git
 	popd
 		if test -f $path; then
 			echo "$me done"
@@ -110,6 +110,7 @@ else
 		echo "4. Fix SDK versions in lib_ projects (properties)"
 		echo "5. Build first 'lib_mpir_gc' then 'lib_mpir_cxx'"
 		echo "6. Verify $fmpirxxlib"
+		exit
 	fi
 fi
 

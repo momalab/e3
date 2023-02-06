@@ -1,4 +1,6 @@
 // Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
+#pragma once
+
 #ifndef _E3_E3KEY_H_
 #define _E3_E3KEY_H_
 
@@ -39,7 +41,8 @@ enum class SchemeType
     BDDN, GATCOU, NATIVE, PAIL, PAILG, PALISADE_BFV,
     PALISADE_CKKS, PILA, PILC, PLAIN, SEAL_BFV, SEAL_CKKS, TFHE
 };
-std::map<std::string, SchemeType> schemeTable
+
+const std::map<std::string, SchemeType> schemeTable
 {
     { "bddn"         , SchemeType::BDDN          },
     { "gatcou"       , SchemeType::GATCOU        },
@@ -68,7 +71,7 @@ void getSecretKey(T x, PrivKey *& sk)
     e3::KeyName kn {x.typname(), x.filname()};
     try
     {
-        switch ( schemeTable[sc] )
+        switch ( schemeTable.at(sc) )
         {
             case SchemeType::BDDN         :
             {

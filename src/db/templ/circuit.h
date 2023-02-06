@@ -92,6 +92,8 @@ template<int SZ> class $NameUint
         $NameUint(const char * c) : $NameUint(std::string(c)) {}
 
         // public encryption
+        // explicit $NameUint(bool a) : $NameUint( (unsigned long long)(a) ) {}
+        // explicit $NameUint(int  a) : $NameUint( (unsigned long long)(a) ) {}
         explicit $NameUint(unsigned long long);
         explicit $NameUint(const std::vector<unsigned long long> &);
 
@@ -215,6 +217,8 @@ template<int SZ> class $NameInt : public $NameUint<SZ>
 
         $NameInt(const $NameUint<SZ> & y): $NameUint<SZ>(y) {}
         explicit $NameInt(const $NameBool & y): $NameUint<SZ>(y) {}
+        explicit $NameInt(bool a) : $NameInt( (long long)(a) ) {}
+        explicit $NameInt(int  a) : $NameInt( (long long)(a) ) {}
         explicit $NameInt(long long x) : $NameUint<SZ>(x) {}
         explicit $NameInt(const std::vector<long long> & x)
             : $NameUint<SZ>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
@@ -264,11 +268,13 @@ class $NameBool : public $NameUint<1>
         // Constructors
         $NameBool() = default;
         template <int SZ> explicit $NameBool(const $NameUint<SZ> &);
-        $NameBool(const std::string & s): $NameUint<1>(s) {}
-        $NameBool(const char * c) : $NameBool(std::string(c)) {}
-        explicit $NameBool(bool x) : $NameUint<1>(x) {}
+        explicit $NameBool(const std::string & s): $NameUint<1>(s) {}
+        explicit $NameBool(const char * c) : $NameBool(std::string(c)) {}
+        // explicit $NameBool(bool x) : $NameUint<1>(x) {}
         explicit $NameBool(const std::vector<bool> & x) : $NameUint<1>( std::vector<unsigned long long>(x.begin(), x.end()) ) {}
+        explicit $NameBool(const std::vector<unsigned long long> & x) : $NameUint<1>(x) {}
         explicit $NameBool(Bit x) { (*this)[0] = x; }
+        // explicit $NameBool(int x) : $NameUint<1>(x) {}
 
         $NameBool(const $NameBool &) = default;
         $NameBool & operator=(const $NameBool & x) = default;
@@ -282,11 +288,17 @@ class $NameBool : public $NameUint<1>
         $NameBool & operator*=(const $NameBool & a);
         $NameBool & operator/=(const $NameBool & a);
         $NameBool & operator%=(const $NameBool & a);
+        $NameBool & operator&=(const $NameBool & a);
+        $NameBool & operator^=(const $NameBool & a);
+        $NameBool & operator|=(const $NameBool & a);
         $NameBool operator+(const $NameBool & a) const;
         $NameBool operator-(const $NameBool & a) const;
         $NameBool operator*(const $NameBool & a) const;
         $NameBool operator/(const $NameBool & a) const;
         $NameBool operator%(const $NameBool & a) const;
+        $NameBool operator&(const $NameBool & a) const;
+        $NameBool operator|(const $NameBool & a) const;
+        $NameBool operator^(const $NameBool & a) const;
         template <int SZ> $NameUint<SZ> operator*(const $NameUint<SZ> & x) const;
         template <int SZ> $NameInt<SZ> operator*(const $NameInt<SZ> & x) const;
 

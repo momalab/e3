@@ -64,7 +64,7 @@ $Name $Name::operator*(const std::vector<unsigned long long> & v) const
     if ( ek->isBatchEncoder ) p = e3::e3seal::batchEncode( v, *(ek->batchEncoder) );
     else ek->encoder->encode(uint64_t(v[0]), p);
     ek->evaluator->multiply_plain_inplace(r.x.p->ct, p);
-    ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
+    ///ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
     return r;
 }
 
@@ -99,7 +99,7 @@ $Name $Name::operator*(const std::vector<unsigned long long> & v) const
     auto ek = e3::e3seal::toek(pek->key);
     p = e3::e3seal::batchEncode( v, *(ek->batchEncoder) );
     ek->evaluator->multiply_plain_inplace(r.x.p->ct, p);
-    ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
+    ///ek->evaluator->relinearize_inplace(r.x.p->ct, ek->relinkeys);
     return r;
 }
 

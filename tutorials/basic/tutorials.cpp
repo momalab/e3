@@ -64,6 +64,12 @@ void print_hello_world()
      */
 }
 
+template <class T>
+inline string dec(const T & num)
+{
+    return e3::util::split(e3::decrypt(num), '_')[0];
+}
+
 void add_two_integers()
 {
     cout << "\nAdding two integers:" << "\n";
@@ -93,9 +99,9 @@ void add_two_integers()
     //cout << "num2 = " << num2 << "\n";
     //cout << "5 + -2 = " << res << "\n";
 
-    cout << "num1d = " << e3::decrypt<SecureInt,vector<int>>(num1)[0] << "\n";
-    cout << "num2d = " << e3::decrypt<SecureInt,vector<int>>(num2)[0] << "\n";
-    cout << "5 + -2 = " << e3::decrypt<SecureInt,vector<int>>(res)[0] << "\n";
+    cout << "num1d = " << dec(num1) << "\n";
+    cout << "num2d = " << dec(num2) << "\n";
+    cout << "5 + -2 = " << dec(res) << "\n";
 
     /*
         Here, you can immediately retrieve decrypted results by using alice.exe. 'e3::decrypt()'
@@ -135,7 +141,7 @@ void factorial()
     }
 
     //cout << "Factorial of " << input << " = " << result << "\n";
-    cout << "Factorial of " << e3::decrypt<SecureInt,vector<int>>(input)[0] << " = " << e3::decrypt<SecureInt,vector<int>>(result)[0] << "\n";
+    cout << "Factorial of " << dec(input) << " = " << dec(result) << "\n";
 }
 
 void factorial_using_bridge()
@@ -169,10 +175,11 @@ void factorial_using_bridge()
          */
     }
 
-    cout << "Factorial of " << e3::decrypt<SecureInt,vector<int>>(input)[0] << " = " << e3::decrypt<SecureMint,vector<int>>(res)[0] << "\n";
+    cout << "Factorial of " << dec(input)[0] << " = " << dec(res) << "\n";
 }
 
 int main()
+try
 {
 
     ///Timer t;
@@ -182,10 +189,10 @@ int main()
     add_two_integers();
     factorial();
     auto r1 = chron::now();
-    cout << "Runtime: " << (r1 - r0) << " us\n";
+    cout << "Runtime: " << (r1 - r0) << " ms\n";
     factorial_using_bridge();
     auto r2 = chron::now();
-    cout << "Runtime: " << (r2 - r1) << " us\n";
+    cout << "Runtime: " << (r2 - r1) << " ms\n";
 
     /*
         You can check both the encrypted and decrypted results by building the tool with the
@@ -211,4 +218,8 @@ int main()
 
         NOTE: Before you build your own program, make sure to run 'make cleanall' or 'make c'.
      */
+}
+catch(...)
+{
+   std::cout<<"exception\n";
 }

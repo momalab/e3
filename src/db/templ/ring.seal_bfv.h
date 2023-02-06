@@ -43,7 +43,10 @@ class $Name
         e3::SealNativeCiphertext native() const { return x; }
 
         // public encryption
+        explicit $Name(int a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
         explicit $Name(unsigned long long a) : $Name( init(pek)->encrypt( std::to_string(a), 0 ) ) {}
+        explicit $Name(const std::vector<int> & a)
+            : $Name( init(pek)->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0), "_" ), 0 ) ) {}
         explicit $Name(const std::vector<unsigned> & a)
             : $Name( init(pek)->encrypt( e3::util::merge( e3::util::extend(a, slots(), 0U), "_" ), 0 ) ) {}
         explicit $Name(const std::vector<unsigned long long> & a)
@@ -54,6 +57,8 @@ class $Name
         $Name & operator+=(const $Name & a);
         $Name & operator-=(const $Name & a);
         $Name & operator*=(const $Name & a);
+        $Name & operator+=(unsigned long long u) { *this += u; return *this; }
+        $Name & operator-=(unsigned long long u) { *this -= u; return *this; }
         $Name operator+(const $Name & a) const;
         $Name operator-(const $Name & a) const;
         $Name operator*(const $Name & a) const;
@@ -91,10 +96,15 @@ class $Name
 
         std::string str() const { return pek->decor(x.str(), true); }
         static size_t slots() { init0(); return pek->slots(); }
-		static uint64_t getPlaintextModulus() { return pek->getPlaintextModulus(); }
+        static uint64_t getPlaintextModulus() { return pek->getPlaintextModulus(); }
 };
 
 inline std::ostream & operator<<(std::ostream & os, const $Name & x) { return os << x.str(); }
+
+namespace std
+{
+inline string to_string(const $Name & a) { return a.str(); }
+} // std
 
 $PostfixDefines
 
