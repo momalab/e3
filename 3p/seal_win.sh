@@ -6,7 +6,8 @@ me="=== 3p ==="
 root=../../e3_seal
 sealdir=$root/SEAL
 cwd=`pwd`
-target=$cwd/seal_$PLAT.372
+#target=$cwd/seal_$PLAT.372
+target=$cwd/seal_$PLAT
 
 echo "$me Cooking SEAL for $PLAT"
 
@@ -49,6 +50,7 @@ echo "Now we support only 64 bit (x64)"
 fi
 
 spath=$sealdir/build/lib/Release/$file1
+#spath=$sealdir/build/lib/$file1
 tpath=$target/lib/$file2
 
 if test -f $tpath; then
@@ -62,7 +64,9 @@ else
 	else
 		echo "Error: no lib $spath"
 		echo "Please build SEAL using external tool, e.g. with Visual Studio"
-		echo "$> cmake -S . -B build"
+		echo "$> cmake -S . -B build -G \"Visual Studio 16 2019\" -A x64"
+		echo "$> cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64"
+		#echo "$> cmake --build build"
 		echo "Then build .sln (project 'seal') in build"
 		echo "Select Release, select project 'seal'"
 		echo "Use Options -> C++ -> Code Gen -> Runtime Lib -> MT"
