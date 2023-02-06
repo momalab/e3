@@ -175,16 +175,17 @@ void factorial_using_bridge()
 int main()
 {
 
-    Timer t;
+    ///Timer t;
+    auto r0 = chron::now();
 
     print_hello_world();
     add_two_integers();
     factorial();
-    auto r1 = t.get();
-    cout << "Runtime: " << r1 << " us\n";
+    auto r1 = chron::now();
+    cout << "Runtime: " << (r1 - r0) << " us\n";
     factorial_using_bridge();
-    auto r2 = t.get();
-    cout << "Runtime: " << r2 - r1 << " us\n";
+    auto r2 = chron::now();
+    cout << "Runtime: " << (r2 - r1) << " us\n";
 
     /*
         You can check both the encrypted and decrypted results by building the tool with the
