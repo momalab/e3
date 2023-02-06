@@ -88,14 +88,14 @@ void add_two_integers()
         For more information about supported C++ operators, see FAQ.
      */
 
-    cout << "num1 = " << num1 << "\n";
-    cout << "num2 = " << num2 << "\n";
-    cout << "5 + -2 = " << res << "\n";
+     cout << "Sum is finished\n";
+    //cout << "num1 = " << num1 << "\n";
+    //cout << "num2 = " << num2 << "\n";
+    //cout << "5 + -2 = " << res << "\n";
 
-    cout << "Using alice:\n";
-    cout << "num1d = " << e3::decrypt(num1) << "\n";
-    cout << "num2d = " << e3::decrypt(num2) << "\n";
-    cout << "5 + -2 = " << e3::decrypt(res) << "\n";
+    cout << "num1d = " << e3::decrypt<SecureInt,vector<int>>(num1)[0] << "\n";
+    cout << "num2d = " << e3::decrypt<SecureInt,vector<int>>(num2)[0] << "\n";
+    cout << "5 + -2 = " << e3::decrypt<SecureInt,vector<int>>(res)[0] << "\n";
 
     /*
         Here, you can immediately retrieve decrypted results by using alice.exe. 'e3::decrypt()'
@@ -134,7 +134,8 @@ void factorial()
          */
     }
 
-    cout << "Factorial of " << input << " = " << result << "\n";
+    //cout << "Factorial of " << input << " = " << result << "\n";
+    cout << "Factorial of " << e3::decrypt<SecureInt,vector<int>>(input)[0] << " = " << e3::decrypt<SecureInt,vector<int>>(result)[0] << "\n";
 }
 
 void factorial_using_bridge()
@@ -168,8 +169,7 @@ void factorial_using_bridge()
          */
     }
 
-    cout << "Factorial of " << input << " = " << res << "\n";
-
+    cout << "Factorial of " << e3::decrypt<SecureInt,vector<int>>(input)[0] << " = " << e3::decrypt<SecureMint,vector<int>>(res)[0] << "\n";
 }
 
 int main()
