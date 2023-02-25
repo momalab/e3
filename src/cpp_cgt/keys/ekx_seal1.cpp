@@ -18,21 +18,50 @@ void e3::SealBaseEvalKeyExt::save()
     auto fileRelin  = filename() + ".relin.key";
     auto fileGalois = filename() + ".galois.key";
     auto fileConfig = filename() + ".config.key";
-    std::ofstream ofParams(fileParams, std::ios::binary);
-    std::ofstream ofPublicKey(filePublicKey, std::ios::binary);
-    std::ofstream ofRelin (fileRelin , std::ios::binary);
-    std::ofstream ofGalois(fileGalois, std::ios::binary);
-    std::ofstream ofConfig(fileConfig, std::ios::binary);
 
+	//<< sizeof()
+
+    auto k = e3seal::toek(key);
+
+    {
+        cout << "[param" << std::flush;
+        std::ofstream ofParams(fileParams, std::ios::binary);
 #if SEALVER == 332
-    seal::EncryptionParameters::Save( *(e3seal::toek(key)->params), ofParams );
+        seal::EncryptionParameters::Save( *(e3seal::toek(key)->params), ofParams );
 #else
-    e3seal::toek(key)->params->save( ofParams );
+        ///e3seal::toek(key)->params->save( ofParams );
+        k->params->save( ofParams );
 #endif
+        cout << "] " << std::flush;
+    }
 
-    e3seal::toek(key)->publickey.save(ofPublicKey);
-    e3seal::toek(key)->relinkeys.save(ofRelin);
-    e3seal::toek(key)->galoiskeys.save(ofGalois);
-    ofConfig << (unsigned char) (e3seal::toek(key)->isBatchEncoder);
+    {
+        cout << "[pk" <<  std::flush;
+        std::ofstream ofPublicKey(filePublicKey, std::ios::binary);
+        k->publickey.save(ofPublicKey);
+        cout << "] " << std::flush;
+    }
+
+    {
+        cout << "[rel" << std::flush;
+        std::ofstream ofRelin (fileRelin , std::ios::binary);
+        k->relinkeys.save(ofRelin);
+        cout << "] " << std::flush;
+    }
+
+    {
+        cout << "[gal" << std::flush;
+        std::ofstream ofGalois(fileGalois, std::ios::binary);
+        k->galoiskeys.save(ofGalois);
+        cout << "] " << std::flush;
+    }
+
+    {
+        cout << "[cfg" << std::flush;
+        std::ofstream ofConfig(fileConfig, std::ios::binary);
+        ofConfig << (unsigned char) (k->isBatchEncoder);
+        cout << "] " << std::flush;
+    }
+
     cout << "ok\n";
 }

@@ -21,7 +21,7 @@
  */
 
 using namespace std;
-using SecureInt  = TypeUint<8>;
+using SecureInt  = TypeUint<4>;
 using SecureBool = TypeBool;
 using SecureMint = TypeMint;
 //using SecureInt = NativeInt<64>;
@@ -42,7 +42,7 @@ using SecureMint = TypeMint;
     configuration file.
  */
 
-#define MAX_NUM 10
+#define MAX_NUM 4
 
 /*
     In order to make your program data-oblivious and privacy-preserving, the 'for' loop
@@ -67,7 +67,13 @@ void print_hello_world()
 template <class T>
 inline string dec(const T & num)
 {
-    return e3::util::split(e3::decrypt(num), '_')[0];
+    string s = e3::decrypt(num);
+    if( s.empty() ) return "[EMPTY]";
+    ///cout<<"AAA1 "<<s.size()<<" ["<<s[0]<<"] ["<<s[1]<<"]\n";
+    auto v = e3::util::split(s, '_');
+    ///cout<<"AAA2 "<<v.size()<<" ["<<v[0]<<"] ["<<v[0]<<"]\n";
+    ///return "ooo";
+    return v[0];
 }
 
 void add_two_integers()
@@ -77,6 +83,9 @@ void add_two_integers()
     SecureInt num1 = _5_Ep;
     SecureInt num2 = _2_En;
     SecureInt res = _0_Ep;
+
+    SecureMint m1 = _5_Ea;
+    SecureMint m2 = _2_Ea;
 
     /*
         Instead of using regular integer datatype 'int', you need to replace with our
@@ -88,6 +97,7 @@ void add_two_integers()
      */
 
     res = num1 + num2;
+    auto mr = m1 + m2;
 
     /*
         All standard operators are available to the user when using encrypted variables.
@@ -102,6 +112,7 @@ void add_two_integers()
     cout << "num1d = " << dec(num1) << "\n";
     cout << "num2d = " << dec(num2) << "\n";
     cout << "5 + -2 = " << dec(res) << "\n";
+    cout << "5 + 2 = " << dec(mr) << "\n";
 
     /*
         Here, you can immediately retrieve decrypted results by using alice.exe. 'e3::decrypt()'
@@ -115,7 +126,7 @@ void factorial()
     cout << "\nFactorial using boolean circuit:" << "\n";
 
     SecureInt i = _1_Ep;
-    SecureInt input = _5_Ep;
+    SecureInt input = _3_Ep;
     SecureInt fact = _1_Ep;
     SecureInt result = _0_Ep;
 
@@ -153,7 +164,7 @@ void factorial_using_bridge()
     SecureMint   ia = _1_Ea;
     SecureInt    ic = _1_Ep;
     SecureMint  res = _0_Ea;
-    SecureInt input = _5_Ep;
+    SecureInt input = _3_Ep;
 
     for (int cntr = 1; cntr < MAX_NUM; cntr++)
     {

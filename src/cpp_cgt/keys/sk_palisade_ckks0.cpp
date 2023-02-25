@@ -50,10 +50,15 @@ PalisadeCkksPrivKey::PalisadeCkksPrivKey (
             throw "Missing parameters. Check the configuration file.";
         try
         {
-            ek.securityLevel   = stoul( params["lambda"  ] );
-            ek.multDepth       = stoul( params["muldepth"] );
-            ek.scaleFactorBits = stoul( params["scale"   ] );
-            ek.batchSize       = stoul( params["useslots"] );
+            auto mstoul = [&params](string a) -> unsigned long
+            {
+                auto x = params[a];
+                return a.empty() ? 0 : stoul(a);
+            };
+            ek.securityLevel   = mstoul( params["lambda"  ] );
+            ek.multDepth       = mstoul( params["muldepth"] );
+            ek.scaleFactorBits = mstoul( params["scale"   ] );
+            ek.batchSize       = mstoul( params["useslots"] );
             ek.ringDimension   = palisade_ckks::getRingDimension(ek.multDepth, ek.batchSize);
         }
         catch (...) { throw "Invalid parameters. Check the configuration file."; }

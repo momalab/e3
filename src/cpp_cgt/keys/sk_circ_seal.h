@@ -47,6 +47,7 @@ class CircuitPrivKey_seal_bfv : public CircuitPrivKey
         virtual std::vector<bool> decbitstr(const std::string & s, bool * ok) const
         {
             auto sbit = bsk.rawDecrypt(s);
+            /// std::cout << __func__ << " INPUT: [" << ( s.size() > 10 ? s.substr(0,10) : s ) << "]\n";
 
             if (ok) *ok = true;
             std::vector<bool> bit;

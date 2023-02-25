@@ -24,7 +24,7 @@ struct SealNativeCiphertext
     SealNativeCiphertext(const SealNativeCiphertext &); // = delete;
     SealNativeCiphertext(const std::string & enc, cSealNativeEvalKey ek);
 
-	~SealNativeCiphertext();
+    ~SealNativeCiphertext();
 };
 
 int seal_impl(); // 0 or 1

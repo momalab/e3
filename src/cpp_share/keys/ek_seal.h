@@ -30,7 +30,7 @@ class SealBaseEvalKey : public EvalKey
 
         virtual size_t slots();
 
-		uint64_t getPlaintextModulus() const;
+        uint64_t getPlaintextModulus() const;
 };
 
 } // e3

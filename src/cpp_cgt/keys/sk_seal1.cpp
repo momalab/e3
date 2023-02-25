@@ -129,6 +129,7 @@ bool SealBasePrivKey::load()
 
 vector<string> SealBasePrivKey::rawDecrypt(const string & undecorated) const
 {
+    /// std::cout << __func__ << " INPUT: [" << ( undecorated.size() > 10 ? undecorated.substr(0,10) : undecorated ) << "]\n";
     if (undecorated.empty()) return vector<string>(1, "");
     SealNativeCiphertext nb(undecorated, ek.key);
     auto evalkey = e3seal::toek(ek.key);
@@ -150,6 +151,7 @@ vector<string> SealBasePrivKey::rawDecrypt(const string & undecorated) const
 #else
     else never;
 #endif
+    /// std::cout << __func__ << " OUTPUT SIZE: [" << m.size() << "]\n";
     return m;
 }
 
@@ -167,4 +169,3 @@ void SealBasePrivKey::save()
 }
 
 } // e3
-

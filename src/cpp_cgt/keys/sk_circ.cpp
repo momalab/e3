@@ -1,5 +1,6 @@
 // Copyright 2022 MoMA Lab, NYU Abu Dhabi (wp.nyu.edu/momalab/)
 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -32,7 +33,13 @@ std::string CircuitPrivKey::decrypt_cir(const std::string & ss) const
     vector<vector<bool>> m;
     bool ok = true;
     auto dbit = decbitstr(bits[0], &ok);
-    if (!ok) return "";
+    /// if (!ok) return "";
+    string error_msg = "Decryption failed. Ciphertext is corrupted";
+    if (!ok)
+    {
+        std::cerr << error_msg << '\n';
+        throw error_msg;
+    }
     for ( auto db : dbit ) m.push_back( vector<bool>(1, db) );
     for ( size_t i = 1; i < bits.size(); i++ )
     {
@@ -40,7 +47,12 @@ std::string CircuitPrivKey::decrypt_cir(const std::string & ss) const
         ok = true;
         dbit = decbitstr(s, &ok);
         for ( size_t j = 0; j < dbit.size(); j++ ) m[j].push_back( dbit[j] );
-        if (!ok) return "";
+        /// if (!ok) return "";
+        if (!ok)
+        {
+            std::cerr << error_msg << '\n';
+            throw error_msg;
+        }
     }
 
     string r = "";

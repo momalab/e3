@@ -38,6 +38,7 @@ class SealBasePrivKey : public PrivKey
 
         virtual std::string decrypt(const std::string & s) const
         {
+            // std::cout << __func__ << " INPUT: [" << s << "]\n";
             auto v = rawDecrypt( ek.decor(s, false) );
             std::string r = "";
             bool isTrailing = false;
@@ -64,6 +65,7 @@ class SealBasePrivKey : public PrivKey
             }
             if ( isTrailing ) r = r.substr(1);
             else r = v[0] + r;
+            // std::cout << __func__ << " OUTPUT: [" << s << "]\n";
             return r;
         }
         virtual void decrypt(const std::string & s, std::vector<int> & r);
